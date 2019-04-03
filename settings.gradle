@@ -1,0 +1,5 @@
+rootProject.name = 'pms'
+include 'pms-webserver'
+include 'pms-desktop'
+include 'pms-core'
+
