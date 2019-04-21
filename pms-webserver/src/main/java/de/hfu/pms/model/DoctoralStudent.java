@@ -62,6 +62,11 @@ public class DoctoralStudent implements Serializable {
 
     // GETTER AND SETTER
 
+
+    public Long getId() {
+        return id;
+    }
+
     public PersonalData getPersonalData() {
         return personalData;
     }
