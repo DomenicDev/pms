@@ -12,9 +12,7 @@ public class DoctoralStudent implements Serializable {
     private Long id;
 
     @Embedded
-    private PersonalData personalData = new PersonalData();
-
-
+    private PersonalData personalData;
 
     @Embedded
     private QualifiedGraduation qualifiedGraduation;
@@ -31,7 +29,86 @@ public class DoctoralStudent implements Serializable {
     @Embedded
     private AlumniState alumniState;
 
+
+    /**
+     * Default constructor.
+     */
+    public DoctoralStudent() {
+        this.personalData = new PersonalData();
+        this.qualifiedGraduation = new QualifiedGraduation();
+        this.targetGraduation = new TargetGraduation();
+        this.employment = new Employment();
+        this.support = new Support();
+        this.alumniState = new AlumniState();
+    }
+
+    /**
+     *
+     * @param personalData
+     * @param qualifiedGraduation
+     * @param targetGraduation
+     * @param employment
+     * @param support
+     * @param alumniState
+     */
+    public DoctoralStudent(PersonalData personalData, QualifiedGraduation qualifiedGraduation, TargetGraduation targetGraduation, Employment employment, Support support, AlumniState alumniState) {
+        this.personalData = personalData;
+        this.qualifiedGraduation = qualifiedGraduation;
+        this.targetGraduation = targetGraduation;
+        this.employment = employment;
+        this.support = support;
+        this.alumniState = alumniState;
+    }
+
+    // GETTER AND SETTER
+
     public PersonalData getPersonalData() {
         return personalData;
     }
+
+    public void setPersonalData(PersonalData personalData) {
+        this.personalData = personalData;
+    }
+
+    public QualifiedGraduation getQualifiedGraduation() {
+        return qualifiedGraduation;
+    }
+
+    public void setQualifiedGraduation(QualifiedGraduation qualifiedGraduation) {
+        this.qualifiedGraduation = qualifiedGraduation;
+    }
+
+    public TargetGraduation getTargetGraduation() {
+        return targetGraduation;
+    }
+
+    public void setTargetGraduation(TargetGraduation targetGraduation) {
+        this.targetGraduation = targetGraduation;
+    }
+
+    public Employment getEmployment() {
+        return employment;
+    }
+
+    public void setEmployment(Employment employment) {
+        this.employment = employment;
+    }
+
+    public Support getSupport() {
+        return support;
+    }
+
+    public void setSupport(Support support) {
+        this.support = support;
+    }
+
+    public AlumniState getAlumniState() {
+        return alumniState;
+    }
+
+    public void setAlumniState(AlumniState alumniState) {
+        this.alumniState = alumniState;
+    }
+
+
 }
