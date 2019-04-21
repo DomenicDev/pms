@@ -5,12 +5,14 @@ package de.hfu.pms.shared.enums;
  */
 public enum FamilyStatus {
 
+    /**
+     * A single person in this context is someone who is unmarried.
+     */
     Single,
 
-    Married,
-
-    Divorced,
-
-    Widowed;
+    /**
+     * A person which is officially married to another person.
+     */
+    Married
 
 }
