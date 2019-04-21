@@ -1,8 +1,5 @@
 package de.hfu.pms.model;
 
-import de.hfu.pms.model.TravelCostSupport;
-import de.hfu.pms.model.VisitedQualification;
-
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
@@ -13,20 +10,16 @@ import java.util.Set;
 public class Support {
 
     @OneToMany
-    private Set<TravelCostSupport> travelCostSupports;
+    private Set<TravelCostConference> travelCostConferences;
+
+    @OneToMany
+    private Set<TravelCostUniversity> travelCostUniversities;
 
     @OneToMany
     private Set<VisitedQualification> visitedQualifications;
 
-    // todo ---> check if only one consulting entry is enough
-    @Column
-    private Date consultingDate;
-
-    @Column
-    private String consultingType;
-
-    @Column
-    private int consultingDuration; // in minutes
+    @OneToMany
+    private Set<ConsultingSupport> consultingSupports;
 
     @Column
     private String scholarship;
@@ -38,4 +31,61 @@ public class Support {
     private String miscellaneous;
 
 
+    // GETTER AND SETTERS
+
+    public String getScholarship() {
+        return scholarship;
+    }
+
+    public void setScholarship(String scholarship) {
+        this.scholarship = scholarship;
+    }
+
+    public String getAwards() {
+        return awards;
+    }
+
+    public void setAwards(String awards) {
+        this.awards = awards;
+    }
+
+    public String getMiscellaneous() {
+        return miscellaneous;
+    }
+
+    public void setMiscellaneous(String miscellaneous) {
+        this.miscellaneous = miscellaneous;
+    }
+
+    public Set<TravelCostConference> getTravelCostConferences() {
+        return travelCostConferences;
+    }
+
+    public void setTravelCostConferences(Set<TravelCostConference> travelCostConferences) {
+        this.travelCostConferences = travelCostConferences;
+    }
+
+    public Set<TravelCostUniversity> getTravelCostUniversities() {
+        return travelCostUniversities;
+    }
+
+    public void setTravelCostUniversities(Set<TravelCostUniversity> travelCostUniversities) {
+        this.travelCostUniversities = travelCostUniversities;
+    }
+
+    public Set<VisitedQualification> getVisitedQualifications() {
+        return visitedQualifications;
+    }
+
+    public void setVisitedQualifications(Set<VisitedQualification> visitedQualifications) {
+        this.visitedQualifications = visitedQualifications;
+    }
+
+    public Set<ConsultingSupport> getConsultingSupports() {
+        return consultingSupports;
+    }
+
+    public void setConsultingSupports(Set<ConsultingSupport> consultingSupports) {
+        this.consultingSupports = consultingSupports;
+    }
 }

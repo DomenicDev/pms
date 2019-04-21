@@ -1,9 +1,6 @@
 package de.hfu.pms;
 
-import de.hfu.pms.model.DoctoralStudent;
-import de.hfu.pms.model.TravelCostSupport;
-import de.hfu.pms.model.University;
-import de.hfu.pms.model.VisitedQualification;
+import de.hfu.pms.model.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -36,8 +33,10 @@ public class Webserver {
                 .configure()
                 .addAnnotatedClass(DoctoralStudent.class)
                 .addAnnotatedClass(University.class)
-                .addAnnotatedClass(TravelCostSupport.class)
+                .addAnnotatedClass(TravelCostConference.class)
+                .addAnnotatedClass(TravelCostUniversity.class)
                 .addAnnotatedClass(VisitedQualification.class)
+                .addAnnotatedClass(ConsultingSupport.class)
                 .buildSessionFactory();
     }
 
