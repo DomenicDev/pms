@@ -38,10 +38,12 @@ public class TargetGraduation {
     private University externalUniversity;
 
     @Column
-    private Integer promotionAccepted;
+    @Temporal(value = TemporalType.DATE)
+    private Date promotionAccepted;
 
     @Column
-    private Integer procedureCompleted;
+    @Temporal(value = TemporalType.DATE)
+    private Date procedureCompleted;
 
     @Column
     @Enumerated
