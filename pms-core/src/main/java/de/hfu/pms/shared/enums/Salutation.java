@@ -13,6 +13,11 @@ public enum Salutation {
     /**
      * For female salutation.
      */
-    Miss;
+    Miss,
+
+    /**
+     * If user doesn't want to be specifically saluted.
+     */
+    None
 
 }
