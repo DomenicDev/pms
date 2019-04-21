@@ -14,8 +14,7 @@ public class DoctoralStudent implements Serializable {
     @Embedded
     private PersonalData personalData = new PersonalData();
 
-    @Embedded
-    private Address mailingAdress;
+
 
     @Embedded
     private QualifiedGraduation qualifiedGraduation;
