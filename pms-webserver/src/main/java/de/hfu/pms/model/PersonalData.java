@@ -3,7 +3,6 @@ package de.hfu.pms.model;
 import de.hfu.pms.shared.enums.FamilyStatus;
 import de.hfu.pms.shared.enums.Gender;
 import de.hfu.pms.shared.enums.Salutation;
-import de.hfu.pms.shared.enums.Title;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -25,8 +24,7 @@ public class PersonalData {
     private Salutation salutation;
 
     @Column
-    @Enumerated
-    private Title title;
+    private String title;
 
     @Column
     @Enumerated
