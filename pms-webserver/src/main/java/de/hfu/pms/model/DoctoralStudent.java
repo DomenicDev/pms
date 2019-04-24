@@ -43,7 +43,7 @@ public class DoctoralStudent implements Serializable {
     }
 
     /**
-     *
+     * Initializes a doctoral student with the specified data.
      * @param personalData
      * @param qualifiedGraduation
      * @param targetGraduation
