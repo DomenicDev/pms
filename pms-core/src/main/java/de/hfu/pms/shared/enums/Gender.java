@@ -18,6 +18,11 @@ public enum Gender {
     /**
      * For other gender types than male and female
      */
-    Miscellaneous;
+    Miscellaneous,
+
+    /**
+     * No information about gender available.
+     */
+    No_Information;
 
 }
