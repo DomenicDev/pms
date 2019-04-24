@@ -13,6 +13,11 @@ public enum FamilyStatus {
     /**
      * A person which is officially married to another person.
      */
-    Married
+    Married,
+
+    /**
+     * There is no information available about family status
+     */
+    NoInformation
 
 }
