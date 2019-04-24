@@ -1,6 +1,6 @@
 package de.hfu.pms.shared.dto;
 
-public class User {
+public class UserDto {
 
     public String getUsername() {
         return username;

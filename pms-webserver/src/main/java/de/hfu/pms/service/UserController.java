@@ -1,6 +1,7 @@
 package de.hfu.pms.service;
 
-import de.hfu.pms.shared.dto.User;
+
+import de.hfu.pms.shared.dto.UserDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,8 +11,8 @@ public class UserController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public void newUser (@RequestBody User user){
-        new de.hfu.pms.model.User(user.getUsername(),user.getPassword());
+    public void newUser (@RequestBody UserDto user){
+
     }
 
 
