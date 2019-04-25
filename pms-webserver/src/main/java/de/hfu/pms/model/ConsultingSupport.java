@@ -9,7 +9,7 @@ public class ConsultingSupport {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column
     private Date consultingDate;
@@ -26,11 +26,11 @@ public class ConsultingSupport {
         this.consultingDuration = consultingDuration;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

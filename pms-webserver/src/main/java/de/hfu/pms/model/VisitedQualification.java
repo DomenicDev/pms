@@ -9,7 +9,7 @@ public class VisitedQualification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column
     @Temporal(value = TemporalType.DATE)
