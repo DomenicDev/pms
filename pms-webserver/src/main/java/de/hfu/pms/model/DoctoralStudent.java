@@ -34,12 +34,14 @@ public class DoctoralStudent implements Serializable {
      * Default constructor.
      */
     public DoctoralStudent() {
+        /*
         this.personalData = new PersonalData();
         this.qualifiedGraduation = new QualifiedGraduation();
         this.targetGraduation = new TargetGraduation();
         this.employment = new Employment();
         this.support = new Support();
         this.alumniState = new AlumniState();
+        */
     }
 
     /**
