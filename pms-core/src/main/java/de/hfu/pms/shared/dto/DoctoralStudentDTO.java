@@ -1,56 +1,18 @@
 package de.hfu.pms.shared.dto;
 
-import de.hfu.pms.shared.enums.*;
-
-import java.math.BigDecimal;
-import java.util.Date;
-
 public class DoctoralStudentDTO {
 
     // IDENTIFICATION NUMBER
     private int id;
 
     // PERSONAL DATA
-    private String forename;
-    private String lastName;
-    private String formerLastName;
-    private Salutation salutation;
-    private String title;
-    private Gender gender;
-    private Date dateOfBirth;
-    private String nationality;
-    private FamilyStatus familyStatus;
-    private Integer numberOfChildren;
-    private AddressDTO address;
-    private String telephone;
-    private byte[] photo;
+    private PersonalDataDTO personalData;
 
     // QUALIFIED GRADUATION
-    private Graduation graduation;
-    private String subjectArea;
-    private BigDecimal grade;
-    private UniversityDTO qualifiedGraduationUniversity;
+    private QualifiedGraduationDTO qualifiedGraduation;
 
     // TARGET GRADUATION
-    private String targetGraduationDegree;
-    private String nameOfDissertation;
-    private String internalSupervisor;
-    private FacultyHFU facultyHFU;
-    private String externalSupervisor;
-    private String externalFaculty;
-    private UniversityDTO externalUniversity;
-    private Date promotionAccepted;
-    private Date procedureCompleted;
-    private Rating rating;
-    private Date cancelDate;
-    private String cancelReason;
-    private Date membershipHFUKollegBegin;
-    private Date membershipHFUKollegEnd;
-    private Date extendedMembershipEnd;
-    private String externalProgram;
-    private Date promotionAdmissionDate;
-    private Date prognosticatedPromotionDate;
-    private Date promotionAgreement;
+    private TargetGraduationDTO targetGraduation;
 
     // EMPLOYMENT
     private EmploymentDTO employment;
@@ -59,10 +21,65 @@ public class DoctoralStudentDTO {
     private SupportDTO support;
 
     // ALUMNI STATE
-    private String jobTitle;
-    private String employer;
-    private boolean agreementNews;
-    private boolean agreementEvaluation;
+    private AlumniStateDTO alumniState;
 
+    public DoctoralStudentDTO() {
 
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public PersonalDataDTO getPersonalData() {
+        return personalData;
+    }
+
+    public void setPersonalData(PersonalDataDTO personalData) {
+        this.personalData = personalData;
+    }
+
+    public QualifiedGraduationDTO getQualifiedGraduation() {
+        return qualifiedGraduation;
+    }
+
+    public void setQualifiedGraduation(QualifiedGraduationDTO qualifiedGraduation) {
+        this.qualifiedGraduation = qualifiedGraduation;
+    }
+
+    public TargetGraduationDTO getTargetGraduation() {
+        return targetGraduation;
+    }
+
+    public void setTargetGraduation(TargetGraduationDTO targetGraduation) {
+        this.targetGraduation = targetGraduation;
+    }
+
+    public EmploymentDTO getEmployment() {
+        return employment;
+    }
+
+    public void setEmployment(EmploymentDTO employment) {
+        this.employment = employment;
+    }
+
+    public SupportDTO getSupport() {
+        return support;
+    }
+
+    public void setSupport(SupportDTO support) {
+        this.support = support;
+    }
+
+    public AlumniStateDTO getAlumniState() {
+        return alumniState;
+    }
+
+    public void setAlumniState(AlumniStateDTO alumniState) {
+        this.alumniState = alumniState;
+    }
 }
