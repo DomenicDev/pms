@@ -1,7 +1,8 @@
-package de.hfu.pms.service;
+package de.hfu.pms.controller;
 
 
 import de.hfu.pms.model.UserRole;
+import de.hfu.pms.service.UserService;
 import de.hfu.pms.service.impl.UserServiceImpl;
 import de.hfu.pms.shared.dto.UserDto;
 import org.springframework.http.HttpStatus;
