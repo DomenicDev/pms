@@ -12,7 +12,7 @@ public class User implements Serializable {
     private Long id;
 
 
-    @Column
+    @Column(unique = true)
     private String username;
 
     //sha-256 Hashed Password
