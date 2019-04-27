@@ -39,8 +39,13 @@ public class DoctoralStudentController {
     @ResponseStatus(HttpStatus.CREATED)
     public DoctoralStudentDTO addDoctoralStudent(DoctoralStudentDTO doctoralStudentDTO) {
         DoctoralStudent student = convertToEntity(doctoralStudentDTO);
-        DoctoralStudent studentCreated = doctoralStudentService.createDoctoralStudent(student);
+        DoctoralStudent studentCreated = doctoralStudentService.create(student);
         return convertToDTO(studentCreated);
+    }
+
+    @RequestMapping(value= "/update/{id}")
+    public DoctoralStudentDTO updateDoctoralStudent(DoctoralStudentDTO doctoralStudentDTO) {
+        throw new UnsupportedOperationException();
     }
 
     @RequestMapping(value= "/add_sample")

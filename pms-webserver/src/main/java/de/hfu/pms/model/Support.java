@@ -2,23 +2,27 @@ package de.hfu.pms.model;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import java.util.Date;
 import java.util.Set;
 
 @Embeddable
 public class Support {
 
     @OneToMany
+    @JoinColumn(name = "fk_student")
     private Set<TravelCostConference> travelCostConferences;
 
     @OneToMany
+    @JoinColumn(name = "fk_student")
     private Set<TravelCostUniversity> travelCostUniversities;
 
     @OneToMany
+    @JoinColumn(name = "fk_student")
     private Set<VisitedQualification> visitedQualifications;
 
     @OneToMany
+    @JoinColumn(name = "fk_student")
     private Set<ConsultingSupport> consultingSupports;
 
     @Column
@@ -57,6 +61,7 @@ public class Support {
         this.miscellaneous = miscellaneous;
     }
 
+
     public Set<TravelCostConference> getTravelCostConferences() {
         return travelCostConferences;
     }
@@ -64,6 +69,7 @@ public class Support {
     public void setTravelCostConferences(Set<TravelCostConference> travelCostConferences) {
         this.travelCostConferences = travelCostConferences;
     }
+
 
     public Set<TravelCostUniversity> getTravelCostUniversities() {
         return travelCostUniversities;

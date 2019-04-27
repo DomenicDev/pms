@@ -40,7 +40,7 @@ public class UserController {
     }
 
 
-    @ResponseStatus(value = HttpStatus.CONFLICT,reason = "This Username already exists.")
+    @ResponseStatus(value = HttpStatus.CONFLICT, reason = "This Username already exists.")
     @ExceptionHandler(org.springframework.dao.DataIntegrityViolationException.class)
     public void uniqueUsernameViolation(){}
 
