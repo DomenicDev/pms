@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.collections.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="589.0" prefWidth="787.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="589.0" prefWidth="787.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <children>
     <TabPane layoutX="0.0" layoutY="14.0" prefHeight="575.0000999999975" prefWidth="787.0" tabClosingPolicy="UNAVAILABLE">
       <tabs>
@@ -378,7 +385,27 @@
         </Tab>
         <Tab disable="false" text="Manage employees">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="787.0">
+                     <children>
+                        <ScrollPane layoutX="54.0" layoutY="73.0" prefHeight="411.0" prefWidth="675.0">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="428.0" prefWidth="674.0">
+                                 <children>
+                                    <TableView layoutX="6.0" prefHeight="414.0" prefWidth="654.0">
+                                      <columns>
+                                        <TableColumn prefWidth="30.285701751708984" />
+                                        <TableColumn prefWidth="120.57147216796875" text="Name" />
+                                          <TableColumn prefWidth="75.0" text="E-Mail" />
+                                          <TableColumn prefWidth="75.0" text="Privilegien" />
+                                      </columns>
+                                    </TableView>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </ScrollPane>
+                        <TextField layoutX="62.0" layoutY="29.0" prefHeight="25.0" prefWidth="263.0" promptText="enter search term" />
+                        <Button layoutX="342.0" layoutY="29.0" mnemonicParsing="false" text="Suchen" />
+                     </children></AnchorPane>
           </content>
         </Tab>
         <Tab text="Account">
