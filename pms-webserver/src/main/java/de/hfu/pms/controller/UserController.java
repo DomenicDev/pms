@@ -1,6 +1,7 @@
 package de.hfu.pms.controller;
 
 
+import de.hfu.pms.model.User;
 import de.hfu.pms.model.UserRole;
 import de.hfu.pms.service.UserService;
 import de.hfu.pms.shared.dto.UserDto;
@@ -19,10 +20,10 @@ public class UserController {
         this.service = service;
     }
 
-    @RequestMapping("/create")
+    @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public void newUser (@RequestParam String user){
-        service.createUser(new UserDto(user, ""));
+    public void newUser (@RequestBody UserDto userDto){
+        service.createUser(new User(userDto.getUsername(),userDto.getPassword()));
 
     }
 

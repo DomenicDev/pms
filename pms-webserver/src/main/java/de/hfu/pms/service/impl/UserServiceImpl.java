@@ -20,10 +20,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void createUser(UserDto userDto) {
-        User newUser = new User(userDto.getUsername(),userDto.getPassword());
+    public void createUser(User newUser) {
         userDao.save(newUser);
-        userDao.flush();
     }
 
     @Override
