@@ -22,5 +22,8 @@ public class UserDto {
 
     private String password;
 
-
+    public UserDto(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 }

@@ -5,13 +5,19 @@ import de.hfu.pms.model.User;
 import de.hfu.pms.model.UserRole;
 import de.hfu.pms.service.UserService;
 import de.hfu.pms.shared.dto.UserDto;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.List;
 
+@Service
 public class UserServiceImpl implements UserService {
 
-    //@
-    private UserDao userDao;
+    private final UserDao userDao;
+
+    @Autowired
+    public UserServiceImpl(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
     @Override
     public void createUser(UserDto userDto) {

@@ -3,8 +3,8 @@ package de.hfu.pms.controller;
 
 import de.hfu.pms.model.UserRole;
 import de.hfu.pms.service.UserService;
-import de.hfu.pms.service.impl.UserServiceImpl;
 import de.hfu.pms.shared.dto.UserDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +12,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 public class UserController {
 
-    private UserService service = new UserServiceImpl();
+    private final UserService service;
 
-    @PostMapping("/create")
+    @Autowired
+    public UserController(UserService service) {
+        this.service = service;
+    }
+
+    @RequestMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public void newUser (@RequestBody UserDto user){
         service.createUser(user);
