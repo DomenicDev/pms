@@ -21,8 +21,9 @@ public class UserController {
 
     @RequestMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public void newUser (@RequestBody UserDto user){
-        service.createUser(user);
+    public void newUser (@RequestParam String user){
+        service.createUser(new UserDto(user, ""));
+
     }
 
     @PostMapping("/delete")
@@ -38,5 +39,8 @@ public class UserController {
     }
 
 
+    @ResponseStatus(value = HttpStatus.CONFLICT,reason = "This Username already exists.")
+    @ExceptionHandler(org.springframework.dao.DataIntegrityViolationException.class)
+    public void uniqueUsernameViolation(){}
 
 }
