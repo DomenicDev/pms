@@ -1,6 +1,9 @@
 package de.hfu.pms.shared.dto;
 
-public class UserDto {
+import de.hfu.pms.shared.enums.UserRole;
+
+public class UserDTO {
+
 
     public String getUsername() {
         return username;
@@ -18,12 +21,20 @@ public class UserDto {
         this.password = password;
     }
 
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
+    }
+
     private String username;
 
     private String password;
 
-    public UserDto(String username, String password) {
-        this.username = username;
-        this.password = password;
+    private UserRole userRole;
+
+    public UserDTO() {
     }
 }

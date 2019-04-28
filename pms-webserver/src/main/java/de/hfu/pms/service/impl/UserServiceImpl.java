@@ -4,7 +4,6 @@ import de.hfu.pms.dao.UserDao;
 import de.hfu.pms.model.User;
 import de.hfu.pms.model.UserRole;
 import de.hfu.pms.service.UserService;
-import de.hfu.pms.shared.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,5 +40,16 @@ public class UserServiceImpl implements UserService {
                 user.setRole(role);
             }
         }
+    }
+
+
+    @Override
+    public User getUser(String username){
+        for(User user :userDao.findAll()){
+            if(user.getUsername().equals(username)){
+                return user;
+            }
+        }
+        return null;
     }
 }
