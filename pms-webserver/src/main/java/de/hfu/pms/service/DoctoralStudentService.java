@@ -8,7 +8,9 @@ public interface DoctoralStudentService {
 
     DoctoralStudent create(DoctoralStudent doctoralStudent);
 
-    void update(DoctoralStudent doctoralStudent);
+    DoctoralStudent update(Long id, DoctoralStudent doctoralStudent);
+
+    DoctoralStudent findById(Long id);
 
     void remove(Long id);
 

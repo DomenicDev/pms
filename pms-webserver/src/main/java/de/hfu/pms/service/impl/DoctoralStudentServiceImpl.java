@@ -1,6 +1,7 @@
 package de.hfu.pms.service.impl;
 
 import de.hfu.pms.dao.DoctoralStudentDao;
+import de.hfu.pms.exceptions.DoctoralStudentNotFoundException;
 import de.hfu.pms.model.DoctoralStudent;
 import de.hfu.pms.service.DoctoralStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,13 @@ public class DoctoralStudentServiceImpl implements DoctoralStudentService {
     }
 
     @Override
-    public void update(DoctoralStudent doctoralStudent) {
-        doctoralStudentDao.save(doctoralStudent);
+    public DoctoralStudent update(Long id, DoctoralStudent doctoralStudent) {
+        return doctoralStudentDao.save(doctoralStudent);
+    }
+
+    @Override
+    public DoctoralStudent findById(Long id) {
+       return doctoralStudentDao.findById(id).orElseThrow(() -> new DoctoralStudentNotFoundException(id));
     }
 
     @Override
