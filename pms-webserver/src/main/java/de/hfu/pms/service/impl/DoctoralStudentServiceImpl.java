@@ -6,6 +6,8 @@ import de.hfu.pms.service.DoctoralStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DoctoralStudentServiceImpl implements DoctoralStudentService {
 
@@ -17,8 +19,35 @@ public class DoctoralStudentServiceImpl implements DoctoralStudentService {
     }
 
     @Override
-    public DoctoralStudent createDoctoralStudent(DoctoralStudent doctoralStudent) {
+    public DoctoralStudent create(DoctoralStudent doctoralStudent) {
         doctoralStudentDao.save(doctoralStudent);
         return doctoralStudent;
+    }
+
+    @Override
+    public void update(DoctoralStudent doctoralStudent) {
+        doctoralStudentDao.save(doctoralStudent);
+    }
+
+    @Override
+    public void remove(Long id) {
+        doctoralStudentDao.deleteById(id);
+    }
+
+    @Override
+    public void anonymize(Long id) {
+        // TODO
+        throw new UnsupportedOperationException("method must still be implemented");
+    }
+
+    @Override
+    public List<DoctoralStudent> getAll() {
+        return doctoralStudentDao.findAll();
+    }
+
+    @Override
+    public List<DoctoralStudent> search() {
+        // TODO
+        throw new UnsupportedOperationException("method must still be implemented");
     }
 }

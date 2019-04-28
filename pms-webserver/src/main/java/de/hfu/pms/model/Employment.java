@@ -1,27 +1,25 @@
 package de.hfu.pms.model;
 
-import de.hfu.pms.shared.enums.Campus;
-import de.hfu.pms.shared.enums.EmploymentLocation;
-
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import java.util.Set;
 
 @Embeddable
 public class Employment {
 
-    @Column
-    @Enumerated
-    private EmploymentLocation employmentLocation;
+    @OneToMany
+    @JoinColumn
+    private Set<EmploymentEntry> employmentEntries;
 
-    @Column
-    private String kindOfEmployment;
 
-    @Column
-    @Enumerated
-    private Campus campusOfDeployment;
+    // GETTER AND SETTER
 
-    @Column
-    private boolean preEmploymentTimeToBeCharged;
+    public Set<EmploymentEntry> getEmploymentEntries() {
+        return employmentEntries;
+    }
 
+    public void setEmploymentEntries(Set<EmploymentEntry> employmentEntries) {
+        this.employmentEntries = employmentEntries;
+    }
 }
