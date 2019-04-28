@@ -38,6 +38,7 @@ public class UserServiceImpl implements UserService {
         for(User user :userDao.findAll()){
             if(user.getUsername().equals(username)){
                 user.setRole(role);
+                userDao.save(user);
             }
         }
     }

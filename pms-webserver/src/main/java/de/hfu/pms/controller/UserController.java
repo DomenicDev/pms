@@ -31,7 +31,7 @@ public class UserController {
     public String newUser (@RequestBody UserDTO userDTO ){
         User user = convertToEntity(userDTO);
         service.createUser(user);
-        return "User " + user.getUsername() + " wurde mit dem Passwort "+ user.getPasswordHash() + " und der Rolle " + user.getRole() + " erzeugt.";
+        return "User " + user.getUsername() + " wurde mit dem Passwort "+ user.getPassword() + " und der Rolle " + user.getRole() + " erzeugt.";
     }
 
     @PostMapping("/delete")
@@ -43,9 +43,11 @@ public class UserController {
 
     @PostMapping("/updateRole")
     @ResponseStatus(HttpStatus.OK)
-    public String updateUserRole (@RequestBody User updateUser){
-        service.updateUserRole(updateUser.getUsername(),updateUser.getRole());
-        return "User " + updateUser.getUsername() + " wurde erfolgreich die Rolle " + updateUser.getRole() + " zugewiesen.";
+    public String updateUserRole (@RequestBody UserDTO userDTO){
+        User user = convertToEntity(userDTO);
+        System.err.println(user.getId() + user.getPassword() + user.getUsername() + user.getRole());
+        service.updateUserRole(user.getUsername(),user.getRole());
+        return "User " + user.getUsername() + " wurde erfolgreich die Rolle " + user.getRole() + " zugewiesen.";
     }
 
     @PostMapping("/getUser")
@@ -53,20 +55,18 @@ public class UserController {
     public String getUser (@RequestBody String username){
         try {
             User returnUser = service.getUser(username);
-            return "User: " + returnUser.getUsername() + " Password: " + returnUser.getPasswordHash() + " Role: " + returnUser.getRole();
+            return "User: " + returnUser.getUsername() + " Password: " + returnUser.getPassword() + " Role: " + returnUser.getRole();
         }catch (NullPointerException e){
             throw new UserNotFoundException(username);
         }
     }
 
     private User convertToEntity(UserDTO userDTO) {
-        User doctoralStudent = modelMapper.map(userDTO, User.class);
-        return doctoralStudent;
+        return modelMapper.map(userDTO, User.class);
     }
 
     private UserDTO convertToDTO(User user) {
-        UserDTO doctoralStudentDTO = modelMapper.map(user, UserDTO.class);
-        return doctoralStudentDTO;
+        return modelMapper.map(user, UserDTO.class);
     }
 
 

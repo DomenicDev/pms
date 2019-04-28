@@ -17,7 +17,7 @@ public class User implements Serializable {
 
     //sha-256 Hashed Password
     @Column
-    private String passwordHash;
+    private String password;
 
     //Administrator or normal User
     @Column
@@ -28,12 +28,12 @@ public class User implements Serializable {
     //Costructors
     public User(){
         this.username = "";
-        this.passwordHash = "";
+        this.password = "";
         this.role = UserRole.user;
     }
-    public User(String username, String passwordHash) {
+    public User(String username, String password) {
         this.username = username;
-        this.passwordHash = passwordHash;
+        this.password = password;
         this.role = UserRole.user;
     }
 
@@ -51,12 +51,12 @@ public class User implements Serializable {
         this.username = username;
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setPassword(String passwordHash) {
+        this.password = passwordHash;
     }
 
     public UserRole getRole() {
