@@ -13,14 +13,15 @@
    <children>
       <AnchorPane layoutX="350.0" prefHeight="400.0" prefWidth="351.0" style="-fx-background-color: #C5E2FF;">
          <children>
-            <TextField layoutX="37.0" layoutY="93.0" prefHeight="25.0" prefWidth="277.0" promptText="Benutzername" style="-fx-background-color: #92C8FF;" />
-            <PasswordField layoutX="37.0" layoutY="148.0" prefHeight="25.0" prefWidth="277.0" promptText="Passwort" style="-fx-background-color: #92C8FF;" />
-            <Button layoutX="84.0" layoutY="227.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="183.0" style="-fx-background-color: #92C8FF;" text="Login" textFill="#008351" />
+            <TextField layoutX="37.0" layoutY="93.0" prefHeight="25.0" prefWidth="277.0" promptText="Benutzername" style="-fx-background-color: #92C8FF; -fx-text-inner-color: #000000 ; -fx-prompt-text-fill: #008351  " />
+            <PasswordField layoutX="37.0" layoutY="148.0" prefHeight="25.0" prefWidth="277.0" promptText="Passwort" style="-fx-background-color: #92C8FF; -fx-text-inner-color: #000000; -fx-prompt-text-fill: #008351" />
+            <Button layoutX="84.0" layoutY="212.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="183.0" style="-fx-background-color: #92C8FF;" text="Login" textFill="#008351" />
             <Text fill="#008351" layoutX="40.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Promovierendenmanagement Login">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Text>
+            <Button layoutX="84.0" layoutY="269.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="183.0" style="-fx-background-color: #92C8FF;" text="Beenden" textFill="#008351" />
          </children>
       </AnchorPane>
       <ImageView fitHeight="135.0" fitWidth="286.0" layoutX="33.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true">
