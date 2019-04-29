@@ -45,7 +45,6 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public String updateUserRole (@RequestBody UserDTO userDTO){
         User user = convertToEntity(userDTO);
-        System.err.println(user.getId() + user.getPassword() + user.getUsername() + user.getRole());
         service.updateUserRole(user.getUsername(),user.getRole());
         return "User " + user.getUsername() + " wurde erfolgreich die Rolle " + user.getRole() + " zugewiesen.";
     }

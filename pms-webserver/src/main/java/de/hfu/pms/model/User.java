@@ -7,11 +7,8 @@ import java.io.Serializable;
 @Table
 public class User implements Serializable {
 
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-
     @Column(unique = true)
     private String username;
 
@@ -39,10 +36,6 @@ public class User implements Serializable {
 
 
     //Getter and Setter
-    public Long getId() {
-        return id;
-    }
-
     public String getUsername() {
         return username;
     }
