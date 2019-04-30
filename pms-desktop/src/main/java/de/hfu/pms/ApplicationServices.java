@@ -6,6 +6,10 @@ public interface ApplicationServices {
 
     void addDoctoralStudent(DoctoralStudentDTO student);
 
+    void login(String username, String password);
+
+
+
     // Todo add all other needed methods
 
 }
