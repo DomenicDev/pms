@@ -12,9 +12,6 @@ public class TravelCostConference {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
-    private DoctoralStudent student;
-
     @Column
     @Temporal(value = TemporalType.DATE)
     private Date date;
