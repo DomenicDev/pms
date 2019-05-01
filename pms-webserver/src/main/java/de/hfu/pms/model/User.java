@@ -56,6 +56,17 @@ public class User implements Serializable {
         return role;
     }
 
+    public String getRoleAsString(){
+        if(role.equals(UserRole.administrator)){
+            return "administrator";
+        }
+        if(role.equals(UserRole.user)){
+            return "user";
+        }
+        else
+            return null;
+    }
+
     public void setRole(UserRole role) {
         this.role = role;
     }
