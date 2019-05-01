@@ -1,21 +1,17 @@
 package de.hfu.pms;
 
+import com.google.common.eventbus.EventBus;
+import de.hfu.pms.events.LoginEvent;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 public class LoginScreenController {
 
-
-
+    private EventBus eventBus = EventBusSystem.getEventBus();
 
     @FXML
     private TextField usernameTextField;
@@ -46,6 +42,7 @@ public class LoginScreenController {
     public void handleLoginEvent(ActionEvent actionEvent) {
         System.out.println("Login clicked");
        // loginButton.setOnAction(event -> window.setScene);
+        eventBus.post(new LoginEvent("bob", "1234"));
 
     }
 
