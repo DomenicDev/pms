@@ -19,8 +19,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("bob").password("admin").roles("ADMIN");
-        auth.inMemoryAuthentication().withUser("alice").password("test").roles("USER");
+        auth.inMemoryAuthentication().withUser("bob").password("{noop}admin").roles("ADMIN");
+        auth.inMemoryAuthentication().withUser("alice").password("{noop}test").roles("USER");
     }
 
     @Override
@@ -31,6 +31,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/**").hasRole("ADMIN")
                 .and().httpBasic().realmName(REALM).authenticationEntryPoint(getBasicAuthEntryPoint())
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);//We don't need sessions to be created.
+        http.csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/student/**").hasAnyRole("USER","ADMIN")
+                .and().httpBasic().realmName(REALM).authenticationEntryPoint(getBasicAuthEntryPoint())
+                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);//We don't need sessions to be created.
+
     }
 
     @Bean
