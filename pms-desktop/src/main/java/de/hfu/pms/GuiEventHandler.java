@@ -2,7 +2,7 @@ package de.hfu.pms;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-import de.hfu.pms.events.LoginEvent;
+import de.hfu.pms.events.LoginRequestEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -33,9 +33,9 @@ public class GuiEventHandler {
     }
 
     @Subscribe
-    public void handleLoginEvent(LoginEvent loginEvent) {
+    public void handleLoginEvent(LoginRequestEvent loginRequestEvent) {
         System.out.println("received login event...");
-        System.out.println(loginEvent.getUsername() + " mit pw: " + loginEvent.getPassword());
+        System.out.println(loginRequestEvent.getUsername() + " mit pw: " + loginRequestEvent.getPassword());
 
         primaryStage.close();
 
