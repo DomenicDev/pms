@@ -2,6 +2,7 @@ package de.hfu.pms;
 
 import com.google.common.eventbus.EventBus;
 import de.hfu.pms.events.LoginRequestEvent;
+import de.hfu.pms.shared.SHA;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -42,8 +43,8 @@ public class LoginScreenController {
     public void handleLoginEvent(ActionEvent actionEvent) {
         System.out.println("Login clicked");
        // loginButton.setOnAction(event -> window.setScene);
-        eventBus.post(new LoginRequestEvent("bob", "1234"));
-
+        eventBus.post(new LoginRequestEvent(usernameTextField.getText(),
+                SHA.getSHA(passwordField.getText())));
     }
 
     private void dump() {

@@ -3,15 +3,15 @@ package de.hfu.pms.events;
 public class LoginRequestEvent {
 
     private final String username;
-    private final String password;
+    private final String pwHash;
 
-    public LoginRequestEvent(String username, String password) {
+    public LoginRequestEvent(String username, String pwHash) {
         this.username = username;
-        this.password = password;
+        this.pwHash = pwHash;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPwHash() {
+        return pwHash;
     }
 
     public String getUsername() {

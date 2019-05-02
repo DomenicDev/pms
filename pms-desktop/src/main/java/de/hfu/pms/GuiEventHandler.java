@@ -35,7 +35,7 @@ public class GuiEventHandler {
     @Subscribe
     public void handleLoginEvent(LoginRequestEvent loginRequestEvent) {
         System.out.println("received login event...");
-        System.out.println(loginRequestEvent.getUsername() + " mit pw: " + loginRequestEvent.getPassword());
+        System.out.println(loginRequestEvent.getUsername() + " mit pwHash: " + loginRequestEvent.getPwHash());
 
         primaryStage.close();
 
