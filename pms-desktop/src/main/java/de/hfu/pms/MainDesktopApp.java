@@ -24,6 +24,7 @@ public class MainDesktopApp extends Application {
         primaryStage.initStyle(StageStyle.UNDECORATED);
         Scene scene = new Scene(root);
         window =primaryStage;
+        
 
         primaryStage.setScene(scene);
         primaryStage.show();

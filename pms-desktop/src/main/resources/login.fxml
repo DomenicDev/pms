@@ -9,22 +9,22 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" fx:controller="de.hfu.pms.LoginScreenController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400" minWidth="700" prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.LoginScreenController">
    <children>
-      <AnchorPane layoutX="350.0" prefHeight="400.0" prefWidth="351.0" style="-fx-background-color: #C5E2FF;">
+      <AnchorPane layoutX="350.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="351.0" style="-fx-background-color: #C5E2FF;">
          <children>
-            <TextField fx:id="usernameTextField" layoutX="37.0" layoutY="93.0" prefHeight="25.0" prefWidth="277.0" promptText="Benutzername" style="-fx-background-color: #92C8FF; -fx-text-inner-color: #000000 ; -fx-prompt-text-fill: #008351  " />
-            <PasswordField fx:id="passwordField" layoutX="37.0" layoutY="148.0" prefHeight="25.0" prefWidth="277.0" promptText="Passwort" style="-fx-background-color: #92C8FF; -fx-text-inner-color: #000000; -fx-prompt-text-fill: #008351" />
-            <Button fx:id="loginButton" onAction="#handleLoginEvent" layoutX="84.0" layoutY="212.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="183.0" style="-fx-background-color: #92C8FF;" text="Login" textFill="#008351" />
-            <Text fill="#008351" layoutX="40.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Promovierendenmanagement Login">
+            <TextField fx:id="usernameTextField" layoutX="37.0" layoutY="93.0" prefHeight="25.0" prefWidth="277.0" promptText="Benutzername" style="-fx-background-color: #92C8FF; -fx-text-inner-color: #000000 ; -fx-prompt-text-fill: #008351  " AnchorPane.bottomAnchor="281.85714285714283" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="93.0" />
+            <PasswordField fx:id="passwordField" layoutX="37.0" layoutY="148.0" prefHeight="25.0" prefWidth="277.0" promptText="Passwort" style="-fx-background-color: #92C8FF; -fx-text-inner-color: #000000; -fx-prompt-text-fill: #008351" AnchorPane.bottomAnchor="226.85714285714286" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="148.0" />
+            <Button fx:id="loginButton" layoutX="84.0" layoutY="212.0" mnemonicParsing="false" onAction="#handleLoginEvent" prefHeight="25.0" prefWidth="183.0" style="-fx-background-color: #92C8FF;" text="Login" textFill="#008351" AnchorPane.bottomAnchor="162.8571428571429" AnchorPane.leftAnchor="84.0" AnchorPane.rightAnchor="84.0" AnchorPane.topAnchor="212.0" />
+            <Text fill="#008351" layoutX="40.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Promovierendenmanagement Login" AnchorPane.bottomAnchor="350.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="30.0">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Text>
-            <Button fx:id="exitButton" layoutX="84.0" onAction="#handleExitEvent" layoutY="269.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="183.0" style="-fx-background-color: #92C8FF;" text="Beenden" textFill="#008351"  />
+            <Button fx:id="exitButton" layoutX="84.0" layoutY="263.0" mnemonicParsing="false" onAction="#handleExitEvent" prefHeight="25.0" prefWidth="183.0" style="-fx-background-color: #92C8FF;" text="Beenden" textFill="#008351" AnchorPane.bottomAnchor="111.85714285714289" AnchorPane.leftAnchor="84.0" AnchorPane.rightAnchor="84.0" AnchorPane.topAnchor="263.0" />
          </children>
       </AnchorPane>
-      <ImageView fitHeight="135.0" fitWidth="286.0" layoutX="33.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="135.0" fitWidth="286.0" layoutX="33.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="164.3182830810547" AnchorPane.leftAnchor="33.0" AnchorPane.rightAnchor="381.0" AnchorPane.topAnchor="134.0">
          <image>
             <Image url="@image/Logo_HFU_A6_RGB.jpg" />
          </image></ImageView>

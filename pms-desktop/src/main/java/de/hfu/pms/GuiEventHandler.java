@@ -39,7 +39,7 @@ public class GuiEventHandler {
 
         primaryStage.close();
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashboard.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/responsiveDashboard.fxml"));
         try {
             Stage newStage = new Stage(StageStyle.DECORATED);
             Parent dashboard = loader.load();

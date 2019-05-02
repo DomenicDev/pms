@@ -47,7 +47,7 @@ public class LoginScreenController {
                 SHA.getSHA(passwordField.getText())));
     }
 
-    private void dump() {
+    public void dump() {
         System.out.println("in dump... ");
     }
     //public void getScene
