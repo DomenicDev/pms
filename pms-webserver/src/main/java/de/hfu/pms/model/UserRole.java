@@ -1,7 +1,16 @@
 package de.hfu.pms.model;
 
 public enum UserRole {
-    administrator,
-    user
+
+    /**
+     * User with Admin rights.
+     */
+    ADMIN,
+
+    /**
+     * User with normal "User" rights
+     */
+    USER
+
 
 }

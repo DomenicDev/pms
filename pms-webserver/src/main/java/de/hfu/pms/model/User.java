@@ -1,41 +1,61 @@
 package de.hfu.pms.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
 @Table
 public class User implements Serializable {
 
-
     @Id
+    @NotNull
     @Column(unique = true)
     private String username;
 
-    //sha-256 Hashed Password
     @Column
+    @NotNull
     private String password;
 
-    //Administrator or normal User
+    @NotNull
     @Column
     @Enumerated
     private UserRole role;
 
 
-    //Costructors
+    /**
+     * Default constructor for user. Do not use!
+     */
     public User(){
-        this.username = "";
-        this.password = "";
-        this.role = UserRole.user;
+        this.username = null;
+        this.password = null;
+        this.role = null;
     }
+
+    /**
+     * Creates a new user with the specified credentials
+     * and normal user rights (no admin rights).
+     * @param username the username of the user
+     * @param password the password of the user
+     */
     public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.role = UserRole.user;
+        this.role = UserRole.USER;
     }
 
+    /**
+     * Creates a new user with the specified credentials.
+     * @param username the username of the user
+     * @param password the password of the user
+     * @param role the role of the admin
+     */
+    public User(@NotNull String username, @NotNull String password, @NotNull UserRole role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
 
-    //Getter and Setter
     public String getUsername() {
         return username;
     }
