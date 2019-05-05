@@ -9,6 +9,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 
 public class MainDesktopApp extends Application {
@@ -16,15 +19,17 @@ public class MainDesktopApp extends Application {
     Stage window;
     Scene login, dashboard;
 
+    private Logger logger = Logger.getLogger(MainDesktopApp.class);
+
     @Override
     public void start(Stage primaryStage) throws Exception {
+        logger.log(Level.INFO, "Starting GUI...");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
         Parent root = loader.load();
         primaryStage.initStyle(StageStyle.UNDECORATED);
         Scene scene = new Scene(root);
         window =primaryStage;
-        
 
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -32,13 +37,14 @@ public class MainDesktopApp extends Application {
         LoginScreenController loginScreenController = loader.getController();
 //        loginScreenController.dump();
 
-        GuiEventHandler guiEventHandler = new GuiEventHandler(primaryStage,null, EventBusSystem.getEventBus());
-
-
+        GuiEventHandler guiEventHandler = new GuiEventHandler(primaryStage,new ApplicationServiceImpl(), EventBusSystem.getEventBus());
     }
 
 
     public static void main(String[] args) {
+        // load log4j properties file
+        PropertyConfigurator.configure(MainDesktopApp.class.getClassLoader().getResource("conf/log4j.properties"));
+
         Application.launch(args);
     }
 

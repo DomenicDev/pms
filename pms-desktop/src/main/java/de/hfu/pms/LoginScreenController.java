@@ -2,7 +2,6 @@ package de.hfu.pms;
 
 import com.google.common.eventbus.EventBus;
 import de.hfu.pms.events.LoginRequestEvent;
-import de.hfu.pms.shared.SHA;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,26 +28,28 @@ public class LoginScreenController {
 
     @FXML
     private void initialize() {
-        System.out.println("In init...");
-        //exitButton.setText("Hallo Benni");
+
     }
 
     @FXML
     public void handleExitEvent() {
-        System.out.println("exit clicked");
         Platform.exit();
     }
 
     @FXML
     public void handleLoginEvent(ActionEvent actionEvent) {
-        System.out.println("Login clicked");
-       // loginButton.setOnAction(event -> window.setScene);
-        eventBus.post(new LoginRequestEvent(usernameTextField.getText(),
-                SHA.getSHA(passwordField.getText())));
+        // extract credentials from text fields
+        String username = usernameTextField.getText();
+        String password = passwordField.getText();
+
+        // check if there are any empty textfields
+        if (username == null || password == null) {
+            // todo: show prompt which tells the user to fill in all text fields
+            return;
+        }
+
+        // notify about the login request
+        eventBus.post(new LoginRequestEvent(username, password));
     }
 
-    public void dump() {
-        System.out.println("in dump... ");
-    }
-    //public void getScene
 }

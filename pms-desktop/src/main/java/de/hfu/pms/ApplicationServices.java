@@ -1,5 +1,6 @@
 package de.hfu.pms;
 
+import de.hfu.pms.exceptions.LoginFailedException;
 import de.hfu.pms.shared.dto.DoctoralStudentDTO;
 import de.hfu.pms.shared.dto.UserDTO;
 import de.hfu.pms.shared.enums.UserRole;
@@ -21,8 +22,13 @@ public interface ApplicationServices {
 
     SortedList<DoctoralStudentDTO> searchDoctoralStudents(String keyword);
 
-    // todo: return a session-token?
-    void login(String username, String pwHash);
+    /**
+     * Login with the specified credentials.
+     * @param username the username to login with
+     * @param pwHash the password to login with
+     * @throws LoginFailedException if login authentication failed
+     */
+    void login(String username, String pwHash) throws LoginFailedException;
 
     void logout();
 

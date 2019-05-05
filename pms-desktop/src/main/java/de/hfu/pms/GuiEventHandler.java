@@ -3,6 +3,7 @@ package de.hfu.pms;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.events.LoginRequestEvent;
+import de.hfu.pms.exceptions.LoginFailedException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -34,21 +35,35 @@ public class GuiEventHandler {
 
     @Subscribe
     public void handleLoginEvent(LoginRequestEvent loginRequestEvent) {
-        System.out.println("received login event...");
-        System.out.println(loginRequestEvent.getUsername() + " mit pwHash: " + loginRequestEvent.getPwHash());
+        // extract credentials from request
+        String username = loginRequestEvent.getUsername();
+        String password = loginRequestEvent.getPwHash();
 
-        primaryStage.close();
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/responsiveDashboard.fxml"));
         try {
-            Stage newStage = new Stage(StageStyle.DECORATED);
-            Parent dashboard = loader.load();
-            Scene scene = new Scene(dashboard);
-            newStage.setScene(scene);
-            newStage.show();
-        } catch (IOException e) {
+            // try to login with specified username and password
+            applicationServices.login(username, password);
+
+            // login was successful, so we can close the login screen and open the dashboard
+            primaryStage.close();
+
+            // todo: replace the following event with event
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/responsiveDashboard.fxml"));
+            try {
+                Stage newStage = new Stage(StageStyle.DECORATED);
+                Parent dashboard = loader.load();
+                Scene scene = new Scene(dashboard);
+                newStage.setScene(scene);
+                newStage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } catch (LoginFailedException e) {
+            // todo: show prompt which shows error message failed login
             e.printStackTrace();
         }
+
+
     }
 
 }
