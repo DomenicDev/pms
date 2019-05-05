@@ -37,11 +37,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/**").hasRole(UserRole.ADMIN.name())
                 .anyRequest().authenticated()
                 .and()
-                .logout()
-                .logoutUrl("/logout")
-                .permitAll()
-                .and()
-                .httpBasic();
+                .httpBasic()
+                .authenticationEntryPoint(getBasicAuthEntryPoint());
     }
 
 
