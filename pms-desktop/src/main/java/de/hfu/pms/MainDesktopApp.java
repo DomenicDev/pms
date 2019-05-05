@@ -34,9 +34,6 @@ public class MainDesktopApp extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        LoginScreenController loginScreenController = loader.getController();
-//        loginScreenController.dump();
-
         GuiEventHandler guiEventHandler = new GuiEventHandler(primaryStage,new ApplicationServiceImpl(), EventBusSystem.getEventBus());
     }
 
