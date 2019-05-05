@@ -41,15 +41,16 @@ public class GuiEventHandler {
 
         try {
             // try to login with specified username and password
-            applicationServices.login(username, password);
+            //applicationServices.login(username, password);
 
             // login was successful, so we can close the login screen and open the dashboard
             primaryStage.close();
 
             // todo: replace the following event with event
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/responsiveDashboard.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/newDashboardDesign.fxml"));
             try {
                 Stage newStage = new Stage(StageStyle.DECORATED);
+
                 Parent dashboard = loader.load();
                 Scene scene = new Scene(dashboard);
                 newStage.setScene(scene);
