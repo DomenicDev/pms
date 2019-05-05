@@ -13,6 +13,8 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import java.util.ResourceBundle;
+
 
 public class MainDesktopApp extends Application {
 
@@ -25,7 +27,10 @@ public class MainDesktopApp extends Application {
     public void start(Stage primaryStage) throws Exception {
         logger.log(Level.INFO, "Starting GUI...");
 
+        ResourceBundle bundle = ResourceBundle.getBundle("lang/strings");
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
+        loader.setResources(bundle);
         Parent root = loader.load();
         primaryStage.initStyle(StageStyle.UNDECORATED);
         Scene scene = new Scene(root);
