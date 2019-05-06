@@ -17,6 +17,18 @@ public class User implements Serializable {
     @NotNull
     private String password;
 
+    @Column
+    @NotNull
+    private String email;
+
+    @Column
+    @NotNull
+    private String forename;
+
+    @Column
+    @NotNull
+    private String lastname;
+
     @NotNull
     @Column
     @Enumerated
@@ -37,24 +49,40 @@ public class User implements Serializable {
      * and normal user rights (no admin rights).
      * @param username the username of the user
      * @param password the password of the user
+     * @param email the email of the user
+     * @param forename the forename of the user
+     * @param lastname the lastname of the user
      */
-    public User(String username, String password) {
+    public User(@NotNull String username, @NotNull String password, @NotNull String email, @NotNull String forename, @NotNull String lastname) {
         this.username = username;
         this.password = password;
+        this.email = email;
+        this.forename = forename;
+        this.lastname = lastname;
         this.role = UserRole.USER;
     }
 
     /**
-     * Creates a new user with the specified credentials.
+     * Creates a new user with the specified credentials
+     * and normal user rights (no admin rights).
      * @param username the username of the user
      * @param password the password of the user
-     * @param role the role of the admin
+     * @param email the email of the user
+     * @param forename the forename of the user
+     * @param lastname the lastname of the user
+     * @param role the role of the user
      */
-    public User(@NotNull String username, @NotNull String password, @NotNull UserRole role) {
+    public User(@NotNull String username, @NotNull String password, @NotNull String email, @NotNull String forename, @NotNull String lastname, @NotNull UserRole role) {
         this.username = username;
         this.password = password;
+        this.email = email;
+        this.forename = forename;
+        this.lastname = lastname;
         this.role = role;
     }
+
+
+
 
     public String getUsername() {
         return username;
@@ -82,6 +110,30 @@ public class User implements Serializable {
 
     public void setRole(UserRole role) {
         this.role = role;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getForename() {
+        return forename;
+    }
+
+    public void setForename(String forename) {
+        this.forename = forename;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
 
