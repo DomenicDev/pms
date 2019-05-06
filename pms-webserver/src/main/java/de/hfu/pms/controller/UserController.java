@@ -1,6 +1,8 @@
 package de.hfu.pms.controller;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.hfu.pms.controller.exceptions.UserNotFoundException;
 import de.hfu.pms.dao.UserDao;
 import de.hfu.pms.model.User;
@@ -11,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -18,6 +22,8 @@ public class UserController {
     private final UserDao userDao;
     private final UserService service;
     private final ModelMapper modelMapper;
+
+    private ObjectMapper objectMapper;
 
     @Autowired
     public UserController(UserDao userDao, UserService userService, ModelMapper modelMapper) {
@@ -58,6 +64,12 @@ public class UserController {
         }catch (NullPointerException e){
             throw new UserNotFoundException(username);
         }
+    }
+
+    @GetMapping("/getUserList")
+    @ResponseStatus(HttpStatus.OK)
+    public List<User> getAllUsers(){
+        return service.getUserList();
     }
 
     private User convertToEntity(UserDTO userDTO) {

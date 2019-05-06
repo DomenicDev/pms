@@ -36,6 +36,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void updatePassword(String username, String oldPassword, String newPassword) {
+        //implement
+    }
+
+    @Override
     public void updateUserRole(String username, UserRole role) {
         for(User user :userDao.findAll()){
             if(user.getUsername().equals(username)){

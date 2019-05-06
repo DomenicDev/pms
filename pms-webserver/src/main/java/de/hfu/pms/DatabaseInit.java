@@ -26,7 +26,7 @@ public class DatabaseInit implements CommandLineRunner {
     @Override
     public void run(String... args) {
         // add test user with admin rights
-        User testAdmin = new User("admin", passwordEncoder.encode("1234"));
+        User testAdmin = new User("admin", passwordEncoder.encode("1234"),"test@example.com","Bob","Tester");
         testAdmin.setRole(UserRole.ADMIN);
         userDao.save(testAdmin);
     }
