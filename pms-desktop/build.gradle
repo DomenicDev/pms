@@ -10,7 +10,7 @@ javafx {
     modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.graphics' ]
 }
 
-mainClassName = 'de.hfu.pms.MainDesktopApp'
+mainClassName = 'de.hfu.pms.NewGuiTest'
 
 dependencies {
     compile project(':pms-core')
