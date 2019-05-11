@@ -25,7 +25,7 @@
       </AnchorPane>
       <ImageView fitHeight="135.0" fitWidth="286.0" layoutX="33.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="164.3182830810547" AnchorPane.leftAnchor="33.0" AnchorPane.rightAnchor="381.0" AnchorPane.topAnchor="134.0">
          <image>
-            <Image url="@image/Logo_HFU_A6_RGB.jpg" />
+            <Image url="@images/Logo_HFU_A6_RGB.jpg" />
          </image></ImageView>
    </children>
 </AnchorPane>
