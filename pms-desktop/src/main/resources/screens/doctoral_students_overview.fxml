@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox prefHeight="62.0" prefWidth="600.0" spacing="15.0">
+         <children>
+            <FontIcon iconLiteral="fa-search" iconSize="20" />
+            <TextField prefHeight="25.0" prefWidth="176.0" promptText="Search for Doctoral Students" />
+         </children>
+         <padding>
+            <Insets left="10.0" top="20.0" />
+         </padding>
+      </HBox>
+      <TableView prefHeight="200.0" prefWidth="200.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="Name" />
+          <TableColumn prefWidth="75.0" text="Vorname" />
+            <TableColumn prefWidth="75.0" text="Fakultät" />
+        </columns>
+      </TableView>
+   </children>
+</VBox>

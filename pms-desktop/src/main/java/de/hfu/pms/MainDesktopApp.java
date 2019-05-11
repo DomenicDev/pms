@@ -29,7 +29,7 @@ public class MainDesktopApp extends Application {
 
         ResourceBundle bundle = ResourceBundle.getBundle("lang/strings");
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/screens/dashboard_final.fxml"));
         loader.setResources(bundle);
         Parent root = loader.load();
         primaryStage.initStyle(StageStyle.UNDECORATED);
