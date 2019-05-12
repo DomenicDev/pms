@@ -1,7 +1,6 @@
 package de.hfu.pms.controller;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.hfu.pms.controller.exceptions.UserNotFoundException;
 import de.hfu.pms.dao.UserDao;
@@ -55,12 +54,12 @@ public class UserController {
         return "User " + user.getUsername() + " wurde erfolgreich die Rolle " + user.getRole() + " zugewiesen.";
     }
 
-    @PostMapping("/getUser")
+    @GetMapping("/getUser/{username}")
     @ResponseStatus(HttpStatus.OK)
-    public String getUser (@RequestBody String username){
+    public UserDTO getUser (@PathVariable String username){
         try {
             User returnUser = service.getUser(username);
-            return "User: " + returnUser.getUsername() + " Password: " + returnUser.getPassword() + " Role: " + returnUser.getRole();
+            return convertToDTO(returnUser);
         }catch (NullPointerException e){
             throw new UserNotFoundException(username);
         }
