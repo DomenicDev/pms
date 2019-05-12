@@ -110,7 +110,6 @@ public class RestClient {
         EntityUtils.consume(response.getEntity());
 
 
-        System.out.println(responseString);
         int statusCode = response.getStatusLine().getStatusCode();
         if (statusCode != HttpStatus.SC_OK) {
             throw new HttpResponseException(statusCode, response.getStatusLine().getReasonPhrase());
