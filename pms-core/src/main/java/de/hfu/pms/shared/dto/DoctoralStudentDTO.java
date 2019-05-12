@@ -82,4 +82,17 @@ public class DoctoralStudentDTO {
     public void setAlumniState(AlumniStateDTO alumniState) {
         this.alumniState = alumniState;
     }
+
+    @Override
+    public String toString() {
+        return "DoctoralStudentDTO{" +
+                "id=" + id +
+                ", personalData=" + personalData +
+                ", qualifiedGraduation=" + qualifiedGraduation +
+                ", targetGraduation=" + targetGraduation +
+                ", employment=" + employment +
+                ", support=" + support +
+                ", alumniState=" + alumniState +
+                '}';
+    }
 }

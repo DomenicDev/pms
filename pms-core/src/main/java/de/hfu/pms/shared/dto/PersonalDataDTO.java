@@ -4,6 +4,7 @@ import de.hfu.pms.shared.enums.FamilyStatus;
 import de.hfu.pms.shared.enums.Gender;
 import de.hfu.pms.shared.enums.Salutation;
 
+import java.util.Arrays;
 import java.util.Date;
 
 public class PersonalDataDTO {
@@ -124,5 +125,24 @@ public class PersonalDataDTO {
 
     public void setPhoto(byte[] photo) {
         this.photo = photo;
+    }
+
+    @Override
+    public String toString() {
+        return "PersonalDataDTO{" +
+                "forename='" + forename + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", formerLastName='" + formerLastName + '\'' +
+                ", salutation=" + salutation +
+                ", title='" + title + '\'' +
+                ", gender=" + gender +
+                ", dateOfBirth=" + dateOfBirth +
+                ", nationality='" + nationality + '\'' +
+                ", familyStatus=" + familyStatus +
+                ", numberOfChildren=" + numberOfChildren +
+                ", address=" + address +
+                ", telephone='" + telephone + '\'' +
+                ", photo=" + Arrays.toString(photo) +
+                '}';
     }
 }

@@ -66,4 +66,16 @@ public class UserDTO {
 
     public UserDTO() {
     }
+
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", forename='" + forename + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", email='" + email + '\'' +
+                ", userRole=" + userRole +
+                '}';
+    }
 }
