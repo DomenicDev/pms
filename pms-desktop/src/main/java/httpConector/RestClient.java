@@ -1,19 +1,22 @@
 package httpConector;
 
-import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 
@@ -27,14 +30,12 @@ public class RestClient {
     private CookieStore cookieStore;
     private CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
 
-
     /**
      * Creates a new Rest Client.
      * The constructor also sets up the most important components such as a HttpClientContext
      * and a CredentialsProvider.
      */
     public RestClient() {
-
         // create cookie store
         this.cookieStore = new BasicCookieStore();
 
@@ -61,10 +62,10 @@ public class RestClient {
      * Sends a HTTP-POST with the specified json object to the specified url and returns the response object.
      * @param url the url to send the post to
      * @param json the json object contained in the body of the post
-     * @return the http response
+     * @return the body of the http response
      * @throws IOException if connection aborted or other communication problems occurred
      */
-    public HttpResponse postJson(String url, String json) throws IOException {
+    public String postJson(String url, String json) throws IOException {
         // validate input parameters
         checkForNull(url);
         checkForNull(json);
@@ -76,19 +77,50 @@ public class RestClient {
         // add json body
         post.setEntity(new StringEntity(json));
 
-        // send post and retrieve response
-        CloseableHttpResponse response = client.execute(post);
-        response.close();
-
-        // return response object
-        return response;
+        return execute(post);
     }
 
-    public HttpResponse get(String url) throws IOException {
+    /**
+     * Executes a Get-Request to the specified url and will return the resulting body.
+     * @param url the url of the get request
+     * @return the body response as string
+     * @throws IOException is thrown when status code is not 200 or connection issues appeared
+     */
+    public String get(String url) throws IOException {
         checkForNull(url);
 
         HttpGet get = new HttpGet(url);
-        return client.execute(get);
+        return execute(get);
+    }
+
+    /**
+     * Executes the specified request and returns the result as string.
+     * @param request the request object to be sent
+     * @return a string containing the body of the response
+     * @throws IOException is thrown when status code is not 200 or connection issues appeared
+     */
+    private String execute(HttpUriRequest request) throws IOException {
+        // send post and retrieve response
+        CloseableHttpResponse response = this.client.execute(request);
+
+        // extract the response body and convert it to a string
+        String responseString = EntityUtils.toString(response.getEntity());
+
+        // to avoid connection issues we need to make sure that the body has been fully consumed
+        EntityUtils.consume(response.getEntity());
+
+
+        System.out.println(responseString);
+        int statusCode = response.getStatusLine().getStatusCode();
+        if (statusCode != HttpStatus.SC_OK) {
+            throw new HttpResponseException(statusCode, response.getStatusLine().getReasonPhrase());
+        }
+
+        // finally close the response properly
+        response.close();
+
+        // return response object
+        return responseString;
     }
 
     /**

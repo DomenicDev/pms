@@ -7,12 +7,7 @@ import de.hfu.pms.shared.dto.UserDTO;
 import de.hfu.pms.shared.enums.UserRole;
 import httpConector.RestClient;
 import javafx.collections.transformation.SortedList;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-
-import java.io.IOException;
 
 public class ApplicationServiceImpl implements ApplicationServices {
 
@@ -61,9 +56,12 @@ public class ApplicationServiceImpl implements ApplicationServices {
         // first update the login credentials with the specified ones
         restClient.setLoginCredentials(username, password);
 
+        /*
         try {
             // to verify that the credentials is valid we call an secured site
             // if the credentials are correct we will return a response with status code 200 (--> OK)
+
+
             HttpResponse response = restClient.get(basicUrl + "/");
             if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
                 // login failed
@@ -73,6 +71,7 @@ public class ApplicationServiceImpl implements ApplicationServices {
         } catch (IOException e) {
             throw new LoginFailedException(e);
         }
+        */
     }
 
     @Override
