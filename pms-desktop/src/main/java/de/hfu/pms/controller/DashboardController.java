@@ -33,10 +33,19 @@ public class DashboardController {
     @FXML
     private AnchorPane mainContentPane;
 
+    @FXML
+    private Button changeUserInformationButton;
+
+    @FXML
+    private Button universityAddButton;
+
     // custom fields
     private Parent homeParent;
     private Parent doctoralStudentsParent;
     private Parent universitiesParent;
+
+    private Parent accountInformationParent;
+    private Parent changeAccountInformationParent;
 
     @FXML
     public void initialize() throws IOException {
@@ -45,7 +54,11 @@ public class DashboardController {
         // to later dynamically switch between them
         homeParent              = GuiLoader.loadFXML("/screens/home.fxml");
         doctoralStudentsParent  = GuiLoader.loadFXML("/screens/doctoral_students_content.fxml");
-        // todo add more
+        universitiesParent      = GuiLoader.loadFXML("/screens/university_screen.fxml");
+    //
+     //   accountInformationParent= GuiLoader.loadFXML("/screens/account_infoscreen.fxml");
+    //    changeAccountInformationParent= GuiLoader.loadFXML("screens/change_accountinformation_screen.fxml");
+            // todo add more
 
 
         // set home to be showed at first
@@ -75,6 +88,20 @@ public class DashboardController {
     @FXML
     public void handleOnActionDoctoralStudentsButton() {
         switchMainContent(doctoralStudentsParent);
+    }
+    @FXML
+    public void handleChangeUserInformationButton(){
+        switchMainContent(changeAccountInformationParent);
+
+    }
+
+    @FXML
+    public void handleUniversityButton(){
+        switchMainContent(universitiesParent);
+    }
+    @FXML
+    public void handleAccountnformationButton(){
+        switchMainContent(accountInformationParent);
     }
 
 }

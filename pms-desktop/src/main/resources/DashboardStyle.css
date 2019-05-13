@@ -20,3 +20,36 @@
     -fx-border-color: #92C8FF;
     -fx-border-width: 0px 0px 0px 0px;
 }
+
+.tab-pane{
+
+    -fx-background-color:#C5E2FF;
+
+}
+
+.tab{
+
+    -fx-background-color: #92C8FF;
+
+}
+
+.tab:hover{
+    -fx-background-color: #717679;
+}
+.tab:pressed{
+
+    -fx-background-color: #92C8FF;
+
+}
+.tab:selected
+{
+    -fx-background-color: #FAFAFA;
+    -fx-border-color: #92C8FF;
+    -fx-border-width: 0px 0px 0px 0px;
+}
+.tab-pane *.tab-header-background
+{
+    -fx-background-color: #FFFFFF;
+}
+
+

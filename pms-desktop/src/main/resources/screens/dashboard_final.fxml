@@ -78,7 +78,7 @@
                                     <Font name="System Bold" size="20.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="universityButton" alignment="TOP_LEFT" graphicTextGap="10.0" layoutX="10.0" layoutY="164.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="309.0" text="Universitäten">
+                              <Button fx:id="universityButton" onAction="#handleUniversityButton" alignment="TOP_LEFT" graphicTextGap="10.0" layoutX="10.0" layoutY="164.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="309.0" text="Universitäten">
                                  <graphic>
                                     <FontIcon iconLiteral="fa-university" iconSize="30" />
                                  </graphic>
@@ -91,7 +91,7 @@
                         <Separator prefWidth="200.0" />
                         <VBox prefHeight="106.0" prefWidth="219.0" spacing="20.0">
                            <children>
-                              <Button fx:id="accountSettingsButton" mnemonicParsing="false" text="Accounteinstellungen">
+                              <Button fx:id="accountSettingsButton" onAction="#handleAccountnformationButton" mnemonicParsing="false" text="Accounteinstellungen">
                                  <graphic>
                                     <FontIcon iconLiteral="fa-gear" />
                                  </graphic>
