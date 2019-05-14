@@ -1,36 +1,55 @@
 package de.hfu.pms.controller;
 
-import de.hfu.pms.utils.GuiLoader;
-import de.hfu.pms.utils.JavaFxUtils;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-import java.io.IOException;
 
-public class UniversityController {
+public class UniversityController implements Initializable {
 
-    private Parent universityAddParent;
+    private Logger logger = Logger.getLogger(UniversityController.class);
+
     @FXML
-    private AnchorPane mainContentPane;
-
-    public void initialize() throws IOException {
-        universityAddParent = GuiLoader.loadFXML("/screens/Univerity_add_screen.fxml");
-    }
+    private TableView<?> tableViewUniversity;
 
     @FXML
-    public void handleUniversityAddButton() {
-        switchMainContent(universityAddParent);
+    private Button universityAddButton;
 
-    }
+    @FXML
+    void handleUniversityAddButton(ActionEvent event) {
+        try {
 
-    private void switchMainContent(Parent parentToShow) {
-        // don't do anything if parent is already visible
-        if (mainContentPane.getChildren().contains(parentToShow)) {
-            return;
+            ResourceBundle bundle = ResourceBundle.getBundle("lang/strings");
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/screens/Univerity_add_screen.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Universität Hinzufügen");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (Exception e) {
+            logger.log(Level.ERROR, "Unable to load the University add screen");
         }
-        mainContentPane.getChildren().clear();
-        mainContentPane.getChildren().add(parentToShow);
+
+
+    }
+
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
 
     }
 }

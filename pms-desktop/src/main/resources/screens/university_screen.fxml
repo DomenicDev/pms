@@ -7,12 +7,11 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <ScrollPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.UniversityController">
    <content>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="701.0" prefWidth="798.0">
          <children>
-            <TableView layoutX="186.0" layoutY="155.0" prefHeight="443.0" prefWidth="653.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="150.0">
+            <TableView fx:id="tableViewUniversity" layoutX="186.0" layoutY="155.0" prefHeight="443.0" prefWidth="653.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="150.0">
               <columns>
                 <TableColumn prefWidth="75.0" text="Name" />
                 <TableColumn prefWidth="75.0" text="Ort " />

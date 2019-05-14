@@ -8,6 +8,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 
 public class DashboardController {
@@ -43,22 +45,22 @@ public class DashboardController {
     private Parent homeParent;
     private Parent doctoralStudentsParent;
     private Parent universitiesParent;
-
     private Parent accountInformationParent;
-    private Parent changeAccountInformationParent;
+    private Parent adminArea;
+    private Logger logger = Logger.getLogger(DashboardControler.class);
 
     @FXML
     public void initialize() throws IOException {
         // for the main content pane we need to load
         // all the separated fxml files
         // to later dynamically switch between them
-        homeParent              = GuiLoader.loadFXML("/screens/home.fxml");
-        doctoralStudentsParent  = GuiLoader.loadFXML("/screens/doctoral_students_content.fxml");
-        universitiesParent      = GuiLoader.loadFXML("/screens/university_screen.fxml");
-    //
-     //   accountInformationParent= GuiLoader.loadFXML("/screens/account_infoscreen.fxml");
-    //    changeAccountInformationParent= GuiLoader.loadFXML("screens/change_accountinformation_screen.fxml");
-            // todo add more
+        homeParent = GuiLoader.loadFXML("/screens/home.fxml");
+        doctoralStudentsParent = GuiLoader.loadFXML("/screens/doctoral_students_content.fxml");
+        universitiesParent = GuiLoader.loadFXML("/screens/university_screen.fxml");
+        //accountInformationParent = GuiLoader.loadFXML("/screens/account_infoscreen.fxml");
+        //adminArea =GuiLoader.loadFXML("/screens/");
+
+        // todo add more
 
 
         // set home to be showed at first
@@ -89,19 +91,18 @@ public class DashboardController {
     public void handleOnActionDoctoralStudentsButton() {
         switchMainContent(doctoralStudentsParent);
     }
-    @FXML
-    public void handleChangeUserInformationButton(){
-        switchMainContent(changeAccountInformationParent);
-
-    }
 
     @FXML
-    public void handleUniversityButton(){
+    public void handleUniversityButton() {
         switchMainContent(universitiesParent);
     }
+
     @FXML
-    public void handleAccountnformationButton(){
+    public void handleAccountnformationButton() {
         switchMainContent(accountInformationParent);
     }
+    @FXML
+    public void  handleAdminArea() {
 
+    }
 }
