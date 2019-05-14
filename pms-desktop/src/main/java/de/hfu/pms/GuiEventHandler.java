@@ -47,7 +47,7 @@ public class GuiEventHandler {
             primaryStage.close();
 
             // todo: replace the following event with event
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/newDashboardDesign.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/screens/dashboard_final.fxml"));
             try {
                 Stage newStage = new Stage(StageStyle.DECORATED);
 
