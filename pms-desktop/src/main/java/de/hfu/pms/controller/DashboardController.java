@@ -47,7 +47,7 @@ public class DashboardController {
     private Parent universitiesParent;
     private Parent accountInformationParent;
     private Parent adminArea;
-    private Logger logger = Logger.getLogger(DashboardControler.class);
+    private Logger logger = Logger.getLogger(DashboardController.class);
 
     @FXML
     public void initialize() throws IOException {
