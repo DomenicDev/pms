@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="69.0" layoutY="42.0" text="Benutzer Hinzufügen" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0" />
+      <Label layoutX="69.0" layoutY="109.0" text="Benutzername: *" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="100.0" />
+      <Label layoutX="69.0" layoutY="166.0" text="Passwort: *" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="140.0" />
+      <Label layoutX="69.0" layoutY="200.0" text="Passwort wiederholen: *" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="180.0" />
+      <TextField layoutX="202.0" layoutY="96.0" promptText="neuer Benutzername" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="96.0" />
+      <PasswordField layoutX="199.0" layoutY="136.0" prefHeight="25.0" prefWidth="225.0" promptText="Passwort für Benutzer festlegen" AnchorPane.leftAnchor="199.0" AnchorPane.topAnchor="136.0" />
+      <PasswordField layoutX="199.0" layoutY="176.0" prefHeight="25.0" prefWidth="225.0" promptText="Passwort Wiederholen" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="176.0" />
+      <Label layoutX="187.0" layoutY="212.0" text="Passwörter stimmen nicht überein" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="220.0" />
+      <Button layoutX="235.0" layoutY="287.0" mnemonicParsing="false" text="Hinzufügen" AnchorPane.leftAnchor="200.0" />
+      <Button layoutX="351.0" layoutY="287.0" mnemonicParsing="false" text="Abbrechen" AnchorPane.leftAnchor="351.0" AnchorPane.topAnchor="287.0" />
+   </children>
+</AnchorPane>
