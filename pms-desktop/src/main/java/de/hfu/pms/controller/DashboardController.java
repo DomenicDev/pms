@@ -8,6 +8,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 
 public class DashboardController {
@@ -33,18 +35,31 @@ public class DashboardController {
     @FXML
     private AnchorPane mainContentPane;
 
+    @FXML
+    private Button changeUserInformationButton;
+
+    @FXML
+    private Button universityAddButton;
+
     // custom fields
     private Parent homeParent;
     private Parent doctoralStudentsParent;
     private Parent universitiesParent;
+    private Parent accountInformationParent;
+    private Parent adminArea;
+    private Logger logger = Logger.getLogger(DashboardControler.class);
 
     @FXML
     public void initialize() throws IOException {
         // for the main content pane we need to load
         // all the separated fxml files
         // to later dynamically switch between them
-        homeParent              = GuiLoader.loadFXML("/screens/home.fxml");
-        doctoralStudentsParent  = GuiLoader.loadFXML("/screens/doctoral_students_content.fxml");
+        homeParent = GuiLoader.loadFXML("/screens/home.fxml");
+        doctoralStudentsParent = GuiLoader.loadFXML("/screens/doctoral_students_content.fxml");
+        universitiesParent = GuiLoader.loadFXML("/screens/university_screen.fxml");
+        //accountInformationParent = GuiLoader.loadFXML("/screens/account_infoscreen.fxml");
+        //adminArea =GuiLoader.loadFXML("/screens/");
+
         // todo add more
 
 
@@ -77,4 +92,17 @@ public class DashboardController {
         switchMainContent(doctoralStudentsParent);
     }
 
+    @FXML
+    public void handleUniversityButton() {
+        switchMainContent(universitiesParent);
+    }
+
+    @FXML
+    public void handleAccountnformationButton() {
+        switchMainContent(accountInformationParent);
+    }
+    @FXML
+    public void  handleAdminArea() {
+
+    }
 }

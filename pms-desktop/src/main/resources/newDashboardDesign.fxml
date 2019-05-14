@@ -74,7 +74,7 @@
             </Pane>
             <AnchorPane layoutX="330.0" layoutY="45.0" prefHeight="110.0" prefWidth="694.0" style="-fx-background-color: #C5E2FF;" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="329.71428571428567" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
                <children>
-                  <Label fx:id="lblStatus" layoutX="186.0" layoutY="32.0" text="Doktoranten Übersicht" AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="186.0" AnchorPane.topAnchor="32.0">
+                  <Label fx:id="lblStatus" layoutX="186.0" layoutY="32.0" text="PMS" AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="186.0" AnchorPane.topAnchor="32.0">
                      <font>
                         <Font name="System Bold" size="30.0" />
                      </font>
@@ -135,7 +135,7 @@
                               </Button>
                            </children>
                         </VBox>
-                        <AnchorPane prefHeight="501.0" prefWidth="453.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="240.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane prefHeight="501.0" prefWidth="453.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="240.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <StackPane prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
@@ -390,7 +390,7 @@
                                           </ScrollPane>
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane id="Content" fx:id="apPromotion" minHeight="0.0" minWidth="0.0" prefHeight="492.0" prefWidth="759.0" style="-fx-background-color: #FFFFFF;">
+                                    <AnchorPane id="Content" fx:id="apPromotion" minHeight="0.0" minWidth="0.0" prefHeight="492.0" prefWidth="759.0">
                                        <children>
                                           <ScrollPane layoutX="3.0" layoutY="1.0" prefHeight="430.0" prefWidth="754.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <content>
@@ -441,6 +441,7 @@
                                           <Button layoutX="20.0" layoutY="84.0" mnemonicParsing="false" text="Markierte Dokumente Entfernen" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="84.0" />
                                        </children>
                                     </AnchorPane>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;" />
                                  </children>
                               </StackPane>
                            </children>
@@ -497,6 +498,7 @@
                         <TextField layoutX="99.0" layoutY="146.0" prefWidth="125.0" text="email@domain.com" AnchorPane.leftAnchor="99.0" AnchorPane.topAnchor="146.0" />
                      </children>
                   </AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;" />
                </children>
             </StackPane>
          </children>
