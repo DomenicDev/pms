@@ -29,7 +29,7 @@ public class DoctoralStudentController {
 
     @PostMapping(value= "/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public DoctoralStudentDTO createDoctoralStudent(DoctoralStudentDTO doctoralStudentDTO) {
+    public DoctoralStudentDTO createDoctoralStudent(@RequestBody DoctoralStudentDTO doctoralStudentDTO) {
         DoctoralStudent student = convertToEntity(doctoralStudentDTO);
         DoctoralStudent studentCreated = doctoralStudentService.create(student);
         return convertToDTO(studentCreated);
