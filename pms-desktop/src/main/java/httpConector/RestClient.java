@@ -11,6 +11,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.protocol.HttpClientContext;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.BasicCredentialsProvider;
@@ -75,7 +76,7 @@ public class RestClient {
         post.setHeader("Content-type", "application/json");
 
         // add json body
-        post.setEntity(new StringEntity(json));
+        post.setEntity(new StringEntity(json, ContentType.APPLICATION_JSON));
 
         return execute(post);
     }
@@ -111,7 +112,7 @@ public class RestClient {
 
 
         int statusCode = response.getStatusLine().getStatusCode();
-        if (statusCode != HttpStatus.SC_OK) {
+        if (statusCode != HttpStatus.SC_OK && statusCode != HttpStatus.SC_CREATED) {
             throw new HttpResponseException(statusCode, response.getStatusLine().getReasonPhrase());
         }
 
