@@ -2,8 +2,11 @@ package de.hfu.pms;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
+import com.sun.javadoc.Doc;
 import de.hfu.pms.events.LoginRequestEvent;
+import de.hfu.pms.events.SaveDoctoralStudentEvent;
 import de.hfu.pms.exceptions.LoginFailedException;
+import de.hfu.pms.shared.dto.DoctoralStudentDTO;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -63,8 +66,11 @@ public class GuiEventHandler {
             // todo: show prompt which shows error message failed login
             e.printStackTrace();
         }
-
-
     }
 
+    @Subscribe
+    public void handleSaveDoctoralStudentEvent(SaveDoctoralStudentEvent saveEvent) {
+        DoctoralStudentDTO doctoralStudent = saveEvent.getDoctoralStudent();
+        applicationServices.addDoctoralStudent(doctoralStudent);
+    }
 }

@@ -1,5 +1,7 @@
 package de.hfu.pms;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.hfu.pms.config.AppConfig;
 import de.hfu.pms.exceptions.LoginFailedException;
 import de.hfu.pms.shared.dto.DoctoralStudentDTO;
@@ -7,15 +9,20 @@ import de.hfu.pms.shared.dto.UserDTO;
 import de.hfu.pms.shared.enums.UserRole;
 import httpConector.RestClient;
 import javafx.collections.transformation.SortedList;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+
+import java.io.IOException;
 
 public class ApplicationServiceImpl implements ApplicationServices {
 
     private Logger logger = Logger.getLogger(ApplicationServiceImpl.class);
 
+    private ObjectMapper mapper = new ObjectMapper();
     private RestClient restClient;
 
-    private String basicUrl = AppConfig.get("host");
+    private final String HOST_URL = AppConfig.get("host");
+    private final String STUDENT_PREFIX = "/student/";
 
     public ApplicationServiceImpl() {
         this.restClient = new RestClient();
@@ -23,7 +30,15 @@ public class ApplicationServiceImpl implements ApplicationServices {
 
     @Override
     public void addDoctoralStudent(DoctoralStudentDTO student) {
-
+        System.out.println("addDoctoralStudent");
+        try {
+            String json = mapper.writeValueAsString(student);
+            restClient.postJson(HOST_URL + STUDENT_PREFIX + "create" , json);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -62,7 +77,7 @@ public class ApplicationServiceImpl implements ApplicationServices {
             // if the credentials are correct we will return a response with status code 200 (--> OK)
 
 
-            HttpResponse response = restClient.get(basicUrl + "/");
+            HttpResponse response = restClient.get(HOST_URL + "/");
             if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
                 // login failed
                 throw new LoginFailedException();

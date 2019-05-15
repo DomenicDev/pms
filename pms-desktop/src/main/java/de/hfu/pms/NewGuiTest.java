@@ -16,10 +16,16 @@ public class NewGuiTest extends Application {
 
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        ApplicationServices applicationServices = new ApplicationServiceImpl();
+        applicationServices.login("admin", "1234");
+        GuiEventHandler eventHandler = new GuiEventHandler(primaryStage, applicationServices, EventBusSystem.getEventBus());
     }
 
     public static void main(String[] args) {
         PropertyConfigurator.configure(MainDesktopApp.class.getClassLoader().getResource("conf/log4j.properties"));
         Application.launch(args);
+
+
     }
 }
