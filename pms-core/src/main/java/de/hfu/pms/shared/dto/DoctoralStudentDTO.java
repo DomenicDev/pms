@@ -3,7 +3,7 @@ package de.hfu.pms.shared.dto;
 public class DoctoralStudentDTO {
 
     // IDENTIFICATION NUMBER
-    private int id;
+    private Long id;
 
     // PERSONAL DATA
     private PersonalDataDTO personalData;
@@ -27,11 +27,11 @@ public class DoctoralStudentDTO {
 
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
