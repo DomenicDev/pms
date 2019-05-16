@@ -9,7 +9,6 @@ import de.hfu.pms.shared.dto.UserDTO;
 import de.hfu.pms.shared.enums.UserRole;
 import httpConector.RestClient;
 import javafx.collections.transformation.SortedList;
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -30,7 +29,6 @@ public class ApplicationServiceImpl implements ApplicationServices {
 
     @Override
     public void addDoctoralStudent(DoctoralStudentDTO student) {
-        System.out.println("addDoctoralStudent");
         try {
             String json = mapper.writeValueAsString(student);
             restClient.postJson(HOST_URL + STUDENT_PREFIX + "create" , json);

@@ -14,6 +14,8 @@ public class GuiLoader {
 
     private final static ResourceBundle bundle;
 
+    public static final String EMPLOYMENT = "/screens/employment_screen.fxml";
+
     static {
         // load resource bundle file
         bundle = ResourceBundle.getBundle("lang/strings");
@@ -27,7 +29,6 @@ public class GuiLoader {
      * @throws IOException if file with specified url does not exist or if file could not be loaded completely
      */
     public static Parent loadFXML(String url) throws IOException {
-
         FXMLLoader loader = new FXMLLoader(GuiLoader.class.getResource(url));
         loader.setResources(getResourceBundle());
         return loader.load();

@@ -1,16 +1,35 @@
 package de.hfu.pms.controller;
 
 import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.EventBusSystem;
+import de.hfu.pms.events.CreateEmploymentEntryEvent;
 import de.hfu.pms.events.SaveDoctoralStudentEvent;
 import de.hfu.pms.shared.dto.DoctoralStudentDTO;
+import de.hfu.pms.shared.dto.EmploymentEntryDTO;
 import de.hfu.pms.shared.dto.PersonalDataDTO;
+import de.hfu.pms.shared.enums.Campus;
+import de.hfu.pms.shared.enums.EmploymentLocation;
 import de.hfu.pms.shared.enums.FamilyStatus;
+import de.hfu.pms.utils.GuiLoader;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
-public class DoctoralStudentFormController {
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class DoctoralStudentFormController implements Initializable {
 
     private DoctoralStudentDTO doctoralStudent = null;
 
@@ -25,9 +44,34 @@ public class DoctoralStudentFormController {
     // PERSONAL DATA
     @FXML private TextField lastNameTextField;
 
+    // Employment
     @FXML
-    public void initialize() {
+    private TableView<EmploymentEntryDTO> employmentTableView;
+    @FXML
+    private TableColumn<EmploymentEntryDTO, EmploymentLocation> employmentLocationTableColumn;
+    @FXML
+    private TableColumn<EmploymentEntryDTO, String> kindOfEmploymentTableColumn;
+    @FXML
+    private TableColumn<EmploymentEntryDTO, Campus> employmentCampusTableColumn;
+    @FXML
+    private TableColumn<EmploymentEntryDTO, String> preTimesTableColumn;
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        eventBus.register(this);
+
+        // setup employment table columns
+        initEmploymentTable(resources);
+    }
+
+    private void initEmploymentTable(ResourceBundle resources) {
+        employmentLocationTableColumn.setCellValueFactory(new PropertyValueFactory<>("employmentLocation"));
+        kindOfEmploymentTableColumn.setCellValueFactory(new PropertyValueFactory<>("kindOfEmployment"));
+        employmentCampusTableColumn.setCellValueFactory(new PropertyValueFactory<>("campusOfDeployment"));
+        preTimesTableColumn.setCellValueFactory(param -> {
+            String text = (param.getValue().isPreEmploymentTimeToBeCharged()) ? resources.getString("yes") : resources.getString("no");
+            return new SimpleStringProperty(text);
+        });
     }
 
     public void resetAllInputFields() {
@@ -69,6 +113,26 @@ public class DoctoralStudentFormController {
 
         // after saving, we can reset our input fields
         resetAllInputFields();
+    }
+
+    // DEPLOYMENT
+    @FXML
+    public void handleOnActionAddEmploymentEntryButton() throws IOException {
+        Parent parent = GuiLoader.loadFXML(GuiLoader.EMPLOYMENT);
+        Scene scene = new Scene(parent);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setMinWidth(400);
+        stage.setMinHeight(300);
+        stage.setResizable(false);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.showAndWait();
+    }
+
+    @Subscribe
+    public void handleCreateEmploymentEntryEvent(CreateEmploymentEntryEvent event) {
+        EmploymentEntryDTO entry = event.getEmploymentEntryDTO();
+        employmentTableView.getItems().add(entry);
     }
 
     private <T> T checkForNull(T t) throws IllegalArgumentException {
