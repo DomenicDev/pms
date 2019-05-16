@@ -5,7 +5,7 @@ import de.hfu.pms.shared.enums.FacultyHFU;
 import de.hfu.pms.shared.enums.Rating;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Embeddable
 public class TargetGraduation {
@@ -38,50 +38,41 @@ public class TargetGraduation {
     private University externalUniversity;
 
     @Column
-    @Temporal(value = TemporalType.DATE)
-    private Date promotionAccepted;
+    private LocalDate promotionAccepted;
 
     @Column
-    @Temporal(value = TemporalType.DATE)
-    private Date procedureCompleted;
+    private LocalDate procedureCompleted;
 
     @Column
     @Enumerated
     private Rating rating;
 
     @Column
-    @Temporal(value = TemporalType.DATE)
-    private Date cancelDate;
+    private LocalDate cancelDate;
 
     @Column
     private String cancelReason;
 
     @Column
-    @Temporal(value = TemporalType.DATE)
-    private Date membershipHFUKollegStart;
+    private LocalDate membershipHFUKollegStart;
 
     @Column
-    @Temporal(value = TemporalType.DATE)
-    private Date membershipHFUKollegEnd;
+    private LocalDate membershipHFUKollegEnd;
 
     @Column
-    @Temporal(value = TemporalType.DATE)
-    private Date extendedMembershipEndDate;
+    private LocalDate extendedMembershipEndDate;
 
     @Column
     private String externalProgramm;
 
     @Column
-    @Temporal(value = TemporalType.DATE)
-    private Date promotionAdmissionDate;
+    private LocalDate promotionAdmissionDate;
 
     @Column
-    @Temporal(value = TemporalType.DATE)
-    private Date prognosticatedPromotionDate; // prognostizierter Abschluss
+    private LocalDate prognosticatedPromotionDate; // prognostizierter Abschluss
 
     @Column
-    @Temporal(value = TemporalType.DATE)
-    private Date promotionAgreement;
+    private LocalDate promotionAgreement;
 
 
     public DoctoralGraduation getTargetDegree() {
@@ -140,19 +131,19 @@ public class TargetGraduation {
         this.externalUniversity = externalUniversity;
     }
 
-    public Date getPromotionAccepted() {
+    public LocalDate getPromotionAccepted() {
         return promotionAccepted;
     }
 
-    public void setPromotionAccepted(Date promotionAccepted) {
+    public void setPromotionAccepted(LocalDate promotionAccepted) {
         this.promotionAccepted = promotionAccepted;
     }
 
-    public Date getProcedureCompleted() {
+    public LocalDate getProcedureCompleted() {
         return procedureCompleted;
     }
 
-    public void setProcedureCompleted(Date procedureCompleted) {
+    public void setProcedureCompleted(LocalDate procedureCompleted) {
         this.procedureCompleted = procedureCompleted;
     }
 
@@ -164,11 +155,11 @@ public class TargetGraduation {
         this.rating = rating;
     }
 
-    public Date getCancelDate() {
+    public LocalDate getCancelDate() {
         return cancelDate;
     }
 
-    public void setCancelDate(Date cancelDate) {
+    public void setCancelDate(LocalDate cancelDate) {
         this.cancelDate = cancelDate;
     }
 
@@ -180,27 +171,27 @@ public class TargetGraduation {
         this.cancelReason = cancelReason;
     }
 
-    public Date getMembershipHFUKollegStart() {
+    public LocalDate getMembershipHFUKollegStart() {
         return membershipHFUKollegStart;
     }
 
-    public void setMembershipHFUKollegStart(Date membershipHFUKollegStart) {
+    public void setMembershipHFUKollegStart(LocalDate membershipHFUKollegStart) {
         this.membershipHFUKollegStart = membershipHFUKollegStart;
     }
 
-    public Date getMembershipHFUKollegEnd() {
+    public LocalDate getMembershipHFUKollegEnd() {
         return membershipHFUKollegEnd;
     }
 
-    public void setMembershipHFUKollegEnd(Date membershipHFUKollegEnd) {
+    public void setMembershipHFUKollegEnd(LocalDate membershipHFUKollegEnd) {
         this.membershipHFUKollegEnd = membershipHFUKollegEnd;
     }
 
-    public Date getExtendedMembershipEndDate() {
+    public LocalDate getExtendedMembershipEndDate() {
         return extendedMembershipEndDate;
     }
 
-    public void setExtendedMembershipEndDate(Date extendedMembershipEndDate) {
+    public void setExtendedMembershipEndDate(LocalDate extendedMembershipEndDate) {
         this.extendedMembershipEndDate = extendedMembershipEndDate;
     }
 
@@ -212,27 +203,27 @@ public class TargetGraduation {
         this.externalProgramm = externalProgramm;
     }
 
-    public Date getPromotionAdmissionDate() {
+    public LocalDate getPromotionAdmissionDate() {
         return promotionAdmissionDate;
     }
 
-    public void setPromotionAdmissionDate(Date promotionAdmissionDate) {
+    public void setPromotionAdmissionDate(LocalDate promotionAdmissionDate) {
         this.promotionAdmissionDate = promotionAdmissionDate;
     }
 
-    public Date getPrognosticatedPromotionDate() {
+    public LocalDate getPrognosticatedPromotionDate() {
         return prognosticatedPromotionDate;
     }
 
-    public void setPrognosticatedPromotionDate(Date prognosticatedPromotionDate) {
+    public void setPrognosticatedPromotionDate(LocalDate prognosticatedPromotionDate) {
         this.prognosticatedPromotionDate = prognosticatedPromotionDate;
     }
 
-    public Date getPromotionAgreement() {
+    public LocalDate getPromotionAgreement() {
         return promotionAgreement;
     }
 
-    public void setPromotionAgreement(Date promotionAgreement) {
+    public void setPromotionAgreement(LocalDate promotionAgreement) {
         this.promotionAgreement = promotionAgreement;
     }
 }

@@ -4,8 +4,8 @@ import de.hfu.pms.shared.enums.FamilyStatus;
 import de.hfu.pms.shared.enums.Gender;
 import de.hfu.pms.shared.enums.Salutation;
 
+import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Date;
 
 public class PersonalDataDTO {
 
@@ -15,7 +15,7 @@ public class PersonalDataDTO {
     private Salutation salutation;
     private String title;
     private Gender gender;
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
     private String nationality;
     private FamilyStatus familyStatus;
     private Integer numberOfChildren;
@@ -71,11 +71,11 @@ public class PersonalDataDTO {
         this.gender = gender;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

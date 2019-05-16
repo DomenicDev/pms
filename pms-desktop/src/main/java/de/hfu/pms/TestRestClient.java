@@ -2,6 +2,7 @@ package de.hfu.pms;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import de.hfu.pms.shared.dto.DoctoralStudentDTO;
 import de.hfu.pms.shared.dto.PersonalDataDTO;
 import de.hfu.pms.shared.dto.UserDTO;
@@ -10,6 +11,7 @@ import httpConector.RestClient;
 import org.apache.http.client.HttpResponseException;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class TestRestClient {
 
@@ -19,7 +21,7 @@ public class TestRestClient {
         restClient.setLoginCredentials("admin", "1234");
 
         ObjectMapper mapper = new ObjectMapper();
-
+        mapper.registerModule(new JavaTimeModule());
 
         UserDTO userDTO = new UserDTO();
         userDTO.setUsername("test");
@@ -64,6 +66,7 @@ public class TestRestClient {
         dto.setId(5L);
         PersonalDataDTO personalData = new PersonalDataDTO();
         personalData.setLastName("Cassisi");
+        personalData.setDateOfBirth(LocalDate.of(1997, 12, 19));
         dto.setPersonalData(personalData);
 
         try {
@@ -71,6 +74,10 @@ public class TestRestClient {
             System.out.println(jsonDto);
             String response = restClient.postJson("http://localhost:8080/student/create", jsonDto);
             System.out.println(response);
+
+            DoctoralStudentDTO responseDto = mapper.readValue(response, DoctoralStudentDTO.class);
+            System.out.println(responseDto);
+
         } catch (IOException e) {
             e.printStackTrace();
         }

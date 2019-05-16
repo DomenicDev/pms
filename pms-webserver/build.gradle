@@ -21,6 +21,8 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.1.4.RELEASE'
     compile group: 'com.h2database', name: 'h2', version: '1.4.199'
     compile group: 'org.modelmapper', name: 'modelmapper', version: '2.3.3'
+    compile group: 'org.hibernate', name: 'hibernate-java8', version: '5.4.2.Final'
+
 
 
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.1.4.RELEASE'

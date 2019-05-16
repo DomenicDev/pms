@@ -2,7 +2,7 @@ package de.hfu.pms.model;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table
@@ -13,8 +13,7 @@ public class TravelCostUniversity {
     private Long id;
 
     @Column
-    @Temporal(value = TemporalType.DATE)
-    private Date date;
+    private LocalDate date;
 
     @Column
     private BigDecimal sum;
@@ -27,11 +26,11 @@ public class TravelCostUniversity {
         this.id = id;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
