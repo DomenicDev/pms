@@ -2,6 +2,9 @@ package de.hfu.pms.utils;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ResourceBundle;
@@ -15,6 +18,7 @@ public class GuiLoader {
     private final static ResourceBundle bundle;
 
     public static final String EMPLOYMENT = "/screens/employment_screen.fxml";
+    public static final String TRAVEL_COST_UNIVERSITY = "/screens/support_travel_cost_uni.fxml";
 
     static {
         // load resource bundle file
@@ -41,6 +45,28 @@ public class GuiLoader {
      */
     public static ResourceBundle getResourceBundle() {
         return bundle;
+    }
+
+    /**
+     * Helper method to create a modal window, especially for small windows, e.g. edit or creation screens.
+     * @param url the url of the screen to load
+     * @param width the width of the window
+     * @param height the height of the window
+     * @param resizable true if window shall be resizable, false otherwise
+     * @return the newly created stage
+     * @throws IOException if screen could not be loaded
+     */
+    public static Stage createModalWindow(String url, int width, int height, boolean resizable) throws IOException {
+        Parent parent = GuiLoader.loadFXML(url);
+        Scene scene = new Scene(parent);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setMinWidth(width);
+        stage.setMinHeight(height);
+        stage.setResizable(resizable);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+        return stage;
     }
 
 }

@@ -3,15 +3,15 @@ package de.hfu.pms;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import de.hfu.pms.shared.dto.DoctoralStudentDTO;
-import de.hfu.pms.shared.dto.PersonalDataDTO;
-import de.hfu.pms.shared.dto.UserDTO;
+import de.hfu.pms.shared.dto.*;
 import de.hfu.pms.shared.enums.UserRole;
 import httpConector.RestClient;
 import org.apache.http.client.HttpResponseException;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.HashSet;
 
 public class TestRestClient {
 
@@ -69,11 +69,21 @@ public class TestRestClient {
         personalData.setDateOfBirth(LocalDate.of(1997, 12, 19));
         dto.setPersonalData(personalData);
 
+        // add some support
+        SupportDTO supportDTO = new SupportDTO();
+        dto.setSupport(supportDTO);
+        TravelCostUniversityDTO cost1 = new TravelCostUniversityDTO();
+        cost1.setSum(BigDecimal.valueOf(100.50));
+        cost1.setDate(LocalDate.now());
+
+        supportDTO.setTravelCostUniversities(new HashSet<>());
+        supportDTO.getTravelCostUniversities().add(cost1);
+
         try {
             String jsonDto = mapper.writeValueAsString(dto);
-            System.out.println(jsonDto);
+            System.out.println("POST: " + jsonDto);
             String response = restClient.postJson("http://localhost:8080/student/create", jsonDto);
-            System.out.println(response);
+            System.out.println("RESPONSE: " + response);
 
             DoctoralStudentDTO responseDto = mapper.readValue(response, DoctoralStudentDTO.class);
             System.out.println(responseDto);
@@ -82,6 +92,8 @@ public class TestRestClient {
             e.printStackTrace();
         }
 
+
+        // --------------
 
     }
 

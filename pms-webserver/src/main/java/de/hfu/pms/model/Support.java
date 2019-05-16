@@ -1,27 +1,24 @@
 package de.hfu.pms.model;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Set;
 
 @Embeddable
 public class Support {
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_student")
     private Set<TravelCostConference> travelCostConferences;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_student")
     private Set<TravelCostUniversity> travelCostUniversities;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_student")
     private Set<VisitedQualification> visitedQualifications;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_student")
     private Set<ConsultingSupport> consultingSupports;
 

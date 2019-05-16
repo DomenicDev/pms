@@ -2,7 +2,7 @@ package de.hfu.pms;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-import com.sun.javadoc.Doc;
+import de.hfu.pms.events.AlertNotificationEvent;
 import de.hfu.pms.events.LoginRequestEvent;
 import de.hfu.pms.events.SaveDoctoralStudentEvent;
 import de.hfu.pms.exceptions.LoginFailedException;
@@ -11,6 +11,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -73,4 +76,29 @@ public class GuiEventHandler {
         DoctoralStudentDTO doctoralStudent = saveEvent.getDoctoralStudent();
         applicationServices.addDoctoralStudent(doctoralStudent);
     }
+
+    @Subscribe
+    public void handleNotificationEvent(AlertNotificationEvent event) {
+        Alert.AlertType type;
+
+        // map event type to alert type
+        switch (event.getType()) {
+            case AlertNotificationEvent.INFO:
+                type = Alert.AlertType.INFORMATION;
+                break;
+            case AlertNotificationEvent.ERROR:
+                type = Alert.AlertType.ERROR;
+                break;
+            case AlertNotificationEvent.WARNING:
+                type = Alert.AlertType.WARNING;
+                break;
+            default:
+                type = Alert.AlertType.NONE;
+        }
+
+        Alert alert = new Alert(type, event.getMessage(), ButtonType.OK);
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.show();
+    }
+
 }

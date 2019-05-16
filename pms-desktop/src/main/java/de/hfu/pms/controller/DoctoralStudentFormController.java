@@ -3,11 +3,10 @@ package de.hfu.pms.controller;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.EventBusSystem;
+import de.hfu.pms.events.CreateDocStudentPropertyEvent;
 import de.hfu.pms.events.CreateEmploymentEntryEvent;
 import de.hfu.pms.events.SaveDoctoralStudentEvent;
-import de.hfu.pms.shared.dto.DoctoralStudentDTO;
-import de.hfu.pms.shared.dto.EmploymentEntryDTO;
-import de.hfu.pms.shared.dto.PersonalDataDTO;
+import de.hfu.pms.shared.dto.*;
 import de.hfu.pms.shared.enums.Campus;
 import de.hfu.pms.shared.enums.EmploymentLocation;
 import de.hfu.pms.shared.enums.FamilyStatus;
@@ -15,18 +14,17 @@ import de.hfu.pms.utils.GuiLoader;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.ResourceBundle;
 
 public class DoctoralStudentFormController implements Initializable {
@@ -56,12 +54,23 @@ public class DoctoralStudentFormController implements Initializable {
     @FXML
     private TableColumn<EmploymentEntryDTO, String> preTimesTableColumn;
 
+    // Support
+    // Tables
+    @FXML
+    private TableView<TravelCostUniversityDTO> travelCostUniversityTableView;
+    @FXML
+    private TableColumn<TravelCostUniversityDTO, LocalDate> travelCostUniversityDateTableColumn;
+    @FXML
+    private TableColumn<TravelCostUniversityDTO, BigDecimal> travelCostUniversitySupportTableColumn;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         eventBus.register(this);
 
         // setup employment table columns
         initEmploymentTable(resources);
+
+        initSupportTables(resources);
     }
 
     private void initEmploymentTable(ResourceBundle resources) {
@@ -72,6 +81,12 @@ public class DoctoralStudentFormController implements Initializable {
             String text = (param.getValue().isPreEmploymentTimeToBeCharged()) ? resources.getString("yes") : resources.getString("no");
             return new SimpleStringProperty(text);
         });
+    }
+
+    private void initSupportTables(ResourceBundle resources) {
+        // Travel Cost University
+        travelCostUniversityDateTableColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        travelCostUniversitySupportTableColumn.setCellValueFactory(new PropertyValueFactory<>("sum"));
     }
 
     public void resetAllInputFields() {
@@ -99,6 +114,7 @@ public class DoctoralStudentFormController implements Initializable {
             // we are not editing an existing object but actually creating a new one
             this.doctoralStudent = new DoctoralStudentDTO();
             this.doctoralStudent.setPersonalData(new PersonalDataDTO());
+            this.doctoralStudent.setSupport(new SupportDTO());
             // todo add missing parts....
         } else {
             // if we are here, we edit an already existing student
@@ -118,15 +134,13 @@ public class DoctoralStudentFormController implements Initializable {
     // DEPLOYMENT
     @FXML
     public void handleOnActionAddEmploymentEntryButton() throws IOException {
-        Parent parent = GuiLoader.loadFXML(GuiLoader.EMPLOYMENT);
-        Scene scene = new Scene(parent);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.setMinWidth(400);
-        stage.setMinHeight(300);
-        stage.setResizable(false);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+        GuiLoader.createModalWindow(GuiLoader.EMPLOYMENT, 400, 300, false);
+    }
+
+    // SUPPORT
+    @FXML
+    public void handleOnActionAddTravelCostUniversityButton() throws IOException {
+        GuiLoader.createModalWindow(GuiLoader.TRAVEL_COST_UNIVERSITY, 400, 300, false);
     }
 
     @Subscribe
@@ -134,6 +148,12 @@ public class DoctoralStudentFormController implements Initializable {
         EmploymentEntryDTO entry = event.getEmploymentEntryDTO();
         employmentTableView.getItems().add(entry);
     }
+
+    @Subscribe
+    public void handleCreatePropertyEvent(CreateDocStudentPropertyEvent<TravelCostUniversityDTO> event) {
+        travelCostUniversityTableView.getItems().add(event.getProperty());
+    }
+
 
     private <T> T checkForNull(T t) throws IllegalArgumentException {
         if (t == null) {
@@ -151,6 +171,10 @@ public class DoctoralStudentFormController implements Initializable {
         personalData.setLastName(lastName);
         personalData.setForename("Bernd");
         personalData.setFamilyStatus(FamilyStatus.Married);
+
+        SupportDTO support = doctoralStudent.getSupport();
+        HashSet<TravelCostUniversityDTO> travelCostsUni = new HashSet<>(travelCostUniversityTableView.getItems());
+        support.setTravelCostUniversities(travelCostsUni);
     }
 
 

@@ -2,6 +2,7 @@ package de.hfu.pms;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import de.hfu.pms.config.AppConfig;
 import de.hfu.pms.exceptions.LoginFailedException;
 import de.hfu.pms.shared.dto.DoctoralStudentDTO;
@@ -9,6 +10,7 @@ import de.hfu.pms.shared.dto.UserDTO;
 import de.hfu.pms.shared.enums.UserRole;
 import httpConector.RestClient;
 import javafx.collections.transformation.SortedList;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -25,13 +27,16 @@ public class ApplicationServiceImpl implements ApplicationServices {
 
     public ApplicationServiceImpl() {
         this.restClient = new RestClient();
+        this.mapper.registerModule(new JavaTimeModule());
     }
 
     @Override
     public void addDoctoralStudent(DoctoralStudentDTO student) {
         try {
             String json = mapper.writeValueAsString(student);
-            restClient.postJson(HOST_URL + STUDENT_PREFIX + "create" , json);
+            String response = restClient.postJson(HOST_URL + STUDENT_PREFIX + "create" , json);
+            DoctoralStudentDTO dto = mapper.readValue(response, DoctoralStudentDTO.class);
+            logger.log(Level.INFO, "Doctoral Student created: " + dto);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         } catch (IOException e) {

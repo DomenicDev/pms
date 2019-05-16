@@ -35,4 +35,13 @@ public class TravelCostUniversityDTO {
     public void setSum(BigDecimal sum) {
         this.sum = sum;
     }
+
+    @Override
+    public String toString() {
+        return "TravelCostUniversityDTO{" +
+                "id=" + id +
+                ", date=" + date +
+                ", sum=" + sum +
+                '}';
+    }
 }

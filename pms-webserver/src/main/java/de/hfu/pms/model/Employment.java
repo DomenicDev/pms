@@ -1,5 +1,6 @@
 package de.hfu.pms.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -8,7 +9,7 @@ import java.util.Set;
 @Embeddable
 public class Employment {
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn
     private Set<EmploymentEntry> employmentEntries;
 
