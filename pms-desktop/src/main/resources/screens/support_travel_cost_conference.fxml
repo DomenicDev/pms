@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="207.0" prefWidth="407.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.TravelCostConferenceController">
+    <children>
+        <VBox layoutX="139.0" layoutY="58.0" prefHeight="207.0" prefWidth="407.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <GridPane>
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="290.0" minWidth="-Infinity" prefWidth="141.0" />
+                        <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="462.0" minWidth="10.0" prefWidth="449.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="-Infinity" prefHeight="30.0" />
+                  <RowConstraints prefHeight="30.0" />
+                  <RowConstraints prefHeight="30.0" />
+                        <RowConstraints minHeight="-Infinity" prefHeight="30.0" />
+                    </rowConstraints>
+                    <children>
+                        <Label text="Datum" />
+                        <Label text="Abgerechneter Betrag" GridPane.rowIndex="3" />
+                        <TextField fx:id="sumSupportTextField" prefHeight="25.0" prefWidth="71.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <DatePicker fx:id="datePicker" GridPane.columnIndex="1" />
+                  <Label text="Titel der Konferenz" GridPane.rowIndex="1" />
+                  <Label text="Ort der Konferenz" GridPane.rowIndex="2" />
+                  <TextField fx:id="titleTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="locationTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    </children>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                </GridPane>
+                <HBox alignment="CENTER" prefHeight="60.0" prefWidth="590.0" spacing="25.0">
+                    <children>
+                        <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOnActionSubmitButton" text="Übernehmen" />
+                        <Button cancelButton="true" mnemonicParsing="false" onAction="#handleOnActionCancelButton" text="Abbrechen" />
+                    </children>
+                </HBox>
+            </children>
+            <padding>
+                <Insets left="10.0" top="15.0" />
+            </padding>
+        </VBox>
+    </children>
+</AnchorPane>

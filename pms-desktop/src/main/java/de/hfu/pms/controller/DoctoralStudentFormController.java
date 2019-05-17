@@ -143,6 +143,11 @@ public class DoctoralStudentFormController implements Initializable {
         GuiLoader.createModalWindow(GuiLoader.TRAVEL_COST_UNIVERSITY, 400, 300, false);
     }
 
+    @FXML
+    public void handleOnActionAddTravelCostConferenceButton() throws IOException {
+        GuiLoader.createModalWindow(GuiLoader.TRAVEL_COST_CONFERENCE, 400, 300, false);
+    }
+
     @Subscribe
     public void handleCreateEmploymentEntryEvent(CreateEmploymentEntryEvent event) {
         EmploymentEntryDTO entry = event.getEmploymentEntryDTO();
@@ -150,9 +155,16 @@ public class DoctoralStudentFormController implements Initializable {
     }
 
     @Subscribe
-    public void handleCreatePropertyEvent(CreateDocStudentPropertyEvent<TravelCostUniversityDTO> event) {
-        travelCostUniversityTableView.getItems().add(event.getProperty());
+    public void handleCreateTravelCostUniversityEvent(CreateDocStudentPropertyEvent event) {
+        Object property = event.getProperty();
+        if (property instanceof TravelCostUniversityDTO) {
+            travelCostUniversityTableView.getItems().add((TravelCostUniversityDTO) property);
+        } else if (property instanceof TravelCostConferenceDTO) {
+            // todo
+        }
     }
+
+
 
 
     private <T> T checkForNull(T t) throws IllegalArgumentException {

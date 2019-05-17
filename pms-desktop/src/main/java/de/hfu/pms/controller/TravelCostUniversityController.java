@@ -1,7 +1,6 @@
 package de.hfu.pms.controller;
 
 import de.hfu.pms.shared.dto.TravelCostUniversityDTO;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -19,17 +18,6 @@ public class TravelCostUniversityController extends AbstractPropertyFormControll
 
     @FXML
     private TextField sumSupportTextField;
-
-    @FXML
-    public void initialize() {
-
-    }
-
-    @FXML
-    public void handleOnActionSubmitButton() {
-        submit();
-        close();
-    }
 
     @Override
     public void writeProperty() throws IllegalArgumentException {
@@ -61,12 +49,4 @@ public class TravelCostUniversityController extends AbstractPropertyFormControll
         this.sumSupportTextField.setText(property.getSum().toPlainString());
     }
 
-    private void close() {
-        datePicker.getScene().getWindow().hide();
-    }
-
-    @FXML
-    public void handleOnActionCancelButton(ActionEvent event) {
-        close();
-    }
 }

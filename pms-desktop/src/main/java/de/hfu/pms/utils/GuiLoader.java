@@ -19,6 +19,7 @@ public class GuiLoader {
 
     public static final String EMPLOYMENT = "/screens/employment_screen.fxml";
     public static final String TRAVEL_COST_UNIVERSITY = "/screens/support_travel_cost_uni.fxml";
+    public static final String TRAVEL_COST_CONFERENCE = "/screens/support_travel_cost_conference.fxml";
 
     static {
         // load resource bundle file
@@ -35,6 +36,13 @@ public class GuiLoader {
     public static Parent loadFXML(String url) throws IOException {
         FXMLLoader loader = new FXMLLoader(GuiLoader.class.getResource(url));
         loader.setResources(getResourceBundle());
+        return loader.load();
+    }
+
+    public static Parent loadAbstractFormScreen(String url, Object controller) throws IOException {
+        FXMLLoader loader = new FXMLLoader(GuiLoader.class.getResource(url));
+        loader.setResources(getResourceBundle());
+        loader.setController(controller);
         return loader.load();
     }
 

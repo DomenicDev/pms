@@ -5,8 +5,15 @@ import de.hfu.pms.EventBusSystem;
 import de.hfu.pms.events.AlertNotificationEvent;
 import de.hfu.pms.events.CreateDocStudentPropertyEvent;
 import de.hfu.pms.exceptions.SubmitException;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 
-public abstract class AbstractPropertyFormController<T> {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public abstract class AbstractPropertyFormController<T> implements Initializable {
 
     /**
      * We use the EventBus to notify about the creation.
@@ -17,6 +24,26 @@ public abstract class AbstractPropertyFormController<T> {
      * The entity which is being created or edited in this context.
      */
     protected T property;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
+
+    @FXML
+    public void handleOnActionSubmitButton(ActionEvent event) {
+        try {
+            submit();
+            ((Button)event.getSource()).getScene().getWindow().hide();
+        } catch (SubmitException e) {
+            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.ERROR, "check your input fields"));
+        }
+    }
+
+    @FXML
+    public void handleOnActionCancelButton(ActionEvent event) {
+        ((Button)event.getSource()).getScene().getWindow().hide();
+    }
 
     /**
      * This method should read the input data from the gui
@@ -45,8 +72,6 @@ public abstract class AbstractPropertyFormController<T> {
             writeProperty();
             eventBus.post(new CreateDocStudentPropertyEvent<>(property));
         } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.ERROR, "check your input fields"));
             throw new SubmitException(e.getMessage());
         }
 

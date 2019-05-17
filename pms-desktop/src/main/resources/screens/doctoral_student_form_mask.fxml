@@ -455,7 +455,7 @@
                                                                   <Font name="System Bold" size="12.0" />
                                                                </font>
                                                             </Label>
-                                                            <Button mnemonicParsing="false" text="Hinzufügen" />
+                                                            <Button mnemonicParsing="false" onAction="#handleOnActionAddTravelCostConferenceButton" text="Hinzufügen" />
                                                             <Button mnemonicParsing="false" text="Ausgewählte Löschen" />
                                                          </children>
                                                       </HBox>
