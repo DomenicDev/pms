@@ -3,9 +3,9 @@ package de.hfu.pms;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import de.hfu.pms.client.RestClient;
 import de.hfu.pms.shared.dto.*;
 import de.hfu.pms.shared.enums.UserRole;
-import httpConector.RestClient;
 import org.apache.http.client.HttpResponseException;
 
 import java.io.IOException;

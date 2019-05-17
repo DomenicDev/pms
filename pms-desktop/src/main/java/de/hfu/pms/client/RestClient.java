@@ -1,4 +1,4 @@
-package httpConector;
+package de.hfu.pms.client;
 
 import org.apache.http.HttpStatus;
 import org.apache.http.auth.AuthScope;
