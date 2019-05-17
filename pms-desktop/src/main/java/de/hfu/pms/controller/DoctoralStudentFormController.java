@@ -4,7 +4,6 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.EventBusSystem;
 import de.hfu.pms.events.CreateDocStudentPropertyEvent;
-import de.hfu.pms.events.CreateEmploymentEntryEvent;
 import de.hfu.pms.events.SaveDoctoralStudentEvent;
 import de.hfu.pms.shared.dto.*;
 import de.hfu.pms.shared.enums.Campus;
@@ -211,12 +210,6 @@ public class DoctoralStudentFormController implements Initializable {
     }
 
     @Subscribe
-    public void handleCreateEmploymentEntryEvent(CreateEmploymentEntryEvent event) {
-        EmploymentEntryDTO entry = event.getEmploymentEntryDTO();
-        employmentTableView.getItems().add(entry);
-    }
-
-    @Subscribe
     public void handleCreateTravelCostUniversityEvent(CreateDocStudentPropertyEvent event) {
         Object property = event.getProperty();
         if (property instanceof TravelCostUniversityDTO) {
@@ -227,6 +220,8 @@ public class DoctoralStudentFormController implements Initializable {
             consultingSupportTableView.getItems().add((ConsultingSupportDTO) property);
         } else if (property instanceof VisitedQualificationDTO) {
             qualificationTableView.getItems().add((VisitedQualificationDTO) property);
+        } else if (property instanceof EmploymentEntryDTO) {
+            employmentTableView.getItems().add((EmploymentEntryDTO) property);
         } else {
             logger.log(Level.WARN, "No defined handling for specified property: " + property.getClass().getName());
         }
