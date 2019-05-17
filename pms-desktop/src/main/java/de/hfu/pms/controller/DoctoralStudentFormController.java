@@ -12,6 +12,7 @@ import de.hfu.pms.shared.enums.EmploymentLocation;
 import de.hfu.pms.shared.enums.FamilyStatus;
 import de.hfu.pms.utils.GuiLoader;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -19,6 +20,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -28,6 +31,8 @@ import java.util.HashSet;
 import java.util.ResourceBundle;
 
 public class DoctoralStudentFormController implements Initializable {
+
+    private Logger logger = Logger.getLogger(DoctoralStudentFormController.class);
 
     private DoctoralStudentDTO doctoralStudent = null;
 
@@ -54,14 +59,45 @@ public class DoctoralStudentFormController implements Initializable {
     @FXML
     private TableColumn<EmploymentEntryDTO, String> preTimesTableColumn;
 
-    // Support
-    // Tables
+    /* ***********Support ***************** */
+    // travel cost university
     @FXML
     private TableView<TravelCostUniversityDTO> travelCostUniversityTableView;
     @FXML
     private TableColumn<TravelCostUniversityDTO, LocalDate> travelCostUniversityDateTableColumn;
     @FXML
     private TableColumn<TravelCostUniversityDTO, BigDecimal> travelCostUniversitySupportTableColumn;
+
+    // travel cost conference
+    @FXML
+    private TableView<TravelCostConferenceDTO> travelCostConferenceTableView;
+    @FXML
+    private TableColumn<TravelCostConferenceDTO, LocalDate> travelCostConferenceDateTableColumn;
+    @FXML
+    private TableColumn<TravelCostConferenceDTO, String> travelCostConferenceTitleTableColumn;
+    @FXML
+    private TableColumn<TravelCostConferenceDTO, String> travelCostConferenceLocationTableColumn;
+    @FXML
+    private TableColumn<TravelCostConferenceDTO, String> travelCostConferenceSumSupportTableColumn;
+
+    // Consulting Support
+    @FXML
+    private TableView<ConsultingSupportDTO> consultingSupportTableView;
+    @FXML
+    private TableColumn<ConsultingSupportDTO, LocalDate> consultingSupportDateTableColumn;
+    @FXML
+    private TableColumn<ConsultingSupportDTO, String> consultingSupportTypeTableColumn;
+    @FXML
+    private TableColumn<ConsultingSupportDTO, String> consultingSupportDurationTableColumn;
+
+    // Qualifications
+    @FXML
+    private TableView<VisitedQualificationDTO> qualificationTableView;
+    @FXML
+    private TableColumn<VisitedQualificationDTO, LocalDate> qualificationDateTableColumn;
+    @FXML
+    private TableColumn<VisitedQualificationDTO, String> qualificationNameTableColumn;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -87,6 +123,22 @@ public class DoctoralStudentFormController implements Initializable {
         // Travel Cost University
         travelCostUniversityDateTableColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         travelCostUniversitySupportTableColumn.setCellValueFactory(new PropertyValueFactory<>("sum"));
+
+        // Travel Cost Conference
+        travelCostConferenceDateTableColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        travelCostConferenceTitleTableColumn.setCellValueFactory(new PropertyValueFactory<>("conferenceTitle"));
+        travelCostConferenceLocationTableColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+        travelCostConferenceSumSupportTableColumn.setCellValueFactory(new PropertyValueFactory<>("sum"));
+
+        // Consulting Support
+        consultingSupportDateTableColumn.setCellValueFactory(new PropertyValueFactory<>("consultingDate"));
+        consultingSupportTypeTableColumn.setCellValueFactory(new PropertyValueFactory<>("consultingType"));
+        consultingSupportDurationTableColumn.setCellValueFactory(new PropertyValueFactory<>("consultingDuration"));
+
+        // Qualifications
+        qualificationDateTableColumn.setCellValueFactory(new PropertyValueFactory<>("qualificationDate"));
+        qualificationNameTableColumn.setCellValueFactory(new PropertyValueFactory<>("nameOfQualification"));
+
     }
 
     public void resetAllInputFields() {
@@ -148,6 +200,16 @@ public class DoctoralStudentFormController implements Initializable {
         GuiLoader.createModalWindow(GuiLoader.TRAVEL_COST_CONFERENCE, 400, 300, false);
     }
 
+    @FXML
+    public void handleOnActionAddConsultingButton(ActionEvent actionEvent) throws IOException {
+        GuiLoader.createModalWindow(GuiLoader.CONSULTING_SUPPORT, 450, 250, false);
+    }
+
+    @FXML
+    public void handleOnActionAddQualificationButton(ActionEvent actionEvent) throws IOException {
+        GuiLoader.createModalWindow(GuiLoader.QUALIFICATION, 450, 200, false);
+    }
+
     @Subscribe
     public void handleCreateEmploymentEntryEvent(CreateEmploymentEntryEvent event) {
         EmploymentEntryDTO entry = event.getEmploymentEntryDTO();
@@ -160,7 +222,13 @@ public class DoctoralStudentFormController implements Initializable {
         if (property instanceof TravelCostUniversityDTO) {
             travelCostUniversityTableView.getItems().add((TravelCostUniversityDTO) property);
         } else if (property instanceof TravelCostConferenceDTO) {
-            // todo
+            travelCostConferenceTableView.getItems().add((TravelCostConferenceDTO) property);
+        } else if (property instanceof ConsultingSupportDTO) {
+            consultingSupportTableView.getItems().add((ConsultingSupportDTO) property);
+        } else if (property instanceof VisitedQualificationDTO) {
+            qualificationTableView.getItems().add((VisitedQualificationDTO) property);
+        } else {
+            logger.log(Level.WARN, "No defined handling for specified property: " + property.getClass().getName());
         }
     }
 

@@ -5,21 +5,25 @@ import java.time.LocalDate;
 public class ConsultingSupportDTO {
 
     private int id;
-    private String typeOfConsulting;
+    private String consultingType;
     private LocalDate consultingDate;
-    private int duration; // in minutes
+    private int consultingDuration; // in minutes
 
-    public ConsultingSupportDTO(String typeOfConsulting, LocalDate consultingDate, int duration) {
-        this.typeOfConsulting = typeOfConsulting;
-        this.consultingDate = consultingDate;
-        this.duration = duration;
+    public ConsultingSupportDTO() {
+
     }
 
-    public ConsultingSupportDTO(int id, String typeOfConsulting, LocalDate consultingDate, int duration) {
-        this.id = id;
-        this.typeOfConsulting = typeOfConsulting;
+    public ConsultingSupportDTO(String consultingType, LocalDate consultingDate, int consultingDuration) {
+        this.consultingType = consultingType;
         this.consultingDate = consultingDate;
-        this.duration = duration;
+        this.consultingDuration = consultingDuration;
+    }
+
+    public ConsultingSupportDTO(int id, String consultingType, LocalDate consultingDate, int consultingDuration) {
+        this.id = id;
+        this.consultingType = consultingType;
+        this.consultingDate = consultingDate;
+        this.consultingDuration = consultingDuration;
     }
 
     public int getId() {
@@ -30,12 +34,12 @@ public class ConsultingSupportDTO {
         this.id = id;
     }
 
-    public String getTypeOfConsulting() {
-        return typeOfConsulting;
+    public String getConsultingType() {
+        return consultingType;
     }
 
-    public void setTypeOfConsulting(String typeOfConsulting) {
-        this.typeOfConsulting = typeOfConsulting;
+    public void setConsultingType(String consultingType) {
+        this.consultingType = consultingType;
     }
 
     public LocalDate getConsultingDate() {
@@ -46,11 +50,11 @@ public class ConsultingSupportDTO {
         this.consultingDate = consultingDate;
     }
 
-    public int getDuration() {
-        return duration;
+    public int getConsultingDuration() {
+        return consultingDuration;
     }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
+    public void setConsultingDuration(int consultingDuration) {
+        this.consultingDuration = consultingDuration;
     }
 }

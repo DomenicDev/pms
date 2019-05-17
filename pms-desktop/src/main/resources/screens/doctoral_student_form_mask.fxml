@@ -459,12 +459,12 @@
                                                             <Button mnemonicParsing="false" text="Ausgewählte Löschen" />
                                                          </children>
                                                       </HBox>
-                                                      <TableView prefHeight="200.0" prefWidth="200.0">
+                                                      <TableView fx:id="travelCostConferenceTableView" prefHeight="200.0" prefWidth="200.0">
                                                         <columns>
-                                                          <TableColumn prefWidth="102.0" text="Datum" />
-                                                          <TableColumn prefWidth="193.0" text="Titel" />
-                                                            <TableColumn prefWidth="75.0" text="Ort" />
-                                                            <TableColumn prefWidth="215.0" text="Abgerechneter Betrag" />
+                                                          <TableColumn fx:id="travelCostConferenceDateTableColumn" prefWidth="102.0" text="Datum" />
+                                                          <TableColumn fx:id="travelCostConferenceTitleTableColumn" prefWidth="193.0" text="Titel" />
+                                                            <TableColumn fx:id="travelCostConferenceLocationTableColumn" prefWidth="75.0" text="Ort" />
+                                                            <TableColumn fx:id="travelCostConferenceSumSupportTableColumn" prefWidth="215.0" text="Abgerechneter Betrag" />
                                                         </columns>
                                                          <columnResizePolicy>
                                                             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -486,15 +486,15 @@
                                                                   <Font name="System Bold" size="12.0" />
                                                                </font>
                                                             </Label>
-                                                            <Button mnemonicParsing="false" text="Hinzufügen" />
+                                                            <Button mnemonicParsing="false" onAction="#handleOnActionAddConsultingButton" text="Hinzufügen" />
                                                             <Button mnemonicParsing="false" text="Ausgewählte Löschen" />
                                                          </children>
                                                       </HBox>
-                                                      <TableView prefHeight="200.0" prefWidth="200.0">
+                                                      <TableView fx:id="consultingSupportTableView" prefHeight="200.0" prefWidth="200.0">
                                                          <columns>
-                                                            <TableColumn prefWidth="218.0" text="Datum" />
-                                                            <TableColumn prefWidth="1060.0" text="Art der Beratung" />
-                                                            <TableColumn prefWidth="75.0" text="Beratungsdauer (in Minuten)" />
+                                                            <TableColumn fx:id="consultingSupportDateTableColumn" prefWidth="218.0" text="Datum" />
+                                                            <TableColumn fx:id="consultingSupportTypeTableColumn" prefWidth="1060.0" text="Art der Beratung" />
+                                                            <TableColumn fx:id="consultingSupportDurationTableColumn" prefWidth="75.0" text="Beratungsdauer (in Minuten)" />
                                                          </columns>
                                                          <columnResizePolicy>
                                                             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -511,14 +511,14 @@
                                                                   <Font name="System Bold" size="12.0" />
                                                                </font>
                                                             </Label>
-                                                            <Button mnemonicParsing="false" text="Hinzufügen" />
+                                                            <Button mnemonicParsing="false" onAction="#handleOnActionAddQualificationButton" text="Hinzufügen" />
                                                             <Button mnemonicParsing="false" text="Ausgewählte Löschen" />
                                                          </children>
                                                       </HBox>
-                                                      <TableView prefHeight="200.0" prefWidth="200.0">
+                                                      <TableView fx:id="qualificationTableView" prefHeight="200.0" prefWidth="200.0" tableMenuButtonVisible="true">
                                                          <columns>
-                                                            <TableColumn prefWidth="218.0" text="Datum" />
-                                                            <TableColumn prefWidth="1060.0" text="Name / Bezeichnung der Qualifikation" />
+                                                            <TableColumn fx:id="qualificationDateTableColumn" prefWidth="218.0" text="Datum" />
+                                                            <TableColumn fx:id="qualificationNameTableColumn" prefWidth="1060.0" text="Name / Bezeichnung der Qualifikation" />
                                                          </columns>
                                                          <columnResizePolicy>
                                                             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

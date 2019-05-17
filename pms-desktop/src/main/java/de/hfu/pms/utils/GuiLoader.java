@@ -20,6 +20,8 @@ public class GuiLoader {
     public static final String EMPLOYMENT = "/screens/employment_screen.fxml";
     public static final String TRAVEL_COST_UNIVERSITY = "/screens/support_travel_cost_uni.fxml";
     public static final String TRAVEL_COST_CONFERENCE = "/screens/support_travel_cost_conference.fxml";
+    public static final String CONSULTING_SUPPORT = "/screens/support_consulting_screen.fxml";
+    public static final String QUALIFICATION = "/screens/qualification_screen.fxml";
 
     static {
         // load resource bundle file
