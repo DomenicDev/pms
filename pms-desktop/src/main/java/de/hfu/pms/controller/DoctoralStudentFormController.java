@@ -43,46 +43,32 @@ public class DoctoralStudentFormController implements Initializable {
     // PERSONAL DATA
     @FXML
     private TextField lastNameTextField;
-
     @FXML
     private TextField foreNameTextField;
-
     @FXML
     private TextField formerLastNameTextField;
-
     @FXML
     private TextField streetTextField;
-
     @FXML
     private TextField PLZTextField;
-
     @FXML
     private TextField locationTextField;
-
     @FXML
     private TextField countryTextField;
-
     @FXML
     private TextField emailTextField;
-
     @FXML
     private TextField phoneTextField;
-
     @FXML
     private TextField titleTextField;
-
     @FXML
     private DatePicker dateOfBirthDatePicker;
-
     @FXML
     private ComboBox salutationComboBox;
-
     @FXML
     private ComboBox genderComboBox;
-
     @FXML
     private ComboBox childrenCountComboBox;
-
 
     // Employment
     @FXML
@@ -136,16 +122,22 @@ public class DoctoralStudentFormController implements Initializable {
     private TableColumn<VisitedQualificationDTO, String> qualificationNameTableColumn;
 
 
+    // Other
+    @FXML
+    private TextField scholarshipTextField;
+    @FXML
+    private TextField awardsTextField;
+    @FXML
+    private TextArea miscellaneousTextArea;
+
+
     // Alumni-Status
     @FXML
     private TextField jobTitleTextField;
-
     @FXML
     private TextField employerTextField;
-
     @FXML
     private CheckBox agreementNewsCheckBox;
-
     @FXML
     private CheckBox agreementEvaluationCheckBox;
 
@@ -317,6 +309,13 @@ public class DoctoralStudentFormController implements Initializable {
         personalAddress.setCountry(checkForNull(countryTextField.getText()));
         personalAddress.setLocation(checkForNull(locationTextField.getText()));
         personalAddress.setStreet(checkForNull(streetTextField.getText()));
+
+
+
+        // process Support
+        support.setScholarship(checkForNull(scholarshipTextField.getText()));
+        support.setAwards(checkForNull(awardsTextField.getText()));
+        support.setMiscellaneous(checkForNull(miscellaneousTextArea.getText()));
 
 
         // process alumni-state

@@ -602,11 +602,11 @@
                                                         </rowConstraints>
                                                          <children>
                                                             <Label text="Stipendium" />
-                                                            <TextField GridPane.columnIndex="1" />
+                                                            <TextField fx:id="scholarshipTextField" GridPane.columnIndex="1" />
                                                             <Label text="Auzeichnungen" GridPane.rowIndex="1" />
-                                                            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                            <TextField fx:id="awardsTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                             <Label text="Sonstiges" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-                                                            <TextArea prefHeight="52.0" prefWidth="640.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                            <TextArea fx:id="miscellaneousTextArea" prefHeight="52.0" prefWidth="640.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                          </children>
                                                       </GridPane>
                                                    </children>
