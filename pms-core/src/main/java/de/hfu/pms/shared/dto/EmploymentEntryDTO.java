@@ -11,6 +11,14 @@ public class EmploymentEntryDTO {
     private Campus campusOfDeployment;
     private boolean preEmploymentTimeToBeCharged;
 
+    public void EmploymentEntryDTO(Long id, EmploymentLocation employmentLocation, String kindOfEmployment, Campus campusOfDeployment, boolean preEmploymentTimeToBeCharged){
+        this.id = id;
+        this.employmentLocation = employmentLocation;
+        this.kindOfEmployment = kindOfEmployment;
+        this.campusOfDeployment = campusOfDeployment;
+        this.preEmploymentTimeToBeCharged = preEmploymentTimeToBeCharged;
+    }
+
     public Long getId() {
         return id;
     }

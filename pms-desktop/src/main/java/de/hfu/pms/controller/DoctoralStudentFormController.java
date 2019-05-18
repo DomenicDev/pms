@@ -24,6 +24,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 public class DoctoralStudentFormController implements Initializable {
 
@@ -288,6 +289,7 @@ public class DoctoralStudentFormController implements Initializable {
         AddressDTO personalAddress = personalData.getAddress();
         SupportDTO support = doctoralStudent.getSupport();
         AlumniStateDTO alumniState = doctoralStudent.getAlumniState();
+        EmploymentDTO employment = doctoralStudent.getEmployment();
 
         // process personal data
         personalData.setLastName(checkForNull(lastNameTextField.getText()));
@@ -309,6 +311,23 @@ public class DoctoralStudentFormController implements Initializable {
         personalAddress.setCountry(checkForNull(countryTextField.getText()));
         personalAddress.setLocation(checkForNull(locationTextField.getText()));
         personalAddress.setStreet(checkForNull(streetTextField.getText()));
+
+
+        // process employment relationship
+
+        Set<EmploymentEntryDTO> employmentEntries = new HashSet<>();
+
+        for (EmploymentEntryDTO entry: employmentTableView.getItems()) {
+            EmploymentEntryDTO employmentEntry = new EmploymentEntryDTO();
+
+            employmentEntry.setCampusOfDeployment(entry.getCampusOfDeployment());
+            employmentEntry.setEmploymentLocation(entry.getEmploymentLocation());
+            employmentEntry.setId(checkForNull(entry.getId()));
+            employmentEntry.setKindOfEmployment(checkForNull(entry.getKindOfEmployment()));
+            employmentEntry.setPreEmploymentTimeToBeCharged(checkForNull(entry.isPreEmploymentTimeToBeCharged()));
+            employmentEntries.add(employmentEntry);
+        }
+        employment.setEmploymentEntries(employmentEntries);
 
 
 

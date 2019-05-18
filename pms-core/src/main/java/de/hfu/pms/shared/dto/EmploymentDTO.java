@@ -15,4 +15,8 @@ public class EmploymentDTO {
     public Set<EmploymentEntryDTO> getEmploymentEntries() {
         return employmentEntries;
     }
+
+    public void setEmploymentEntries(Set<EmploymentEntryDTO> employmentEntries) {
+        this.employmentEntries = employmentEntries;
+    }
 }
