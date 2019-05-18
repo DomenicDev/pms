@@ -6,9 +6,7 @@ import de.hfu.pms.EventBusSystem;
 import de.hfu.pms.events.CreateDocStudentPropertyEvent;
 import de.hfu.pms.events.SaveDoctoralStudentEvent;
 import de.hfu.pms.shared.dto.*;
-import de.hfu.pms.shared.enums.Campus;
-import de.hfu.pms.shared.enums.EmploymentLocation;
-import de.hfu.pms.shared.enums.FamilyStatus;
+import de.hfu.pms.shared.enums.*;
 import de.hfu.pms.utils.GuiLoader;
 import de.hfu.pms.utils.RepresentationWrapper;
 import de.hfu.pms.utils.WrappedEntity;
@@ -67,18 +65,18 @@ public class DoctoralStudentFormController implements Initializable {
     @FXML
     private DatePicker dateOfBirthDatePicker;
     @FXML
-    private ComboBox salutationComboBox;
+    private ComboBox<WrappedEntity<Salutation>> salutationComboBox;
     @FXML
-    private ComboBox genderComboBox;
+    private ComboBox<WrappedEntity<Gender>> genderComboBox;
     @FXML
     private ComboBox<WrappedEntity<FamilyStatus>> familyStatusComboBox;
     @FXML
-    private ComboBox childrenCountComboBox;
+    private ComboBox<Integer> childrenCountComboBox;
 
     /* *********** Graduation ***************** */
     // Qualified Graduation
     @FXML
-    private ComboBox graduationComboBox;
+    private ComboBox<WrappedEntity<Graduation>> graduationComboBox;
     @FXML
     private TextField subjectAreaTextField;
     @FXML
@@ -88,13 +86,13 @@ public class DoctoralStudentFormController implements Initializable {
 
     // Target Graduation
     @FXML
-    private ComboBox targetGraduationDegreeTextField;
+    private ComboBox<WrappedEntity<DoctoralGraduation>> targetGraduationDegreeTextField;
     @FXML
     private TextField nameOfDissertationTextField;
     @FXML
     private TextField internalSupervisorTextField;
     @FXML
-    private ComboBox facultyHFUComboBox;
+    private ComboBox<WrappedEntity<FacultyHFU>> facultyHFUComboBox;
     @FXML
     private TextField externalSupervisorTextField;
     @FXML
@@ -106,7 +104,7 @@ public class DoctoralStudentFormController implements Initializable {
     @FXML
     private DatePicker procedureCompletedDatePicker;
     @FXML
-    private ComboBox ratingComboBox;
+    private ComboBox<WrappedEntity<Rating>> ratingComboBox;
 
     // Further Information
     @FXML
@@ -119,6 +117,7 @@ public class DoctoralStudentFormController implements Initializable {
     // Cancel
     @FXML
     private CheckBox promotionCanceledCheckBox;
+    @FXML
     private TextField cancelReason;
 
     // Membership
@@ -252,8 +251,17 @@ public class DoctoralStudentFormController implements Initializable {
     }
 
     private void initComboBoxes() {
-        // family status
+        // personal data combo boxes
         familyStatusComboBox.getItems().addAll(RepresentationWrapper.getWrappedFamilyStatus());
+        salutationComboBox.getItems().addAll(RepresentationWrapper.getWrappedSalutations());
+        genderComboBox.getItems().addAll(RepresentationWrapper.getWrappedGenders());
+        childrenCountComboBox.getItems().addAll(0, 1, 2, 3, 4, 5, 6 ,7, 8 ,9);
+
+        // graduation
+        graduationComboBox.getItems().addAll(RepresentationWrapper.getWrappedGraduations());
+        targetGraduationDegreeTextField.getItems().addAll(RepresentationWrapper.getWrappedDoctoralGraduations());
+        facultyHFUComboBox.getItems().addAll(RepresentationWrapper.getWrappedHFUFaculties());
+        ratingComboBox.getItems().addAll(RepresentationWrapper.getWrappedRatings());
     }
 
     public void resetAllInputFields() {

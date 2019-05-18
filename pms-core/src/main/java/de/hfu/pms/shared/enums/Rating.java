@@ -2,9 +2,14 @@ package de.hfu.pms.shared.enums;
 
 public enum Rating {
 
-    VeryGood,
-    VeryBad;
+    Magna_cum_laude,
 
-    // TODO: Add missing rating types
+    Cum_laude,
+
+    Bene,
+
+    Rite,
+
+    Failed
 
 }
