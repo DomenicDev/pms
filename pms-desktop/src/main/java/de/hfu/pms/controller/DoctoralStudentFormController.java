@@ -6,18 +6,14 @@ import de.hfu.pms.EventBusSystem;
 import de.hfu.pms.events.CreateDocStudentPropertyEvent;
 import de.hfu.pms.events.SaveDoctoralStudentEvent;
 import de.hfu.pms.shared.dto.*;
-import de.hfu.pms.shared.enums.Campus;
-import de.hfu.pms.shared.enums.EmploymentLocation;
-import de.hfu.pms.shared.enums.FamilyStatus;
+import de.hfu.pms.shared.enums.*;
 import de.hfu.pms.utils.GuiLoader;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -45,6 +41,19 @@ public class DoctoralStudentFormController implements Initializable {
 
     // PERSONAL DATA
     @FXML private TextField lastNameTextField;
+    @FXML private TextField foreNameTextField;
+    @FXML private TextField formerLastNameTextField;
+    @FXML private TextField streetTextField;
+    @FXML private TextField PLZTextField;
+    @FXML private TextField locationTextField;
+    @FXML private TextField countryTextField;
+    @FXML private TextField emailTextField;
+    @FXML private TextField phoneTextField;
+    @FXML private TextField titleTextField;
+    @FXML private DatePicker dateOfBirthDatePicker;
+    @FXML private ComboBox salutationComboBox;
+    @FXML private ComboBox genderComboBox;
+    @FXML private ComboBox childrenCountComboBox;
 
     // Employment
     @FXML
@@ -237,20 +246,38 @@ public class DoctoralStudentFormController implements Initializable {
         return t;
     }
 
+
     private void writeToDoctoralStudentDTO() {
-        // we first check personal data
         PersonalDataDTO personalData = doctoralStudent.getPersonalData();
-
-        String lastName = checkForNull(lastNameTextField.getText());
-        // todo ... for now we insert some test data
-        personalData.setLastName(lastName);
-        personalData.setForename("Bernd");
-        personalData.setFamilyStatus(FamilyStatus.Married);
-
+        AddressDTO personalAddress = personalData.getAddress();
         SupportDTO support = doctoralStudent.getSupport();
+
+        // process personal data
+        personalData.setLastName(checkForNull(lastNameTextField.getText()));
+        personalData.setForename(checkForNull(foreNameTextField.getText()));
+        personalData.setFormerLastName(checkForNull(formerLastNameTextField.getText()));
+        personalData.setTelephone(checkForNull(phoneTextField.getText()));
+        personalData.setTitle(checkForNull(titleTextField.getText()));
+        personalData.setDateOfBirth(checkForNull(dateOfBirthDatePicker.getValue()));
+        personalData.setEmail(checkForNull(emailTextField.getText()));
+
+        // todo: selected item in combobox, enums in fxml (salution, gender)
+        // ObservableList<Integer> numberOfChildren = childrenCountComboBox.getItems();
+        // personalData.setNumberOfChildren(numberOfChildren.get(childrenCountComboBox.getSelectedIndex()));
+        // ComboBox childrenCount;
+        // ComboBox salutationComboBox;
+        // ComboBox genderComboBox;
+
+        personalAddress.setPlz(checkForNull(PLZTextField.getText()));
+        personalAddress.setCountry(checkForNull(countryTextField.getText()));
+        personalAddress.setLocation(checkForNull(locationTextField.getText()));
+        personalAddress.setStreet(checkForNull(streetTextField.getText()));
+
+
+
+        personalData.setFamilyStatus(FamilyStatus.Married); // TODO: not in gui
+
         HashSet<TravelCostUniversityDTO> travelCostsUni = new HashSet<>(travelCostUniversityTableView.getItems());
         support.setTravelCostUniversities(travelCostsUni);
     }
-
-
 }

@@ -21,6 +21,7 @@ public class PersonalDataDTO {
     private Integer numberOfChildren;
     private AddressDTO address;
     private String telephone;
+    private String email;
     private byte[] photo;
 
     public String getForename() {
@@ -119,6 +120,14 @@ public class PersonalDataDTO {
         this.telephone = telephone;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public byte[] getPhoto() {
         return photo;
     }
@@ -142,6 +151,7 @@ public class PersonalDataDTO {
                 ", numberOfChildren=" + numberOfChildren +
                 ", address=" + address +
                 ", telephone='" + telephone + '\'' +
+                ", email=" + email +
                 ", photo=" + Arrays.toString(photo) +
                 '}';
     }
