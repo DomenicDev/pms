@@ -4,10 +4,14 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.UniversityAddController">
    <children>
-      <Label layoutX="54.0" layoutY="29.0" text="Universität Hinzufügen" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="30.0" />
+      <Label layoutX="54.0" layoutY="29.0" text="Universität Hinzufügen" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="30.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
       <Label layoutX="54.0" layoutY="73.0" text="Name der Univerität *" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="80.0" />
       <Label layoutX="54.0" layoutY="115.0" text="Standort *" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="120.0" />
       <Label layoutX="54.0" layoutY="160.0" text="Land * " AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="160.0" />

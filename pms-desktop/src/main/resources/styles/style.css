@@ -16,3 +16,7 @@ hfu darker green    rgb(132, 182, 45)
 .background_color-green_hfu {
     background-color: rgb(132, 182, 45);
 }
+#TextFont {
+    -fx-font: 30px Arial;
+
+}

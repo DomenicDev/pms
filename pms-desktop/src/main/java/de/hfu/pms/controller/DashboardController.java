@@ -57,8 +57,8 @@ public class DashboardController {
         homeParent = GuiLoader.loadFXML("/screens/home.fxml");
         doctoralStudentsParent = GuiLoader.loadFXML("/screens/doctoral_students_content.fxml");
         universitiesParent = GuiLoader.loadFXML("/screens/university_screen.fxml");
-        //accountInformationParent = GuiLoader.loadFXML("/screens/account_infoscreen.fxml");
-        //adminArea =GuiLoader.loadFXML("/screens/");
+        accountInformationParent = GuiLoader.loadFXML("/screens/account_infoscreen.fxml");
+        adminArea =GuiLoader.loadFXML("/screens/admin_Area.fxml");
 
         // todo add more
 
@@ -103,6 +103,7 @@ public class DashboardController {
     }
     @FXML
     public void  handleAdminArea() {
+        switchMainContent((adminArea));
 
     }
 }
