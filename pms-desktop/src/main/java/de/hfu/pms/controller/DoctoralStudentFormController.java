@@ -39,21 +39,50 @@ public class DoctoralStudentFormController implements Initializable {
     @FXML
     private Button cancelButton;
 
+
     // PERSONAL DATA
-    @FXML private TextField lastNameTextField;
-    @FXML private TextField foreNameTextField;
-    @FXML private TextField formerLastNameTextField;
-    @FXML private TextField streetTextField;
-    @FXML private TextField PLZTextField;
-    @FXML private TextField locationTextField;
-    @FXML private TextField countryTextField;
-    @FXML private TextField emailTextField;
-    @FXML private TextField phoneTextField;
-    @FXML private TextField titleTextField;
-    @FXML private DatePicker dateOfBirthDatePicker;
-    @FXML private ComboBox salutationComboBox;
-    @FXML private ComboBox genderComboBox;
-    @FXML private ComboBox childrenCountComboBox;
+    @FXML
+    private TextField lastNameTextField;
+
+    @FXML
+    private TextField foreNameTextField;
+
+    @FXML
+    private TextField formerLastNameTextField;
+
+    @FXML
+    private TextField streetTextField;
+
+    @FXML
+    private TextField PLZTextField;
+
+    @FXML
+    private TextField locationTextField;
+
+    @FXML
+    private TextField countryTextField;
+
+    @FXML
+    private TextField emailTextField;
+
+    @FXML
+    private TextField phoneTextField;
+
+    @FXML
+    private TextField titleTextField;
+
+    @FXML
+    private DatePicker dateOfBirthDatePicker;
+
+    @FXML
+    private ComboBox salutationComboBox;
+
+    @FXML
+    private ComboBox genderComboBox;
+
+    @FXML
+    private ComboBox childrenCountComboBox;
+
 
     // Employment
     @FXML
@@ -105,6 +134,21 @@ public class DoctoralStudentFormController implements Initializable {
     private TableColumn<VisitedQualificationDTO, LocalDate> qualificationDateTableColumn;
     @FXML
     private TableColumn<VisitedQualificationDTO, String> qualificationNameTableColumn;
+
+
+    // Alumni-Status
+    @FXML
+    private TextField jobTitleTextField;
+
+    @FXML
+    private TextField employerTextField;
+
+    @FXML
+    private CheckBox agreementNewsCheckBox;
+
+    @FXML
+    private CheckBox agreementEvaluationCheckBox;
+
 
 
     @Override
@@ -251,6 +295,7 @@ public class DoctoralStudentFormController implements Initializable {
         PersonalDataDTO personalData = doctoralStudent.getPersonalData();
         AddressDTO personalAddress = personalData.getAddress();
         SupportDTO support = doctoralStudent.getSupport();
+        AlumniStateDTO alumniState = doctoralStudent.getAlumniState();
 
         // process personal data
         personalData.setLastName(checkForNull(lastNameTextField.getText()));
@@ -261,7 +306,7 @@ public class DoctoralStudentFormController implements Initializable {
         personalData.setDateOfBirth(checkForNull(dateOfBirthDatePicker.getValue()));
         personalData.setEmail(checkForNull(emailTextField.getText()));
 
-        // todo: selected item in combobox, enums in fxml (salution, gender)
+        // todo: get selected item in combobox, enums in fxml (salutation, gender)
         // ObservableList<Integer> numberOfChildren = childrenCountComboBox.getItems();
         // personalData.setNumberOfChildren(numberOfChildren.get(childrenCountComboBox.getSelectedIndex()));
         // ComboBox childrenCount;
@@ -273,6 +318,12 @@ public class DoctoralStudentFormController implements Initializable {
         personalAddress.setLocation(checkForNull(locationTextField.getText()));
         personalAddress.setStreet(checkForNull(streetTextField.getText()));
 
+
+        // process alumni-state
+        alumniState.setJobTitle(checkForNull(jobTitleTextField.getText()));
+        alumniState.setEmployer(checkForNull(emailTextField.getText()));
+        alumniState.setAgreementNews(agreementNewsCheckBox.isSelected());
+        alumniState.setAgreementEvaluation(agreementEvaluationCheckBox.isSelected());
 
 
         personalData.setFamilyStatus(FamilyStatus.Married); // TODO: not in gui

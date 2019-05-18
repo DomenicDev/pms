@@ -645,8 +645,8 @@
                                              <children>
                                                 <Label text="Tätigkeit Berufsbezeichnung" />
                                                 <Label text="Arbeitgeber" GridPane.rowIndex="1" />
-                                                <TextField prefHeight="25.0" prefWidth="273.0" GridPane.columnIndex="1" />
-                                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <TextField fx:id="jobTitleTextField" prefHeight="25.0" prefWidth="273.0" GridPane.columnIndex="1" />
+                                                <TextField fx:id="employerTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                              </children>
                                           </GridPane>
                                           <Label text="Einwilligungen">
@@ -654,8 +654,8 @@
                                                 <Font name="System Bold" size="12.0" />
                                              </font>
                                           </Label>
-                                          <CheckBox mnemonicParsing="false" text="Einwilligung zu Kontakt / News" />
-                                          <CheckBox mnemonicParsing="false" text="Einwilligung zur Auswertung" />
+                                          <CheckBox fx:id="agreementNewsCheckBox" mnemonicParsing="false" text="Einwilligung zu Kontakt / News" />
+                                          <CheckBox fx:id="agreementEvaluationCheckBox" mnemonicParsing="false" text="Einwilligung zur Auswertung" />
                                        </children>
                                     </VBox>
                                  </content>
