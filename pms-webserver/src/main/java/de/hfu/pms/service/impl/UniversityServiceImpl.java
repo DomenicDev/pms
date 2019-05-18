@@ -5,9 +5,11 @@ import de.hfu.pms.exceptions.UniversityNotFoundException;
 import de.hfu.pms.model.University;
 import de.hfu.pms.service.UniversityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class UniversityServiceImpl implements UniversityService {
 
     private final UniversityDao universityDao;
