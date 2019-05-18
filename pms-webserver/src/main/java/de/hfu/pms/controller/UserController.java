@@ -1,8 +1,7 @@
 package de.hfu.pms.controller;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import de.hfu.pms.controller.exceptions.UserNotFoundException;
+import de.hfu.pms.exceptions.UserNotFoundException;
 import de.hfu.pms.dao.UserDao;
 import de.hfu.pms.model.User;
 import de.hfu.pms.service.UserService;
@@ -22,7 +21,6 @@ public class UserController {
     private final UserService service;
     private final ModelMapper modelMapper;
 
-    private ObjectMapper objectMapper;
 
     @Autowired
     public UserController(UserDao userDao, UserService userService, ModelMapper modelMapper) {
@@ -54,7 +52,7 @@ public class UserController {
         return "User " + user.getUsername() + " wurde erfolgreich die Rolle " + user.getRole() + " zugewiesen.";
     }
 
-    @GetMapping("/getUser/{username}")
+    @GetMapping("/get/{username}")
     @ResponseStatus(HttpStatus.OK)
     public UserDTO getUser (@PathVariable String username){
         try {
@@ -65,7 +63,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/getUserList")
+    @GetMapping("/getList")
     @ResponseStatus(HttpStatus.OK)
     public List<User> getAllUsers(){
         return service.getUserList();
