@@ -366,9 +366,9 @@ public class DoctoralStudentFormController implements Initializable {
         personalData.setFamilyStatus(checkForNull(familyStatusComboBox.getValue()).getEntity());
         personalData.setLastName(checkForNull(lastNameTextField.getText()));
         personalData.setForename(checkForNull(foreNameTextField.getText()));
-        personalData.setFormerLastName(checkForNull(formerLastNameTextField.getText()));
-        personalData.setTelephone(checkForNull(phoneTextField.getText()));
-        personalData.setTitle(checkForNull(titleTextField.getText()));
+        personalData.setFormerLastName(formerLastNameTextField.getText());
+        personalData.setTelephone(phoneTextField.getText());
+        personalData.setTitle(titleTextField.getText());
         personalData.setDateOfBirth(checkForNull(dateOfBirthDatePicker.getValue()));
         personalData.setEmail(checkForNull(emailTextField.getText()));
 
@@ -395,11 +395,13 @@ public class DoctoralStudentFormController implements Initializable {
 
 
         // process Support
-        HashSet<TravelCostUniversityDTO> travelCostsUni = new HashSet<>(travelCostUniversityTableView.getItems());
-        support.setTravelCostUniversities(travelCostsUni);
-        support.setScholarship(checkForNull(scholarshipTextField.getText()));
-        support.setAwards(checkForNull(awardsTextField.getText()));
-        support.setMiscellaneous(checkForNull(miscellaneousTextArea.getText()));
+        support.setTravelCostUniversities(new HashSet<>(travelCostUniversityTableView.getItems()));
+        support.setTravelCostConferences(new HashSet<>(travelCostConferenceTableView.getItems()));
+        support.setConsultingSupports(new HashSet<>(consultingSupportTableView.getItems()));
+        support.setVisitedQualifications(new HashSet<>(qualificationTableView.getItems()));
+        support.setScholarship(scholarshipTextField.getText());
+        support.setAwards(awardsTextField.getText());
+        support.setMiscellaneous(miscellaneousTextArea.getText());
 
 
         // process alumni-state
