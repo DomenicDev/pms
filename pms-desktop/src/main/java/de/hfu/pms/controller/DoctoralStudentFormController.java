@@ -6,10 +6,13 @@ import de.hfu.pms.EventBusSystem;
 import de.hfu.pms.events.CreateDocStudentPropertyEvent;
 import de.hfu.pms.events.SaveDoctoralStudentEvent;
 import de.hfu.pms.shared.dto.*;
-import de.hfu.pms.shared.enums.*;
+import de.hfu.pms.shared.enums.Campus;
+import de.hfu.pms.shared.enums.EmploymentLocation;
+import de.hfu.pms.shared.enums.FamilyStatus;
 import de.hfu.pms.utils.GuiLoader;
+import de.hfu.pms.utils.RepresentationWrapper;
+import de.hfu.pms.utils.WrappedEntity;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -67,6 +70,8 @@ public class DoctoralStudentFormController implements Initializable {
     private ComboBox salutationComboBox;
     @FXML
     private ComboBox genderComboBox;
+    @FXML
+    private ComboBox<WrappedEntity<FamilyStatus>> familyStatusComboBox;
     @FXML
     private ComboBox childrenCountComboBox;
 
@@ -207,10 +212,11 @@ public class DoctoralStudentFormController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         eventBus.register(this);
 
-        // setup employment table columns
+        // setup table columns
         initEmploymentTable(resources);
-
         initSupportTables(resources);
+
+        initComboBoxes();
     }
 
     private void initEmploymentTable(ResourceBundle resources) {
@@ -243,6 +249,11 @@ public class DoctoralStudentFormController implements Initializable {
         qualificationDateTableColumn.setCellValueFactory(new PropertyValueFactory<>("qualificationDate"));
         qualificationNameTableColumn.setCellValueFactory(new PropertyValueFactory<>("nameOfQualification"));
 
+    }
+
+    private void initComboBoxes() {
+        // family status
+        familyStatusComboBox.getItems().addAll(RepresentationWrapper.getWrappedFamilyStatus());
     }
 
     public void resetAllInputFields() {
@@ -352,7 +363,7 @@ public class DoctoralStudentFormController implements Initializable {
 
 
         // process personal data
-        personalData.setFamilyStatus(FamilyStatus.Married); // TODO: not in gui
+        personalData.setFamilyStatus(checkForNull(familyStatusComboBox.getValue()).getEntity());
         personalData.setLastName(checkForNull(lastNameTextField.getText()));
         personalData.setForename(checkForNull(foreNameTextField.getText()));
         personalData.setFormerLastName(checkForNull(formerLastNameTextField.getText()));
