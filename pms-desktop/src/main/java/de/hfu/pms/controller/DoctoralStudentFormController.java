@@ -40,8 +40,7 @@ public class DoctoralStudentFormController implements Initializable {
     @FXML
     private Button cancelButton;
 
-
-    // PERSONAL DATA
+    // Personal Data
     @FXML
     private TextField lastNameTextField;
     @FXML
@@ -51,7 +50,7 @@ public class DoctoralStudentFormController implements Initializable {
     @FXML
     private TextField streetTextField;
     @FXML
-    private TextField PLZTextField;
+    private TextField plzTextField;
     @FXML
     private TextField locationTextField;
     @FXML
@@ -70,6 +69,68 @@ public class DoctoralStudentFormController implements Initializable {
     private ComboBox genderComboBox;
     @FXML
     private ComboBox childrenCountComboBox;
+
+    /* *********** Graduation ***************** */
+    // Qualified Graduation
+    @FXML
+    private ComboBox graduationComboBox;
+    @FXML
+    private TextField subjectAreaTextField;
+    @FXML
+    private TextField gradeTextField;
+    @FXML
+    private ComboBox qualifiedGraduationUniversityComboBox;
+
+    // Target Graduation
+    @FXML
+    private ComboBox targetGraduationDegreeTextField;
+    @FXML
+    private TextField nameOfDissertationTextField;
+    @FXML
+    private TextField internalSupervisorTextField;
+    @FXML
+    private ComboBox facultyHFUComboBox;
+    @FXML
+    private TextField externalSupervisorTextField;
+    @FXML
+    private TextField externalFacultyTextField;
+    @FXML
+    private ComboBox externalUniversityComboBox;
+    @FXML
+    private DatePicker promotionAcceptedDatePicker;
+    @FXML
+    private DatePicker procedureCompletedDatePicker;
+    @FXML
+    private ComboBox ratingComboBox;
+
+    // Further Information
+    @FXML
+    private DatePicker promotionBeginDatePicker;
+    @FXML
+    private DatePicker predictedGraduationDatePicker;
+    @FXML
+    private DatePicker promotionAgreementDatePicker;
+
+    // Cancel
+    @FXML
+    private CheckBox promotionCanceledCheckBox;
+    private TextField cancelReason;
+
+    // Membership
+    @FXML
+    private CheckBox hfuMemberCheckBox;
+    @FXML
+    private DatePicker memberUntilDatePicker;
+    @FXML
+    private DatePicker memberSinceDatePicker;
+    @FXML
+    private CheckBox prolongMembershipCheckBox;
+    @FXML
+    private DatePicker prolongTillDatePicker;
+    @FXML
+    private CheckBox externMemberCheckBox;
+    @FXML
+    private TextField externCollegeNameTextField;
 
     // Employment
     @FXML
@@ -122,7 +183,6 @@ public class DoctoralStudentFormController implements Initializable {
     @FXML
     private TableColumn<VisitedQualificationDTO, String> qualificationNameTableColumn;
 
-
     // Other
     @FXML
     private TextField scholarshipTextField;
@@ -130,7 +190,6 @@ public class DoctoralStudentFormController implements Initializable {
     private TextField awardsTextField;
     @FXML
     private TextArea miscellaneousTextArea;
-
 
     // Alumni-Status
     @FXML
@@ -291,7 +350,9 @@ public class DoctoralStudentFormController implements Initializable {
         AlumniStateDTO alumniState = doctoralStudent.getAlumniState();
         EmploymentDTO employment = doctoralStudent.getEmployment();
 
+
         // process personal data
+        personalData.setFamilyStatus(FamilyStatus.Married); // TODO: not in gui
         personalData.setLastName(checkForNull(lastNameTextField.getText()));
         personalData.setForename(checkForNull(foreNameTextField.getText()));
         personalData.setFormerLastName(checkForNull(formerLastNameTextField.getText()));
@@ -307,31 +368,24 @@ public class DoctoralStudentFormController implements Initializable {
         // ComboBox salutationComboBox;
         // ComboBox genderComboBox;
 
-        personalAddress.setPlz(checkForNull(PLZTextField.getText()));
+        personalAddress.setPlz(checkForNull(plzTextField.getText()));
         personalAddress.setCountry(checkForNull(countryTextField.getText()));
         personalAddress.setLocation(checkForNull(locationTextField.getText()));
         personalAddress.setStreet(checkForNull(streetTextField.getText()));
 
 
+        // process graduation
+        // todo
+
+
         // process employment relationship
-
-        Set<EmploymentEntryDTO> employmentEntries = new HashSet<>();
-
-        for (EmploymentEntryDTO entry: employmentTableView.getItems()) {
-            EmploymentEntryDTO employmentEntry = new EmploymentEntryDTO();
-
-            employmentEntry.setCampusOfDeployment(entry.getCampusOfDeployment());
-            employmentEntry.setEmploymentLocation(entry.getEmploymentLocation());
-            employmentEntry.setId(checkForNull(entry.getId()));
-            employmentEntry.setKindOfEmployment(checkForNull(entry.getKindOfEmployment()));
-            employmentEntry.setPreEmploymentTimeToBeCharged(checkForNull(entry.isPreEmploymentTimeToBeCharged()));
-            employmentEntries.add(employmentEntry);
-        }
+        Set<EmploymentEntryDTO> employmentEntries = new HashSet<>(employmentTableView.getItems());
         employment.setEmploymentEntries(employmentEntries);
 
 
-
         // process Support
+        HashSet<TravelCostUniversityDTO> travelCostsUni = new HashSet<>(travelCostUniversityTableView.getItems());
+        support.setTravelCostUniversities(travelCostsUni);
         support.setScholarship(checkForNull(scholarshipTextField.getText()));
         support.setAwards(checkForNull(awardsTextField.getText()));
         support.setMiscellaneous(checkForNull(miscellaneousTextArea.getText()));
@@ -342,11 +396,5 @@ public class DoctoralStudentFormController implements Initializable {
         alumniState.setEmployer(checkForNull(emailTextField.getText()));
         alumniState.setAgreementNews(agreementNewsCheckBox.isSelected());
         alumniState.setAgreementEvaluation(agreementEvaluationCheckBox.isSelected());
-
-
-        personalData.setFamilyStatus(FamilyStatus.Married); // TODO: not in gui
-
-        HashSet<TravelCostUniversityDTO> travelCostsUni = new HashSet<>(travelCostUniversityTableView.getItems());
-        support.setTravelCostUniversities(travelCostsUni);
     }
 }
