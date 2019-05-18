@@ -404,7 +404,7 @@ public class DoctoralStudentFormController implements Initializable {
 
         // process alumni-state
         alumniState.setJobTitle(checkForNull(jobTitleTextField.getText()));
-        alumniState.setEmployer(checkForNull(emailTextField.getText()));
+        alumniState.setEmployer(checkForNull(employerTextField.getText()));
         alumniState.setAgreementNews(agreementNewsCheckBox.isSelected());
         alumniState.setAgreementEvaluation(agreementEvaluationCheckBox.isSelected());
     }
