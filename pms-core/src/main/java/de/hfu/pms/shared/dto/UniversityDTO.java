@@ -2,6 +2,7 @@ package de.hfu.pms.shared.dto;
 
 public class UniversityDTO {
 
+    private Long id;
     private String name;
     private String location;
     private String country;
@@ -9,10 +10,19 @@ public class UniversityDTO {
     public UniversityDTO() {
     }
 
-    public UniversityDTO(String name, String location, String country) {
+    public UniversityDTO(Long id, String name, String location, String country) {
+        this.id = id;
         this.name = name;
         this.location = location;
         this.country = country;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

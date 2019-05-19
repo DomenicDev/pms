@@ -2,9 +2,12 @@ package de.hfu.pms;
 
 import de.hfu.pms.exceptions.LoginFailedException;
 import de.hfu.pms.shared.dto.DoctoralStudentDTO;
+import de.hfu.pms.shared.dto.UniversityDTO;
 import de.hfu.pms.shared.dto.UserDTO;
 import de.hfu.pms.shared.enums.UserRole;
 import javafx.collections.transformation.SortedList;
+
+import java.util.Collection;
 
 public interface ApplicationServices {
 
@@ -30,6 +33,8 @@ public interface ApplicationServices {
      */
     void login(String username, String pwHash) throws LoginFailedException;
 
+    Collection<UniversityDTO> getAllUniversities();
+
     void logout();
 
     void changePassword(String Username, String newPwHash, String previousPwHash);
@@ -43,6 +48,8 @@ public interface ApplicationServices {
     UserRole getCurrentUserPrivileges();
 
     SortedList<UserDTO> getAllUsers();
+
+    void initEntityPool();
 
 
     // Todo add all other needed methods

@@ -1,5 +1,6 @@
 package de.hfu.pms.utils;
 
+import de.hfu.pms.shared.dto.UniversityDTO;
 import de.hfu.pms.shared.enums.*;
 
 import java.util.ArrayList;
@@ -88,5 +89,17 @@ public class RepresentationWrapper {
         collection.add(new WrappedEntity<>(bundle.getString("enum.rating.rite"), Rating.Rite));
         collection.add(new WrappedEntity<>(bundle.getString("enum.rating.failed"), Rating.Failed));
         return collection;
+    }
+
+    public static Collection<WrappedEntity<UniversityDTO>> getWrappedUniversities(Collection<UniversityDTO> universities) {
+        Collection<WrappedEntity<UniversityDTO>> collection = new ArrayList<>();
+        for (UniversityDTO uni : universities) {
+            collection.add(getWrappedUniversity(uni));
+        }
+        return collection;
+    }
+
+    public static WrappedEntity<UniversityDTO> getWrappedUniversity(UniversityDTO university) {
+        return new WrappedEntity<>(university.getName(), university);
     }
 }

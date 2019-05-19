@@ -11,15 +11,15 @@ public class NewGuiTest extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = GuiLoader.loadFXML("/screens/dashboard_final.fxml");
-        Scene scene = new Scene(root);
-
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
         ApplicationServices applicationServices = new ApplicationServiceImpl();
         applicationServices.login("admin", "1234");
         GuiEventHandler eventHandler = new GuiEventHandler(primaryStage, applicationServices, EventBusSystem.getEventBus());
+        applicationServices.initEntityPool();
+
+        Parent root = GuiLoader.loadFXML("/screens/dashboard_final.fxml");
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
     public static void main(String[] args) {

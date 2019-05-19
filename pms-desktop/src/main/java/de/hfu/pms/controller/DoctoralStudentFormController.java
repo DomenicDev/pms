@@ -5,6 +5,8 @@ import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.EventBusSystem;
 import de.hfu.pms.events.CreateDocStudentPropertyEvent;
 import de.hfu.pms.events.SaveDoctoralStudentEvent;
+import de.hfu.pms.events.SuccessfullyAddedUniversityEvent;
+import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.*;
 import de.hfu.pms.shared.enums.*;
 import de.hfu.pms.utils.GuiLoader;
@@ -23,6 +25,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -98,7 +101,7 @@ public class DoctoralStudentFormController implements Initializable {
     @FXML
     private TextField externalFacultyTextField;
     @FXML
-    private ComboBox externalUniversityComboBox;
+    private ComboBox<WrappedEntity<UniversityDTO>> externalUniversityComboBox;
     @FXML
     private DatePicker promotionAcceptedDatePicker;
     @FXML
@@ -262,6 +265,11 @@ public class DoctoralStudentFormController implements Initializable {
         targetGraduationDegreeTextField.getItems().addAll(RepresentationWrapper.getWrappedDoctoralGraduations());
         facultyHFUComboBox.getItems().addAll(RepresentationWrapper.getWrappedHFUFaculties());
         ratingComboBox.getItems().addAll(RepresentationWrapper.getWrappedRatings());
+
+        // university
+        Collection<UniversityDTO> universities = EntityPool.getInstance().getUniversities();
+        logger.log(Level.DEBUG, "Init university combo box with " + universities.size() + " item(s)");
+        externalUniversityComboBox.getItems().addAll(RepresentationWrapper.getWrappedUniversities(universities));
     }
 
     public void resetAllInputFields() {
@@ -351,6 +359,11 @@ public class DoctoralStudentFormController implements Initializable {
         }
     }
 
+    @Subscribe
+    public void handleAddUniversityEvent(SuccessfullyAddedUniversityEvent event) {
+        UniversityDTO university = event.getUniversity();
+        this.externalUniversityComboBox.getItems().add(RepresentationWrapper.getWrappedUniversity(university));
+    }
 
 
 
@@ -371,14 +384,14 @@ public class DoctoralStudentFormController implements Initializable {
 
 
         // process personal data
-        personalData.setFamilyStatus(checkForNull(familyStatusComboBox.getValue()).getEntity());
-        personalData.setLastName(checkForNull(lastNameTextField.getText()));
-        personalData.setForename(checkForNull(foreNameTextField.getText()));
+        personalData.setFamilyStatus((familyStatusComboBox.getValue()).getEntity());
+        personalData.setLastName((lastNameTextField.getText()));
+        personalData.setForename((foreNameTextField.getText()));
         personalData.setFormerLastName(formerLastNameTextField.getText());
         personalData.setTelephone(phoneTextField.getText());
         personalData.setTitle(titleTextField.getText());
-        personalData.setDateOfBirth(checkForNull(dateOfBirthDatePicker.getValue()));
-        personalData.setEmail(checkForNull(emailTextField.getText()));
+        personalData.setDateOfBirth((dateOfBirthDatePicker.getValue()));
+        personalData.setEmail((emailTextField.getText()));
 
         // todo: get selected item in combobox, enums in fxml (salutation, gender)
         // ObservableList<Integer> numberOfChildren = childrenCountComboBox.getItems();
@@ -387,10 +400,10 @@ public class DoctoralStudentFormController implements Initializable {
         // ComboBox salutationComboBox;
         // ComboBox genderComboBox;
 
-        personalAddress.setPlz(checkForNull(plzTextField.getText()));
-        personalAddress.setCountry(checkForNull(countryTextField.getText()));
-        personalAddress.setLocation(checkForNull(locationTextField.getText()));
-        personalAddress.setStreet(checkForNull(streetTextField.getText()));
+        personalAddress.setPlz((plzTextField.getText()));
+        personalAddress.setCountry((countryTextField.getText()));
+        personalAddress.setLocation((locationTextField.getText()));
+        personalAddress.setStreet((streetTextField.getText()));
 
 
         // process graduation
@@ -413,8 +426,8 @@ public class DoctoralStudentFormController implements Initializable {
 
 
         // process alumni-state
-        alumniState.setJobTitle(checkForNull(jobTitleTextField.getText()));
-        alumniState.setEmployer(checkForNull(employerTextField.getText()));
+        alumniState.setJobTitle((jobTitleTextField.getText()));
+        alumniState.setEmployer((employerTextField.getText()));
         alumniState.setAgreementNews(agreementNewsCheckBox.isSelected());
         alumniState.setAgreementEvaluation(agreementEvaluationCheckBox.isSelected());
     }

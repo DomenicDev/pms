@@ -1,11 +1,9 @@
 package de.hfu.pms;
 
 import de.hfu.pms.dao.DoctoralStudentDao;
+import de.hfu.pms.dao.UniversityDao;
 import de.hfu.pms.dao.UserDao;
-import de.hfu.pms.model.DoctoralStudent;
-import de.hfu.pms.model.PersonalData;
-import de.hfu.pms.model.User;
-import de.hfu.pms.model.UserRole;
+import de.hfu.pms.model.*;
 import de.hfu.pms.shared.enums.Gender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -22,12 +20,14 @@ public class DatabaseInit implements CommandLineRunner {
     private PasswordEncoder passwordEncoder;
 
     private final DoctoralStudentDao doctoralStudentDao;
+    private final UniversityDao universityDao;
 
     @Autowired
-    public DatabaseInit(UserDao userDao, PasswordEncoder passwordEncoder, DoctoralStudentDao doctoralStudentDao) {
+    public DatabaseInit(UserDao userDao, PasswordEncoder passwordEncoder, DoctoralStudentDao doctoralStudentDao, UniversityDao universityDao) {
         this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
         this.doctoralStudentDao = doctoralStudentDao;
+        this.universityDao = universityDao;
     }
 
     @Override
@@ -50,5 +50,11 @@ public class DatabaseInit implements CommandLineRunner {
 
         doctoralStudentDao.save(student);
 
+        // add test university
+        University university = new University();
+        university.setName("HFU");
+        university.setLocation("Furtwangen");
+        university.setCountry("Deutschland");
+        universityDao.save(university);
     }
 }

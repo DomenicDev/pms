@@ -1,12 +1,16 @@
 package de.hfu.pms;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.google.common.eventbus.EventBus;
 import de.hfu.pms.client.RestClient;
 import de.hfu.pms.config.AppConfig;
 import de.hfu.pms.exceptions.LoginFailedException;
+import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.DoctoralStudentDTO;
+import de.hfu.pms.shared.dto.UniversityDTO;
 import de.hfu.pms.shared.dto.UserDTO;
 import de.hfu.pms.shared.enums.UserRole;
 import javafx.collections.transformation.SortedList;
@@ -14,16 +18,21 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.List;
 
 public class ApplicationServiceImpl implements ApplicationServices {
 
     private Logger logger = Logger.getLogger(ApplicationServiceImpl.class);
+
+    private EventBus eventBus = EventBusSystem.getEventBus();
 
     private ObjectMapper mapper = new ObjectMapper();
     private RestClient restClient;
 
     private final String HOST_URL = AppConfig.get("host");
     private final String STUDENT_PREFIX = "/student/";
+    private final String UNIVERSITY_PREFIX = "/university/";
 
     public ApplicationServiceImpl() {
         this.restClient = new RestClient();
@@ -93,6 +102,17 @@ public class ApplicationServiceImpl implements ApplicationServices {
     }
 
     @Override
+    public List<UniversityDTO> getAllUniversities() {
+        try {
+            String response = restClient.get(HOST_URL + UNIVERSITY_PREFIX + "getList");
+            return mapper.readValue(response, new TypeReference<List<UniversityDTO>>(){});
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
     public void logout() {
 
     }
@@ -125,5 +145,11 @@ public class ApplicationServiceImpl implements ApplicationServices {
     @Override
     public SortedList<UserDTO> getAllUsers() {
         return null;
+    }
+
+    @Override
+    public void initEntityPool() {
+        Collection<UniversityDTO> universities = getAllUniversities();
+        EntityPool.getInstance().addAll(universities);
     }
 }

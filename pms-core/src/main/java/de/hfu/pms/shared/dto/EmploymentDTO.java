@@ -8,6 +8,10 @@ public class EmploymentDTO {
 
     private Set<EmploymentEntryDTO> employmentEntries = new HashSet<>();
 
+    public EmploymentDTO() {
+
+    }
+
     public EmploymentDTO(Collection<EmploymentEntryDTO> employmentEntries) {
         this.employmentEntries.addAll(employmentEntries);
     }

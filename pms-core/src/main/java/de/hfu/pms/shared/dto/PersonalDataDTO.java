@@ -19,7 +19,7 @@ public class PersonalDataDTO {
     private String nationality;
     private FamilyStatus familyStatus;
     private Integer numberOfChildren;
-    private AddressDTO address;
+    private AddressDTO address = new AddressDTO();
     private String telephone;
     private String email;
     private byte[] photo;

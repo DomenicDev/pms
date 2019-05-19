@@ -24,8 +24,15 @@ public class DoctoralStudentDTO {
     private AlumniStateDTO alumniState;
 
     public DoctoralStudentDTO() {
-
+        this.personalData = new PersonalDataDTO();
+        this.qualifiedGraduation = new QualifiedGraduationDTO();
+        this.targetGraduation = new TargetGraduationDTO();
+        this.employment = new EmploymentDTO();
+        this.support = new SupportDTO();
+        this.alumniState = new AlumniStateDTO();
     }
+
+
 
     public Long getId() {
         return id;
