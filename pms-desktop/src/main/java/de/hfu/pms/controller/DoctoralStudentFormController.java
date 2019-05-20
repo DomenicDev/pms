@@ -9,6 +9,7 @@ import de.hfu.pms.events.SuccessfullyAddedUniversityEvent;
 import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.*;
 import de.hfu.pms.shared.enums.*;
+import de.hfu.pms.utils.FormValidator;
 import de.hfu.pms.utils.GuiLoader;
 import de.hfu.pms.utils.RepresentationWrapper;
 import de.hfu.pms.utils.WrappedEntity;
@@ -85,7 +86,7 @@ public class DoctoralStudentFormController implements Initializable {
     @FXML
     private TextField gradeTextField;
     @FXML
-    private ComboBox qualifiedGraduationUniversityComboBox;
+    private ComboBox<WrappedEntity<UniversityDTO>> qualifiedGraduationUniversityComboBox;
 
     // Target Graduation
     @FXML
@@ -121,7 +122,7 @@ public class DoctoralStudentFormController implements Initializable {
     @FXML
     private CheckBox promotionCanceledCheckBox;
     @FXML
-    private TextField cancelReason;
+    private TextField cancelReasonTextField;
 
     // Membership
     @FXML
@@ -270,6 +271,7 @@ public class DoctoralStudentFormController implements Initializable {
         Collection<UniversityDTO> universities = EntityPool.getInstance().getUniversities();
         logger.log(Level.DEBUG, "Init university combo box with " + universities.size() + " item(s)");
         externalUniversityComboBox.getItems().addAll(RepresentationWrapper.getWrappedUniversities(universities));
+        qualifiedGraduationUniversityComboBox.getItems().addAll(RepresentationWrapper.getWrappedUniversities(universities));
     }
 
     public void resetAllInputFields() {
@@ -304,14 +306,17 @@ public class DoctoralStudentFormController implements Initializable {
             // we must not set the ID !!!
         }
         // write form data to java object
-        writeToDoctoralStudentDTO();
+        boolean validationSuccessful = writeToDoctoralStudentDTO();
 
-        // post a new save event to notify subscribers about the save action
-        // they should take care about the actual saving process
-        eventBus.post(new SaveDoctoralStudentEvent(doctoralStudent));
+        if (validationSuccessful) {
+            // post a new save event to notify subscribers about the save action
+            // they should take care about the actual saving process
+            eventBus.post(new SaveDoctoralStudentEvent(doctoralStudent));
 
-        // after saving, we can reset our input fields
-        resetAllInputFields();
+            // after saving, we can reset our input fields
+            resetAllInputFields();
+        }
+
     }
 
     // DEPLOYMENT
@@ -363,28 +368,27 @@ public class DoctoralStudentFormController implements Initializable {
     public void handleAddUniversityEvent(SuccessfullyAddedUniversityEvent event) {
         UniversityDTO university = event.getUniversity();
         this.externalUniversityComboBox.getItems().add(RepresentationWrapper.getWrappedUniversity(university));
+        this.qualifiedGraduationUniversityComboBox.getItems().add(RepresentationWrapper.getWrappedUniversity(university));
     }
 
 
-
-    private <T> T checkForNull(T t) throws IllegalArgumentException {
-        if (t == null) {
-            throw new IllegalArgumentException("null is not a valid value");
-        }
-        return t;
-    }
-
-
-    private void writeToDoctoralStudentDTO() {
+    private boolean writeToDoctoralStudentDTO() {
         PersonalDataDTO personalData = doctoralStudent.getPersonalData();
         AddressDTO personalAddress = personalData.getAddress();
         SupportDTO support = doctoralStudent.getSupport();
         AlumniStateDTO alumniState = doctoralStudent.getAlumniState();
         EmploymentDTO employment = doctoralStudent.getEmployment();
+        QualifiedGraduationDTO qualifiedGraduation = doctoralStudent.getQualifiedGraduation();
+        TargetGraduationDTO targetGraduationDTO = doctoralStudent.getTargetGraduation();
 
+        FormValidator validator = new FormValidator();
 
         // process personal data
-        personalData.setFamilyStatus((familyStatusComboBox.getValue()).getEntity());
+        if (familyStatusComboBox.getValue() == null) {
+            personalData.setFamilyStatus(null);
+        } else {
+            personalData.setFamilyStatus((familyStatusComboBox.getValue()).getEntity());
+        }
         personalData.setLastName((lastNameTextField.getText()));
         personalData.setForename((foreNameTextField.getText()));
         personalData.setFormerLastName(formerLastNameTextField.getText());
@@ -407,7 +411,67 @@ public class DoctoralStudentFormController implements Initializable {
 
 
         // process graduation
-        // todo
+        if (validator.comboBoxHasSelectedItem(graduationComboBox)) {
+            qualifiedGraduation.setGraduation(graduationComboBox.getValue().getEntity());
+        }
+
+        if (validator.textFieldNotEmpty(subjectAreaTextField)) {
+            qualifiedGraduation.setSubjectArea(subjectAreaTextField.getText());
+        }
+
+        if (validator.isValidGrade(gradeTextField)) {
+            qualifiedGraduation.setGrade(new BigDecimal(gradeTextField.getText().replace(",", ".")));
+        } else {
+        }
+
+        // target graduation
+        // todo: add more complex logic for evaluating custom text field if there is no match in the combobox
+        if (targetGraduationDegreeTextField.getValue() == null) {
+            targetGraduationDTO.setTargetGraduationDegree(null);
+        } else {
+            targetGraduationDTO.setTargetGraduationDegree(targetGraduationDegreeTextField.getValue().getRepresentation());
+        }
+
+        if (validator.textFieldNotEmpty(nameOfDissertationTextField)) {
+            targetGraduationDTO.setNameOfDissertation(nameOfDissertationTextField.getText());
+        }
+
+        if (validator.textFieldNotEmpty(internalSupervisorTextField)) {
+            targetGraduationDTO.setInternalSupervisor(internalSupervisorTextField.getText());
+        }
+
+        if (validator.comboBoxHasSelectedItem(facultyHFUComboBox)) {
+            targetGraduationDTO.setFacultyHFU(facultyHFUComboBox.getValue().getEntity());
+        }
+
+        targetGraduationDTO.setExternalSupervisor(externalSupervisorTextField.getText());
+        targetGraduationDTO.setExternalFaculty(externalFacultyTextField.getText());
+
+        if (externalUniversityComboBox.getValue() != null) {
+            targetGraduationDTO.setExternalUniversity(externalUniversityComboBox.getValue().getEntity());
+        } else {
+            targetGraduationDTO.setExternalUniversity(null);
+        }
+
+        targetGraduationDTO.setPromotionAccepted(promotionAcceptedDatePicker.getValue());
+        targetGraduationDTO.setProcedureCompleted(procedureCompletedDatePicker.getValue());
+
+        if (ratingComboBox.getValue() == null) {
+            targetGraduationDTO.setRating(null);
+        } else {
+            targetGraduationDTO.setRating(ratingComboBox.getValue().getEntity());
+        }
+
+        // further information
+        targetGraduationDTO.setPromotionAdmissionDate(promotionBeginDatePicker.getValue());
+        targetGraduationDTO.setPrognosticatedPromotionDate(predictedGraduationDatePicker.getValue());
+        targetGraduationDTO.setPromotionAgreement(promotionAgreementDatePicker.getValue());
+
+        if (promotionCanceledCheckBox.isSelected()) {
+            targetGraduationDTO.setCancelReason(cancelReasonTextField.getText());
+        } else {
+            targetGraduationDTO.setCancelReason(null);
+        }
 
 
         // process employment relationship
@@ -430,5 +494,7 @@ public class DoctoralStudentFormController implements Initializable {
         alumniState.setEmployer((employerTextField.getText()));
         alumniState.setAgreementNews(agreementNewsCheckBox.isSelected());
         alumniState.setAgreementEvaluation(agreementEvaluationCheckBox.isSelected());
+
+        return validator.validationSuccessful();
     }
 }
