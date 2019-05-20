@@ -80,6 +80,7 @@ public class ApplicationServiceImpl implements ApplicationServices {
 
     @Override
     public void login(String username, String password) throws LoginFailedException {
+        logger.log(Level.DEBUG, "Try to Login with Username and Password");
         // first update the login credentials with the specified ones
         restClient.setLoginCredentials(username, password);
 
