@@ -178,7 +178,12 @@ public class ApplicationServiceImpl implements ApplicationServices {
 
     @Override
     public void changeUserPrivileges(String username, UserRole newUserRole) {
-
+        try {
+            String response = restClient.get(HOST_URL + USER_PREFIX +"updateRole/" + username);
+            logger.log(Level.INFO, response);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

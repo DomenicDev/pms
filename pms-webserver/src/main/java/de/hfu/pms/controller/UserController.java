@@ -6,6 +6,7 @@ import de.hfu.pms.exceptions.UserNotFoundException;
 import de.hfu.pms.dao.UserDao;
 import de.hfu.pms.exceptions.WrongPasswordException;
 import de.hfu.pms.model.User;
+import de.hfu.pms.model.UserRole;
 import de.hfu.pms.service.UserService;
 import de.hfu.pms.shared.dto.UserDTO;
 import org.modelmapper.ModelMapper;
@@ -55,12 +56,12 @@ public class UserController {
         return "Password sucessfully changed";
     }
 
-    @PostMapping("/updateRole")
+    @PostMapping("/updateRole/{username}")
     @ResponseStatus(HttpStatus.OK)
-    public String updateUserRole(@RequestBody UserDTO userDTO) {
-        User user = convertToEntity(userDTO);
-        service.updateUserRole(user.getUsername(), user.getRole());
-        return "User " + user.getUsername() + " wurde erfolgreich die Rolle " + user.getRole() + " zugewiesen.";
+    public UserDTO updateUserRole(@PathVariable String username, @RequestBody UserRole newRole) {
+        User user = service.updateUserRole(username , newRole);
+        UserDTO userDTO = convertToDTO(user);
+        return userDTO;
     }
 
     @GetMapping("/get/{username}")
