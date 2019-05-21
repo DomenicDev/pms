@@ -3,14 +3,16 @@ package de.hfu.pms.controller;
 import de.hfu.pms.dao.DoctoralStudentDao;
 import de.hfu.pms.exceptions.DoctoralStudentNotFoundException;
 import de.hfu.pms.model.DoctoralStudent;
-import de.hfu.pms.model.PersonalData;
 import de.hfu.pms.service.DoctoralStudentService;
 import de.hfu.pms.shared.dto.DoctoralStudentDTO;
-import de.hfu.pms.shared.dto.PersonalDataDTO;
+import de.hfu.pms.shared.dto.PreviewDoctoralStudentDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/student")
@@ -42,6 +44,16 @@ public class DoctoralStudentController {
         return convertToDTO(updatedStudent);
     }
 
+    @GetMapping("/previews")
+    public List<PreviewDoctoralStudentDTO> getAllDoctoralStudentsAsPreview() {
+        List<DoctoralStudent> doctoralStudents = doctoralStudentService.getAll();
+        List<PreviewDoctoralStudentDTO> previews = new ArrayList<>();
+        for (DoctoralStudent student : doctoralStudents) {
+            previews.add(convertToPreview(student));
+        }
+        return previews;
+    }
+
     @GetMapping("/get/{id}")
     public DoctoralStudentDTO getDoctoralStudent(@PathVariable Long id) {
         DoctoralStudent student = doctoralStudentService.findById(id);
@@ -64,33 +76,23 @@ public class DoctoralStudentController {
         return doctoralStudentDTO;
     }
 
+    private PreviewDoctoralStudentDTO convertToPreview(DoctoralStudent doctoralStudent) {
+        PreviewDoctoralStudentDTO preview = new PreviewDoctoralStudentDTO();
+        preview.setId(doctoralStudent.getId());
+        preview.setForeName(doctoralStudent.getPersonalData().getForename());
+        preview.setName(doctoralStudent.getPersonalData().getLastName());
+        preview.setFaculty(doctoralStudent.getTargetGraduation().getFacultyHFU());
+        preview.setEmail(doctoralStudent.getPersonalData().getEmail());
+        preview.setPhoneNumber(doctoralStudent.getPersonalData().getTelephone());
+        preview.setGender(doctoralStudent.getPersonalData().getGender());
+        return preview;
+    }
+
     @ResponseBody
     @ExceptionHandler(DoctoralStudentNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String doctoralStudentNotFoundHandler(DoctoralStudentNotFoundException ex) {
         return ex.getMessage();
-    }
-
-
-    // samples (can be deleted soon)
-    private int c = 1;
-    @RequestMapping("/sample")
-    public DoctoralStudent docStudent() {
-        DoctoralStudent doc = new DoctoralStudent();
-        doc.setPersonalData(new PersonalData());
-        doc.getPersonalData().setForename("Domenic"+(c++));
-        doctoralStudentDao.save(doc);
-        return doc;
-    }
-
-    @RequestMapping(value= "/add_sample")
-    @ResponseStatus(HttpStatus.CREATED)
-    public DoctoralStudentDTO getSampleDTO(@RequestParam(value = "name", defaultValue = "World") String name) {
-        DoctoralStudentDTO dto = new DoctoralStudentDTO();
-        dto.setPersonalData(new PersonalDataDTO());
-        dto.getPersonalData().setForename(name);
-        DoctoralStudent student = convertToEntity(dto);
-        return convertToDTO(student);
     }
 
 }
