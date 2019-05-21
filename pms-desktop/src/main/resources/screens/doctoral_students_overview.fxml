@@ -16,9 +16,9 @@
             <FontIcon iconLiteral="fa-search" iconSize="20" />
             <TextField prefHeight="25.0" prefWidth="176.0" promptText="Search for Doctoral Students">
                <HBox.margin>
-                  <Insets right="40.0" />
+                  <Insets right="15.0" />
                </HBox.margin></TextField>
-            <Button mnemonicParsing="false" onAction="#handleOnActionNewButton" text="Neu" />
+            <Button mnemonicParsing="false" onAction="#handleOnActionSearchButton" text="Suchen" />
             <Button mnemonicParsing="false" onAction="#handleOnActionEditButton" text="Bearbeiten" />
             <Button mnemonicParsing="false" onAction="#handleOnActionDeleteButton" text="Löschen" />
          </children>
@@ -26,11 +26,14 @@
             <Insets left="10.0" top="20.0" />
          </padding>
       </HBox>
-      <TableView prefHeight="200.0" prefWidth="200.0">
+      <TableView fx:id="searchResultTableView" prefHeight="200.0" prefWidth="200.0">
         <columns>
           <TableColumn prefWidth="75.0" text="Name" />
           <TableColumn prefWidth="75.0" text="Vorname" />
-            <TableColumn prefWidth="75.0" text="Fakultät" />
+          <TableColumn prefWidth="75.0" text="Fakultät" />
+          <TableColumn prefWidth="75.0" text="E-Mail" />
+          <TableColumn prefWidth="75.0" text="Telefon" />
+          <TableColumn prefWidth="75.0" text="Geschlecht" />
         </columns>
       </TableView>
    </children>

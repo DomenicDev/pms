@@ -1,9 +1,15 @@
 package de.hfu.pms.controller;
 
+import de.hfu.pms.shared.dto.PreviewDoctoralStudentDTO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.TableView;
+
 
 public class DoctoralStudentOverviewController {
+
+    @FXML
+    private TableView<PreviewDoctoralStudentDTO> searchResultTableView;
 
     @FXML
     public void handleOnActionDeleteButton(ActionEvent event) {
@@ -16,9 +22,9 @@ public class DoctoralStudentOverviewController {
     }
 
     @FXML
-    public void handleOnActionNewButton(ActionEvent event) {
-
+    public void handleOnActionSearchButton(ActionEvent event) {
+        //Object property = event.getProperty();
+        //searchResultTableView.getItems().add((DoctoralStudentDTO) property);
     }
-
 
 }
