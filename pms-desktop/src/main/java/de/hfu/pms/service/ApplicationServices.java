@@ -41,7 +41,7 @@ public interface ApplicationServices {
 
     void changePassword(String Username, String newPwHash, String previousPwHash);
 
-    void addUser(String username, String pwHash);
+    void addUser(UserDTO userDTO);
 
     void removeUser(String username);
 

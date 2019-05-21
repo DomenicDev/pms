@@ -33,6 +33,7 @@ public class ApplicationServiceImpl implements ApplicationServices {
 
     private final String HOST_URL = AppConfig.get("host");
     private final String STUDENT_PREFIX = "/student/";
+    private final String USER_PREFIX = "/user/";
     private final String UNIVERSITY_PREFIX = "/university/";
 
     public ApplicationServiceImpl() {
@@ -140,7 +141,17 @@ public class ApplicationServiceImpl implements ApplicationServices {
     }
 
     @Override
-    public void addUser(String username, String pwHash) {
+    public void addUser(UserDTO userDTO) {
+        try {
+            String json = mapper.writeValueAsString(userDTO);
+            String response = restClient.postJson(HOST_URL + USER_PREFIX + "create", json);
+            UserDTO dto = mapper.readValue(response, UserDTO.class);
+            logger.log(Level.INFO, "User created: " + dto);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
