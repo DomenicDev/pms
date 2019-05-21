@@ -77,6 +77,7 @@ public class UserController {
         return modelMapper.map(user, UserDTO.class);
     }
 
+    //Error Response
 
     @ResponseStatus(value = HttpStatus.CONFLICT, reason = "This Username already exists.")
     @ExceptionHandler(org.springframework.dao.DataIntegrityViolationException.class)
