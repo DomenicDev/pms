@@ -142,9 +142,9 @@ public class DoctoralStudentFormController implements Initializable {
     @FXML
     private DatePicker prolongTillDatePicker;
     @FXML
-    private CheckBox externMemberCheckBox;
+    private CheckBox externalMemberCheckBox;
     @FXML
-    private TextField externCollegeNameTextField;
+    private TextField externalCollegeNameTextField;
 
     // Employment
     @FXML
@@ -365,7 +365,7 @@ public class DoctoralStudentFormController implements Initializable {
     }
 
     @FXML
-    public void handleOnActionExternMemberCheckBox() {
+    public void handleOnActionExternalMemberCheckBox() {
         refreshCheckBoxes();
     }
 
@@ -377,7 +377,7 @@ public class DoctoralStudentFormController implements Initializable {
     private void refreshCheckBoxes() {
         hfuMembershipVBox.setDisable(!hfuMemberCheckBox.isSelected());
         extensionMembershipHBox.setDisable(!prolongMembershipCheckBox.isSelected());
-        externCollegeNameTextField.setDisable(!externMemberCheckBox.isSelected());
+        externalCollegeNameTextField.setDisable(!externalMemberCheckBox.isSelected());
         cancelReasonTextField.setDisable(!promotionCanceledCheckBox.isSelected());
     }
 
@@ -524,7 +524,7 @@ public class DoctoralStudentFormController implements Initializable {
         }
 
         // external membership
-        targetGraduationDTO.setExternalProgram(externMemberCheckBox.isSelected() ? externCollegeNameTextField.getText() : null);
+        targetGraduationDTO.setExternalProgram(externalMemberCheckBox.isSelected() ? externalCollegeNameTextField.getText() : null);
 
         // cancel reason
         targetGraduationDTO.setCancelReason(promotionCanceledCheckBox.isSelected() ? cancelReasonTextField.getText() : null);
