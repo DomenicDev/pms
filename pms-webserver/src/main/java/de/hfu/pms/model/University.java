@@ -19,6 +19,9 @@ public class University {
     @Column
     private String country;
 
+    @Column
+    private String abbreviation;
+
     public Integer getId() {
         return id;
     }
@@ -49,5 +52,13 @@ public class University {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public String getAbbreviation() {
+        return abbreviation;
+    }
+
+    public void setAbbreviation(String abbreviation) {
+        this.abbreviation = abbreviation;
     }
 }

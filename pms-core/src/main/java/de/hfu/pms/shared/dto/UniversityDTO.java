@@ -6,15 +6,17 @@ public class UniversityDTO {
     private String name;
     private String location;
     private String country;
+    private String abbreviation;
 
     public UniversityDTO() {
     }
 
-    public UniversityDTO(Long id, String name, String location, String country) {
+    public UniversityDTO(Long id, String name, String location, String country, String abbreviation) {
         this.id = id;
         this.name = name;
         this.location = location;
         this.country = country;
+        this.abbreviation = abbreviation;
     }
 
     public Long getId() {
@@ -47,5 +49,13 @@ public class UniversityDTO {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public String getAbbreviation() {
+        return abbreviation;
+    }
+
+    public void setAbbreviation(String abbreviation) {
+        this.abbreviation = abbreviation;
     }
 }
