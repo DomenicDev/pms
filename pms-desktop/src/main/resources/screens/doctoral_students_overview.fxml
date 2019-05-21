@@ -14,7 +14,7 @@
       <HBox prefHeight="62.0" prefWidth="600.0" spacing="15.0">
          <children>
             <FontIcon iconLiteral="fa-search" iconSize="20" />
-            <TextField prefHeight="25.0" prefWidth="176.0" promptText="Search for Doctoral Students">
+            <TextField fx:id="searchTextField" prefHeight="25.0" prefWidth="176.0" promptText="Search for Doctoral Students">
                <HBox.margin>
                   <Insets right="15.0" />
                </HBox.margin></TextField>
@@ -28,12 +28,12 @@
       </HBox>
       <TableView fx:id="searchResultTableView" prefHeight="200.0" prefWidth="200.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Name" />
-          <TableColumn prefWidth="75.0" text="Vorname" />
-          <TableColumn prefWidth="75.0" text="Fakultät" />
-          <TableColumn prefWidth="75.0" text="E-Mail" />
-          <TableColumn prefWidth="75.0" text="Telefon" />
-          <TableColumn prefWidth="75.0" text="Geschlecht" />
+          <TableColumn fx:id="searchResultNameTableColumn" prefWidth="75.0" text="Name" />
+          <TableColumn fx:id="searchResultForeNameTableColumn" prefWidth="75.0" text="Vorname" />
+          <TableColumn fx:id="searchResultFacultyTableColumn" prefWidth="75.0" text="Fakultät" />
+          <TableColumn fx:id="searchResultEmailTableColumn" prefWidth="75.0" text="E-Mail" />
+          <TableColumn fx:id="searchResultPhoneNumberTableColumn" prefWidth="75.0" text="Telefon" />
+          <TableColumn fx:id="searchResultGenderTableColumn" prefWidth="75.0" text="Geschlecht" />
         </columns>
       </TableView>
    </children>

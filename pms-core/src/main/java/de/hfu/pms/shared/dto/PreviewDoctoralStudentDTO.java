@@ -6,17 +6,17 @@ import de.hfu.pms.shared.enums.Gender;
 public class PreviewDoctoralStudentDTO {
 
     private Long id;
-    private String foreName;
     private String name;
+    private String foreName;
     private FacultyHFU faculty;
     private String email;
     private String phoneNumber;
     private Gender gender;
 
-    public PreviewDoctoralStudentDTO(Long id, String foreName, String name, FacultyHFU faculty, String email, String phoneNumber, Gender gender) {
+    public PreviewDoctoralStudentDTO(Long id, String name, String foreName, FacultyHFU faculty, String email, String phoneNumber, Gender gender) {
         this.id = id;
-        this.foreName = foreName;
         this.name = name;
+        this.foreName = foreName;
         this.faculty = faculty;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -31,20 +31,20 @@ public class PreviewDoctoralStudentDTO {
         this.id = id;
     }
 
-    public String getforeName() {
-        return foreName;
-    }
-
-    public void setForeName(String foreName) {
-        this.foreName = foreName;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getForeName() {
+        return foreName;
+    }
+
+    public void setForeName(String foreName) {
+        this.foreName = foreName;
     }
 
     public FacultyHFU getFaculty() { return faculty; }
