@@ -3,6 +3,7 @@ package de.hfu.pms.controller;
 import com.google.common.eventbus.EventBus;
 import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.AlertNotificationEvent;
+import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.PreviewDoctoralStudentDTO;
 import de.hfu.pms.shared.enums.FacultyHFU;
 import de.hfu.pms.shared.enums.Gender;
@@ -14,11 +15,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.awt.event.KeyEvent;
 import java.net.URL;
-import java.util.*;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.ResourceBundle;
 
 
 public class DoctoralStudentOverviewController  implements Initializable {
@@ -50,6 +51,10 @@ public class DoctoralStudentOverviewController  implements Initializable {
 
         // setup table columns
         initPreviewTables();
+
+        // init with previews
+        Collection<PreviewDoctoralStudentDTO> previews = EntityPool.getInstance().getPreviewStudents();
+        searchResultTableView.getItems().addAll(previews);
     }
 
     @FXML

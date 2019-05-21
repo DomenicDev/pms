@@ -2,6 +2,7 @@ package de.hfu.pms.service;
 
 import de.hfu.pms.exceptions.LoginFailedException;
 import de.hfu.pms.shared.dto.DoctoralStudentDTO;
+import de.hfu.pms.shared.dto.PreviewDoctoralStudentDTO;
 import de.hfu.pms.shared.dto.UniversityDTO;
 import de.hfu.pms.shared.dto.UserDTO;
 import de.hfu.pms.shared.enums.UserRole;
@@ -20,6 +21,8 @@ public interface ApplicationServices {
     void deleteDoctoralStudent(int studentID);
 
     void pseudonymisate(int studentID);
+
+    Collection<PreviewDoctoralStudentDTO> getPreviews();
 
     DoctoralStudentDTO getDoctoralStudent(int studentID);
 

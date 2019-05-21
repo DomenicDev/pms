@@ -12,6 +12,7 @@ import de.hfu.pms.events.SuccessfullyAddedUniversityEvent;
 import de.hfu.pms.exceptions.LoginFailedException;
 import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.DoctoralStudentDTO;
+import de.hfu.pms.shared.dto.PreviewDoctoralStudentDTO;
 import de.hfu.pms.shared.dto.UniversityDTO;
 import de.hfu.pms.shared.dto.UserDTO;
 import de.hfu.pms.shared.enums.UserRole;
@@ -70,6 +71,17 @@ public class ApplicationServiceImpl implements ApplicationServices {
     @Override
     public void pseudonymisate(int studentID) {
 
+    }
+
+    @Override
+    public Collection<PreviewDoctoralStudentDTO> getPreviews() {
+        try {
+            String response = restClient.get(HOST_URL + STUDENT_PREFIX + "previews");
+            return mapper.readValue(response, new TypeReference<List<PreviewDoctoralStudentDTO>>(){});
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
@@ -212,5 +224,7 @@ public class ApplicationServiceImpl implements ApplicationServices {
     public void initEntityPool() {
         Collection<UniversityDTO> universities = getAllUniversities();
         EntityPool.getInstance().addAll(universities);
+
+        EntityPool.getInstance().initPreviews(getPreviews());
     }
 }

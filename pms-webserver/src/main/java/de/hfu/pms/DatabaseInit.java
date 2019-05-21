@@ -4,6 +4,7 @@ import de.hfu.pms.dao.DoctoralStudentDao;
 import de.hfu.pms.dao.UniversityDao;
 import de.hfu.pms.dao.UserDao;
 import de.hfu.pms.model.*;
+import de.hfu.pms.shared.enums.FacultyHFU;
 import de.hfu.pms.shared.enums.Gender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -47,6 +48,8 @@ public class DatabaseInit implements CommandLineRunner {
         personalData.setNationality("German");
 
         student.setPersonalData(personalData);
+
+        student.getTargetGraduation().setFacultyHFU(FacultyHFU.Informatik);
 
         doctoralStudentDao.save(student);
 

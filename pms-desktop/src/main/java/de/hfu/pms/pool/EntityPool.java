@@ -37,6 +37,10 @@ public final class EntityPool {
         universities.addAll(data);
     }
 
+    public void initPreviews(Collection<PreviewDoctoralStudentDTO> previews) {
+        this.previewStudents.addAll(previews);
+    }
+
     public Collection<UniversityDTO> getUniversities() {
         return universities;
     }
