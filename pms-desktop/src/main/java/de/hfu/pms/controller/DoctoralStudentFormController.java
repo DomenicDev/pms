@@ -19,6 +19,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -128,11 +130,15 @@ public class DoctoralStudentFormController implements Initializable {
     @FXML
     private CheckBox hfuMemberCheckBox;
     @FXML
+    private VBox hfuMembershipVBox;
+    @FXML
     private DatePicker memberUntilDatePicker;
     @FXML
     private DatePicker memberSinceDatePicker;
     @FXML
     private CheckBox prolongMembershipCheckBox;
+    @FXML
+    private HBox extensionMembershipHBox;
     @FXML
     private DatePicker prolongTillDatePicker;
     @FXML
@@ -220,6 +226,8 @@ public class DoctoralStudentFormController implements Initializable {
         initSupportTables(resources);
 
         initComboBoxes();
+
+        refreshCheckBoxes();
     }
 
     private void initEmploymentTable(ResourceBundle resources) {
@@ -346,6 +354,33 @@ public class DoctoralStudentFormController implements Initializable {
         GuiLoader.createModalWindow(GuiLoader.QUALIFICATION, 450, 200, false);
     }
 
+    @FXML
+    public void handleHfuMemberCheckBox(ActionEvent event) {
+        refreshCheckBoxes();
+    }
+
+    @FXML
+    public void handleOnActionExtendMembershipCheckBox() {
+        refreshCheckBoxes();
+    }
+
+    @FXML
+    public void handleOnActionExternMemberCheckBox() {
+        refreshCheckBoxes();
+    }
+
+    @FXML
+    public void handleOnActionPromotionCanceledCheckBox() {
+        refreshCheckBoxes();
+    }
+
+    private void refreshCheckBoxes() {
+        hfuMembershipVBox.setDisable(!hfuMemberCheckBox.isSelected());
+        extensionMembershipHBox.setDisable(!prolongMembershipCheckBox.isSelected());
+        externCollegeNameTextField.setDisable(!externMemberCheckBox.isSelected());
+        cancelReasonTextField.setDisable(!promotionCanceledCheckBox.isSelected());
+    }
+
     @Subscribe
     public void handleCreateTravelCostUniversityEvent(CreateDocStudentPropertyEvent event) {
         Object property = event.getProperty();
@@ -370,7 +405,6 @@ public class DoctoralStudentFormController implements Initializable {
         this.externalUniversityComboBox.getItems().add(RepresentationWrapper.getWrappedUniversity(university));
         this.qualifiedGraduationUniversityComboBox.getItems().add(RepresentationWrapper.getWrappedUniversity(university));
     }
-
 
     private boolean writeToDoctoralStudentDTO() {
         PersonalDataDTO personalData = doctoralStudent.getPersonalData();
@@ -472,6 +506,8 @@ public class DoctoralStudentFormController implements Initializable {
         } else {
             targetGraduationDTO.setCancelReason(null);
         }
+
+        // membership
 
 
         // process employment relationship
