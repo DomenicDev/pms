@@ -19,15 +19,15 @@ public class User implements Serializable {
 
     @Column
     @NotNull
-    private String email;
-
-    @Column
-    @NotNull
     private String forename;
 
     @Column
     @NotNull
     private String lastname;
+
+    @Column
+    @NotNull
+    private String email;
 
     @NotNull
     @Column
@@ -41,9 +41,9 @@ public class User implements Serializable {
     public User(){
         this.username = null;
         this.password = null;
-        this.email = null;
         this.forename = null;
         this.lastname = null;
+        this.email = null;
         this.role = null;
     }
 
@@ -56,12 +56,12 @@ public class User implements Serializable {
      * @param forename the forename of the user
      * @param lastname the lastname of the user
      */
-    public User(@NotNull String username, @NotNull String password, @NotNull String email, @NotNull String forename, @NotNull String lastname) {
+    public User(@NotNull String username, @NotNull String password,  @NotNull String forename, @NotNull String lastname, @NotNull String email ) {
         this.username = username;
         this.password = password;
-        this.email = email;
         this.forename = forename;
         this.lastname = lastname;
+        this.email = email;
         this.role = UserRole.USER;
     }
 
@@ -75,12 +75,12 @@ public class User implements Serializable {
      * @param lastname the lastname of the user
      * @param role the role of the user
      */
-    public User(@NotNull String username, @NotNull String password, @NotNull String email, @NotNull String forename, @NotNull String lastname, @NotNull UserRole role) {
+    public User(@NotNull String username, @NotNull String password, @NotNull String forename, @NotNull String lastname, @NotNull String email, @NotNull UserRole role) {
         this.username = username;
         this.password = password;
-        this.email = email;
         this.forename = forename;
         this.lastname = lastname;
+        this.email = email;
         this.role = role;
     }
 

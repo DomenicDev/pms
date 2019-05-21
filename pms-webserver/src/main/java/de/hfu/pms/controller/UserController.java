@@ -1,6 +1,7 @@
 package de.hfu.pms.controller;
 
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import de.hfu.pms.exceptions.UserNotFoundException;
 import de.hfu.pms.dao.UserDao;
 import de.hfu.pms.model.User;
@@ -42,6 +43,15 @@ public class UserController {
     public String deleteUser (@RequestBody String username){
         service.deleteUser(username);
         return "User " + username + " wurde erfolgreich gelöscht.";
+    }
+
+    @PostMapping("/updatePassword/{username}")
+    @ResponseStatus(HttpStatus.OK)
+    public String updatePassword(@PathVariable String username, @RequestBody ObjectNode json){
+        String newPassword = json.findValue("newPassword").asText();
+        String oldPassword = json.findValue("oldPassword").asText();
+        service.updatePassword(username,oldPassword,newPassword);
+        return "Password sucessfully changed";
     }
 
     @PostMapping("/updateRole")
