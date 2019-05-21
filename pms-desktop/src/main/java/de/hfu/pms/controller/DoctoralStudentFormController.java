@@ -509,7 +509,7 @@ public class DoctoralStudentFormController implements Initializable {
 
         // hfu membership
         if (hfuMemberCheckBox.isSelected()) {
-            targetGraduationDTO.setMembershipHFUKollegBegin(memberUntilDatePicker.getValue());
+            targetGraduationDTO.setMembershipHFUKollegBegin(memberSinceDatePicker.getValue());
             targetGraduationDTO.setMembershipHFUKollegEnd(memberUntilDatePicker.getValue());
 
             if (prolongMembershipCheckBox.isSelected()) {
