@@ -26,8 +26,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createUser(User newUser) {
-        for(User user : userDao.findAll()){
-            if(user.getUsername().equals(newUser.getUsername())){
+        for (User user : userDao.findAll()) {
+            if (user.getUsername().equals(newUser.getUsername())) {
                 throw new org.springframework.dao.DataIntegrityViolationException("User already exists!");
             }
         }
@@ -38,8 +38,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(String username) {
-        for(User user : userDao.findAll()){
-            if(user.getUsername().equals(username)){
+        for (User user : userDao.findAll()) {
+            if (user.getUsername().equals(username)) {
                 userDao.delete(user);
             }
         }
@@ -49,21 +49,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updatePassword(String username, String oldPassword, String newPassword) {
         String encodedNewPassword = passwordEncoder.encode(newPassword);
-        for(User user : userDao.findAll()){
-            if(user.getUsername().equals(username)){
-                if(passwordEncoder.matches(oldPassword, user.getPassword())){
+        for (User user : userDao.findAll()) {
+            if (user.getUsername().equals(username)) {
+                if (passwordEncoder.matches(oldPassword, user.getPassword())) {
                     user.setPassword(encodedNewPassword);
                     userDao.save(user);
-                }
-                else throw new WrongPasswordException();
+                } else throw new WrongPasswordException();
             }
         }
     }
 
     @Override
     public void updateUserRole(String username, UserRole role) {
-        for(User user :userDao.findAll()){
-            if(user.getUsername().equals(username)){
+        for (User user : userDao.findAll()) {
+            if (user.getUsername().equals(username)) {
                 user.setRole(role);
                 userDao.save(user);
             }
@@ -72,9 +71,9 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public User getUser(String username){
-        for(User user :userDao.findAll()){
-            if(user.getUsername().equals(username)){
+    public User getUser(String username) {
+        for (User user : userDao.findAll()) {
+            if (user.getUsername().equals(username)) {
                 return user;
             }
         }
