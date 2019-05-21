@@ -14,7 +14,7 @@
       <HBox prefHeight="62.0" prefWidth="600.0" spacing="15.0">
          <children>
             <FontIcon iconLiteral="fa-search" iconSize="20" />
-            <TextField fx:id="searchTextField" prefHeight="25.0" prefWidth="176.0" promptText="Search for Doctoral Students">
+            <TextField fx:id="searchTextField" prefHeight="25.0" prefWidth="176.0" onAction="#handleOnActionSearchButton" promptText="Search for Doctoral Students">
                <HBox.margin>
                   <Insets right="15.0" />
                </HBox.margin></TextField>
