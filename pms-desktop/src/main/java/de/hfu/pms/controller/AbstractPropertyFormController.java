@@ -1,7 +1,7 @@
 package de.hfu.pms.controller;
 
 import com.google.common.eventbus.EventBus;
-import de.hfu.pms.EventBusSystem;
+import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.AlertNotificationEvent;
 import de.hfu.pms.events.CreateDocStudentPropertyEvent;
 import de.hfu.pms.exceptions.SubmitException;

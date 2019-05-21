@@ -1,4 +1,4 @@
-package de.hfu.pms;
+package de.hfu.pms.service;
 
 import de.hfu.pms.exceptions.LoginFailedException;
 import de.hfu.pms.shared.dto.DoctoralStudentDTO;

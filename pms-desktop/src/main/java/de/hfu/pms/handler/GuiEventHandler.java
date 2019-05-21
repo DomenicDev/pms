@@ -1,4 +1,4 @@
-package de.hfu.pms;
+package de.hfu.pms.handler;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
@@ -6,6 +6,7 @@ import de.hfu.pms.events.AlertNotificationEvent;
 import de.hfu.pms.events.LoginRequestEvent;
 import de.hfu.pms.events.SaveDoctoralStudentEvent;
 import de.hfu.pms.exceptions.LoginFailedException;
+import de.hfu.pms.service.ApplicationServices;
 import de.hfu.pms.shared.dto.DoctoralStudentDTO;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;

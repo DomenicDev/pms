@@ -1,4 +1,4 @@
-package de.hfu.pms;
+package de.hfu.pms.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -7,6 +7,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.common.eventbus.EventBus;
 import de.hfu.pms.client.RestClient;
 import de.hfu.pms.config.AppConfig;
+import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.exceptions.LoginFailedException;
 import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.DoctoralStudentDTO;

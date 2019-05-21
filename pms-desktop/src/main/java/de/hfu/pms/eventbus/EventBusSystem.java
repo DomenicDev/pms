@@ -1,4 +1,4 @@
-package de.hfu.pms;
+package de.hfu.pms.eventbus;
 
 import com.google.common.eventbus.EventBus;
 

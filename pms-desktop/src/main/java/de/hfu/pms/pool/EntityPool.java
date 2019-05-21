@@ -2,7 +2,7 @@ package de.hfu.pms.pool;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-import de.hfu.pms.EventBusSystem;
+import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.SuccessfullyAddedUniversityEvent;
 import de.hfu.pms.shared.dto.UniversityDTO;
 import org.apache.log4j.Level;

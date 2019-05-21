@@ -1,6 +1,7 @@
-package de.hfu.pms;
+package de.hfu.pms.controller;
 
 import com.google.common.eventbus.EventBus;
+import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.LoginRequestEvent;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
