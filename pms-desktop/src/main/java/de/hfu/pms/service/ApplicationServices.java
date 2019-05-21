@@ -47,7 +47,7 @@ public interface ApplicationServices {
 
     void changeUserPrivileges(String username, UserRole newUserRole);
 
-    UserRole getCurrentUserPrivileges();
+    UserDTO getUser(String username);
 
     SortedList<UserDTO> getAllUsers();
 

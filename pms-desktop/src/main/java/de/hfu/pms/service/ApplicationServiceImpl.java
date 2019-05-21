@@ -187,7 +187,13 @@ public class ApplicationServiceImpl implements ApplicationServices {
     }
 
     @Override
-    public UserRole getCurrentUserPrivileges() {
+    public UserDTO getUser(String username) {
+        try {
+            String response = restClient.get(HOST_URL + USER_PREFIX + "get/" + username);
+            return mapper.readValue(response,UserDTO.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
