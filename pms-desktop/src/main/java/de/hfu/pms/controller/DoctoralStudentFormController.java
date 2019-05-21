@@ -92,7 +92,7 @@ public class DoctoralStudentFormController implements Initializable {
 
     // Target Graduation
     @FXML
-    private ComboBox<WrappedEntity<DoctoralGraduation>> targetGraduationDegreeTextField;
+    private ComboBox<String> targetGraduationDegreeComboBox;
     @FXML
     private TextField nameOfDissertationTextField;
     @FXML
@@ -268,10 +268,14 @@ public class DoctoralStudentFormController implements Initializable {
         salutationComboBox.getItems().addAll(RepresentationWrapper.getWrappedSalutations());
         genderComboBox.getItems().addAll(RepresentationWrapper.getWrappedGenders());
         childrenCountComboBox.getItems().addAll(0, 1, 2, 3, 4, 5, 6 ,7, 8 ,9);
+        childrenCountComboBox.getSelectionModel().select(0);
 
         // graduation
         graduationComboBox.getItems().addAll(RepresentationWrapper.getWrappedGraduations());
-        targetGraduationDegreeTextField.getItems().addAll(RepresentationWrapper.getWrappedDoctoralGraduations());
+        for (WrappedEntity<DoctoralGraduation> wrappedEntity : RepresentationWrapper.getWrappedDoctoralGraduations()) {
+            targetGraduationDegreeComboBox.getItems().add(wrappedEntity.getRepresentation());
+        }
+
         facultyHFUComboBox.getItems().addAll(RepresentationWrapper.getWrappedHFUFaculties());
         ratingComboBox.getItems().addAll(RepresentationWrapper.getWrappedRatings());
 
@@ -289,7 +293,108 @@ public class DoctoralStudentFormController implements Initializable {
 
     public void fillFormMask(DoctoralStudentDTO doctoralStudent) {
         this.doctoralStudent = doctoralStudent;
-        // todo.. fill text fields
+
+        PersonalDataDTO personalData = doctoralStudent.getPersonalData();
+        AddressDTO personalAddress = personalData.getAddress();
+        SupportDTO support = doctoralStudent.getSupport();
+        AlumniStateDTO alumniState = doctoralStudent.getAlumniState();
+        EmploymentDTO employment = doctoralStudent.getEmployment();
+        QualifiedGraduationDTO qualifiedGraduation = doctoralStudent.getQualifiedGraduation();
+        TargetGraduationDTO targetGraduationDTO = doctoralStudent.getTargetGraduation();
+
+        // personal data
+        lastNameTextField.setText(personalData.getLastName());
+        foreNameTextField.setText(personalData.getForename());
+        formerLastNameTextField.setText(personalData.getFormerLastName());
+        phoneTextField.setText(personalData.getTelephone());
+        titleTextField.setText(personalData.getTitle());
+        dateOfBirthDatePicker.setValue(personalData.getDateOfBirth());
+        emailTextField.setText(personalData.getEmail());
+
+        // personal data combo boxes
+        salutationComboBox.getSelectionModel().select(RepresentationWrapper.find(personalData.getSalutation(), salutationComboBox.getItems()));
+        genderComboBox.getSelectionModel().select(RepresentationWrapper.find(personalData.getGender(), genderComboBox.getItems()));
+        childrenCountComboBox.getSelectionModel().select(personalData.getNumberOfChildren());
+
+        // address
+        plzTextField.setText(personalAddress.getPlz());
+        countryTextField.setText(personalAddress.getCountry());
+        locationTextField.setText(personalAddress.getLocation());
+        streetTextField.setText(personalAddress.getStreet());
+
+        // graduation
+        graduationComboBox.getSelectionModel().select(RepresentationWrapper.find(qualifiedGraduation.getGraduation(), graduationComboBox.getItems()));
+        subjectAreaTextField.setText(qualifiedGraduation.getSubjectArea());
+        gradeTextField.setText(qualifiedGraduation.getGrade().toPlainString());
+
+        // target graduation
+        // todo
+        //targetGraduationDegreeComboBox.
+
+        nameOfDissertationTextField.setText(targetGraduationDTO.getNameOfDissertation());
+        internalSupervisorTextField.setText(targetGraduationDTO.getInternalSupervisor());
+        facultyHFUComboBox.getSelectionModel().select(RepresentationWrapper.find(targetGraduationDTO.getFacultyHFU(), facultyHFUComboBox.getItems()));
+        externalSupervisorTextField.setText(targetGraduationDTO.getExternalSupervisor());
+        externalFacultyTextField.setText(targetGraduationDTO.getExternalFaculty());
+        externalUniversityComboBox.getSelectionModel().select(RepresentationWrapper.find(targetGraduationDTO.getExternalUniversity(), externalUniversityComboBox.getItems()));
+        promotionAcceptedDatePicker.setValue(targetGraduationDTO.getPromotionAccepted());
+        procedureCompletedDatePicker.setValue(targetGraduationDTO.getProcedureCompleted());
+        ratingComboBox.getSelectionModel().select(RepresentationWrapper.find(targetGraduationDTO.getRating(), ratingComboBox.getItems()));
+        promotionBeginDatePicker.setValue(targetGraduationDTO.getPromotionAdmissionDate());
+        predictedGraduationDatePicker.setValue(targetGraduationDTO.getPrognosticatedPromotionDate());
+        promotionAgreementDatePicker.setValue(targetGraduationDTO.getPromotionAgreement());
+
+        // cancel
+        if (targetGraduationDTO.getCancelReason() != null && !targetGraduationDTO.getCancelReason().isEmpty()) {
+            promotionCanceledCheckBox.setSelected(true);
+            cancelReasonTextField.setText(targetGraduationDTO.getCancelReason());
+        } else {
+            promotionCanceledCheckBox.setSelected(false);
+            cancelReasonTextField.setText(null);
+        }
+
+        // hfu membership
+        memberSinceDatePicker.setValue(targetGraduationDTO.getMembershipHFUKollegBegin());
+        memberUntilDatePicker.setValue(targetGraduationDTO.getMembershipHFUKollegEnd());
+        prolongTillDatePicker.setValue(targetGraduationDTO.getExtendedMembershipEnd());
+
+        if (memberSinceDatePicker.getValue() == null || memberUntilDatePicker.getValue() == null) {
+            hfuMemberCheckBox.setSelected(true);
+        } else {
+            hfuMemberCheckBox.setSelected(false);
+        }
+
+        // external membership
+        String externalProgram = externalCollegeNameTextField.getText();
+        externalCollegeNameTextField.setText(externalProgram);
+        externalMemberCheckBox.setSelected(externalProgram != null);
+
+        // cancel
+        String cancelReason = targetGraduationDTO.getCancelReason();
+        cancelReasonTextField.setText(cancelReason);
+        promotionCanceledCheckBox.setSelected(cancelReason != null);
+
+        // employments
+        Set<EmploymentEntryDTO> employmentEntries = employment.getEmploymentEntries();
+        employmentTableView.getItems().addAll(employmentEntries);
+
+        // support tables
+        travelCostUniversityTableView.getItems().addAll(support.getTravelCostUniversities());
+        travelCostConferenceTableView.getItems().addAll(support.getTravelCostConferences());
+        consultingSupportTableView.getItems().addAll(support.getConsultingSupports());
+        qualificationTableView.getItems().addAll(support.getVisitedQualifications());
+
+        // support text fields
+        scholarshipTextField.setText(support.getScholarship());
+        awardsTextField.setText(support.getAwards());
+        miscellaneousTextArea.setText(support.getAwards());
+
+        // alumni state
+        jobTitleTextField.setText(alumniState.getJobTitle());
+        employerTextField.setText(alumniState.getEmployer());
+        agreementNewsCheckBox.setSelected(alumniState.isAgreementNews());
+        alumniState.setAgreementEvaluation(alumniState.isAgreementEvaluation());
+
     }
 
     @FXML
@@ -431,12 +536,17 @@ public class DoctoralStudentFormController implements Initializable {
         personalData.setDateOfBirth((dateOfBirthDatePicker.getValue()));
         personalData.setEmail((emailTextField.getText()));
 
-        // todo: get selected item in combobox, enums in fxml (salutation, gender)
-        // ObservableList<Integer> numberOfChildren = childrenCountComboBox.getItems();
-        // personalData.setNumberOfChildren(numberOfChildren.get(childrenCountComboBox.getSelectedIndex()));
-        // ComboBox childrenCount;
-        // ComboBox salutationComboBox;
-        // ComboBox genderComboBox;
+        if (validator.comboBoxHasSelectedItem(salutationComboBox)) {
+            personalData.setSalutation(salutationComboBox.getValue().getEntity());
+        }
+
+        if (validator.comboBoxHasSelectedItem(genderComboBox)) {
+            personalData.setGender(genderComboBox.getValue().getEntity());
+        }
+
+        if (validator.comboBoxHasSelectedItem(childrenCountComboBox)) {
+            personalData.setNumberOfChildren(childrenCountComboBox.getValue());
+        }
 
         personalAddress.setPlz((plzTextField.getText()));
         personalAddress.setCountry((countryTextField.getText()));
@@ -460,10 +570,11 @@ public class DoctoralStudentFormController implements Initializable {
 
         // target graduation
         // todo: add more complex logic for evaluating custom text field if there is no match in the combobox
-        if (targetGraduationDegreeTextField.getValue() == null) {
+        if (targetGraduationDegreeComboBox.getValue() == null) {
             targetGraduationDTO.setTargetGraduationDegree(null);
         } else {
-            targetGraduationDTO.setTargetGraduationDegree(targetGraduationDegreeTextField.getValue().getRepresentation());
+            // todo VERY IMPORTANT !!!
+         //   targetGraduationDTO.setTargetGraduationDegree(targetGraduationDegreeComboBox.getValue().getRepresentation());
         }
 
         if (validator.textFieldNotEmpty(nameOfDissertationTextField)) {
