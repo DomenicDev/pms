@@ -507,7 +507,27 @@ public class DoctoralStudentFormController implements Initializable {
             targetGraduationDTO.setCancelReason(null);
         }
 
-        // membership
+        // hfu membership
+        if (hfuMemberCheckBox.isSelected()) {
+            targetGraduationDTO.setMembershipHFUKollegBegin(memberUntilDatePicker.getValue());
+            targetGraduationDTO.setMembershipHFUKollegEnd(memberUntilDatePicker.getValue());
+
+            if (prolongMembershipCheckBox.isSelected()) {
+                targetGraduationDTO.setExtendedMembershipEnd(prolongTillDatePicker.getValue());
+            }
+
+        } else {
+            // check box is disabled, so we make sure all subfields are equal to null
+            targetGraduationDTO.setMembershipHFUKollegBegin(null);
+            targetGraduationDTO.setMembershipHFUKollegEnd(null);
+            targetGraduationDTO.setExtendedMembershipEnd(null);
+        }
+
+        // external membership
+        targetGraduationDTO.setExternalProgram(externMemberCheckBox.isSelected() ? externCollegeNameTextField.getText() : null);
+
+        // cancel reason
+        targetGraduationDTO.setCancelReason(promotionCanceledCheckBox.isSelected() ? cancelReasonTextField.getText() : null);
 
 
         // process employment relationship
