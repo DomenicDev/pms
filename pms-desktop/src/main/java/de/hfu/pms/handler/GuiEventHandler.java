@@ -81,8 +81,8 @@ public class GuiEventHandler {
     }
 
     @Subscribe
-    public void handleSaveUniversityEvent(RequestAddUniversityEvent requesSaveEvent){
-        UniversityDTO universityDTO = requesSaveEvent.getUniversity();
+    public void handleSaveUniversityEvent(RequestAddUniversityEvent requestSaveEvent){
+        UniversityDTO universityDTO = requestSaveEvent.getUniversity();
         applicationServices.addUniversity(universityDTO);
     }
 
