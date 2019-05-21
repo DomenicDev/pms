@@ -35,6 +35,8 @@ public interface ApplicationServices {
 
     Collection<UniversityDTO> getAllUniversities();
 
+    void addUniversity(UniversityDTO universityDTO);
+
     void logout();
 
     void changePassword(String Username, String newPwHash, String previousPwHash);

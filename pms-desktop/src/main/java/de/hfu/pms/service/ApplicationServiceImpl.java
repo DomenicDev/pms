@@ -115,6 +115,21 @@ public class ApplicationServiceImpl implements ApplicationServices {
     }
 
     @Override
+    public void addUniversity(UniversityDTO universityDTO) {
+        try {
+            String json = mapper.writeValueAsString(universityDTO);
+            String response = restClient.postJson(HOST_URL + UNIVERSITY_PREFIX + "create", json);
+            UniversityDTO dto = mapper.readValue(response, UniversityDTO.class);
+            logger.log(Level.INFO, "University created: " + dto);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
     public void logout() {
 
     }
