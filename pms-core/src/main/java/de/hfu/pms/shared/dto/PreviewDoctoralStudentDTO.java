@@ -13,6 +13,9 @@ public class PreviewDoctoralStudentDTO {
     private String phoneNumber;
     private Gender gender;
 
+    public PreviewDoctoralStudentDTO() {
+    }
+
     public PreviewDoctoralStudentDTO(Long id, String foreName, String name, FacultyHFU faculty, String email, String phoneNumber, Gender gender) {
         this.id = id;
         this.foreName = foreName;
