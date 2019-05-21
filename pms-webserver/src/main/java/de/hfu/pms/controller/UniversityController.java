@@ -27,10 +27,10 @@ public class UniversityController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public String newUser (@RequestBody UniversityDTO universityDTO ){
+    public UniversityDTO newUser (@RequestBody UniversityDTO universityDTO ){
         University university = convertToEntity(universityDTO);
         universityService.createUniversity(university);
-        return "Universität " + universityDTO.getName() + " wurde mit dem Land "+ universityDTO.getCountry() + " und dem Ort " + universityDTO.getLocation() + " erzeugt.";
+        return universityDTO;
     }
 
     @GetMapping("/delete/{id}")

@@ -138,8 +138,15 @@ public class ApplicationServiceImpl implements ApplicationServices {
     }
 
     @Override
-    public void changePassword(String Username, String newPwHash, String previousPwHash) {
-
+    public void changePassword(String username, String newPassword, String oldPassword) {
+        try {
+            String json = "{\"newPassword\": \"" + newPassword + "\",\"oldPassword\": \"" + oldPassword + "\"}";
+            String response = restClient.postJson(HOST_URL + UNIVERSITY_PREFIX + "updatePassword/" + username, json);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -33,10 +33,10 @@ public class UserController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public String newUser(@RequestBody UserDTO userDTO) {
+    public UserDTO newUser(@RequestBody UserDTO userDTO) {
         User user = convertToEntity(userDTO);
         service.createUser(user);
-        return "User " + user.getUsername() + " wurde mit dem Passwort " + user.getPassword() + " und der Rolle " + user.getRole() + " erzeugt.";
+        return userDTO;
     }
 
     @PostMapping("/delete")
