@@ -26,7 +26,7 @@ public class TestRestClient {
         UserDTO userDTO = new UserDTO();
         userDTO.setUsername("test");
         userDTO.setPassword("test1234");
-        userDTO.setUserRole(UserRole.USER);
+        userDTO.setRole(UserRole.USER);
         userDTO.setEmail("test.email@example.de");
         userDTO.setForename("Max");
         userDTO.setLastname("Mustermann");
