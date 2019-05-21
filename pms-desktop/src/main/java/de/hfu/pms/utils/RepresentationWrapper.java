@@ -81,6 +81,24 @@ public class RepresentationWrapper {
         return collection;
     }
 
+    /**
+     * This method tries to find the specified entity in the collection
+     * of the specified wrapped entities and will return the WrappedEntity object
+     * containing the specified entity, null otherwise.
+     * @param entity the entity to be find in the collection
+     * @param collection the collection to search the entity for
+     * @param <T> the type of the entity
+     * @return the WrappedEntity containing the specified entity, null otherwise.
+     */
+    public static <T> WrappedEntity<T> find(T entity, Collection<WrappedEntity<T>> collection) {
+        for (WrappedEntity<T> wrappedEntity : collection) {
+            if (wrappedEntity.getEntity().equals(entity)) {
+                return wrappedEntity;
+            }
+        }
+        return null;
+    }
+
     public static Collection<WrappedEntity<Rating>> getWrappedRatings() {
         Collection<WrappedEntity<Rating>> collection = new ArrayList<>();
         collection.add(new WrappedEntity<>(bundle.getString("enum.rating.magna_cum_laude"), Rating.Magna_cum_laude));
