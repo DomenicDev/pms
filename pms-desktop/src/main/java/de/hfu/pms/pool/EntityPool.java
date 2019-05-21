@@ -38,6 +38,9 @@ public final class EntityPool {
     }
 
     public void initPreviews(Collection<PreviewDoctoralStudentDTO> previews) {
+        if (previews == null) {
+            return;
+        }
         this.previewStudents.addAll(previews);
     }
 
