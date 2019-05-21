@@ -8,6 +8,7 @@ import com.google.common.eventbus.EventBus;
 import de.hfu.pms.client.RestClient;
 import de.hfu.pms.config.AppConfig;
 import de.hfu.pms.eventbus.EventBusSystem;
+import de.hfu.pms.events.SuccessfullyAddedUniversityEvent;
 import de.hfu.pms.exceptions.LoginFailedException;
 import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.DoctoralStudentDTO;
@@ -121,6 +122,7 @@ public class ApplicationServiceImpl implements ApplicationServices {
             String json = mapper.writeValueAsString(universityDTO);
             String response = restClient.postJson(HOST_URL + UNIVERSITY_PREFIX + "create", json);
             UniversityDTO dto = mapper.readValue(response, UniversityDTO.class);
+            eventBus.post(new SuccessfullyAddedUniversityEvent(dto));
             logger.log(Level.INFO, "University created: " + dto);
         } catch (JsonProcessingException e) {
             e.printStackTrace();

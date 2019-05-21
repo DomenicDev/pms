@@ -2,17 +2,19 @@ package de.hfu.pms.controller;
 
 import com.google.common.eventbus.EventBus;
 import de.hfu.pms.eventbus.EventBusSystem;
-import de.hfu.pms.events.SuccessfullyAddedUniversityEvent;
+import de.hfu.pms.events.RequestAddUniversityEvent;
 import de.hfu.pms.shared.dto.UniversityDTO;
 import de.hfu.pms.utils.FormValidator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 
 public class UniversityAddController {
+
+
 
     private EventBus eventBus = EventBusSystem.getEventBus();
 
@@ -31,16 +33,43 @@ public class UniversityAddController {
     @FXML
     private Button ButtonUniversityAdd;
 
+    @FXML
+    private Label title;
+
     private UniversityDTO university;
+
+    public void edit(UniversityDTO university) {
+        this.university = university;
+
+        // fill text fields with university attributes
+        textFieldNameOfUniverity.setText(university.getName());
+        textFieldCountry.setText(university.getCountry());
+        textFieldLocation.setText(university.getLocation());
+        textFieldShortForm.setText(university.getAbbreviation());
+  //      setEditMode(true);
+    }
+
+    public void setEditMode(boolean editMode) {
+        if (editMode) {
+            ButtonUniversityAdd.setText("Universität Ändern");
+            title.setText("Universität Ändern");
+        } else {
+            ButtonUniversityAdd.setText("Universiät Hinzufügen");
+            title.setText("Universität Hinzufügen");
+        }
+    }
+
 
     @FXML
     void handleAddButton(ActionEvent event) {
+
         university = new UniversityDTO();
         boolean validationSuccessful = writeToUniversityDTO();
 
         if (validationSuccessful) {
-            eventBus.post(new SuccessfullyAddedUniversityEvent(university));
+            eventBus.post(new RequestAddUniversityEvent(university));
             ((Button)event.getSource()).getScene().getWindow().hide();
+
         }
 
     }
