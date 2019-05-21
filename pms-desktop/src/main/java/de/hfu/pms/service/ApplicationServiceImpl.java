@@ -42,6 +42,7 @@ public class ApplicationServiceImpl implements ApplicationServices {
         this.mapper.registerModule(new JavaTimeModule());
     }
 
+    //TODO: Add good exception handling and logging
     @Override
     public void addDoctoralStudent(DoctoralStudentDTO student) {
         try {
@@ -142,6 +143,7 @@ public class ApplicationServiceImpl implements ApplicationServices {
         try {
             String json = "{\"newPassword\": \"" + newPassword + "\",\"oldPassword\": \"" + oldPassword + "\"}";
             String response = restClient.postJson(HOST_URL + UNIVERSITY_PREFIX + "updatePassword/" + username, json);
+            logger.log(Level.INFO, response);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -166,7 +168,12 @@ public class ApplicationServiceImpl implements ApplicationServices {
 
     @Override
     public void removeUser(String username) {
-
+        try {
+            String response = restClient.get(HOST_URL + USER_PREFIX +"delete/" + username);
+            logger.log(Level.INFO, response);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

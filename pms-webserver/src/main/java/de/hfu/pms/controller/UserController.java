@@ -39,9 +39,9 @@ public class UserController {
         return userDTO;
     }
 
-    @PostMapping("/delete")
+    @PostMapping("/delete/{username}")
     @ResponseStatus(HttpStatus.OK)
-    public String deleteUser(@RequestBody String username) {
+    public String deleteUser(@PathVariable String username) {
         service.deleteUser(username);
         return "User " + username + " wurde erfolgreich gelöscht.";
     }
