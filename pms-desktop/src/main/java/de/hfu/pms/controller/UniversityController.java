@@ -5,6 +5,7 @@ import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.AlertNotificationEvent;
 import de.hfu.pms.events.SuccessfullyAddedUniversityEvent;
+import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.UniversityDTO;
 import de.hfu.pms.utils.GuiLoader;
 import javafx.event.ActionEvent;
@@ -123,6 +124,9 @@ public class UniversityController implements Initializable {
         eventBus.register(this);
 
         initUniversityTable(resources);
+        tableViewUniversity.getItems().addAll(EntityPool.getInstance().getUniversities());
+        tableViewUniversity.setEditable(true);
+
 
     }
 }

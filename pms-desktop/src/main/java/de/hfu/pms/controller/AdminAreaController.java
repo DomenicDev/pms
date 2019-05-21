@@ -1,8 +1,11 @@
 package de.hfu.pms.controller;
 
+import com.google.common.eventbus.EventBus;
+import de.hfu.pms.eventbus.EventBusSystem;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,13 +14,14 @@ import javafx.stage.Stage;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
+import java.net.URL;
 import java.util.ResourceBundle;
 
 
-public class AdminAreaController {
+public class AdminAreaController implements Initializable {
+    private EventBus eventBus = EventBusSystem.getEventBus();
 
-
-    private Logger logger = Logger.getLogger(AdminAreaController.class);
+       private Logger logger = Logger.getLogger(AdminAreaController.class);
 
         @FXML
         private Button ButtonTryChange;
@@ -44,6 +48,9 @@ public class AdminAreaController {
 
         }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        eventBus.register(this);
 
-
+    }
 }

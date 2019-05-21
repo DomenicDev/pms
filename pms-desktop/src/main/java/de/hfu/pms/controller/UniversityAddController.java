@@ -69,7 +69,7 @@ public class UniversityAddController {
         if (validationSuccessful) {
             eventBus.post(new RequestAddUniversityEvent(university));
             ((Button)event.getSource()).getScene().getWindow().hide();
-
+//todo add a edit configuration for the university add screen !
         }
 
     }
