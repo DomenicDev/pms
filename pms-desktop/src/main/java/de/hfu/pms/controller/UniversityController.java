@@ -25,6 +25,7 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import java.net.URL;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 
@@ -110,18 +111,20 @@ public class UniversityController implements Initializable {
         UniversityDTO university = event.getUniversity();
         tableViewUniversity.getItems().add(university);
     }
+
     @Subscribe
     public void handleUpdateEvent(SuccessfullyUpdatedUniversityEvent event){
-        UniversityDTO university = event.getUniversity();
+        UniversityDTO newUniversity = event.getUniversity();
+        LinkedList<UniversityDTO> itemsToRemove = new LinkedList<UniversityDTO>();
 
-        for (int i = 0; i<tableViewUniversity.getItems().size();i++){
-
-           //if (tableViewUniversity.getSelectionModel().getSelectedItem(university.getId()) == tableViewUniversity.getItems(university.getId())){
-               tableViewUniversity.getItems().remove(university);
-           }
-
+        for ( UniversityDTO universityDTO : tableViewUniversity.getItems()){
+            if(universityDTO.getId().equals(newUniversity.getId())) {
+                itemsToRemove.add(universityDTO);
+            }
         }
-    //}
+        tableViewUniversity.getItems().removeAll(itemsToRemove);
+        tableViewUniversity.getItems().add(newUniversity);
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
