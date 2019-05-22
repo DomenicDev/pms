@@ -1,42 +1,35 @@
 package de.hfu.pms.controller;
 
-import de.hfu.pms.utils.GuiLoader;
-import javafx.application.Application;
+import com.google.common.eventbus.EventBus;
+import de.hfu.pms.eventbus.EventBusSystem;
+import de.hfu.pms.events.AlertNotificationEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.stage.Stage;
+import javafx.fxml.Initializable;
 
-import java.io.IOException;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Label;
 
-
-public class HomeController extends Application {
-    private Parent home;
-    private Button AlertTestButton = new Button("Alert Test");
+import java.net.URL;
+import java.util.ResourceBundle;
 
 
-    private void showAlert() {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("");
-        alert.setHeaderText("Ihre Mitgliedschaft endet bald!");
-        alert.setContentText("Sie werden aus der Datenbank geloescht sofern sie innerhalb von XXX keinen Widerspruch einlegen");
-        alert.showAndWait();
-    }
+public class HomeController implements Initializable {
 
-    public void start(Stage stage){
-
-
-
-    }
-
-
+    private EventBus eventBus = EventBusSystem.getEventBus();
 
     @FXML
-    public void initialize() throws IOException {
-        //home = GuiLoader.loadFXML("screens/home.fxml");
+    private Label welcomeLabel;
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        eventBus.register(this);
+        String name = "CurrentUsername";
+
+        welcomeLabel.setText(welcomeLabel.getText() + name);
     }
 
-
+    @FXML
+    public void handleOnActionAlertTestButton(ActionEvent event) {
+        eventBus.post(new AlertNotificationEvent(1, "Ihre Mitgliedschaft endet bald!\r\nSie werden aus der Datenbank geloescht sofern sie innerhalb von XXX keinen Widerspruch einlegen"));
+    }
 }
