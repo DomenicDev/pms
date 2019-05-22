@@ -3,9 +3,12 @@ package de.hfu.pms.controller;
 import com.google.common.eventbus.EventBus;
 import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.AlertNotificationEvent;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
 
 import java.net.URL;
@@ -20,6 +23,8 @@ public class HomeController implements Initializable {
     private Label welcomeLabel;
     @FXML
     private Label doctoralCount;
+    @FXML
+    private PieChart pieChart;
 
 
     @Override
@@ -31,23 +36,14 @@ public class HomeController implements Initializable {
         welcomeLabel.setText(welcomeLabel.getText() + name);
         doctoralCount.setText(doctoralCount.getText() + DoctoralSummary);
 
-/*
-        PieChart pieChart = new PieChart();
 
-        PieChart.Data slice1 = new PieChart.Data("Test1", 2);
-        PieChart.Data slice2 = new PieChart.Data("Test2", 4);
-        PieChart.Data slice3 = new PieChart.Data("Test3", 3);
-        PieChart.Data slice4 = new PieChart.Data("Test4", 6);
-        pieChart.getData().add(slice1);
-        pieChart.getData().add(slice2);
-        pieChart.getData().add(slice3);
-        pieChart.getData().add(slice4);
-        pieChart.setLegendSide(Side.BOTTOM);
-        Stage stage = new Stage();
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
+                new PieChart.Data("Test1", 2),
+                new PieChart.Data("Test2", 4),
+                new PieChart.Data("Test3", 3),
+                new PieChart.Data("Test4", 6));
+        pieChart.setData(pieChartData);
 
-        stage.setTitle("Statistik");
-        stage.setScene(new Scene(root);
-*/
 
     }
 
