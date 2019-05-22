@@ -7,7 +7,8 @@ import java.util.List;
 public interface UniversityService {
 
     void createUniversity(University newUniversity);
-    void deleteUniversity(Integer id);
-    University getUniversity(Integer id);
+    void deleteUniversity(Long id);
+    University getUniversity(Long id);
+    University updateUniversity(Long id, University newUniversity);
     List<University> getUniversityList();
 }

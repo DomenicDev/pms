@@ -40,6 +40,8 @@ public interface ApplicationServices {
 
     void addUniversity(UniversityDTO universityDTO);
 
+    void updateUniversity(Long id, UniversityDTO universityDTO);
+
     void logout();
 
     void changePassword(String Username, String newPwHash, String previousPwHash);

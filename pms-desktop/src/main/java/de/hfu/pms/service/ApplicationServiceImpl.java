@@ -9,6 +9,7 @@ import de.hfu.pms.client.RestClient;
 import de.hfu.pms.config.AppConfig;
 import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.SuccessfullyAddedUniversityEvent;
+import de.hfu.pms.events.SuccessfullyUpdatedUniversityEvent;
 import de.hfu.pms.exceptions.LoginFailedException;
 import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.DoctoralStudentDTO;
@@ -143,6 +144,21 @@ public class ApplicationServiceImpl implements ApplicationServices {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public void updateUniversity(Long id, UniversityDTO universityDTO) {
+        try {
+            String json = mapper.writeValueAsString(universityDTO);
+            String response = restClient.postJson(HOST_URL + UNIVERSITY_PREFIX + "update" + id,json);
+            UniversityDTO dto = mapper.readValue(response, UniversityDTO.class);
+            eventBus.post(new SuccessfullyUpdatedUniversityEvent(dto));
+            logger.log(Level.INFO, "University updated: " + dto);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

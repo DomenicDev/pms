@@ -25,13 +25,22 @@ public class UniversityServiceImpl implements UniversityService {
     }
 
     @Override
-    public void deleteUniversity(Integer id) {
+    public void deleteUniversity(Long id) {
         universityDao.deleteById(id);
     }
 
     @Override
-    public University getUniversity(Integer id) {
+    public University getUniversity(Long id) {
         return universityDao.findById(id).orElseThrow(() -> new UniversityNotFoundException(id));
+    }
+
+    @Override
+    public University updateUniversity(Long id, University newUniversity) {
+        University oldUniversity = universityDao.findById(id).orElseThrow( () -> new UniversityNotFoundException(id));
+        newUniversity.setId(oldUniversity.getId());
+        universityDao.save(newUniversity);
+
+        return newUniversity;
     }
 
     @Override

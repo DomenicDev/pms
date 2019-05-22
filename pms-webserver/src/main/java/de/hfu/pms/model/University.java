@@ -8,7 +8,7 @@ public class University {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column
     private String name;
@@ -22,11 +22,11 @@ public class University {
     @Column
     private String abbreviation;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

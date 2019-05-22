@@ -2,14 +2,12 @@ package de.hfu.pms.handler;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-import de.hfu.pms.events.AlertNotificationEvent;
-import de.hfu.pms.events.LoginRequestEvent;
-import de.hfu.pms.events.RequestAddUniversityEvent;
-import de.hfu.pms.events.SaveDoctoralStudentEvent;
+import de.hfu.pms.events.*;
 import de.hfu.pms.exceptions.LoginFailedException;
 import de.hfu.pms.service.ApplicationServices;
 import de.hfu.pms.shared.dto.DoctoralStudentDTO;
 import de.hfu.pms.shared.dto.UniversityDTO;
+import de.hfu.pms.shared.dto.UserDTO;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -84,6 +82,18 @@ public class GuiEventHandler {
     public void handleSaveUniversityEvent(RequestAddUniversityEvent requestSaveEvent){
         UniversityDTO universityDTO = requestSaveEvent.getUniversity();
         applicationServices.addUniversity(universityDTO);
+    }
+
+    @Subscribe
+    public void handleUpdateUniversityEvent(RequestUpdateUniversityEvent requestUpdateUniversityEvent){
+        UniversityDTO universityDTO = requestUpdateUniversityEvent.getUniversity();
+        applicationServices.updateUniversity(universityDTO.getId(), universityDTO);
+    }
+
+    public void handleSaveUserEvent(){
+        //TODO: unfinished
+        UserDTO userDTO = null;
+        applicationServices.addUser(userDTO);
     }
 
     @Subscribe

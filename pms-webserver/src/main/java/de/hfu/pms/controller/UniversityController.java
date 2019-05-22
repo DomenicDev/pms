@@ -35,15 +35,23 @@ public class UniversityController {
 
     @GetMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public String deleteUser (@PathVariable Integer id){
+    public String deleteUser (@PathVariable Long id){
         universityService.deleteUniversity(id);
         return "Die Universität wurde erfolgreich gelöscht.";
     }
 
     @GetMapping("/get/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public UniversityDTO getUniversity(@PathVariable Integer id){
+    public UniversityDTO getUniversity(@PathVariable Long id){
         return convertToDTO(universityService.getUniversity(id));
+    }
+
+    @PostMapping("/update/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public UniversityDTO updateUniversity(@PathVariable Long id, @RequestBody UniversityDTO universityDTO){
+        University university = convertToEntity(universityDTO);
+        University newUniversity = universityService.updateUniversity(id, university);
+        return convertToDTO(newUniversity);
     }
 
     @GetMapping("/getList")
