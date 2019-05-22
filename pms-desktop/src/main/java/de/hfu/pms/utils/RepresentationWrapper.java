@@ -80,6 +80,14 @@ public class RepresentationWrapper {
         collection.add(new WrappedEntity<>(bundle.getString("enum.hfu_faculty.mechanical_and_medical_engineering"), FacultyHFU.Mechanical_and_Medical_Engineering));
         return collection;
     }
+    public static Collection<WrappedEntity<Role>> getWrappedRole(){
+        Collection<WrappedEntity<Role>> collection =new ArrayList<>();
+        collection.add(new WrappedEntity<>(bundle.getString("enum.role.administrator"), Role.Administrator));
+        collection.add(new WrappedEntity<>(bundle.getString("enum.role.benutzer"),Role.Benutzer));
+        collection.add(new WrappedEntity<>(bundle.getString("enum.role.anderer_benutzer"),Role.AndereRolle));
+
+        return collection;
+    }
 
     /**
      * This method tries to find the specified entity in the collection
