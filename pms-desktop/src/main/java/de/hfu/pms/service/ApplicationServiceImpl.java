@@ -150,7 +150,7 @@ public class ApplicationServiceImpl implements ApplicationServices {
     public void updateUniversity(Long id, UniversityDTO universityDTO) {
         try {
             String json = mapper.writeValueAsString(universityDTO);
-            String response = restClient.postJson(HOST_URL + UNIVERSITY_PREFIX + "update" + id,json);
+            String response = restClient.postJson(HOST_URL + UNIVERSITY_PREFIX + "update/" + id,json);
             UniversityDTO dto = mapper.readValue(response, UniversityDTO.class);
             eventBus.post(new SuccessfullyUpdatedUniversityEvent(dto));
             logger.log(Level.INFO, "University updated: " + dto);
