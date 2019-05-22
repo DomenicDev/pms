@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.HomeController">
     <children>
         <Label fx:id="welcomeLabel" text="Hallo ">
@@ -13,7 +14,10 @@
             </font>
         </Label>
         <Button mnemonicParsing="false" onAction="#handleOnActionAlertTestButton" text="AlertTestButton" />
-        <Label fx:id="doctoralCount" text="Zurzeit befinden sich an der HFU " />
-        <PieChart fx:id="pieChart" prefHeight="245.0" prefWidth="600.0" title="Statistik" />
+        <Label fx:id="doctoralCount" text="Zurzeit befinden sich an der HFU ">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+        <PieChart fx:id="pieChart" prefHeight="500.0" prefWidth="600.0" title="Statistik" />
     </children>
 </VBox>

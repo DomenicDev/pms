@@ -45,8 +45,8 @@ public class HomeController implements Initializable {
         pieChart.setData(pieChartData);
 
 
-
     }
+
 
     @FXML
     public void handleOnActionAlertTestButton(ActionEvent event) {
