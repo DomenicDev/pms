@@ -35,7 +35,7 @@ public class DoctoralStudentDTOUnitTest {
 
         QualifiedGraduation qualifiedGraduation = new QualifiedGraduation();
         doc.setQualifiedGraduation(qualifiedGraduation);
-        qualifiedGraduation.setGrade(new BigDecimal("1.30"));
+        qualifiedGraduation.setGrade("1.30");
 
         DoctoralStudentDTO dto = modelMapper.map(doc, DoctoralStudentDTO.class);
 

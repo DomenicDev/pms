@@ -1,12 +1,17 @@
 package de.hfu.pms.controller;
 
 import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.AlertNotificationEvent;
+import de.hfu.pms.events.OnClickEditDoctoralStudentEvent;
+import de.hfu.pms.events.SuccessfullyAddedDoctoralStudentEvent;
 import de.hfu.pms.pool.EntityPool;
+import de.hfu.pms.shared.dto.DoctoralStudentDTO;
 import de.hfu.pms.shared.dto.PreviewDoctoralStudentDTO;
 import de.hfu.pms.shared.enums.FacultyHFU;
 import de.hfu.pms.shared.enums.Gender;
+import de.hfu.pms.shared.utils.Converter;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
@@ -15,8 +20,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Callback;
 
 import java.net.URL;
 import java.util.Arrays;
@@ -31,6 +36,7 @@ public class DoctoralStudentOverviewController implements Initializable {
     private EventBus eventBus = EventBusSystem.getEventBus();
     private ObjectProperty<TableRow<PreviewDoctoralStudentDTO>> selectedTableRow = new SimpleObjectProperty<>();
 
+    private EntityPool entityPool = EntityPool.getInstance();
 
     @FXML
     private TextField searchTextField;
@@ -60,6 +66,19 @@ public class DoctoralStudentOverviewController implements Initializable {
         // init with previews
         Collection<PreviewDoctoralStudentDTO> previews = EntityPool.getInstance().getPreviewStudents();
         searchResultTableView.getItems().addAll(previews);
+
+        // open edit window on double mouse click
+        searchResultTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getClickCount() == 2) {
+                    PreviewDoctoralStudentDTO preview = searchResultTableView.getSelectionModel().getSelectedItem();
+                    if (preview != null) {
+                        eventBus.post(new OnClickEditDoctoralStudentEvent(preview.getId()));
+                    }
+                }
+            }
+        });
     }
 
     @FXML
@@ -132,5 +151,16 @@ public class DoctoralStudentOverviewController implements Initializable {
                 return row;
             }
         });
+    }
+
+    private void addToTable(DoctoralStudentDTO doctoralStudentDTO) {
+        PreviewDoctoralStudentDTO preview = Converter.convert(doctoralStudentDTO);
+        this.searchResultTableView.getItems().add(preview);
+    }
+
+    @Subscribe
+    public void handle(SuccessfullyAddedDoctoralStudentEvent event) {
+        DoctoralStudentDTO doctoralStudentDTO = event.getDoctoralStudentDTO();
+        addToTable(doctoralStudentDTO);
     }
 }

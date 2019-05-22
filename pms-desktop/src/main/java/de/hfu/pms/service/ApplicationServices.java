@@ -8,13 +8,14 @@ import de.hfu.pms.shared.dto.UserDTO;
 import de.hfu.pms.shared.enums.UserRole;
 import javafx.collections.transformation.SortedList;
 
+import java.io.IOException;
 import java.util.Collection;
 
 public interface ApplicationServices {
 
     // todo: add Documents to DoctoralStudentDTO-class or separate them?
 
-    void addDoctoralStudent(DoctoralStudentDTO student);
+    DoctoralStudentDTO addDoctoralStudent(DoctoralStudentDTO student);
 
     void editDoctoralStudent(DoctoralStudentDTO student);
 
@@ -24,7 +25,7 @@ public interface ApplicationServices {
 
     Collection<PreviewDoctoralStudentDTO> getPreviews();
 
-    DoctoralStudentDTO getDoctoralStudent(int studentID);
+    DoctoralStudentDTO getDoctoralStudent(Long studentID) throws IOException;
 
     SortedList<DoctoralStudentDTO> searchDoctoralStudents(String keyword);
 

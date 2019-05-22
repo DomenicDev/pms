@@ -2,13 +2,11 @@ package de.hfu.pms.shared.dto;
 
 import de.hfu.pms.shared.enums.Graduation;
 
-import java.math.BigDecimal;
-
 public class QualifiedGraduationDTO {
 
     private Graduation graduation;
     private String subjectArea;
-    private BigDecimal grade;
+    private String grade;
     private UniversityDTO qualifiedGraduationUniversity;
 
     public Graduation getGraduation() {
@@ -27,11 +25,11 @@ public class QualifiedGraduationDTO {
         this.subjectArea = subjectArea;
     }
 
-    public BigDecimal getGrade() {
+    public String getGrade() {
         return grade;
     }
 
-    public void setGrade(BigDecimal grade) {
+    public void setGrade(String grade) {
         this.grade = grade;
     }
 

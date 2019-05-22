@@ -4,6 +4,7 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.SuccessfullyAddedUniversityEvent;
+import de.hfu.pms.service.ApplicationServices;
 import de.hfu.pms.shared.dto.PreviewDoctoralStudentDTO;
 import de.hfu.pms.shared.dto.UniversityDTO;
 import org.apache.log4j.Level;
@@ -20,6 +21,7 @@ public final class EntityPool {
     private static Logger logger = Logger.getLogger(EntityPool.class);
     private Collection<UniversityDTO> universities = new HashSet<>();
     private Collection<PreviewDoctoralStudentDTO> previewStudents = new HashSet<>();
+    private ApplicationServices applicationServices;
 
     private EntityPool() {
         // private constructor
@@ -27,6 +29,14 @@ public final class EntityPool {
 
     public static EntityPool getInstance() {
         return entityPool;
+    }
+
+    public void setApplicationServices(ApplicationServices applicationServices) {
+        this.applicationServices = applicationServices;
+    }
+
+    public ApplicationServices getApplicationServices() {
+        return applicationServices;
     }
 
     public void addAll(Collection<UniversityDTO> data) {

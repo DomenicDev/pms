@@ -325,7 +325,7 @@ public class DoctoralStudentFormController implements Initializable {
         // graduation
         graduationComboBox.getSelectionModel().select(RepresentationWrapper.find(qualifiedGraduation.getGraduation(), graduationComboBox.getItems()));
         subjectAreaTextField.setText(qualifiedGraduation.getSubjectArea());
-        gradeTextField.setText(qualifiedGraduation.getGrade().toPlainString());
+        gradeTextField.setText(qualifiedGraduation.getGrade());
 
         // target graduation
         // todo
@@ -564,8 +564,7 @@ public class DoctoralStudentFormController implements Initializable {
         }
 
         if (validator.isValidGrade(gradeTextField)) {
-            qualifiedGraduation.setGrade(new BigDecimal(gradeTextField.getText().replace(",", ".")));
-        } else {
+            qualifiedGraduation.setGrade(gradeTextField.getText());
         }
 
         // target graduation

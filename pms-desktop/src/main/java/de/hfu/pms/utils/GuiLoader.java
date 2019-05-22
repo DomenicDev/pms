@@ -22,6 +22,7 @@ public class GuiLoader {
     public static final String TRAVEL_COST_CONFERENCE = "/screens/support_travel_cost_conference.fxml";
     public static final String CONSULTING_SUPPORT = "/screens/support_consulting_screen.fxml";
     public static final String QUALIFICATION = "/screens/qualification_screen.fxml";
+    public static final String DOCTORAL_STUDENT_FORM_MASK = "/screens/doctoral_student_form_mask.fxml";
 
     static {
         // load resource bundle file

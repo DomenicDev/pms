@@ -46,10 +46,11 @@ public class DatabaseInit implements CommandLineRunner {
         personalData.setLastName("Mustermann");
         personalData.setGender(Gender.Male);
         personalData.setNationality("German");
-
         student.setPersonalData(personalData);
 
         student.getTargetGraduation().setFacultyHFU(FacultyHFU.Informatik);
+        student.getQualifiedGraduation().setGrade("1.3");
+
 
         doctoralStudentDao.save(student);
 

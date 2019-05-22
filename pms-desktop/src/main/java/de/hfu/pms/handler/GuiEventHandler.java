@@ -75,7 +75,10 @@ public class GuiEventHandler {
     @Subscribe
     public void handleSaveDoctoralStudentEvent(SaveDoctoralStudentEvent saveEvent) {
         DoctoralStudentDTO doctoralStudent = saveEvent.getDoctoralStudent();
-        applicationServices.addDoctoralStudent(doctoralStudent);
+        DoctoralStudentDTO createdStudent = applicationServices.addDoctoralStudent(doctoralStudent);
+        if (createdStudent != null) {
+            eventBus.post(new SuccessfullyAddedDoctoralStudentEvent(createdStudent));
+        }
     }
 
     @Subscribe
@@ -94,6 +97,21 @@ public class GuiEventHandler {
     public void handleSaveUserEvent(RequestSaveUserEvent requestSaveUserEvent){
         UserDTO userDTO = requestSaveUserEvent.getUser();
         applicationServices.addUser(userDTO);
+    }
+
+    @Subscribe
+    public void handleEvent(OnClickEditDoctoralStudentEvent event) {
+        Long id = event.getId();
+        DoctoralStudentDTO doctoralStudentDTO = null;
+        try {
+            doctoralStudentDTO = applicationServices.getDoctoralStudent(id);
+        } catch (IOException e) {
+            // todo handle properly
+            e.printStackTrace();
+        }
+
+        // load and start doc student form mask and fill with data
+        eventBus.post(new ShowDoctoralStudentEvent(doctoralStudentDTO));
     }
 
     @Subscribe

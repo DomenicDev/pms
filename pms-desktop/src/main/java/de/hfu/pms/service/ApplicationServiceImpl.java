@@ -40,6 +40,8 @@ public class ApplicationServiceImpl implements ApplicationServices {
     private final String USER_PREFIX = "/user/";
     private final String UNIVERSITY_PREFIX = "/university/";
 
+    private final String STUDENT_SERVICES = HOST_URL + STUDENT_PREFIX;
+
     public ApplicationServiceImpl() {
         this.restClient = new RestClient();
         this.mapper.registerModule(new JavaTimeModule());
@@ -47,17 +49,19 @@ public class ApplicationServiceImpl implements ApplicationServices {
 
     //TODO: Add good exception handling and logging
     @Override
-    public void addDoctoralStudent(DoctoralStudentDTO student) {
+    public DoctoralStudentDTO addDoctoralStudent(DoctoralStudentDTO student) {
         try {
             String json = mapper.writeValueAsString(student);
             String response = restClient.postJson(HOST_URL + STUDENT_PREFIX + "create" , json);
             DoctoralStudentDTO dto = mapper.readValue(response, DoctoralStudentDTO.class);
             logger.log(Level.INFO, "Doctoral Student created: " + dto);
+            return dto;
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null; // todo: better throw exception
     }
 
     @Override
@@ -87,8 +91,15 @@ public class ApplicationServiceImpl implements ApplicationServices {
     }
 
     @Override
-    public DoctoralStudentDTO getDoctoralStudent(int studentID) {
-        return null;
+    public DoctoralStudentDTO getDoctoralStudent(Long studentID) throws IOException {
+        try {
+            String json = restClient.get(STUDENT_SERVICES + "/get/" + studentID);
+            DoctoralStudentDTO dto = mapper.readValue(json, DoctoralStudentDTO.class);
+            return dto;
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new IOException(e);
+        }
     }
 
     @Override
