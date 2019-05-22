@@ -1,6 +1,7 @@
 package de.hfu.pms.controller;
 import com.google.common.eventbus.EventBus;
 import de.hfu.pms.eventbus.EventBusSystem;
+import de.hfu.pms.events.RequestSaveUserEvent;
 import de.hfu.pms.shared.dto.UserDTO;
 import de.hfu.pms.utils.FormValidator;
 import javafx.event.ActionEvent;
@@ -22,7 +23,7 @@ public class ChangeAccountInformationController {
         private TextField textfieldChangeEmail;
 
         @FXML
-        private TextField textfieldFornMeLastname;
+        private TextField textfieldForname;
 
         @FXML
         private Label labelChangeUsername;
@@ -32,6 +33,8 @@ public class ChangeAccountInformationController {
 
         @FXML
         private TextField textfieldLastname;
+
+        private UserDTO user;
 
         @FXML
         void handleChangeUserInformationbutton(ActionEvent event) {
@@ -43,19 +46,20 @@ public class ChangeAccountInformationController {
                         return;
                 }
                 if (validationSuccessful){
-                        //eventBus.post(new RequestU)
-                        ((Button)event.getSource()).getScene().getWindow().hide();
+                        eventBus.post(new RequestSaveUserEvent(user));
+
                 }
+                ((Button)event.getSource()).getScene().getWindow().hide();
 
 
         }
 
-        private UserDTO user;
+
 
         public void edit (UserDTO user){
                 this.user =user;
                 textfieldChangeEmail.setText((user.getEmail()));
-                textfieldFornMeLastname.setText(user.getForename());
+                textfieldForname.setText(user.getForename());
                 labelChangeUsername.setText(user.getUsername());
                 lableChangeRole.setText(user.getRole().name());
                 textfieldLastname.setText(user.getLastname());
@@ -69,54 +73,24 @@ public class ChangeAccountInformationController {
         private boolean writeToUserDTO(){
                 FormValidator userValidator = new FormValidator();
 
+                String benutzername =labelChangeUsername.getText();
+                String vorname =textfieldForname.getText();
+                String email= textfieldChangeEmail.getText();
+                String nachname =textfieldLastname.getText();
+                String rolle =lableChangeRole.getText();
 
+                if (userValidator.textFieldNotEmpty((textfieldForname))){
+                        user.setForename(vorname);
+                }
+                if (userValidator.textFieldNotEmpty(textfieldLastname)){
+                        user.setLastname(nachname);
+                }
+                if (userValidator.textFieldNotEmpty((textfieldChangeEmail))){
+                        user.setEmail(email);
+                }
+                //user.setRole(rolle);
+                user.setUsername(benutzername);
 
                 return userValidator.validationSuccessful();
         }
-
-//
-//        if (!isEditMode()) {
-//            eventBus.post(new RequestAddUniversityEvent(university));
-//        } else {
-//            eventBus.post(new RequestUpdateUniversityEvent(university));
-//        }
-//
-//        ((Button)event.getSource()).getScene().getWindow().hide();
-//
-//    }
-//    private boolean writeToUniversityDTO(){
-//
-//        FormValidator universityValidator = new FormValidator();
-//
-//        String name = textFieldNameOfUniverity.getText();
-//        String location =textFieldLocation.getText();
-//        String country = textFieldCountry.getText();
-//        String shortForm =textFieldShortForm.getText();
-//
-//        if(universityValidator.textFieldNotEmpty(textFieldNameOfUniverity)){
-//            university.setName(name);
-//        }
-//        if(universityValidator.textFieldNotEmpty(textFieldCountry)){
-//            university.setCountry(country);
-//
-//        }
-//        if(universityValidator.textFieldNotEmpty(textFieldLocation)){
-//            university.setLocation(location);
-//
-//        }
-//        university.setAbbreviation(shortForm);
-//
-//        return universityValidator.validationSuccessful();
-//
-//
-//    }
-//
-//    @FXML
-//    void handleCancelButton(ActionEvent event) {
-//        ((Button) event.getSource()).getScene().getWindow().hide();
-//
-//    }
-//}
-
-
 }

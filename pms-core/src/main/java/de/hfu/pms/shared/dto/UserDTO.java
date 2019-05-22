@@ -56,9 +56,7 @@ public class UserDTO {
         this.email = email;
     }
 
-    public UserRole getRole() {
-        return role;
-    }
+    public UserRole getRole() { return role;}
 
     public void setRole(UserRole role) {
         this.role = role;
