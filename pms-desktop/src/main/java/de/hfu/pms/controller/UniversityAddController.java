@@ -39,6 +39,8 @@ public class UniversityAddController {
 
     private UniversityDTO university;
 
+    private boolean editMode = false;
+
     public void edit(UniversityDTO university) {
         this.university = university;
 
@@ -58,24 +60,33 @@ public class UniversityAddController {
             ButtonUniversityAdd.setText("Universität Hinzufügen");
             title.setText("Universität Hinzufügen");
         }
+        this.editMode = editMode;
     }
 
+    public boolean isEditMode() {
+        return editMode;
+    }
 
     @FXML
     void handleAddButton(ActionEvent event) {
 
-        university = new UniversityDTO();
+        if (university == null) {
+            university = new UniversityDTO();
+        }
+
         boolean validationSuccessful = writeToUniversityDTO();
 
-        if (validationSuccessful ) {
-            eventBus.post(new RequestAddUniversityEvent(university));
-            ((Button)event.getSource()).getScene().getWindow().hide();
+        if (!validationSuccessful) {
+            return;
+        }
 
-        }
-        if (validationSuccessful && title.getText()== "Universität Ändern"){
+        if (!isEditMode()) {
+            eventBus.post(new RequestAddUniversityEvent(university));
+        } else {
             eventBus.post(new RequestUpdateUniversityEvent(university));
-            ((Button)event.getSource()).getScene().getWindow().hide();
         }
+
+        ((Button)event.getSource()).getScene().getWindow().hide();
 
     }
     private boolean writeToUniversityDTO(){

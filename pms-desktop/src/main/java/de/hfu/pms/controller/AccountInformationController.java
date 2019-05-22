@@ -2,6 +2,7 @@ package de.hfu.pms.controller;
 
 import com.google.common.eventbus.EventBus;
 import de.hfu.pms.eventbus.EventBusSystem;
+import de.hfu.pms.shared.dto.UserDTO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,7 +38,7 @@ public class AccountInformationController implements Initializable {
 
     private Logger logger = Logger.getLogger(AccountInformationController.class);
 
-
+    private UserDTO user;
 
     @FXML
     void handleChangeUserInformationButton(ActionEvent event) {
@@ -46,7 +47,7 @@ public class AccountInformationController implements Initializable {
             ResourceBundle bundle = ResourceBundle.getBundle("lang/strings");
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/screens/change_accountinformation_screen.fxml"));
-            Parent root = (Parent) fxmlLoader.load();
+            Parent root = fxmlLoader.load();
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Benutzerinformationen Ändern");
@@ -59,12 +60,16 @@ public class AccountInformationController implements Initializable {
 
 
     }
-    private void initLable(ResourceBundle resource){
-        LabelUsername.setText("username");
-        labelForname.setText("Name");
-        LableLastname.setText("Lastname");
-        LableEmail.setText("Email");
-        LableRole.setText("Role");
+    private void initLable(UserDTO user){
+
+        this.user = user;
+
+        LabelUsername.setText(user.getUsername());
+        labelForname.setText(user.getForename());
+        LableLastname.setText(user.getLastname());
+        LableEmail.setText(user.getEmail());
+        LableRole.setText(user.getRole().name());
+
 
     }
 

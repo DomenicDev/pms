@@ -5,6 +5,7 @@ import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.AlertNotificationEvent;
 import de.hfu.pms.events.SuccessfullyAddedUniversityEvent;
+import de.hfu.pms.events.SuccessfullyUpdatedUniversityEvent;
 import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.UniversityDTO;
 import de.hfu.pms.utils.GuiLoader;
@@ -25,6 +26,8 @@ import org.apache.log4j.Logger;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+
 
 
 public class UniversityController implements Initializable {
@@ -85,23 +88,15 @@ public class UniversityController implements Initializable {
             stage.setTitle("Universität Ändern");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));
-
-
-
             stage.show();
 
             UniversityAddController controller = fxmlLoader.getController();
-
-
-
             controller.edit(university);
-
 
         } catch (Exception e) {
             logger.log(Level.ERROR, "Unable to load the University change screen");
         }
     }
-
 
     private void initUniversityTable (ResourceBundle resources){
         TableColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -114,10 +109,19 @@ public class UniversityController implements Initializable {
     public void handleUniversityAddEvent(SuccessfullyAddedUniversityEvent event){
         UniversityDTO university = event.getUniversity();
         tableViewUniversity.getItems().add(university);
-
-
     }
+    @Subscribe
+    public void handleUpdateEvent(SuccessfullyUpdatedUniversityEvent event){
+        UniversityDTO university = event.getUniversity();
 
+        for (int i = 0; i<tableViewUniversity.getItems().size();i++){
+
+           //if (tableViewUniversity.getSelectionModel().getSelectedItem(university.getId()) == tableViewUniversity.getItems(university.getId())){
+               tableViewUniversity.getItems().remove(university);
+           }
+
+        }
+    //}
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
