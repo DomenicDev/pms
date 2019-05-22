@@ -38,11 +38,12 @@ public class HomeController implements Initializable {
 
 
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
-                new PieChart.Data("Test1", 2),
-                new PieChart.Data("Test2", 4),
-                new PieChart.Data("Test3", 3),
-                new PieChart.Data("Test4", 6));
+                new PieChart.Data("Data1", 2),
+                new PieChart.Data("Data2", 5),
+                new PieChart.Data("Data3", 3),
+                new PieChart.Data("Data4", 10));
         pieChart.setData(pieChartData);
+
 
 
     }
