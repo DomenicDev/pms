@@ -90,9 +90,9 @@ public class GuiEventHandler {
         applicationServices.updateUniversity(universityDTO.getId(), universityDTO);
     }
 
-    public void handleSaveUserEvent(){
-        //TODO: unfinished
-        UserDTO userDTO = null;
+    @Subscribe
+    public void handleSaveUserEvent(RequestSaveUserEvent requestSaveUserEvent){
+        UserDTO userDTO = requestSaveUserEvent.getUser();
         applicationServices.addUser(userDTO);
     }
 
