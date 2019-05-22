@@ -60,7 +60,7 @@ public class AccountInformationController implements Initializable {
 
     }
     private void initLable(ResourceBundle resource){
-        LabelUsername.setText("Username");
+        LabelUsername.setText("username");
         labelForname.setText("Name");
         LableLastname.setText("Lastname");
         LableEmail.setText("Email");

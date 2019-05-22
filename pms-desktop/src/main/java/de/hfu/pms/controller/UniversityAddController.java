@@ -3,6 +3,7 @@ package de.hfu.pms.controller;
 import com.google.common.eventbus.EventBus;
 import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.RequestAddUniversityEvent;
+import de.hfu.pms.events.RequestUpdateUniversityEvent;
 import de.hfu.pms.shared.dto.UniversityDTO;
 import de.hfu.pms.utils.FormValidator;
 import javafx.event.ActionEvent;
@@ -46,7 +47,7 @@ public class UniversityAddController {
         textFieldCountry.setText(university.getCountry());
         textFieldLocation.setText(university.getLocation());
         textFieldShortForm.setText(university.getAbbreviation());
-  //      setEditMode(true);
+        setEditMode(true);
     }
 
     public void setEditMode(boolean editMode) {
@@ -54,7 +55,7 @@ public class UniversityAddController {
             ButtonUniversityAdd.setText("Universität Ändern");
             title.setText("Universität Ändern");
         } else {
-            ButtonUniversityAdd.setText("Universiät Hinzufügen");
+            ButtonUniversityAdd.setText("Universität Hinzufügen");
             title.setText("Universität Hinzufügen");
         }
     }
@@ -66,10 +67,14 @@ public class UniversityAddController {
         university = new UniversityDTO();
         boolean validationSuccessful = writeToUniversityDTO();
 
-        if (validationSuccessful) {
+        if (validationSuccessful ) {
             eventBus.post(new RequestAddUniversityEvent(university));
             ((Button)event.getSource()).getScene().getWindow().hide();
-//todo add a edit configuration for the university add screen !
+
+        }
+        if (validationSuccessful && title.getText()== "Universität Ändern"){
+            eventBus.post(new RequestUpdateUniversityEvent(university));
+            ((Button)event.getSource()).getScene().getWindow().hide();
         }
 
     }
