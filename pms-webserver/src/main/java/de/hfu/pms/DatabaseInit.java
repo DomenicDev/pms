@@ -50,6 +50,8 @@ public class DatabaseInit implements CommandLineRunner {
 
         student.getTargetGraduation().setFacultyHFU(FacultyHFU.Informatik);
         student.getQualifiedGraduation().setGrade("1.3");
+        personalData.getAddress().setCountry("Germany");
+        personalData.setEmail("test@email.de");
 
 
         doctoralStudentDao.save(student);

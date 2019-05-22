@@ -47,7 +47,7 @@ public class PersonalData {
     private Integer numberOfChildren;
 
     @Embedded
-    private Address mailingAdress;
+    private Address address = new Address();
 
     @Column
     private String email;
@@ -55,6 +55,8 @@ public class PersonalData {
     @Column
     private String telephone;
 
+    public PersonalData() {
+    }
 
     @Column
     private byte[] photo; // saved as blob
@@ -139,12 +141,12 @@ public class PersonalData {
         this.numberOfChildren = numberOfChildren;
     }
 
-    public Address getMailingAdress() {
-        return mailingAdress;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setMailingAdress(Address mailingAdress) {
-        this.mailingAdress = mailingAdress;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public String getEmail() {
