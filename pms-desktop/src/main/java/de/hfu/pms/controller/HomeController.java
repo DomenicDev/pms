@@ -6,12 +6,9 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
-
 
 
 public class HomeController extends Application {
@@ -37,7 +34,7 @@ public class HomeController extends Application {
 
     @FXML
     public void initialize() throws IOException {
-        home = GuiLoader.loadFXML("screens/home.fxml");
+        //home = GuiLoader.loadFXML("screens/home.fxml");
 
     }
 

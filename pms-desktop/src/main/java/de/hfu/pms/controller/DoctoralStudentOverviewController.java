@@ -22,7 +22,7 @@ import java.util.HashSet;
 import java.util.ResourceBundle;
 
 
-public class DoctoralStudentOverviewController  implements Initializable {
+public class DoctoralStudentOverviewController implements Initializable {
 
     //private Logger logger = Logger.getLogger(DoctoralStudentOverviewController.class);
     private EventBus eventBus = EventBusSystem.getEventBus();
@@ -85,8 +85,8 @@ public class DoctoralStudentOverviewController  implements Initializable {
     public void handleOnActionSearchButton(ActionEvent event) {
         // todo
         // request a Search
-        //
         // print result
+
         String searchterm = searchTextField.getText();
 
         PreviewDoctoralStudentDTO student1 = new PreviewDoctoralStudentDTO(500L, "Jahnsen", "Jan", FacultyHFU.Medical_and_Life_Sciences, "jan.jahnsen@mail.com", "017322497814", Gender.Male);
