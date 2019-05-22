@@ -58,4 +58,15 @@ public class EmploymentEntryDTO {
     public void setPreEmploymentTimeToBeCharged(boolean preEmploymentTimeToBeCharged) {
         this.preEmploymentTimeToBeCharged = preEmploymentTimeToBeCharged;
     }
+
+    @Override
+    public String toString() {
+        return "EmploymentEntryDTO{" +
+                "id=" + id +
+                ", employmentLocation=" + employmentLocation +
+                ", kindOfEmployment='" + kindOfEmployment + '\'' +
+                ", campusOfDeployment=" + campusOfDeployment +
+                ", preEmploymentTimeToBeCharged=" + preEmploymentTimeToBeCharged +
+                '}';
+    }
 }

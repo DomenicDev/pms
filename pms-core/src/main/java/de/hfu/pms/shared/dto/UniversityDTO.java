@@ -58,4 +58,15 @@ public class UniversityDTO {
     public void setAbbreviation(String abbreviation) {
         this.abbreviation = abbreviation;
     }
+
+    @Override
+    public String toString() {
+        return "UniversityDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", location='" + location + '\'' +
+                ", country='" + country + '\'' +
+                ", abbreviation='" + abbreviation + '\'' +
+                '}';
+    }
 }

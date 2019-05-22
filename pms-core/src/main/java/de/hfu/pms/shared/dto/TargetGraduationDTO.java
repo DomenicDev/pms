@@ -179,4 +179,29 @@ public class TargetGraduationDTO {
     public void setPromotionAgreement(LocalDate promotionAgreement) {
         this.promotionAgreement = promotionAgreement;
     }
+
+    @Override
+    public String toString() {
+        return "TargetGraduationDTO{" +
+                "targetGraduationDegree='" + targetGraduationDegree + '\'' +
+                ", nameOfDissertation='" + nameOfDissertation + '\'' +
+                ", internalSupervisor='" + internalSupervisor + '\'' +
+                ", facultyHFU=" + facultyHFU +
+                ", externalSupervisor='" + externalSupervisor + '\'' +
+                ", externalFaculty='" + externalFaculty + '\'' +
+                ", externalUniversity=" + externalUniversity +
+                ", promotionAccepted=" + promotionAccepted +
+                ", procedureCompleted=" + procedureCompleted +
+                ", rating=" + rating +
+                ", cancelDate=" + cancelDate +
+                ", cancelReason='" + cancelReason + '\'' +
+                ", membershipHFUKollegBegin=" + membershipHFUKollegBegin +
+                ", membershipHFUKollegEnd=" + membershipHFUKollegEnd +
+                ", extendedMembershipEnd=" + extendedMembershipEnd +
+                ", externalProgram='" + externalProgram + '\'' +
+                ", promotionAdmissionDate=" + promotionAdmissionDate +
+                ", prognosticatedPromotionDate=" + prognosticatedPromotionDate +
+                ", promotionAgreement=" + promotionAgreement +
+                '}';
+    }
 }

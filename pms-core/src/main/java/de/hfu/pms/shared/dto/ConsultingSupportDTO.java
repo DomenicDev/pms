@@ -57,4 +57,14 @@ public class ConsultingSupportDTO {
     public void setConsultingDuration(int consultingDuration) {
         this.consultingDuration = consultingDuration;
     }
+
+    @Override
+    public String toString() {
+        return "ConsultingSupportDTO{" +
+                "id=" + id +
+                ", consultingType='" + consultingType + '\'' +
+                ", consultingDate=" + consultingDate +
+                ", consultingDuration=" + consultingDuration +
+                '}';
+    }
 }

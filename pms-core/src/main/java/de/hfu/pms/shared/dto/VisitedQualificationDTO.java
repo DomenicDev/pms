@@ -45,4 +45,13 @@ public class VisitedQualificationDTO {
     public void setQualificationDate(LocalDate qualificationDate) {
         this.qualificationDate = qualificationDate;
     }
+
+    @Override
+    public String toString() {
+        return "VisitedQualificationDTO{" +
+                "id=" + id +
+                ", nameOfQualification='" + nameOfQualification + '\'' +
+                ", qualificationDate=" + qualificationDate +
+                '}';
+    }
 }

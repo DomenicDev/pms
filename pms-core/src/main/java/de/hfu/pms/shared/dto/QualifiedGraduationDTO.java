@@ -40,4 +40,14 @@ public class QualifiedGraduationDTO {
     public void setQualifiedGraduationUniversity(UniversityDTO qualifiedGraduationUniversity) {
         this.qualifiedGraduationUniversity = qualifiedGraduationUniversity;
     }
+
+    @Override
+    public String toString() {
+        return "QualifiedGraduationDTO{" +
+                "graduation=" + graduation +
+                ", subjectArea='" + subjectArea + '\'' +
+                ", grade='" + grade + '\'' +
+                ", qualifiedGraduationUniversity=" + qualifiedGraduationUniversity +
+                '}';
+    }
 }

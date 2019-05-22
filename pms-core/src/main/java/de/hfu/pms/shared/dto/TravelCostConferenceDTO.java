@@ -53,4 +53,15 @@ public class TravelCostConferenceDTO {
     public void setConferenceTitle(String conferenceTitle) {
         this.conferenceTitle = conferenceTitle;
     }
+
+    @Override
+    public String toString() {
+        return "TravelCostConferenceDTO{" +
+                "id=" + id +
+                ", date=" + date +
+                ", location='" + location + '\'' +
+                ", sum=" + sum +
+                ", conferenceTitle='" + conferenceTitle + '\'' +
+                '}';
+    }
 }

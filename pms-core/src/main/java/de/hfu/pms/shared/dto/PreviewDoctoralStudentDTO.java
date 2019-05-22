@@ -78,4 +78,16 @@ public class PreviewDoctoralStudentDTO {
         this.gender = gender;
     }
 
+    @Override
+    public String toString() {
+        return "PreviewDoctoralStudentDTO{" +
+                "id=" + id +
+                ", foreName='" + foreName + '\'' +
+                ", name='" + name + '\'' +
+                ", faculty=" + faculty +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", gender=" + gender +
+                '}';
+    }
 }

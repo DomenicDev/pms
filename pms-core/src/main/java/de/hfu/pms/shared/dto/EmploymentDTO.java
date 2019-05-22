@@ -23,4 +23,11 @@ public class EmploymentDTO {
     public void setEmploymentEntries(Set<EmploymentEntryDTO> employmentEntries) {
         this.employmentEntries = employmentEntries;
     }
+
+    @Override
+    public String toString() {
+        return "EmploymentDTO{" +
+                "employmentEntries=" + employmentEntries +
+                '}';
+    }
 }
