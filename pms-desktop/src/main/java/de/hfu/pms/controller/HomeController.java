@@ -5,7 +5,6 @@ import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.AlertNotificationEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 
@@ -19,13 +18,17 @@ public class HomeController implements Initializable {
 
     @FXML
     private Label welcomeLabel;
+    @FXML
+    private Label doctoralCount;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         eventBus.register(this);
         String name = "CurrentUsername";
+        String DoctoralSummary = "CurrentDoctoralStudents";
 
         welcomeLabel.setText(welcomeLabel.getText() + name);
+        doctoralCount.setText(doctoralCount.getText() + DoctoralSummary);
     }
 
     @FXML
