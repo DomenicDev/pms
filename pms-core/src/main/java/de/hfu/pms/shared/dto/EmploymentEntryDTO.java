@@ -11,6 +11,14 @@ public class EmploymentEntryDTO {
     private Campus campusOfDeployment;
     private boolean preEmploymentTimeToBeCharged;
 
+    public void EmploymentEntryDTO(Long id, EmploymentLocation employmentLocation, String kindOfEmployment, Campus campusOfDeployment, boolean preEmploymentTimeToBeCharged){
+        this.id = id;
+        this.employmentLocation = employmentLocation;
+        this.kindOfEmployment = kindOfEmployment;
+        this.campusOfDeployment = campusOfDeployment;
+        this.preEmploymentTimeToBeCharged = preEmploymentTimeToBeCharged;
+    }
+
     public Long getId() {
         return id;
     }
@@ -49,5 +57,16 @@ public class EmploymentEntryDTO {
 
     public void setPreEmploymentTimeToBeCharged(boolean preEmploymentTimeToBeCharged) {
         this.preEmploymentTimeToBeCharged = preEmploymentTimeToBeCharged;
+    }
+
+    @Override
+    public String toString() {
+        return "EmploymentEntryDTO{" +
+                "id=" + id +
+                ", employmentLocation=" + employmentLocation +
+                ", kindOfEmployment='" + kindOfEmployment + '\'' +
+                ", campusOfDeployment=" + campusOfDeployment +
+                ", preEmploymentTimeToBeCharged=" + preEmploymentTimeToBeCharged +
+                '}';
     }
 }

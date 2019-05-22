@@ -1,25 +1,29 @@
 package de.hfu.pms.shared.dto;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class ConsultingSupportDTO {
 
     private int id;
-    private String typeOfConsulting;
-    private Date consultingDate;
-    private int duration; // in minutes
+    private String consultingType;
+    private LocalDate consultingDate;
+    private int consultingDuration; // in minutes
 
-    public ConsultingSupportDTO(String typeOfConsulting, Date consultingDate, int duration) {
-        this.typeOfConsulting = typeOfConsulting;
-        this.consultingDate = consultingDate;
-        this.duration = duration;
+    public ConsultingSupportDTO() {
+
     }
 
-    public ConsultingSupportDTO(int id, String typeOfConsulting, Date consultingDate, int duration) {
-        this.id = id;
-        this.typeOfConsulting = typeOfConsulting;
+    public ConsultingSupportDTO(String consultingType, LocalDate consultingDate, int consultingDuration) {
+        this.consultingType = consultingType;
         this.consultingDate = consultingDate;
-        this.duration = duration;
+        this.consultingDuration = consultingDuration;
+    }
+
+    public ConsultingSupportDTO(int id, String consultingType, LocalDate consultingDate, int consultingDuration) {
+        this.id = id;
+        this.consultingType = consultingType;
+        this.consultingDate = consultingDate;
+        this.consultingDuration = consultingDuration;
     }
 
     public int getId() {
@@ -30,27 +34,37 @@ public class ConsultingSupportDTO {
         this.id = id;
     }
 
-    public String getTypeOfConsulting() {
-        return typeOfConsulting;
+    public String getConsultingType() {
+        return consultingType;
     }
 
-    public void setTypeOfConsulting(String typeOfConsulting) {
-        this.typeOfConsulting = typeOfConsulting;
+    public void setConsultingType(String consultingType) {
+        this.consultingType = consultingType;
     }
 
-    public Date getConsultingDate() {
+    public LocalDate getConsultingDate() {
         return consultingDate;
     }
 
-    public void setConsultingDate(Date consultingDate) {
+    public void setConsultingDate(LocalDate consultingDate) {
         this.consultingDate = consultingDate;
     }
 
-    public int getDuration() {
-        return duration;
+    public int getConsultingDuration() {
+        return consultingDuration;
     }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
+    public void setConsultingDuration(int consultingDuration) {
+        this.consultingDuration = consultingDuration;
+    }
+
+    @Override
+    public String toString() {
+        return "ConsultingSupportDTO{" +
+                "id=" + id +
+                ", consultingType='" + consultingType + '\'' +
+                ", consultingDate=" + consultingDate +
+                ", consultingDuration=" + consultingDuration +
+                '}';
     }
 }

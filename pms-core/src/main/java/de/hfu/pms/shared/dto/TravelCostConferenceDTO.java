@@ -1,12 +1,12 @@
 package de.hfu.pms.shared.dto;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class TravelCostConferenceDTO {
 
     private Long id;
-    private Date date;
+    private LocalDate date;
     private String location;
     private BigDecimal sum;
     private String conferenceTitle;
@@ -22,11 +22,11 @@ public class TravelCostConferenceDTO {
         this.id = id;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -52,5 +52,16 @@ public class TravelCostConferenceDTO {
 
     public void setConferenceTitle(String conferenceTitle) {
         this.conferenceTitle = conferenceTitle;
+    }
+
+    @Override
+    public String toString() {
+        return "TravelCostConferenceDTO{" +
+                "id=" + id +
+                ", date=" + date +
+                ", location='" + location + '\'' +
+                ", sum=" + sum +
+                ", conferenceTitle='" + conferenceTitle + '\'' +
+                '}';
     }
 }

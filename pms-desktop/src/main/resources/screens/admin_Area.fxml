@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<ScrollPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.AdminAreaController">
+   <content>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="789.0" prefWidth="1106.0">
+         <children>
+            <Label layoutX="80.0" layoutY="43.0" text="Admin Bereich" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <TableView fx:id="tableAdminArea" layoutX="50.0" layoutY="106.0" prefHeight="589.0" prefWidth="434.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="100.0">
+              <columns>
+                <TableColumn fx:id="TableColumnForname" prefWidth="75.0" text="Vorname " />
+                <TableColumn fx:id="TableColumnLastname" prefWidth="75.0" text="Nachname" />
+              </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+            <Button fx:id="ButtonTryChange" layoutX="553.0" layoutY="100.0" mnemonicParsing="false" onAction="#handleChangeButton" text="Provisorischer Change Button" AnchorPane.leftAnchor="500.0" AnchorPane.topAnchor="100.0" />
+         </children>
+      </AnchorPane>
+   </content>
+</ScrollPane>

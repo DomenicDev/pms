@@ -2,24 +2,32 @@ package de.hfu.pms.shared.dto;
 
 public class AddressDTO {
 
-    private int plz;
+    private String street;
+    private String plz;
     private String location;
     private String country;
 
     public AddressDTO() {
     }
 
-    public AddressDTO(int plz, String location, String country) {
+    public AddressDTO(String street, String plz, String location, String country) {
+        this.street = street;
         this.plz = plz;
         this.location = location;
         this.country = country;
     }
 
-    public int getPlz() {
+    public String getStreet() { return street; }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getPlz() {
         return plz;
     }
 
-    public void setPlz(int plz) {
+    public void setPlz(String plz) {
         this.plz = plz;
     }
 
@@ -37,5 +45,15 @@ public class AddressDTO {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    @Override
+    public String toString() {
+        return "AddressDTO{" +
+                "street='" + street + '\'' +
+                ", plz='" + plz + '\'' +
+                ", location='" + location + '\'' +
+                ", country='" + country + '\'' +
+                '}';
     }
 }

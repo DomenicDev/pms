@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.DoctoralStudentMainContentController">
+   <children>
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
+        <items>
+          <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#handleOnActionOverviewButton" text="Übersicht">
+               <graphic>
+                  <FontIcon iconLiteral="fa-mortar-board" iconSize="40" />
+               </graphic></Button>
+            <Button mnemonicParsing="false" onAction="#handleOnActionAddButton" text="Hinzufügen" />
+            <Button layoutX="81.0" layoutY="13.0" mnemonicParsing="false" onAction="#handleOnActionEditButton"
+                    text="Bearbeiten"/>
+            <Button mnemonicParsing="false" text="Anonymiseren" />
+            <Button mnemonicParsing="false" text="Löschen" />
+        </items>
+      </ToolBar>
+      <AnchorPane fx:id="doctoralStudentContentPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="503.0" prefWidth="749.0" VBox.vgrow="ALWAYS" />
+   </children>
+</VBox>

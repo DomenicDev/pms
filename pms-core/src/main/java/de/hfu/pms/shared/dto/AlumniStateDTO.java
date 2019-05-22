@@ -38,4 +38,14 @@ public class AlumniStateDTO {
     public void setAgreementEvaluation(boolean agreementEvaluation) {
         this.agreementEvaluation = agreementEvaluation;
     }
+
+    @Override
+    public String toString() {
+        return "AlumniStateDTO{" +
+                "jobTitle='" + jobTitle + '\'' +
+                ", employer='" + employer + '\'' +
+                ", agreementNews=" + agreementNews +
+                ", agreementEvaluation=" + agreementEvaluation +
+                '}';
+    }
 }

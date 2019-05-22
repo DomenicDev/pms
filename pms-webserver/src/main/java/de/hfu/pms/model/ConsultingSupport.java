@@ -1,7 +1,7 @@
 package de.hfu.pms.model;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table
@@ -12,7 +12,7 @@ public class ConsultingSupport {
     private Long id;
 
     @Column
-    private Date consultingDate;
+    private LocalDate consultingDate;
 
     @Column
     private String consultingType;
@@ -20,7 +20,7 @@ public class ConsultingSupport {
     @Column
     private int consultingDuration; // in minutes
 
-    public ConsultingSupport(Date consultingDate, String consultingType, int consultingDuration) {
+    public ConsultingSupport(LocalDate consultingDate, String consultingType, int consultingDuration) {
         this.consultingDate = consultingDate;
         this.consultingType = consultingType;
         this.consultingDuration = consultingDuration;
@@ -34,11 +34,11 @@ public class ConsultingSupport {
         this.id = id;
     }
 
-    public Date getConsultingDate() {
+    public LocalDate getConsultingDate() {
         return consultingDate;
     }
 
-    public void setConsultingDate(Date consultingDate) {
+    public void setConsultingDate(LocalDate consultingDate) {
         this.consultingDate = consultingDate;
     }
 

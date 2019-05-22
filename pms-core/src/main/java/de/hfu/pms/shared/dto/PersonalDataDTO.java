@@ -4,7 +4,8 @@ import de.hfu.pms.shared.enums.FamilyStatus;
 import de.hfu.pms.shared.enums.Gender;
 import de.hfu.pms.shared.enums.Salutation;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.Arrays;
 
 public class PersonalDataDTO {
 
@@ -14,12 +15,13 @@ public class PersonalDataDTO {
     private Salutation salutation;
     private String title;
     private Gender gender;
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
     private String nationality;
     private FamilyStatus familyStatus;
     private Integer numberOfChildren;
-    private AddressDTO address;
+    private AddressDTO address = new AddressDTO();
     private String telephone;
+    private String email;
     private byte[] photo;
 
     public String getForename() {
@@ -70,11 +72,11 @@ public class PersonalDataDTO {
         this.gender = gender;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -118,11 +120,39 @@ public class PersonalDataDTO {
         this.telephone = telephone;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public byte[] getPhoto() {
         return photo;
     }
 
     public void setPhoto(byte[] photo) {
         this.photo = photo;
+    }
+
+    @Override
+    public String toString() {
+        return "PersonalDataDTO{" +
+                "forename='" + forename + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", formerLastName='" + formerLastName + '\'' +
+                ", salutation=" + salutation +
+                ", title='" + title + '\'' +
+                ", gender=" + gender +
+                ", dateOfBirth=" + dateOfBirth +
+                ", nationality='" + nationality + '\'' +
+                ", familyStatus=" + familyStatus +
+                ", numberOfChildren=" + numberOfChildren +
+                ", address=" + address +
+                ", telephone='" + telephone + '\'' +
+                ", email=" + email +
+                ", photo=" + Arrays.toString(photo) +
+                '}';
     }
 }

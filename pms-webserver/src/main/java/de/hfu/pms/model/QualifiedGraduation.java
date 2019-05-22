@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
-import java.math.BigDecimal;
 
 @Embeddable
 public class QualifiedGraduation {
@@ -23,7 +22,7 @@ public class QualifiedGraduation {
      * Grades must have the format d.dd (example: 1.40)
      */
     @Column
-    private BigDecimal grade; // TODO: write tests for this attribute
+    private String grade; // TODO: write tests for this attribute
 
     @ManyToOne(targetEntity = University.class)
     private University gradedUniversity;
@@ -44,11 +43,11 @@ public class QualifiedGraduation {
         this.subjectArea = subjectArea;
     }
 
-    public BigDecimal getGrade() {
+    public String getGrade() {
         return grade;
     }
 
-    public void setGrade(BigDecimal grade) {
+    public void setGrade(String grade) {
         this.grade = grade;
     }
 

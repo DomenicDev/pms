@@ -1,4 +1,4 @@
-package de.hfu.pms.controller.exceptions;
+package de.hfu.pms.exceptions;
 
 public class UserNotFoundException extends RuntimeException {
 

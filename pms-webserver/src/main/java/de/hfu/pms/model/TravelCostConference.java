@@ -2,7 +2,7 @@ package de.hfu.pms.model;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table
@@ -12,12 +12,8 @@ public class TravelCostConference {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
-    private DoctoralStudent student;
-
     @Column
-    @Temporal(value = TemporalType.DATE)
-    private Date date;
+    private LocalDate date;
 
     @Column
     private String location;
@@ -36,11 +32,11 @@ public class TravelCostConference {
         this.id = id;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

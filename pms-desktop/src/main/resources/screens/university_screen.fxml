@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<ScrollPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.UniversityController">
+   <content>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="701.0" prefWidth="798.0">
+         <children>
+            <ScrollPane hbarPolicy="NEVER" layoutX="50.0" layoutY="150.0" prefWidth="655.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="150.0">
+               <content>
+                  <TableView fx:id="tableViewUniversity" prefHeight="443.0" prefWidth="653.0">
+                    <columns>
+                      <TableColumn fx:id="TableColumnName" prefWidth="75.0" text="Name" />
+                      <TableColumn fx:id="TableColumnOrt" prefWidth="75.0" text="Ort " />
+                        <TableColumn fx:id="TableColumnLand" prefWidth="75.0" text="Land" />
+                        <TableColumn fx:id="TableColumnKuerzel" prefWidth="75.0" text="Kürzel" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+               </content>
+            </ScrollPane>
+            <Button fx:id="universityAddButton" layoutX="186.0" layoutY="59.0" mnemonicParsing="false" onAction="#handleUniversityAddButton" text="Universität hinzufügen" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="60.0" />
+            <Label layoutX="186.0" layoutY="109.0" text="bereits vorhandene Universitäten" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="110.0" />
+            <Button fx:id="changeUniversityButton" layoutX="219.0" layoutY="60.0" mnemonicParsing="false" onAction="#handleChangeUniversityButton" text="Ausgewählte Universität bearbeiten" AnchorPane.leftAnchor="220.0" AnchorPane.topAnchor="60.0" />
+         </children>
+      </AnchorPane>
+   </content>
+</ScrollPane>

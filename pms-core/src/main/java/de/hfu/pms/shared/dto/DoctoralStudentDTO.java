@@ -3,7 +3,7 @@ package de.hfu.pms.shared.dto;
 public class DoctoralStudentDTO {
 
     // IDENTIFICATION NUMBER
-    private int id;
+    private Long id;
 
     // PERSONAL DATA
     private PersonalDataDTO personalData;
@@ -24,14 +24,21 @@ public class DoctoralStudentDTO {
     private AlumniStateDTO alumniState;
 
     public DoctoralStudentDTO() {
-
+        this.personalData = new PersonalDataDTO();
+        this.qualifiedGraduation = new QualifiedGraduationDTO();
+        this.targetGraduation = new TargetGraduationDTO();
+        this.employment = new EmploymentDTO();
+        this.support = new SupportDTO();
+        this.alumniState = new AlumniStateDTO();
     }
 
-    public int getId() {
+
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -81,5 +88,18 @@ public class DoctoralStudentDTO {
 
     public void setAlumniState(AlumniStateDTO alumniState) {
         this.alumniState = alumniState;
+    }
+
+    @Override
+    public String toString() {
+        return "DoctoralStudentDTO{" +
+                "id=" + id +
+                ", personalData=" + personalData +
+                ", qualifiedGraduation=" + qualifiedGraduation +
+                ", targetGraduation=" + targetGraduation +
+                ", employment=" + employment +
+                ", support=" + support +
+                ", alumniState=" + alumniState +
+                '}';
     }
 }

@@ -4,6 +4,17 @@ import de.hfu.pms.shared.enums.UserRole;
 
 public class UserDTO {
 
+    private String username;
+
+    private String password;
+
+    private String forename;
+
+    private String lastname;
+
+    private String email;
+
+    private UserRole role;
 
     public String getUsername() {
         return username;
@@ -21,20 +32,56 @@ public class UserDTO {
         this.password = password;
     }
 
-    public UserRole getUserRole() {
-        return userRole;
+    public String getForename() {
+        return forename;
     }
 
-    public void setUserRole(UserRole userRole) {
-        this.userRole = userRole;
+    public void setForename(String forename) {
+        this.forename = forename;
     }
 
-    private String username;
+    public String getLastname() {
+        return lastname;
+    }
 
-    private String password;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
 
-    private UserRole userRole;
+    public String getEmail() {
+        return email;
+    }
 
-    public UserDTO() {
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public UserRole getRole() { return role;}
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+
+    public UserDTO(){}
+
+    public UserDTO(String username, String password, String forename, String lastname, String email, UserRole role) {
+        this.username = username;
+        this.password = password;
+        this.forename = forename;
+        this.lastname = lastname;
+        this.email = email;
+        this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", forename='" + forename + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", email='" + email + '\'' +
+                ", role=" + role +
+                '}';
     }
 }

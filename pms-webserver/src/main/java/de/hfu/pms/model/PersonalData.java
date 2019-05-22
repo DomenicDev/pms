@@ -4,8 +4,11 @@ import de.hfu.pms.shared.enums.FamilyStatus;
 import de.hfu.pms.shared.enums.Gender;
 import de.hfu.pms.shared.enums.Salutation;
 
-import javax.persistence.*;
-import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
+import javax.persistence.Enumerated;
+import java.time.LocalDate;
 
 @Embeddable
 public class PersonalData {
@@ -31,8 +34,7 @@ public class PersonalData {
     private Gender gender;
 
     @Column
-    @Temporal(TemporalType.DATE) // to map java.util.Date to SQL-format
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
 
     @Column
     private String nationality;
@@ -45,7 +47,7 @@ public class PersonalData {
     private Integer numberOfChildren;
 
     @Embedded
-    private Address mailingAdress;
+    private Address address = new Address();
 
     @Column
     private String email;
@@ -53,6 +55,8 @@ public class PersonalData {
     @Column
     private String telephone;
 
+    public PersonalData() {
+    }
 
     @Column
     private byte[] photo; // saved as blob
@@ -105,11 +109,11 @@ public class PersonalData {
         this.gender = gender;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -137,12 +141,12 @@ public class PersonalData {
         this.numberOfChildren = numberOfChildren;
     }
 
-    public Address getMailingAdress() {
-        return mailingAdress;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setMailingAdress(Address mailingAdress) {
-        this.mailingAdress = mailingAdress;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public String getEmail() {

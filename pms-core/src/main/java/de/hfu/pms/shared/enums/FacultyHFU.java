@@ -4,7 +4,20 @@ public enum FacultyHFU {
 
     Informatik,
 
-    Digitale_Medien;
+    Wirtschaftsinformatik,
 
-    // TODO: ADD missing faculties
+    Digitale_Medien,
+
+    Industrial_Technologies,
+
+    Medical_and_Life_Sciences,
+
+    Wirtschaft,
+
+    Wirtschaftsingenieurwesen,
+
+    Gesundheit_Sicherheit_Gesellschaft,
+
+    Mechanical_and_Medical_Engineering
+
 }

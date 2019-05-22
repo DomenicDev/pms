@@ -3,7 +3,7 @@ package de.hfu.pms.shared.dto;
 import de.hfu.pms.shared.enums.FacultyHFU;
 import de.hfu.pms.shared.enums.Rating;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class TargetGraduationDTO {
 
@@ -14,18 +14,18 @@ public class TargetGraduationDTO {
     private String externalSupervisor;
     private String externalFaculty;
     private UniversityDTO externalUniversity;
-    private Date promotionAccepted;
-    private Date procedureCompleted;
+    private LocalDate promotionAccepted;
+    private LocalDate procedureCompleted;
     private Rating rating;
-    private Date cancelDate;
+    private LocalDate cancelDate;
     private String cancelReason;
-    private Date membershipHFUKollegBegin;
-    private Date membershipHFUKollegEnd;
-    private Date extendedMembershipEnd;
+    private LocalDate membershipHFUKollegBegin;
+    private LocalDate membershipHFUKollegEnd;
+    private LocalDate extendedMembershipEnd;
     private String externalProgram;
-    private Date promotionAdmissionDate;
-    private Date prognosticatedPromotionDate;
-    private Date promotionAgreement;
+    private LocalDate promotionAdmissionDate;
+    private LocalDate prognosticatedPromotionDate;
+    private LocalDate promotionAgreement;
 
 
     public String getTargetGraduationDegree() {
@@ -84,19 +84,19 @@ public class TargetGraduationDTO {
         this.externalUniversity = externalUniversity;
     }
 
-    public Date getPromotionAccepted() {
+    public LocalDate getPromotionAccepted() {
         return promotionAccepted;
     }
 
-    public void setPromotionAccepted(Date promotionAccepted) {
+    public void setPromotionAccepted(LocalDate promotionAccepted) {
         this.promotionAccepted = promotionAccepted;
     }
 
-    public Date getProcedureCompleted() {
+    public LocalDate getProcedureCompleted() {
         return procedureCompleted;
     }
 
-    public void setProcedureCompleted(Date procedureCompleted) {
+    public void setProcedureCompleted(LocalDate procedureCompleted) {
         this.procedureCompleted = procedureCompleted;
     }
 
@@ -108,11 +108,11 @@ public class TargetGraduationDTO {
         this.rating = rating;
     }
 
-    public Date getCancelDate() {
+    public LocalDate getCancelDate() {
         return cancelDate;
     }
 
-    public void setCancelDate(Date cancelDate) {
+    public void setCancelDate(LocalDate cancelDate) {
         this.cancelDate = cancelDate;
     }
 
@@ -124,27 +124,27 @@ public class TargetGraduationDTO {
         this.cancelReason = cancelReason;
     }
 
-    public Date getMembershipHFUKollegBegin() {
+    public LocalDate getMembershipHFUKollegBegin() {
         return membershipHFUKollegBegin;
     }
 
-    public void setMembershipHFUKollegBegin(Date membershipHFUKollegBegin) {
+    public void setMembershipHFUKollegBegin(LocalDate membershipHFUKollegBegin) {
         this.membershipHFUKollegBegin = membershipHFUKollegBegin;
     }
 
-    public Date getMembershipHFUKollegEnd() {
+    public LocalDate getMembershipHFUKollegEnd() {
         return membershipHFUKollegEnd;
     }
 
-    public void setMembershipHFUKollegEnd(Date membershipHFUKollegEnd) {
+    public void setMembershipHFUKollegEnd(LocalDate membershipHFUKollegEnd) {
         this.membershipHFUKollegEnd = membershipHFUKollegEnd;
     }
 
-    public Date getExtendedMembershipEnd() {
+    public LocalDate getExtendedMembershipEnd() {
         return extendedMembershipEnd;
     }
 
-    public void setExtendedMembershipEnd(Date extendedMembershipEnd) {
+    public void setExtendedMembershipEnd(LocalDate extendedMembershipEnd) {
         this.extendedMembershipEnd = extendedMembershipEnd;
     }
 
@@ -156,27 +156,52 @@ public class TargetGraduationDTO {
         this.externalProgram = externalProgram;
     }
 
-    public Date getPromotionAdmissionDate() {
+    public LocalDate getPromotionAdmissionDate() {
         return promotionAdmissionDate;
     }
 
-    public void setPromotionAdmissionDate(Date promotionAdmissionDate) {
+    public void setPromotionAdmissionDate(LocalDate promotionAdmissionDate) {
         this.promotionAdmissionDate = promotionAdmissionDate;
     }
 
-    public Date getPrognosticatedPromotionDate() {
+    public LocalDate getPrognosticatedPromotionDate() {
         return prognosticatedPromotionDate;
     }
 
-    public void setPrognosticatedPromotionDate(Date prognosticatedPromotionDate) {
+    public void setPrognosticatedPromotionDate(LocalDate prognosticatedPromotionDate) {
         this.prognosticatedPromotionDate = prognosticatedPromotionDate;
     }
 
-    public Date getPromotionAgreement() {
+    public LocalDate getPromotionAgreement() {
         return promotionAgreement;
     }
 
-    public void setPromotionAgreement(Date promotionAgreement) {
+    public void setPromotionAgreement(LocalDate promotionAgreement) {
         this.promotionAgreement = promotionAgreement;
+    }
+
+    @Override
+    public String toString() {
+        return "TargetGraduationDTO{" +
+                "targetGraduationDegree='" + targetGraduationDegree + '\'' +
+                ", nameOfDissertation='" + nameOfDissertation + '\'' +
+                ", internalSupervisor='" + internalSupervisor + '\'' +
+                ", facultyHFU=" + facultyHFU +
+                ", externalSupervisor='" + externalSupervisor + '\'' +
+                ", externalFaculty='" + externalFaculty + '\'' +
+                ", externalUniversity=" + externalUniversity +
+                ", promotionAccepted=" + promotionAccepted +
+                ", procedureCompleted=" + procedureCompleted +
+                ", rating=" + rating +
+                ", cancelDate=" + cancelDate +
+                ", cancelReason='" + cancelReason + '\'' +
+                ", membershipHFUKollegBegin=" + membershipHFUKollegBegin +
+                ", membershipHFUKollegEnd=" + membershipHFUKollegEnd +
+                ", extendedMembershipEnd=" + extendedMembershipEnd +
+                ", externalProgram='" + externalProgram + '\'' +
+                ", promotionAdmissionDate=" + promotionAdmissionDate +
+                ", prognosticatedPromotionDate=" + prognosticatedPromotionDate +
+                ", promotionAgreement=" + promotionAgreement +
+                '}';
     }
 }

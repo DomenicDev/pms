@@ -1,31 +1,34 @@
 package de.hfu.pms.shared.dto;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class SupportDTO {
 
-    private Set<TravelCostConferenceDTO> conferenceTravelCost;
-    private Set<TravelCostUniversityDTO> universityTravelCost;
-    private Set<VisitedQualificationDTO> visitedQualifications;
-    private Set<ConsultingSupportDTO> consultingSupport;
+    private Set<TravelCostConferenceDTO> travelCostConferences = new HashSet<>();
+    private Set<TravelCostUniversityDTO> travelCostUniversities = new HashSet<>();
+    private Set<VisitedQualificationDTO> visitedQualifications = new HashSet<>();
+    private Set<ConsultingSupportDTO> consultingSupports = new HashSet<>();
     private String scholarship;
     private String awards;
     private String miscellaneous;
 
-    public Set<TravelCostConferenceDTO> getConferenceTravelCost() {
-        return conferenceTravelCost;
+
+
+    public Set<TravelCostConferenceDTO> getTravelCostConferences() {
+        return travelCostConferences;
     }
 
-    public void setConferenceTravelCost(Set<TravelCostConferenceDTO> conferenceTravelCost) {
-        this.conferenceTravelCost = conferenceTravelCost;
+    public void setTravelCostConferences(Set<TravelCostConferenceDTO> travelCostConferences) {
+        this.travelCostConferences = travelCostConferences;
     }
 
-    public Set<TravelCostUniversityDTO> getUniversityTravelCost() {
-        return universityTravelCost;
+    public Set<TravelCostUniversityDTO> getTravelCostUniversities() {
+        return travelCostUniversities;
     }
 
-    public void setUniversityTravelCost(Set<TravelCostUniversityDTO> universityTravelCost) {
-        this.universityTravelCost = universityTravelCost;
+    public void setTravelCostUniversities(Set<TravelCostUniversityDTO> travelCostUniversities) {
+        this.travelCostUniversities = travelCostUniversities;
     }
 
     public Set<VisitedQualificationDTO> getVisitedQualifications() {
@@ -36,12 +39,12 @@ public class SupportDTO {
         this.visitedQualifications = visitedQualifications;
     }
 
-    public Set<ConsultingSupportDTO> getConsultingSupport() {
-        return consultingSupport;
+    public Set<ConsultingSupportDTO> getConsultingSupports() {
+        return consultingSupports;
     }
 
-    public void setConsultingSupport(Set<ConsultingSupportDTO> consultingSupport) {
-        this.consultingSupport = consultingSupport;
+    public void setConsultingSupports(Set<ConsultingSupportDTO> consultingSupports) {
+        this.consultingSupports = consultingSupports;
     }
 
     public String getScholarship() {
@@ -66,5 +69,18 @@ public class SupportDTO {
 
     public void setMiscellaneous(String miscellaneous) {
         this.miscellaneous = miscellaneous;
+    }
+
+    @Override
+    public String toString() {
+        return "SupportDTO{" +
+                "travelCostConferences=" + travelCostConferences +
+                ", travelCostUniversities=" + travelCostUniversities +
+                ", visitedQualifications=" + visitedQualifications +
+                ", consultingSupports=" + consultingSupports +
+                ", scholarship='" + scholarship + '\'' +
+                ", awards='" + awards + '\'' +
+                ", miscellaneous='" + miscellaneous + '\'' +
+                '}';
     }
 }

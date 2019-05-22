@@ -1,7 +1,7 @@
 package de.hfu.pms.model;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table
@@ -12,8 +12,7 @@ public class VisitedQualification {
     private Long id;
 
     @Column
-    @Temporal(value = TemporalType.DATE)
-    private Date qualificationDate;
+    private LocalDate qualificationDate;
 
     @Column
     private String nameOfQualification;

@@ -8,11 +8,26 @@ public class EmploymentDTO {
 
     private Set<EmploymentEntryDTO> employmentEntries = new HashSet<>();
 
+    public EmploymentDTO() {
+
+    }
+
     public EmploymentDTO(Collection<EmploymentEntryDTO> employmentEntries) {
         this.employmentEntries.addAll(employmentEntries);
     }
 
     public Set<EmploymentEntryDTO> getEmploymentEntries() {
         return employmentEntries;
+    }
+
+    public void setEmploymentEntries(Set<EmploymentEntryDTO> employmentEntries) {
+        this.employmentEntries = employmentEntries;
+    }
+
+    @Override
+    public String toString() {
+        return "EmploymentDTO{" +
+                "employmentEntries=" + employmentEntries +
+                '}';
     }
 }
