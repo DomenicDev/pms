@@ -1,22 +1,28 @@
 package de.hfu.pms.shared.dto;
 
 import de.hfu.pms.shared.enums.Campus;
-import de.hfu.pms.shared.enums.EmploymentLocation;
+
+import java.time.LocalDate;
 
 public class EmploymentEntryDTO {
 
     private Long id;
-    private EmploymentLocation employmentLocation;
+    private String employmentLocation;
     private String kindOfEmployment;
     private Campus campusOfDeployment;
-    private boolean preEmploymentTimeToBeCharged;
+    private LocalDate employmentBegin;
+    private LocalDate employmentEnd;
 
-    public void EmploymentEntryDTO(Long id, EmploymentLocation employmentLocation, String kindOfEmployment, Campus campusOfDeployment, boolean preEmploymentTimeToBeCharged){
+    public EmploymentEntryDTO() {
+    }
+
+    public EmploymentEntryDTO(Long id, String employmentLocation, String kindOfEmployment, Campus campusOfDeployment, LocalDate employmentBegin, LocalDate employmentEnd) {
         this.id = id;
         this.employmentLocation = employmentLocation;
         this.kindOfEmployment = kindOfEmployment;
         this.campusOfDeployment = campusOfDeployment;
-        this.preEmploymentTimeToBeCharged = preEmploymentTimeToBeCharged;
+        this.employmentBegin = employmentBegin;
+        this.employmentEnd = employmentEnd;
     }
 
     public Long getId() {
@@ -27,11 +33,11 @@ public class EmploymentEntryDTO {
         this.id = id;
     }
 
-    public EmploymentLocation getEmploymentLocation() {
+    public String getEmploymentLocation() {
         return employmentLocation;
     }
 
-    public void setEmploymentLocation(EmploymentLocation employmentLocation) {
+    public void setEmploymentLocation(String employmentLocation) {
         this.employmentLocation = employmentLocation;
     }
 
@@ -51,22 +57,31 @@ public class EmploymentEntryDTO {
         this.campusOfDeployment = campusOfDeployment;
     }
 
-    public boolean isPreEmploymentTimeToBeCharged() {
-        return preEmploymentTimeToBeCharged;
+    public LocalDate getEmploymentBegin() {
+        return employmentBegin;
     }
 
-    public void setPreEmploymentTimeToBeCharged(boolean preEmploymentTimeToBeCharged) {
-        this.preEmploymentTimeToBeCharged = preEmploymentTimeToBeCharged;
+    public void setEmploymentBegin(LocalDate employmentBegin) {
+        this.employmentBegin = employmentBegin;
+    }
+
+    public LocalDate getEmploymentEnd() {
+        return employmentEnd;
+    }
+
+    public void setEmploymentEnd(LocalDate employmentEnd) {
+        this.employmentEnd = employmentEnd;
     }
 
     @Override
     public String toString() {
         return "EmploymentEntryDTO{" +
                 "id=" + id +
-                ", employmentLocation=" + employmentLocation +
+                ", employmentLocation='" + employmentLocation + '\'' +
                 ", kindOfEmployment='" + kindOfEmployment + '\'' +
                 ", campusOfDeployment=" + campusOfDeployment +
-                ", preEmploymentTimeToBeCharged=" + preEmploymentTimeToBeCharged +
+                ", employmentBegin=" + employmentBegin +
+                ", employmentEnd=" + employmentEnd +
                 '}';
     }
 }

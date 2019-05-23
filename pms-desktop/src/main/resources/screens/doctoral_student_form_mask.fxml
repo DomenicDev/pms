@@ -423,7 +423,8 @@
                                           <TableColumn fx:id="employmentLocationTableColumn" prefWidth="75.0" text="Ort" />
                                           <TableColumn fx:id="kindOfEmploymentTableColumn" prefWidth="156.0" text="Art der Beschäftigung" />
                                           <TableColumn fx:id="employmentCampusTableColumn" prefWidth="75.0" text="Dienstort" />
-                                          <TableColumn fx:id="preTimesTableColumn" prefWidth="275.0" text="Anzurechnende Beschäftigungsvorzeiten" />
+                                          <TableColumn fx:id="employmentBeginTableColumn" prefWidth="75.0" text="Beginn der Beschäftigung" />
+                                          <TableColumn fx:id="employmentEndTableColumn" prefWidth="75.0" text="Ende der Beschäftigung" />
                                       </columns>
                                        <columnResizePolicy>
                                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

@@ -13,7 +13,6 @@ import de.hfu.pms.utils.FormValidator;
 import de.hfu.pms.utils.GuiLoader;
 import de.hfu.pms.utils.RepresentationWrapper;
 import de.hfu.pms.utils.WrappedEntity;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -156,8 +155,9 @@ public class DoctoralStudentFormController implements Initializable {
     @FXML
     private TableColumn<EmploymentEntryDTO, Campus> employmentCampusTableColumn;
     @FXML
-    private TableColumn<EmploymentEntryDTO, String> preTimesTableColumn;
-
+    private TableColumn<EmploymentEntryDTO, LocalDate> employmentBeginTableColumn;
+    @FXML
+    private TableColumn<EmploymentEntryDTO, LocalDate> employmentEndTableColumn;
     /* ***********Support ***************** */
     // travel cost university
     @FXML
@@ -234,10 +234,8 @@ public class DoctoralStudentFormController implements Initializable {
         employmentLocationTableColumn.setCellValueFactory(new PropertyValueFactory<>("employmentLocation"));
         kindOfEmploymentTableColumn.setCellValueFactory(new PropertyValueFactory<>("kindOfEmployment"));
         employmentCampusTableColumn.setCellValueFactory(new PropertyValueFactory<>("campusOfDeployment"));
-        preTimesTableColumn.setCellValueFactory(param -> {
-            String text = (param.getValue().isPreEmploymentTimeToBeCharged()) ? resources.getString("yes") : resources.getString("no");
-            return new SimpleStringProperty(text);
-        });
+        employmentBeginTableColumn.setCellValueFactory(new PropertyValueFactory<>("employmentBegin"));
+        employmentEndTableColumn.setCellValueFactory(new PropertyValueFactory<>("employmentEnd"));
     }
 
     private void initSupportTables(ResourceBundle resources) {
