@@ -27,7 +27,7 @@
                <children>
                   <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
                     <tabs>
-                      <Tab text="Persönliche Daten">
+                      <Tab text="%ui.tab.personal_data">
                            <content>
                               <ScrollPane prefHeight="464.0" prefWidth="1279.0">
                                  <content>
@@ -151,7 +151,7 @@
                               </ScrollPane>
                            </content>
                         </Tab>
-                        <Tab text="Abschluss">
+                        <Tab text="%ui.tab.promotion">
                            <content>
                               <ScrollPane prefHeight="706.0" prefWidth="1280.0">
                                  <content>
@@ -384,7 +384,7 @@
                               </ScrollPane>
                            </content>
                         </Tab>
-                        <Tab text="Beschäftigungsverhältnisse">
+                        <Tab text="%ui.tab.employment">
                           <content>
                               <VBox spacing="10.0">
                                  <children>
@@ -423,7 +423,7 @@
                               </VBox>
                           </content>
                         </Tab>
-                        <Tab text="Förderungen">
+                        <Tab text="%ui.tab.support">
                           <content>
                               <ScrollPane>
                                  <content>
@@ -579,7 +579,7 @@
                               </ScrollPane>
                           </content>
                         </Tab>
-                        <Tab text="Alumni-Status">
+                        <Tab text="%ui.tab.alumni_state">
                           <content>
                               <ScrollPane>
                                  <content>
