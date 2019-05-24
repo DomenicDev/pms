@@ -3,6 +3,7 @@ package de.hfu.pms.handler;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.events.*;
+import de.hfu.pms.exceptions.BusinessException;
 import de.hfu.pms.exceptions.LoginFailedException;
 import de.hfu.pms.service.ApplicationServices;
 import de.hfu.pms.shared.dto.DoctoralStudentDTO;
@@ -75,10 +76,24 @@ public class GuiEventHandler {
     @Subscribe
     public void handleSaveDoctoralStudentEvent(SaveDoctoralStudentEvent saveEvent) {
         DoctoralStudentDTO doctoralStudent = saveEvent.getDoctoralStudent();
-        DoctoralStudentDTO createdStudent = applicationServices.addDoctoralStudent(doctoralStudent);
-        if (createdStudent != null) {
-            eventBus.post(new SuccessfullyAddedDoctoralStudentEvent(createdStudent));
+        // we check if a new entity has been created or if an existing one has been edited
+        if (doctoralStudent.getId() == null) {
+            DoctoralStudentDTO createdStudent = applicationServices.addDoctoralStudent(doctoralStudent);
+            if (createdStudent != null) {
+                eventBus.post(new SuccessfullyAddedDoctoralStudentEvent(createdStudent));
+            }
+        } else {
+            // we are editing an already existing entity
+            try {
+                DoctoralStudentDTO updatedStudent = applicationServices.editDoctoralStudent(doctoralStudent);
+                // we inform about the successful update
+                eventBus.post(new SuccessfullyUpdatedDoctoralStudentEvent(updatedStudent));
+            } catch (BusinessException e) {
+                e.printStackTrace();
+            }
+
         }
+
     }
 
     @Subscribe

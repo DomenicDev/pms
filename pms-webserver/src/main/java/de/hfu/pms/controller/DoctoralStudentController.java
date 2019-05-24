@@ -35,7 +35,7 @@ public class DoctoralStudentController {
         return convertToDTO(studentCreated);
     }
 
-    @PutMapping("/update/{id}")
+    @PostMapping("/update/{id}")
     public DoctoralStudentDTO updateDoctoralStudent(@RequestBody DoctoralStudentDTO doctoralStudentDTO, @PathVariable Long id) {
         DoctoralStudent student = convertToEntity(doctoralStudentDTO);
         DoctoralStudent updatedStudent = doctoralStudentService.update(id, student);
@@ -60,7 +60,8 @@ public class DoctoralStudentController {
         return convertToDTO(student);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @PostMapping("/delete/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public void deleteDoctoralStudent(@PathVariable Long id) {
         doctoralStudentService.remove(id);
     }

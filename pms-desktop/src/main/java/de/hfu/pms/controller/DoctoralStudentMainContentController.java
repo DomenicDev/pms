@@ -82,7 +82,6 @@ public class DoctoralStudentMainContentController implements Initializable {
         // get controller
         DoctoralStudentFormController formController = loader.getController();
         formController.fillFormMask(doctoralStudentDTO);
-
     }
 
     @FXML
@@ -91,8 +90,8 @@ public class DoctoralStudentMainContentController implements Initializable {
     }
 
     @FXML
-    public void handleOnActionAddButton(ActionEvent event) {
-        switchMainContent(formMask);
+    public void handleOnActionAddButton(ActionEvent event) throws IOException {
+        switchMainContent(GuiLoader.loadFXML(GuiLoader.DOCTORAL_STUDENT_FORM_MASK));
     }
 
     @FXML

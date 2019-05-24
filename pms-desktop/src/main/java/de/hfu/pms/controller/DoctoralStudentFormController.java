@@ -217,7 +217,6 @@ public class DoctoralStudentFormController implements Initializable {
     private CheckBox agreementEvaluationCheckBox;
 
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         eventBus.register(this);

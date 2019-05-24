@@ -6,12 +6,14 @@ import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.AlertNotificationEvent;
 import de.hfu.pms.events.OnClickEditDoctoralStudentEvent;
 import de.hfu.pms.events.SuccessfullyAddedDoctoralStudentEvent;
+import de.hfu.pms.events.SuccessfullyUpdatedDoctoralStudentEvent;
 import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.DoctoralStudentDTO;
 import de.hfu.pms.shared.dto.PreviewDoctoralStudentDTO;
 import de.hfu.pms.shared.enums.FacultyHFU;
 import de.hfu.pms.shared.enums.Gender;
 import de.hfu.pms.shared.utils.Converter;
+import de.hfu.pms.utils.CollectionUtils;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
@@ -22,6 +24,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import java.net.URL;
 import java.util.Arrays;
@@ -31,6 +35,8 @@ import java.util.ResourceBundle;
 
 
 public class DoctoralStudentOverviewController implements Initializable {
+
+    private Logger logger = Logger.getLogger(DoctoralStudentOverviewController.class.getName());
 
     //private Logger logger = Logger.getLogger(DoctoralStudentOverviewController.class);
     private EventBus eventBus = EventBusSystem.getEventBus();
@@ -154,13 +160,29 @@ public class DoctoralStudentOverviewController implements Initializable {
     }
 
     private void addToTable(DoctoralStudentDTO doctoralStudentDTO) {
+        if (doctoralStudentDTO == null) {
+            logger.log(Level.DEBUG, "null values cannot be added to the preview table");
+            return;
+        }
+
         PreviewDoctoralStudentDTO preview = Converter.convert(doctoralStudentDTO);
         this.searchResultTableView.getItems().add(preview);
+    }
+
+    private void updateTable(DoctoralStudentDTO updatedDoctoralStudent) {
+        PreviewDoctoralStudentDTO preview = Converter.convert(updatedDoctoralStudent);
+        CollectionUtils.removeFromList(preview, searchResultTableView.getItems(), (original, collectionItem) -> original.getId().equals(collectionItem.getId()));
+        searchResultTableView.getItems().add(preview);
     }
 
     @Subscribe
     public void handle(SuccessfullyAddedDoctoralStudentEvent event) {
         DoctoralStudentDTO doctoralStudentDTO = event.getDoctoralStudentDTO();
         addToTable(doctoralStudentDTO);
+    }
+
+    @Subscribe
+    public void handle(SuccessfullyUpdatedDoctoralStudentEvent event) {
+        updateTable(event.getUpdatedStudent());
     }
 }

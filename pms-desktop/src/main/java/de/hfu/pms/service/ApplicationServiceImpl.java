@@ -65,8 +65,19 @@ public class ApplicationServiceImpl implements ApplicationServices {
     }
 
     @Override
-    public void editDoctoralStudent(DoctoralStudentDTO student) {
-
+    public DoctoralStudentDTO editDoctoralStudent(DoctoralStudentDTO student) {
+        try {
+            String json = mapper.writeValueAsString(student);
+            String response = restClient.postJson(STUDENT_SERVICES + "update/" + student.getId(), json);
+            DoctoralStudentDTO updatedEntity =  mapper.readValue(response, DoctoralStudentDTO.class);
+            logger.log(Level.DEBUG, "Doctoral student has been updated successfully: " + updatedEntity);
+            return updatedEntity;
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return student;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package de.hfu.pms.service;
 
+import de.hfu.pms.exceptions.BusinessException;
 import de.hfu.pms.exceptions.LoginFailedException;
 import de.hfu.pms.shared.dto.DoctoralStudentDTO;
 import de.hfu.pms.shared.dto.PreviewDoctoralStudentDTO;
@@ -17,7 +18,7 @@ public interface ApplicationServices {
 
     DoctoralStudentDTO addDoctoralStudent(DoctoralStudentDTO student);
 
-    void editDoctoralStudent(DoctoralStudentDTO student);
+    DoctoralStudentDTO editDoctoralStudent(DoctoralStudentDTO student) throws BusinessException;
 
     void deleteDoctoralStudent(int studentID);
 
