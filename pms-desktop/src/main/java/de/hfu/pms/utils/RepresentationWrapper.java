@@ -2,6 +2,8 @@ package de.hfu.pms.utils;
 
 import de.hfu.pms.shared.dto.UniversityDTO;
 import de.hfu.pms.shared.enums.*;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,6 +14,8 @@ import java.util.ResourceBundle;
  * data representation in the graphical user interface.
  */
 public class RepresentationWrapper {
+
+    private static Logger logger = Logger.getLogger(RepresentationWrapper.class.getName());
 
     /**
      * Used to get the actual string representation that are shown in the gui.
@@ -104,6 +108,7 @@ public class RepresentationWrapper {
                 return wrappedEntity;
             }
         }
+        logger.log(Level.DEBUG, "Could not find entity in WrappedEntity collection. Entity to find: '" + entity + "' in Collection: '" + collection + "'");
         return null;
     }
 
@@ -114,6 +119,19 @@ public class RepresentationWrapper {
         collection.add(new WrappedEntity<>(bundle.getString("enum.rating.bene"), Rating.Bene));
         collection.add(new WrappedEntity<>(bundle.getString("enum.rating.rite"), Rating.Rite));
         collection.add(new WrappedEntity<>(bundle.getString("enum.rating.failed"), Rating.Failed));
+        return collection;
+    }
+
+    public static Collection<String> getTargetDegreeSuggestions() {
+        Collection<String> collection = new ArrayList<>();
+        collection.add(bundle.getString("enum.doctoral_graduation.dr_ing"));
+        collection.add(bundle.getString("enum.doctoral_graduation.dr_phil"));
+        collection.add(bundle.getString("enum.doctoral_graduation.dr_rer_nat"));
+        collection.add(bundle.getString("enum.doctoral_graduation.dr_sc_nat"));
+        collection.add(bundle.getString("enum.doctoral_graduation.dr_rer_soc"));
+        collection.add(bundle.getString("enum.doctoral_graduation.dr_rer_tech"));
+        collection.add(bundle.getString("enum.doctoral_graduation.dr_sc_techn"));
+        collection.add(bundle.getString("enum.doctoral_graduation.ph_d"));
         return collection;
     }
 

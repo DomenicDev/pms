@@ -22,6 +22,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.controlsfx.control.textfield.TextFields;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -91,7 +92,7 @@ public class DoctoralStudentFormController implements Initializable {
 
     // Target Graduation
     @FXML
-    private ComboBox<String> targetGraduationDegreeComboBox;
+    private TextField targetGraduationDegreeTextField;
     @FXML
     private TextField nameOfDissertationTextField;
     @FXML
@@ -270,10 +271,11 @@ public class DoctoralStudentFormController implements Initializable {
 
         // graduation
         graduationComboBox.getItems().addAll(RepresentationWrapper.getWrappedGraduations());
-        for (WrappedEntity<DoctoralGraduation> wrappedEntity : RepresentationWrapper.getWrappedDoctoralGraduations()) {
-            targetGraduationDegreeComboBox.getItems().add(wrappedEntity.getRepresentation());
-        }
 
+        // add some common target degrees to show for auto completion
+        TextFields.bindAutoCompletion(targetGraduationDegreeTextField, RepresentationWrapper.getTargetDegreeSuggestions());
+
+        // init combo boxes with wrapped entities of the specific type
         facultyHFUComboBox.getItems().addAll(RepresentationWrapper.getWrappedHFUFaculties());
         ratingComboBox.getItems().addAll(RepresentationWrapper.getWrappedRatings());
 
@@ -324,11 +326,11 @@ public class DoctoralStudentFormController implements Initializable {
         graduationComboBox.getSelectionModel().select(RepresentationWrapper.find(qualifiedGraduation.getGraduation(), graduationComboBox.getItems()));
         subjectAreaTextField.setText(qualifiedGraduation.getSubjectArea());
         gradeTextField.setText(qualifiedGraduation.getGrade());
+        qualifiedGraduationUniversityComboBox.getSelectionModel().select(RepresentationWrapper.find(qualifiedGraduation.getGradedUniversity(), RepresentationWrapper.getWrappedUniversities(EntityPool.getInstance().getUniversities())));
+
 
         // target graduation
-        // todo
-        //targetGraduationDegreeComboBox.
-
+        targetGraduationDegreeTextField.setText(targetGraduationDTO.getTargetGraduationDegree());
         nameOfDissertationTextField.setText(targetGraduationDTO.getNameOfDissertation());
         internalSupervisorTextField.setText(targetGraduationDTO.getInternalSupervisor());
         facultyHFUComboBox.getSelectionModel().select(RepresentationWrapper.find(targetGraduationDTO.getFacultyHFU(), facultyHFUComboBox.getItems()));
@@ -566,12 +568,8 @@ public class DoctoralStudentFormController implements Initializable {
         }
 
         // target graduation
-        // todo: add more complex logic for evaluating custom text field if there is no match in the combobox
-        if (targetGraduationDegreeComboBox.getValue() == null) {
-            targetGraduationDTO.setTargetGraduationDegree(null);
-        } else {
-            // todo VERY IMPORTANT !!!
-         //   targetGraduationDTO.setTargetGraduationDegree(targetGraduationDegreeComboBox.getValue().getRepresentation());
+        if (validator.textFieldNotEmpty(targetGraduationDegreeTextField)) {
+            targetGraduationDTO.setTargetGraduationDegree(targetGraduationDegreeTextField.getText());
         }
 
         if (validator.textFieldNotEmpty(nameOfDissertationTextField)) {

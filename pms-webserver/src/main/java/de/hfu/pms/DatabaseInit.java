@@ -3,11 +3,9 @@ package de.hfu.pms;
 import de.hfu.pms.dao.DoctoralStudentDao;
 import de.hfu.pms.dao.UniversityDao;
 import de.hfu.pms.dao.UserDao;
+import de.hfu.pms.model.UserRole;
 import de.hfu.pms.model.*;
-import de.hfu.pms.shared.enums.FacultyHFU;
-import de.hfu.pms.shared.enums.FamilyStatus;
-import de.hfu.pms.shared.enums.Gender;
-import de.hfu.pms.shared.enums.Salutation;
+import de.hfu.pms.shared.enums.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -61,6 +59,7 @@ public class DatabaseInit implements CommandLineRunner {
         personalData.setFamilyStatus(FamilyStatus.Single);
         personalData.setNumberOfChildren(0);
         personalData.setEmail("max@mustermann.de");
+        personalData.setTelephone("0174 456789");
         personalData.setDateOfBirth(LocalDate.of(1997, 12, 19));
         personalData.getAddress().setStreet("Musterstraße 1");
         personalData.getAddress().setLocation("Musterort");
@@ -68,8 +67,19 @@ public class DatabaseInit implements CommandLineRunner {
         personalData.getAddress().setCountry("Germany");
         student.setPersonalData(personalData);
 
-        student.getTargetGraduation().setFacultyHFU(FacultyHFU.Informatik);
+        // qualified graduation
+        student.getQualifiedGraduation().setGradedUniversity(university);
         student.getQualifiedGraduation().setGrade("1.3");
+        student.getQualifiedGraduation().setGraduation(Graduation.Master_of_Science);
+        student.getQualifiedGraduation().setSubjectArea("Thema meiner Wahl");
+
+        // target graduation
+        student.getTargetGraduation().setExternalUniversity(university);
+        student.getTargetGraduation().setExternalSupervisor("Müller");
+        student.getTargetGraduation().setFacultyHFU(FacultyHFU.Informatik);
+        student.getTargetGraduation().setNameOfDissertation("Thema der Dissertation");
+        student.getTargetGraduation().setTargetDegree(DoctoralGraduation.Dr_sc_nat.name());
+
 
         student.getQualifiedGraduation().setGradedUniversity(university);
 

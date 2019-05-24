@@ -7,8 +7,12 @@ plugins {
 sourceCompatibility = 11
 
 javafx {
+    // version = "11.0.2"
     modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.graphics' ]
 }
+
+// this vm argument is important to make the "controlsfx" dependency work 
+applicationDefaultJvmArgs = ["--add-exports=javafx.base/com.sun.javafx.event=ALL-UNNAMED"]
 
 mainClassName = 'de.hfu.pms.NewGuiTest'
 
@@ -20,6 +24,7 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.8'
     compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.9.8'
     compile group: 'log4j', name: 'log4j', version: '1.2.17'
+    compile group: 'org.controlsfx', name: 'controlsfx', version: '11.0.0'
 
     compile 'org.kordamp.ikonli:ikonli-javafx:11.3.4'
     compile 'org.kordamp.ikonli:ikonli-fontawesome-pack:11.3.4'

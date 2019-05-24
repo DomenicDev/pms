@@ -1,5 +1,7 @@
 package de.hfu.pms.shared.dto;
 
+import java.util.Objects;
+
 public class UniversityDTO {
 
     private Long id;
@@ -57,6 +59,23 @@ public class UniversityDTO {
 
     public void setAbbreviation(String abbreviation) {
         this.abbreviation = abbreviation;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UniversityDTO that = (UniversityDTO) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(location, that.location) &&
+                Objects.equals(country, that.country) &&
+                Objects.equals(abbreviation, that.abbreviation);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, location, country, abbreviation);
     }
 
     @Override

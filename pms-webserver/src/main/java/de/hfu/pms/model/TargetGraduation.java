@@ -1,6 +1,5 @@
 package de.hfu.pms.model;
 
-import de.hfu.pms.shared.enums.DoctoralGraduation;
 import de.hfu.pms.shared.enums.FacultyHFU;
 import de.hfu.pms.shared.enums.Rating;
 
@@ -15,7 +14,7 @@ public class TargetGraduation {
      */
     @Column
     @Enumerated
-    private DoctoralGraduation targetDegree;
+    private String targetDegree;
 
     @Column
     private String nameOfDissertation;
@@ -75,11 +74,11 @@ public class TargetGraduation {
     private LocalDate promotionAgreement;
 
 
-    public DoctoralGraduation getTargetDegree() {
+    public String getTargetDegree() {
         return targetDegree;
     }
 
-    public void setTargetDegree(DoctoralGraduation targetDegree) {
+    public void setTargetDegree(String targetDegree) {
         this.targetDegree = targetDegree;
     }
 

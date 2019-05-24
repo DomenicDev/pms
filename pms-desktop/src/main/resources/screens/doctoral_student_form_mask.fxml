@@ -229,13 +229,16 @@
                                                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                         </rowConstraints>
                                                          <children>
                                                             <Label text="Thema der Dissertation" GridPane.rowIndex="1" />
                                                             <TextField fx:id="nameOfDissertationTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                             <Label text="Grad" />
-                                                             <ComboBox fx:id="targetGraduationDegreeComboBox" prefWidth="150.0" GridPane.columnIndex="1" />
+                                                            <VBox GridPane.columnIndex="1">
+                                                               <children>
+                                                                  <TextField fx:id="targetGraduationDegreeTextField" />
+                                                               </children>
+                                                            </VBox>
                                                             <Label prefHeight="24.0" prefWidth="211.0" text="Wissenschaftliche Betreuung (HFU)" GridPane.rowIndex="2" />
                                                             <TextField fx:id="internalSupervisorTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                             <Label text="Zuordnung HFU-Fakultät" GridPane.rowIndex="3" />
