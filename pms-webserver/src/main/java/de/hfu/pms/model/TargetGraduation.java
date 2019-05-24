@@ -13,7 +13,6 @@ public class TargetGraduation {
      * Represents the target degree.
      */
     @Column
-    @Enumerated
     private String targetDegree;
 
     @Column
