@@ -97,9 +97,9 @@ public class DoctoralStudentOverviewController implements Initializable {
     public void handleOnActionEditButton(ActionEvent event) {
         int selectedCount = searchResultTableView.getSelectionModel().getSelectedItems().size();
         if(selectedCount == 1){
-            // todo
-            // get full DoctoalStudent
-            // Switch to edit window
+            PreviewDoctoralStudentDTO selectedItem = searchResultTableView.getSelectionModel().getSelectedItem();
+            Long id = selectedItem.getId();
+            eventBus.post(new OnClickEditDoctoralStudentEvent(id));
         }
         else if(selectedCount > 1){
             eventBus.post(new AlertNotificationEvent(1, "Es kann immer nur ein Eintrag editiert werden."));
