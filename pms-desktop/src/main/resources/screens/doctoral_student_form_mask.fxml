@@ -170,9 +170,14 @@
                                                                   <Label text="Note *" GridPane.rowIndex="2" />
                                                                   <TextField fx:id="gradeTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                                   <Label text="Einrichtung *" GridPane.rowIndex="3" />
-                                                                  <ComboBox fx:id="qualifiedGraduationUniversityComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                                  <HBox spacing="15.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                                     <children>
+                                                                        <ComboBox fx:id="qualifiedGraduationUniversityComboBox" prefWidth="150.0">
 
                                                       </ComboBox>
+                                                                        <Button mnemonicParsing="false" onAction="#handleOnActionAddUniversityButton" text="Hinzufügen" />
+                                                                     </children>
+                                                                  </HBox>
                                                                   <Label text="Grad *" />
                                                                    <ComboBox fx:id="graduationComboBox" prefWidth="150.0" GridPane.columnIndex="1" />
                                                                </children>
@@ -251,9 +256,14 @@
                                                             <Label text="Bewertung" GridPane.rowIndex="9" />
                                                             <TextField fx:id="externalSupervisorTextField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                                             <TextField fx:id="externalFacultyTextField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                                            <ComboBox fx:id="externalUniversityComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                                            <HBox spacing="15.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                                               <children>
+                                                                  <ComboBox fx:id="externalUniversityComboBox" prefWidth="150.0">
 
                                                             </ComboBox>
+                                                                  <Button mnemonicParsing="false" onAction="#handleOnActionAddUniversityButton" text="Hinzufügen" />
+                                                               </children>
+                                                            </HBox>
                                                             <DatePicker fx:id="promotionAcceptedDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                                                             <DatePicker fx:id="procedureCompletedDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                                                              <ComboBox fx:id="ratingComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
@@ -541,7 +551,7 @@
                                                             <Button mnemonicParsing="false" text="Ausgewählte Löschen" />
                                                          </children>
                                                       </HBox>
-                                                      <TableView fx:id="qualificationTableView" prefHeight="200.0" prefWidth="200.0" tableMenuButtonVisible="true">
+                                                      <TableView fx:id="qualificationTableView" prefHeight="200.0" prefWidth="200.0">
                                                          <columns>
                                                             <TableColumn fx:id="qualificationDateTableColumn" prefWidth="218.0" text="Datum" />
                                                             <TableColumn fx:id="qualificationNameTableColumn" prefWidth="1060.0" text="Name / Bezeichnung der Qualifikation" />

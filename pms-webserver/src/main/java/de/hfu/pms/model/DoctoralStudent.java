@@ -63,6 +63,10 @@ public class DoctoralStudent implements Serializable {
     // GETTER AND SETTER
 
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }

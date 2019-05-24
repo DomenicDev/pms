@@ -29,8 +29,8 @@ public class UniversityController {
     @ResponseStatus(HttpStatus.CREATED)
     public UniversityDTO newUser (@RequestBody UniversityDTO universityDTO ){
         University university = convertToEntity(universityDTO);
-        universityService.createUniversity(university);
-        return universityDTO;
+        university = universityService.createUniversity(university);
+        return convertToDTO(university);
     }
 
     @GetMapping("/delete/{id}")

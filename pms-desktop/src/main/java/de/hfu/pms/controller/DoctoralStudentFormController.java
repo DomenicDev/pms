@@ -479,6 +479,11 @@ public class DoctoralStudentFormController implements Initializable {
         refreshCheckBoxes();
     }
 
+    @FXML
+    public void handleOnActionAddUniversityButton() throws IOException {
+        GuiLoader.createModalWindow(GuiLoader.UNIVERSITY_FORM_SCREEN, 250, 300, false);
+    }
+
     private void refreshCheckBoxes() {
         hfuMembershipVBox.setDisable(!hfuMemberCheckBox.isSelected());
         extensionMembershipHBox.setDisable(!prolongMembershipCheckBox.isSelected());

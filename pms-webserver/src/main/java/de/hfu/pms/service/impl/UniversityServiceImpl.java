@@ -20,8 +20,8 @@ public class UniversityServiceImpl implements UniversityService {
     }
 
     @Override
-    public void createUniversity(University newUniversity) {
-        universityDao.save(newUniversity);
+    public University createUniversity(University newUniversity) {
+        return universityDao.save(newUniversity);
     }
 
     @Override

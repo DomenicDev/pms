@@ -60,7 +60,7 @@ public class UniversityController implements Initializable {
 
             ResourceBundle bundle = ResourceBundle.getBundle("lang/strings");
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/screens/Univerity_add_screen.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/screens/university_form_screen.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.setTitle("Universität Hinzufügen");
@@ -83,7 +83,7 @@ public class UniversityController implements Initializable {
             }
 
             ResourceBundle bundle = GuiLoader.getResourceBundle();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/screens/Univerity_add_screen.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/screens/university_form_screen.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.setTitle("Universität Ändern");

@@ -27,6 +27,7 @@ public class DoctoralStudentServiceImpl implements DoctoralStudentService {
 
     @Override
     public DoctoralStudent update(Long id, DoctoralStudent doctoralStudent) {
+        doctoralStudent.setId(id);
         return doctoralStudentDao.save(doctoralStudent);
     }
 
