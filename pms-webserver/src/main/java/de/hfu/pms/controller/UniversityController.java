@@ -1,6 +1,5 @@
 package de.hfu.pms.controller;
 
-import de.hfu.pms.dao.UniversityDao;
 import de.hfu.pms.model.University;
 import de.hfu.pms.service.UniversityService;
 import de.hfu.pms.shared.dto.UniversityDTO;
@@ -14,13 +13,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/university")
 public class UniversityController {
-    private final UniversityDao universityDao;
+
     private final UniversityService universityService;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public UniversityController(UniversityDao universityDao, UniversityService universityService, ModelMapper modelMapper) {
-        this.universityDao = universityDao;
+    public UniversityController(UniversityService universityService, ModelMapper modelMapper) {
         this.universityService = universityService;
         this.modelMapper = modelMapper;
     }

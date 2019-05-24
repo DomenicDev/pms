@@ -1,6 +1,5 @@
 package de.hfu.pms.controller;
 
-import de.hfu.pms.dao.DoctoralStudentDao;
 import de.hfu.pms.exceptions.DoctoralStudentNotFoundException;
 import de.hfu.pms.model.DoctoralStudent;
 import de.hfu.pms.service.DoctoralStudentService;
@@ -19,13 +18,11 @@ import java.util.List;
 @RequestMapping("/student")
 public class DoctoralStudentController {
 
-    private final DoctoralStudentDao doctoralStudentDao;
     private final DoctoralStudentService doctoralStudentService;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public DoctoralStudentController(DoctoralStudentDao doctoralStudentDao, DoctoralStudentService doctoralStudentService, ModelMapper modelMapper) {
-        this.doctoralStudentDao = doctoralStudentDao;
+    public DoctoralStudentController(DoctoralStudentService doctoralStudentService, ModelMapper modelMapper) {
         this.doctoralStudentService = doctoralStudentService;
         this.modelMapper = modelMapper;
     }

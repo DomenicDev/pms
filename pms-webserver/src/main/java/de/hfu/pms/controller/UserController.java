@@ -3,7 +3,6 @@ package de.hfu.pms.controller;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import de.hfu.pms.exceptions.UserNotFoundException;
-import de.hfu.pms.dao.UserDao;
 import de.hfu.pms.exceptions.WrongPasswordException;
 import de.hfu.pms.model.User;
 import de.hfu.pms.model.UserRole;
@@ -20,14 +19,12 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
-    private final UserDao userDao;
     private final UserService service;
     private final ModelMapper modelMapper;
 
 
     @Autowired
-    public UserController(UserDao userDao, UserService userService, ModelMapper modelMapper) {
-        this.userDao = userDao;
+    public UserController(UserService userService, ModelMapper modelMapper) {
         this.service = userService;
         this.modelMapper = modelMapper;
     }
