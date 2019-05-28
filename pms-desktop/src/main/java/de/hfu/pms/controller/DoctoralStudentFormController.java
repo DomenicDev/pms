@@ -358,20 +358,22 @@ public class DoctoralStudentFormController implements Initializable {
         prolongTillDatePicker.setValue(targetGraduationDTO.getExtendedMembershipEnd());
 
         if (memberSinceDatePicker.getValue() == null || memberUntilDatePicker.getValue() == null) {
-            hfuMemberCheckBox.setSelected(true);
-        } else {
             hfuMemberCheckBox.setSelected(false);
+        } else {
+            hfuMemberCheckBox.setSelected(true);
         }
+
 
         // external membership
         String externalProgram = externalCollegeNameTextField.getText();
+        System.out.println(externalProgram);
         externalCollegeNameTextField.setText(externalProgram);
-        externalMemberCheckBox.setSelected(externalProgram != null);
+        externalMemberCheckBox.setSelected(externalProgram != null && !externalProgram.isEmpty());
 
         // cancel
         String cancelReason = targetGraduationDTO.getCancelReason();
         cancelReasonTextField.setText(cancelReason);
-        promotionCanceledCheckBox.setSelected(cancelReason != null);
+        promotionCanceledCheckBox.setSelected(cancelReason != null && !cancelReason.isEmpty());
 
         // employments
         Set<EmploymentEntryDTO> employmentEntries = employment.getEmploymentEntries();
