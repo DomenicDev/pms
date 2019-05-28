@@ -268,5 +268,6 @@ public class ApplicationServiceImpl implements ApplicationServices {
         EntityPool.getInstance().addAll(universities);
 
         EntityPool.getInstance().initPreviews(getPreviews());
+        EntityPool.getInstance().initUsers(getAllUsers());
     }
 }

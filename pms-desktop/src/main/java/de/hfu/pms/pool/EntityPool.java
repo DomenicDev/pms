@@ -7,6 +7,7 @@ import de.hfu.pms.events.SuccessfullyAddedUniversityEvent;
 import de.hfu.pms.service.ApplicationServices;
 import de.hfu.pms.shared.dto.PreviewDoctoralStudentDTO;
 import de.hfu.pms.shared.dto.UniversityDTO;
+import de.hfu.pms.shared.dto.UserDTO;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -21,6 +22,7 @@ public final class EntityPool {
     private static Logger logger = Logger.getLogger(EntityPool.class);
     private Collection<UniversityDTO> universities = new HashSet<>();
     private Collection<PreviewDoctoralStudentDTO> previewStudents = new HashSet<>();
+    private Collection<UserDTO> users = new HashSet<>();
     private ApplicationServices applicationServices;
 
     private EntityPool() {
@@ -54,12 +56,24 @@ public final class EntityPool {
         this.previewStudents.addAll(previews);
     }
 
+    public void initUsers(Collection<UserDTO> initUsers){
+        if (initUsers == null){
+            return;
+        }
+        logger.log(Level.DEBUG, "Adding " + initUsers.size() + " items to users pool.");
+        users.addAll(initUsers);
+    }
+
     public Collection<UniversityDTO> getUniversities() {
         return universities;
     }
 
     public Collection<PreviewDoctoralStudentDTO> getPreviewStudents() {
         return previewStudents;
+    }
+
+    public Collection<UserDTO> getUsers() {
+        return users;
     }
 
     @Subscribe
