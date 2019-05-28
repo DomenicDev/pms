@@ -2,11 +2,11 @@ package de.hfu.pms.events;
 
 import de.hfu.pms.shared.dto.UserDTO;
 
-public class SucessfullyAddedUserEvent {
+public class SuccessfullyAddedUserEvent {
 
     private final UserDTO userDTO;
 
-    public SucessfullyAddedUserEvent(UserDTO userDTO) {
+    public SuccessfullyAddedUserEvent(UserDTO userDTO) {
         this.userDTO = userDTO;
     }
 

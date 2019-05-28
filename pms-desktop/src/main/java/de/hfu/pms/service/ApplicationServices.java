@@ -46,7 +46,7 @@ public interface ApplicationServices {
 
     void logout();
 
-    void changePassword(String Username, String newPwHash, String previousPwHash);
+    void changePassword(UserDTO userDTO, String newPassword);
 
     void addUser(UserDTO userDTO);
 

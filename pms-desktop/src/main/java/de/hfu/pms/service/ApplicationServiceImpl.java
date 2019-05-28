@@ -9,8 +9,9 @@ import de.hfu.pms.client.RestClient;
 import de.hfu.pms.config.AppConfig;
 import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.SuccessfullyAddedUniversityEvent;
+import de.hfu.pms.events.SuccessfullyChangedPasswordEvent;
 import de.hfu.pms.events.SuccessfullyUpdatedUniversityEvent;
-import de.hfu.pms.events.SucessfullyAddedUserEvent;
+import de.hfu.pms.events.SuccessfullyAddedUserEvent;
 import de.hfu.pms.exceptions.LoginFailedException;
 import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.DoctoralStudentDTO;
@@ -190,11 +191,12 @@ public class ApplicationServiceImpl implements ApplicationServices {
     }
 
     @Override
-    public void changePassword(String username, String newPassword, String oldPassword) {
+    public void changePassword(UserDTO userDTO, String newPassword) {
         try {
-            String json = "{\"newPassword\": \"" + newPassword + "\",\"oldPassword\": \"" + oldPassword + "\"}";
-            String response = restClient.postJson(HOST_URL + UNIVERSITY_PREFIX + "updatePassword/" + username, json);
+            String json = "{\"newPassword\": \"" + newPassword + "\",\"oldPassword\": \"" + userDTO.getPassword() + "\"}";
+            String response = restClient.postJson(HOST_URL + UNIVERSITY_PREFIX + "updatePassword/" + userDTO.getPassword(), json);
             logger.log(Level.INFO, response);
+            eventBus.post(new SuccessfullyChangedPasswordEvent(response));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -208,7 +210,7 @@ public class ApplicationServiceImpl implements ApplicationServices {
             String json = mapper.writeValueAsString(userDTO);
             String response = restClient.postJson(HOST_URL + USER_PREFIX + "create", json);
             UserDTO dto = mapper.readValue(response, UserDTO.class);
-            eventBus.post(new SucessfullyAddedUserEvent(dto));
+            eventBus.post(new SuccessfullyAddedUserEvent(dto));
             logger.log(Level.INFO, "User created: " + dto);
         } catch (JsonProcessingException e) {
             e.printStackTrace();

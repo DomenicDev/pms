@@ -3,7 +3,7 @@ package de.hfu.pms.controller;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
-import de.hfu.pms.events.SucessfullyAddedUserEvent;
+import de.hfu.pms.events.SuccessfullyAddedUserEvent;
 import de.hfu.pms.shared.dto.UserDTO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -74,7 +74,7 @@ public class AccountInformationController implements Initializable {
     }
 
 @Subscribe
-public void handleUserChangeEvent(SucessfullyAddedUserEvent event){
+public void handleUserChangeEvent(SuccessfullyAddedUserEvent event){
         UserDTO user =event.getUser();
         LabelUsername.getText();
         LableLastname.getText();

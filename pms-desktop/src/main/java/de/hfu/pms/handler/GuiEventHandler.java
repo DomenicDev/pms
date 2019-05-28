@@ -97,7 +97,7 @@ public class GuiEventHandler {
     }
 
     @Subscribe
-    public void handleSaveUniversityEvent(RequestAddUniversityEvent requestSaveEvent){
+    public void handleAddUniversityEvent(RequestAddUniversityEvent requestSaveEvent){
         UniversityDTO universityDTO = requestSaveEvent.getUniversity();
         applicationServices.addUniversity(universityDTO);
     }
@@ -112,6 +112,13 @@ public class GuiEventHandler {
     public void handleAddUserEvent(RequestAddUserEvent requestAddUserEvent){
         UserDTO userDTO = requestAddUserEvent.getUser();
         applicationServices.addUser(userDTO);
+    }
+
+    @Subscribe
+    public void handlePasswordChange(RequestChangePasswordEvent requestChangePasswordEvent){
+        UserDTO userDTO = requestChangePasswordEvent.getUser();
+        String newPassword = requestChangePasswordEvent.getNewPassword();
+        applicationServices.changePassword(userDTO,newPassword);
     }
 
     @Subscribe
