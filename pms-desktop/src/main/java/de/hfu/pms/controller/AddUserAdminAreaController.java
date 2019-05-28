@@ -1,14 +1,10 @@
 package de.hfu.pms.controller;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 public class AddUserAdminAreaController {
-
 
 
 
@@ -25,34 +21,32 @@ public class AddUserAdminAreaController {
         private Label LabelAreBothPasswortsSimilar;
 
         @FXML
-        private Button ButtonChange;
+        private Button ButtonAdd;
 
         @FXML
         private Button ButtonExitScene;
 
         @FXML
-        private Label labelFornameLastname;
-
-        @FXML
-        private Button ButtonDeleteUser;
-
-        @FXML
         private ComboBox<?> ComboboxRole;
 
         @FXML
-        void handleActionEventChangeUserInformation(ActionEvent event) {
+        private TextField TextFieldEmail;
+
+        @FXML
+        private TextField TextfieldLastname;
+
+        @FXML
+        private TextField TextfieldForname;
+
+        @FXML
+        void handleActionEventAddUserInformation(ActionEvent event) {
 
         }
 
         @FXML
         void handleActionEventCloseScene(ActionEvent event) {
-            ((Button) event.getSource()).getScene().getWindow().hide();
-        }
-
-        @FXML
-        void handleActionEventDeleteuser(ActionEvent event) {
+                ((Button) event.getSource()).getScene().getWindow().hide();
 
         }
 
     }
-

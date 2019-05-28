@@ -4,6 +4,7 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.SuccessfullyAddedUserEvent;
+import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.UserDTO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -91,8 +92,8 @@ private Logger logger = Logger.getLogger(AdminAreaController.class);
 
 
         }
-    private void initUniversityTable (ResourceBundle resources){
-        TableColumnForname.setCellValueFactory(new PropertyValueFactory<>("forname"));
+    private void initAdminTable (ResourceBundle resources){
+        TableColumnForname.setCellValueFactory(new PropertyValueFactory<>("forename"));
         TableColumnLastname.setCellValueFactory(new PropertyValueFactory<>("lastname"));
 
     }
@@ -128,7 +129,9 @@ private Logger logger = Logger.getLogger(AdminAreaController.class);
     public void initialize(URL location, ResourceBundle resources) {
         eventBus.register(this);
 
-        initUniversityTable(resources);
+        initAdminTable(resources);
+        tableAdminArea.getItems().addAll(EntityPool.getInstance().getUsers());
+        tableAdminArea.setEditable(true);
 
     }
 }

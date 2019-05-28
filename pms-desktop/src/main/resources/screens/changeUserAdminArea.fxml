@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="593.0" prefWidth="771.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.AddUserAdminAreaController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="593.0" prefWidth="771.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.ChangeUserAdminArea">
    <children>
       <Label layoutX="50.0" layoutY="67.0" text="Benutzer Ändern" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="67.0" />
       <Label layoutX="50.0" layoutY="117.0" text="Benutzername: *" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="117.0" />
