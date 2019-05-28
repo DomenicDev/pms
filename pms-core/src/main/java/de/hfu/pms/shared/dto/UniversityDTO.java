@@ -9,16 +9,18 @@ public class UniversityDTO {
     private String location;
     private String country;
     private String abbreviation;
+    private String contact;
 
     public UniversityDTO() {
     }
 
-    public UniversityDTO(Long id, String name, String location, String country, String abbreviation) {
+    public UniversityDTO(Long id, String name, String location, String country, String abbreviation, String contact) {
         this.id = id;
         this.name = name;
         this.location = location;
         this.country = country;
         this.abbreviation = abbreviation;
+        this.contact = contact;
     }
 
     public Long getId() {
@@ -61,6 +63,14 @@ public class UniversityDTO {
         this.abbreviation = abbreviation;
     }
 
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -70,12 +80,13 @@ public class UniversityDTO {
                 Objects.equals(name, that.name) &&
                 Objects.equals(location, that.location) &&
                 Objects.equals(country, that.country) &&
-                Objects.equals(abbreviation, that.abbreviation);
+                Objects.equals(abbreviation, that.abbreviation) &&
+                Objects.equals(contact, that.contact);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, location, country, abbreviation);
+        return Objects.hash(id, name, location, country, abbreviation,contact);
     }
 
     @Override
@@ -86,6 +97,7 @@ public class UniversityDTO {
                 ", location='" + location + '\'' +
                 ", country='" + country + '\'' +
                 ", abbreviation='" + abbreviation + '\'' +
+                ", contact='" + contact + '\'' +
                 '}';
     }
 }
