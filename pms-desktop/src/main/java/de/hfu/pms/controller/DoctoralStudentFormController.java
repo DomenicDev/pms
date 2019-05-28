@@ -18,12 +18,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.controlsfx.control.textfield.TextFields;
 
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
@@ -78,6 +82,8 @@ public class DoctoralStudentFormController implements Initializable {
     private ComboBox<WrappedEntity<FamilyStatus>> familyStatusComboBox;
     @FXML
     private ComboBox<Integer> childrenCountComboBox;
+    @FXML
+    private ImageView photoImageView;
 
     /* *********** Graduation ***************** */
     // Qualified Graduation
@@ -483,6 +489,30 @@ public class DoctoralStudentFormController implements Initializable {
     @FXML
     public void handleOnActionAddUniversityButton() throws IOException {
         GuiLoader.createModalWindow(GuiLoader.UNIVERSITY_FORM_SCREEN, 250, 300, false);
+    }
+
+    @FXML
+    public void handleOnActionChangePhotoButton(ActionEvent event) {
+        // create file chooser
+        FileChooser fileChooser = new FileChooser();
+       // fileChooser.setInitialDirectory(new File(System.getProperty("user.name")));
+
+        //Set extension filter
+        FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
+        FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
+        fileChooser.getExtensionFilters().addAll(extFilterJPG, extFilterPNG);
+
+        // open dialog
+        File imageFile = fileChooser.showOpenDialog(((Button) event.getSource()).getScene().getWindow());
+        if (imageFile == null) {
+            // no image has been selected, so we just return
+            return;
+        }
+
+        // show image in image view
+        String path = imageFile.toURI().toString();
+        Image image = new Image(path);
+        photoImageView.setImage(image);
     }
 
     private void refreshCheckBoxes() {

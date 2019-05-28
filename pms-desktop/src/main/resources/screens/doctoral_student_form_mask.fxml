@@ -88,7 +88,7 @@
                                                             <Insets left="50.0" />
                                                          </HBox.margin>
                                                          <children>
-                                                            <ImageView fitHeight="185.0" fitWidth="183.0" pickOnBounds="true" preserveRatio="true">
+                                                            <ImageView fx:id="photoImageView" fitHeight="241.0" fitWidth="336.0" pickOnBounds="true" preserveRatio="true">
                                                                <image>
                                                                   <Image url="@../images/user-shape.png" />
                                                                </image>
@@ -96,7 +96,7 @@
                                                                   <DropShadow />
                                                                </effect>
                                                             </ImageView>
-                                                            <Button mnemonicParsing="false" text="Bild ändern" />
+                                                            <Button mnemonicParsing="false" onAction="#handleOnActionChangePhotoButton" text="Bild ändern" />
                                                          </children>
                                                          <padding>
                                                             <Insets left="10.0" />
