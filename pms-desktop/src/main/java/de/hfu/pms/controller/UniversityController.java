@@ -8,6 +8,7 @@ import de.hfu.pms.events.SuccessfullyAddedUniversityEvent;
 import de.hfu.pms.events.SuccessfullyUpdatedUniversityEvent;
 import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.UniversityDTO;
+import de.hfu.pms.utils.CollectionUtils;
 import de.hfu.pms.utils.GuiLoader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,7 +26,6 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import java.net.URL;
-import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 public class UniversityController implements Initializable {
@@ -116,15 +116,10 @@ public class UniversityController implements Initializable {
     @Subscribe
     public void handleUpdateEvent(SuccessfullyUpdatedUniversityEvent event){
         UniversityDTO newUniversity = event.getUniversity();
-        LinkedList<UniversityDTO> itemsToRemove = new LinkedList<UniversityDTO>();
+        CollectionUtils.removeFromList(newUniversity, tableViewUniversity.getItems(), (original, collectionItem) -> original.getId().equals(collectionItem.getId()));
 
-        for ( UniversityDTO universityDTO : tableViewUniversity.getItems()){
-            if(universityDTO.getId().equals(newUniversity.getId())) {
-                itemsToRemove.add(universityDTO);
-            }
-        }
-        tableViewUniversity.getItems().removeAll(itemsToRemove);
         tableViewUniversity.getItems().add(newUniversity);
+        tableViewUniversity.refresh();
     }
 
     @Override
