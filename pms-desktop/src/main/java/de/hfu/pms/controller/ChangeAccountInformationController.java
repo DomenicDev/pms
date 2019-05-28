@@ -1,7 +1,7 @@
 package de.hfu.pms.controller;
 import com.google.common.eventbus.EventBus;
 import de.hfu.pms.eventbus.EventBusSystem;
-import de.hfu.pms.events.RequestSaveUserEvent;
+import de.hfu.pms.events.RequestAddUserEvent;
 import de.hfu.pms.shared.dto.UserDTO;
 import de.hfu.pms.utils.FormValidator;
 import javafx.event.ActionEvent;
@@ -46,7 +46,7 @@ public class ChangeAccountInformationController {
                         return;
                 }
                 if (validationSuccessful){
-                        eventBus.post(new RequestSaveUserEvent(user));
+                        eventBus.post(new RequestAddUserEvent(user));
 
                 }
                 ((Button)event.getSource()).getScene().getWindow().hide();

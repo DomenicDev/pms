@@ -109,8 +109,8 @@ public class GuiEventHandler {
     }
 
     @Subscribe
-    public void handleSaveUserEvent(RequestSaveUserEvent requestSaveUserEvent){
-        UserDTO userDTO = requestSaveUserEvent.getUser();
+    public void handleAddUserEvent(RequestAddUserEvent requestAddUserEvent){
+        UserDTO userDTO = requestAddUserEvent.getUser();
         applicationServices.addUser(userDTO);
     }
 
