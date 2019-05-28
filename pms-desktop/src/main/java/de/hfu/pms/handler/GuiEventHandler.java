@@ -122,6 +122,12 @@ public class GuiEventHandler {
     }
 
     @Subscribe
+    public void handleRoleChange(RequestChangeUserRoleEvent requestChangeUserRoleEvent){
+        UserDTO userDTO = requestChangeUserRoleEvent.getUser();
+        applicationServices.changeUserPrivileges(userDTO.getUsername(),userDTO.getRole());
+    }
+
+    @Subscribe
     public void handleEvent(OnClickEditDoctoralStudentEvent event) {
         Long id = event.getId();
         DoctoralStudentDTO doctoralStudentDTO = null;

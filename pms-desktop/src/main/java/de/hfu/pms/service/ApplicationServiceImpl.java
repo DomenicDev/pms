@@ -8,10 +8,7 @@ import com.google.common.eventbus.EventBus;
 import de.hfu.pms.client.RestClient;
 import de.hfu.pms.config.AppConfig;
 import de.hfu.pms.eventbus.EventBusSystem;
-import de.hfu.pms.events.SuccessfullyAddedUniversityEvent;
-import de.hfu.pms.events.SuccessfullyChangedPasswordEvent;
-import de.hfu.pms.events.SuccessfullyUpdatedUniversityEvent;
-import de.hfu.pms.events.SuccessfullyAddedUserEvent;
+import de.hfu.pms.events.*;
 import de.hfu.pms.exceptions.LoginFailedException;
 import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.DoctoralStudentDTO;
@@ -234,6 +231,8 @@ public class ApplicationServiceImpl implements ApplicationServices {
     public void changeUserPrivileges(String username, UserRole newUserRole) {
         try {
             String response = restClient.get(HOST_URL + USER_PREFIX +"updateRole/" + username);
+            UserDTO dto = mapper.readValue(response, UserDTO.class);
+            eventBus.post(new SuccessfullyChangedUserRoleEvent(dto));
             logger.log(Level.INFO, response);
         } catch (IOException e) {
             e.printStackTrace();
