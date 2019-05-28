@@ -100,10 +100,16 @@ private Logger logger = Logger.getLogger(AdminAreaController.class);
 
 
     @Subscribe
-    public void handleAdminAccountEvent (SuccessfullyAddedUserEvent event){
+    public void handleAdminAddAccountEvent (SuccessfullyAddedUserEvent event){
        UserDTO user = event.getUser();
        tableAdminArea.getItems().add(user);
     }
+    //@Subscribe
+    //public void handleAdminUpdateEvent(SuccessfullyChangedPasswordEvent event){
+
+    //}
+    //@Subscribe
+    //public void handleAdminChangeRoleEvent (){}
     //@Subscribe
     //    public void handleUniversityAddEvent(SuccessfullyAddedUniversityEvent event){
     //        UniversityDTO university = event.getUniversity();

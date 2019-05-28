@@ -2,13 +2,12 @@ package de.hfu.pms.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 
 public class ChangeUserAdminArea {
-
-
-    @FXML
-    private TextField TextfieldUsername;
 
     @FXML
     private PasswordField TextfieldPassword;
@@ -35,6 +34,12 @@ public class ChangeUserAdminArea {
     private ComboBox<?> ComboboxRole;
 
     @FXML
+    private Label labelUsername;
+
+    @FXML
+    private PasswordField TextFieldEmail;
+
+    @FXML
     void handleActionEventChangeUserInformation(ActionEvent event) {
 
     }
@@ -42,6 +47,7 @@ public class ChangeUserAdminArea {
     @FXML
     void handleActionEventCloseScene(ActionEvent event) {
         ((Button) event.getSource()).getScene().getWindow().hide();
+
     }
 
     @FXML
@@ -50,6 +56,5 @@ public class ChangeUserAdminArea {
     }
 
 }
-
 
 
