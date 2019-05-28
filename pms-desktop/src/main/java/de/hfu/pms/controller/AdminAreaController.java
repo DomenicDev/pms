@@ -104,12 +104,12 @@ private Logger logger = Logger.getLogger(AdminAreaController.class);
        UserDTO user = event.getUser();
        tableAdminArea.getItems().add(user);
     }
-    //@Subscribe
-    //public void handleAdminUpdateEvent(SuccessfullyChangedPasswordEvent event){
+    /*@Subscribe
+    public void handleAdminUpdateEvent(SuccessfullyChangedPasswordEvent event){
+        UserDTO user1 =event.getUser;
 
-    //}
-    //@Subscribe
-    //public void handleAdminChangeRoleEvent (){}
+    }*/
+
     //@Subscribe
     //    public void handleUniversityAddEvent(SuccessfullyAddedUniversityEvent event){
     //        UniversityDTO university = event.getUniversity();
