@@ -104,7 +104,7 @@ public class UniversityController implements Initializable {
         TableColumnOrt.setCellValueFactory(new PropertyValueFactory<>("location"));
         TableColumnLand.setCellValueFactory(new PropertyValueFactory<>("country"));
         TableColumnKuerzel.setCellValueFactory(new PropertyValueFactory<>("abbreviation"));
-       // TableColumnContacttoUniversity.setCellFactory(new PropertyValueFactory<>("contact"));
+        TableColumnContacttoUniversity.setCellValueFactory(new PropertyValueFactory<>("contact"));
     }
 
     @Subscribe
