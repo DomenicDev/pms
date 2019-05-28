@@ -26,15 +26,42 @@ import java.util.ResourceBundle;
 
 public class AdminAreaController implements Initializable {
 
-    private EventBus eventBus = EventBusSystem.getEventBus();
+private EventBus eventBus = EventBusSystem.getEventBus();
 private UserDTO user;
-       private Logger logger = Logger.getLogger(AdminAreaController.class);
+private Logger logger = Logger.getLogger(AdminAreaController.class);
 
-        @FXML
-        private Button ButtonTryChange;
 
-        @FXML
-        private TableView<UserDTO> tableAdminArea;
+
+
+    @FXML
+    private TableView<UserDTO> tableAdminArea;
+
+    @FXML
+    private Button ButtonChangeUserAdmin;
+
+    @FXML
+    private Button ButtonAddUserAdmin;
+
+    @FXML
+    void handleChangeUserAdminEvent(ActionEvent event) {
+        try {
+
+            ResourceBundle bundle = ResourceBundle.getBundle("lang/strings");
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/screens/ChangeUserAdminArea.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Bestehenden Benutzer bearbeiten");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (Exception e) {
+            logger.log(Level.ERROR, "Unable to load the Change User - AdminArea Screen ");
+        }
+
+
+    }
 
     @FXML
     private TableColumn<UserDTO, String> TableColumnForname;
@@ -44,7 +71,7 @@ private UserDTO user;
 
 
     @FXML
-        void handleChangeButton(ActionEvent event) {
+        void handleAddUserAdminEvent(ActionEvent event){
             try {
 
                 ResourceBundle bundle = ResourceBundle.getBundle("lang/strings");
@@ -53,12 +80,12 @@ private UserDTO user;
                 Parent root = (Parent) fxmlLoader.load();
                 Stage stage = new Stage();
                 stage.initModality(Modality.APPLICATION_MODAL);
-                stage.setTitle("BenutzerinformationenÄndern - Admin");
+                stage.setTitle("neuen Benutzer Hinzufügen");
                 stage.setScene(new Scene(root));
                 stage.show();
 
             } catch (Exception e) {
-                logger.log(Level.ERROR, "Unable to load the Change User - AdminArea Screen ");
+                logger.log(Level.ERROR, "Unable to load the Add User - AdminArea Screen ");
             }
 
 

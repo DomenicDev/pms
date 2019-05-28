@@ -12,7 +12,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <TableView fx:id="tableAdminArea" layoutX="50.0" layoutY="106.0" prefHeight="589.0" prefWidth="434.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="100.0">
+            <TableView fx:id="tableAdminArea" layoutX="50.0" layoutY="106.0" prefHeight="589.0" prefWidth="589.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="460.0" AnchorPane.topAnchor="100.0">
               <columns>
                 <TableColumn fx:id="TableColumnForname" prefWidth="75.0" text="Vorname " />
                 <TableColumn fx:id="TableColumnLastname" prefWidth="75.0" text="Nachname" />
@@ -21,7 +21,8 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <Button fx:id="ButtonTryChange" layoutX="553.0" layoutY="100.0" mnemonicParsing="false" onAction="#handleChangeButton" text="Provisorischer Change Button" AnchorPane.leftAnchor="500.0" AnchorPane.topAnchor="100.0" />
+            <Button fx:id="ButtonAddUserAdmin" layoutX="462.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleAddUserAdminEvent" text="Benutzer Hinzufügen" AnchorPane.leftAnchor="230.0" AnchorPane.topAnchor="46.0" />
+            <Button fx:id="ButtonChangeUserAdmin" layoutX="444.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleChangeUserAdminEvent" text="Ausgewählten Benutzer bearbeiten" AnchorPane.leftAnchor="444.0" AnchorPane.topAnchor="46.0" />
          </children>
       </AnchorPane>
    </content>
