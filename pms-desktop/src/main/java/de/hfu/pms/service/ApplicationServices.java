@@ -11,6 +11,7 @@ import javafx.collections.transformation.SortedList;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
 
 public interface ApplicationServices {
 
@@ -56,7 +57,7 @@ public interface ApplicationServices {
 
     UserDTO getUser(String username);
 
-    SortedList<UserDTO> getAllUsers();
+    List<UserDTO> getAllUsers();
 
     void initEntityPool();
 

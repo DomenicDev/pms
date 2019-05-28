@@ -252,7 +252,7 @@ public class ApplicationServiceImpl implements ApplicationServices {
     }
 
     @Override
-    public SortedList<UserDTO> getAllUsers() {
+    public List<UserDTO> getAllUsers() {
         try {
             String response = restClient.get(HOST_URL + USER_PREFIX + "getList");
             return mapper.readValue(response, new TypeReference<List<UserDTO>>(){});
