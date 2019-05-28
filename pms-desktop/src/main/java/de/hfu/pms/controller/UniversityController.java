@@ -28,9 +28,6 @@ import java.net.URL;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
-
-
-
 public class UniversityController implements Initializable {
 
     private EventBus eventBus = EventBusSystem.getEventBus();
@@ -50,6 +47,9 @@ public class UniversityController implements Initializable {
 
     @FXML
     private TableColumn<UniversityDTO, String> TableColumnKuerzel;
+
+    @FXML
+    private TableColumn<UniversityDTO,String> TableColumnContacttoUniversity;
 
     @FXML
     private Button universityAddButton;
@@ -104,6 +104,7 @@ public class UniversityController implements Initializable {
         TableColumnOrt.setCellValueFactory(new PropertyValueFactory<>("location"));
         TableColumnLand.setCellValueFactory(new PropertyValueFactory<>("country"));
         TableColumnKuerzel.setCellValueFactory(new PropertyValueFactory<>("abbreviation"));
+       // TableColumnContacttoUniversity.setCellFactory(new PropertyValueFactory<>("contact"));
     }
 
     @Subscribe

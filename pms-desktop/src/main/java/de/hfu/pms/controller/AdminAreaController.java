@@ -1,7 +1,9 @@
 package de.hfu.pms.controller;
 
 import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
+import de.hfu.pms.events.SucessfullyAddedUserEvent;
 import de.hfu.pms.shared.dto.UserDTO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -69,11 +71,31 @@ private UserDTO user;
     }
 
 
+    @Subscribe
+    public void handleAdminAccountEvent (SucessfullyAddedUserEvent event){
+       UserDTO user = event.getUser();
+       tableAdminArea.getItems().add(user);
+    }
     //@Subscribe
-    //public void handleAdminAccountEvent (SucessfullyAddedUserEvent event){
-    //    UserDTO user = event.getUser();
-    //    tableAdminArea.getItems().add(user);
-    //}
+    //    public void handleUniversityAddEvent(SuccessfullyAddedUniversityEvent event){
+    //        UniversityDTO university = event.getUniversity();
+    //        tableViewUniversity.getItems().add(university);
+    //    }
+   // @Subscribe
+   // public void
+    //    @Subscribe
+    //    public void handleUpdateEvent(SuccessfullyUpdatedUniversityEvent event){
+    //        UniversityDTO newUniversity = event.getUniversity();
+    //        LinkedList<UniversityDTO> itemsToRemove = new LinkedList<UniversityDTO>();
+    //
+    //        for ( UniversityDTO universityDTO : tableViewUniversity.getItems()){
+    //            if(universityDTO.getId().equals(newUniversity.getId())) {
+    //                itemsToRemove.add(universityDTO);
+    //            }
+    //        }
+    //        tableViewUniversity.getItems().removeAll(itemsToRemove);
+    //        tableViewUniversity.getItems().add(newUniversity);
+    //    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

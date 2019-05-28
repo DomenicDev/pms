@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.UniversityAddController">
    <children>
       <Label fx:id="title" layoutX="54.0" layoutY="29.0" text="Universität Hinzufügen" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="30.0">
@@ -17,7 +20,9 @@
       <TextField fx:id="textFieldLocation" layoutX="195.0" layoutY="116.0" AnchorPane.leftAnchor="195.0" AnchorPane.topAnchor="116.0" />
       <TextField fx:id="textFieldCountry" layoutX="195.0" layoutY="156.0" AnchorPane.leftAnchor="195.0" AnchorPane.topAnchor="156.0" />
       <TextField fx:id="textFieldShortForm" layoutX="195.0" layoutY="196.0" AnchorPane.leftAnchor="195.0" AnchorPane.topAnchor="196.0" />
-      <Button layoutX="269.0" layoutY="272.0" mnemonicParsing="false" onAction="#handleCancelButton" text="Abbrechen" AnchorPane.leftAnchor="270.0" AnchorPane.topAnchor="270.0" />
-      <Button fx:id="ButtonUniversityAdd" layoutX="46.0" layoutY="272.0" mnemonicParsing="false" onAction="#handleAddButton" text="Universität Hinzufügen" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="270.0" />
+      <Button layoutX="269.0" layoutY="272.0" mnemonicParsing="false" onAction="#handleCancelButton" text="Abbrechen" AnchorPane.leftAnchor="270.0" AnchorPane.topAnchor="290.0" />
+      <Button fx:id="ButtonUniversityAdd" layoutX="46.0" layoutY="272.0" mnemonicParsing="false" onAction="#handleAddButton" text="Universität Hinzufügen" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="290.0" />
+      <Label layoutX="62.0" layoutY="210.0" text="Kontakt Vorort:" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="240.0" />
+      <TextField fx:id="textFieldContacttoUniversity" layoutX="205.0" layoutY="206.0" AnchorPane.leftAnchor="195.0" AnchorPane.topAnchor="236.0" />
    </children>
 </AnchorPane>
