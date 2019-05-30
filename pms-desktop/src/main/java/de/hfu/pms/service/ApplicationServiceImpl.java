@@ -252,8 +252,8 @@ public class ApplicationServiceImpl implements ApplicationServices {
     @Override
     public UserDTO changePassword(UserDTO userDTO, String newPassword) {
         try {
-            String json = "{\"newPassword\": \"" + newPassword + "\",\"oldPassword\": \"" + userDTO.getPassword() + "\"}";
-            String response = restClient.postJson(HOST_URL + UNIVERSITY_PREFIX + "updatePassword/" + userDTO.getPassword(), json);
+            String json = newPassword;
+            String response = restClient.postJson(HOST_URL + UNIVERSITY_PREFIX + "updatePassword/" + userDTO.getUsername(), json);
             UserDTO dto = mapper.readValue(response, UserDTO.class);
             logger.log(Level.INFO, response);
             return dto;

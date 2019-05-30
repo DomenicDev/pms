@@ -47,10 +47,8 @@ public class UserController {
 
     @PostMapping("/updatePassword/{username}")
     @ResponseStatus(HttpStatus.OK)
-    public UserDTO updatePassword(@PathVariable String username, @RequestBody ObjectNode json) {
-        String newPassword = json.findValue("newPassword").asText();
-        String oldPassword = json.findValue("oldPassword").asText();
-        return convertToDTO(service.updatePassword(username, oldPassword, newPassword));
+    public UserDTO updatePassword(@PathVariable String username, @RequestBody String newPassword) {
+        return convertToDTO(service.updatePassword(username, newPassword));
     }
 
     @PostMapping("/updateRole/{username}")
