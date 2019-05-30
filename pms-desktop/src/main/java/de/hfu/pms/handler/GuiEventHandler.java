@@ -7,6 +7,7 @@ import de.hfu.pms.exceptions.BusinessException;
 import de.hfu.pms.exceptions.LoginFailedException;
 import de.hfu.pms.service.ApplicationServices;
 import de.hfu.pms.shared.dto.DoctoralStudentDTO;
+import de.hfu.pms.shared.dto.FacultyDTO;
 import de.hfu.pms.shared.dto.UniversityDTO;
 import de.hfu.pms.shared.dto.UserDTO;
 import javafx.fxml.FXMLLoader;
@@ -107,6 +108,22 @@ public class GuiEventHandler {
         UniversityDTO universityDTO = requestUpdateUniversityEvent.getUniversity();
         applicationServices.updateUniversity(universityDTO.getId(), universityDTO);
     }
+
+    // todo: delete university
+
+    @Subscribe
+    public void handleAddFacultyEvent(RequestAddFacultyEvent requestSaveEvent){
+        FacultyDTO facultyDTO = requestSaveEvent.getFaculty();
+        applicationServices.addFaculty(facultyDTO);
+    }
+
+    @Subscribe
+    public void handleUpdateFacultyEvent(RequestUpdateFacultyEvent requestUpdateFacultyEvent){
+        FacultyDTO facultyDTO = requestUpdateFacultyEvent.getFaculty();
+        applicationServices.updateFaculty(facultyDTO.getId(), facultyDTO);
+    }
+
+    // todo delete faculty
 
     @Subscribe
     public void handleAddUserEvent(RequestAddUserEvent requestAddUserEvent){

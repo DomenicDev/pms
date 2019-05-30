@@ -3,19 +3,23 @@ package de.hfu.pms.pool;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
+import de.hfu.pms.events.SuccessfullyAddedFacultyEvent;
 import de.hfu.pms.events.SuccessfullyAddedUniversityEvent;
 import de.hfu.pms.service.ApplicationServices;
 import de.hfu.pms.shared.dto.FacultyDTO;
 import de.hfu.pms.shared.dto.PreviewDoctoralStudentDTO;
 import de.hfu.pms.shared.dto.UniversityDTO;
 import de.hfu.pms.shared.dto.UserDTO;
+import javafx.fxml.Initializable;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
+import java.net.URL;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.ResourceBundle;
 
-public final class EntityPool {
+public final class EntityPool{
 
     private static EntityPool entityPool = new EntityPool();
 
@@ -72,6 +76,14 @@ public final class EntityPool {
         }
         logger.log(Level.DEBUG, "Adding " + initFaculties.size() + " items to faculty pool.");
         faculties.addAll(initFaculties);
+    }
+
+    public void addFaculty(FacultyDTO faculty){
+        if (faculty == null){
+            return;
+        }
+        logger.log(Level.DEBUG, "Adding new faculty (" + faculty.getFacultyName() + " to faculty pool.");
+        faculties.add(faculty);
     }
 
     public Collection<UniversityDTO> getUniversities() {

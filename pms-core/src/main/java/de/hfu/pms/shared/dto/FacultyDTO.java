@@ -13,6 +13,15 @@ public class FacultyDTO {
         this.facultyName = facultyName;
     }
 
+    public FacultyDTO(String facultyName) {
+        this.facultyName = facultyName;
+    }
+
+    @Override
+    public String toString() {
+        return facultyName;
+    }
+
     public Long getId() {
         return id;
     }

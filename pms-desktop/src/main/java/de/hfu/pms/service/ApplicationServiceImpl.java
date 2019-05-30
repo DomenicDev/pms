@@ -180,6 +180,8 @@ public class ApplicationServiceImpl implements ApplicationServices {
         }
     }
 
+    // todo deleteUniversity
+
     @Override
     public List<FacultyDTO> getAllFaculties(){
         try {
@@ -221,6 +223,8 @@ public class ApplicationServiceImpl implements ApplicationServices {
             e.printStackTrace();
         }
     }
+
+    // todo deleteFaculty
 
     @Override
     public void logout() {
