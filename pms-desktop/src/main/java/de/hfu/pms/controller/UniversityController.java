@@ -72,6 +72,7 @@ public class UniversityController implements Initializable {
             logger.log(Level.ERROR, "Unable to load the University add screen");
         }
     }
+
     @FXML
     void handleChangeUniversityButton(ActionEvent event) {
         try {
@@ -97,6 +98,17 @@ public class UniversityController implements Initializable {
         } catch (Exception e) {
             logger.log(Level.ERROR, "Unable to load the University change screen");
         }
+    }
+
+    @FXML
+    void handleDeleteUniversityButton(ActionEvent event) {
+        UniversityDTO university = tableViewUniversity.getSelectionModel().getSelectedItem();
+        if (university == null) {
+            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.INFO, "Bitte Uni auswählen"));
+            return;
+        }
+        // todo: confirm dialog + check for dependencies & delete if there are none
+        // ...
     }
 
     private void initUniversityTable (ResourceBundle resources){
