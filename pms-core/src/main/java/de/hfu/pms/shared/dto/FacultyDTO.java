@@ -5,6 +5,9 @@ public class FacultyDTO {
     private Long id;
     private String facultyName;
 
+    public FacultyDTO() {
+    }
+
     public FacultyDTO(Long id, String facultyName) {
         this.id = id;
         this.facultyName = facultyName;
