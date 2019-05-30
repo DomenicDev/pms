@@ -158,6 +158,12 @@ public class ApplicationServiceImpl implements ApplicationServices {
     }
 
     @Override
+    public UserDTO ChangeAccountinformation(String forename, String lastname, String email) {
+
+        return null;
+    }
+
+    @Override
     public List<UniversityDTO> getAllUniversities() {
         try {
             String response = restClient.get(HOST_URL + UNIVERSITY_PREFIX + "getList");

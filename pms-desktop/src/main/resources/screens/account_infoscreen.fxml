@@ -19,6 +19,5 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="LableLastname" layoutX="253.0" layoutY="120.0" text="Lastname" AnchorPane.leftAnchor="270.0" AnchorPane.topAnchor="120.0" />
    </children>
 </AnchorPane>

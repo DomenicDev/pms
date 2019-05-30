@@ -165,6 +165,13 @@ public class GuiEventHandler {
         eventBus.post(new SuccessfullyChangedUserRoleEvent(response));
     }
 
+    @Subscribe void RequestChangeUserInformation( RequestChangeUserInformationEvent requestChangeUserInformationEvent){
+        UserDTO userDTO =requestChangeUserInformationEvent.getUserDTO();
+        UserDTO user = requestChangeUserInformationEvent.getUserDTO();
+        eventBus.post((new SuccessfullyChangedUserInformationEvent(user)));
+
+    }
+
     @Subscribe
     public void handleEvent(OnClickEditDoctoralStudentEvent event) {
         Long id = event.getId();

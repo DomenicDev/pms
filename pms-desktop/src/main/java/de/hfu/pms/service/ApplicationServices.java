@@ -43,6 +43,8 @@ public interface ApplicationServices {
      */
     UserDTO getCurrentUser();
 
+    UserDTO ChangeAccountinformation(String forename, String lastname, String email);
+
     Collection<UniversityDTO> getAllUniversities();
 
     UniversityDTO addUniversity(UniversityDTO universityDTO);

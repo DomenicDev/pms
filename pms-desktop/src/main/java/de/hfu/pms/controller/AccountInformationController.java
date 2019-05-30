@@ -35,9 +35,6 @@ public class AccountInformationController implements Initializable {
     @FXML
     private Label LableRole;
 
-    @FXML
-    private Label LableLastname;
-
     private Logger logger = Logger.getLogger(AccountInformationController.class);
 
     private UserDTO user;
@@ -48,13 +45,18 @@ public class AccountInformationController implements Initializable {
 
             ResourceBundle bundle = ResourceBundle.getBundle("lang/strings");
 
+
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/screens/change_accountinformation_screen.fxml"));
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
+            stage.setWidth(600);
+            stage.setHeight(400);
+            stage.setResizable(false);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Benutzerinformationen Ändern");
             stage.setScene(new Scene(root));
             stage.show();
+
 
             ChangeAccountInformationController controller = fxmlLoader.getController();
             controller.edit(user);
@@ -67,8 +69,7 @@ public class AccountInformationController implements Initializable {
     private void initLable() {
 
         LabelUsername.setText(user.getUsername());
-        labelForname.setText(user.getForename());
-        LableLastname.setText(user.getLastname());
+        labelForname.setText(user.getForename()+" "+ user.getLastname());
         LableEmail.setText(user.getEmail());
         LableRole.setText(user.getRole().name());
     }
@@ -81,11 +82,10 @@ public class AccountInformationController implements Initializable {
     @Subscribe
     public void handleUserChangeEvent(SuccessfullyAddedUserEvent event) {
         UserDTO user = event.getUser();
-        LabelUsername.getText();
-        LableLastname.getText();
-        labelForname.getText();
-        LableEmail.getText();
-        LableRole.getText();
+        LabelUsername.setText(user.getUsername());
+        labelForname.setText(user.getForename()+" "+ user.getLastname());
+        LableEmail.setText(user.getEmail());
+        LableRole.setText(user.getRole().toString());
         //todo remove null pointer exception, i think in initLabel the init is wrong but dont know how to do like a labelProperty or so, you need to initialize the label with the keyword new, but i haven't a clue how
     }
 

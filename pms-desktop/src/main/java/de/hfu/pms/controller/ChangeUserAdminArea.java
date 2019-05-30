@@ -142,7 +142,7 @@ public class ChangeUserAdminArea  implements Initializable {
     public void edit(UserDTO user) {
         this.user = user;
 
-        labelFornameLastname.setText(user.getUsername()+ " " +user.getLastname());
+        labelFornameLastname.setText(user.getForename()+ " " +user.getLastname());
         labelUsername.setText(user.getUsername());
         labelRole.setText(user.getRole().toString());
         labelEmail.setText(user.getEmail());
