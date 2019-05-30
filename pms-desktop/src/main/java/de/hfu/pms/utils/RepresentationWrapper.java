@@ -84,12 +84,10 @@ public class RepresentationWrapper {
         return new WrappedEntity<>(faculty.getFacultyName(), faculty);
     }
 
-    public static Collection<WrappedEntity<Role>> getWrappedRole(){
-        Collection<WrappedEntity<Role>> collection =new ArrayList<>();
-        collection.add(new WrappedEntity<>(bundle.getString("enum.role.administrator"), Role.Administrator));
-        collection.add(new WrappedEntity<>(bundle.getString("enum.role.benutzer"),Role.Benutzer));
-        collection.add(new WrappedEntity<>(bundle.getString("enum.role.anderer_benutzer"),Role.AndereRolle));
-
+    public static Collection<WrappedEntity<UserRole>> getWrappedRole(){
+        Collection<WrappedEntity<UserRole>> collection =new ArrayList<>();
+        collection.add(new WrappedEntity<>(bundle.getString("enum.role.administrator"), UserRole.ADMIN));
+        collection.add(new WrappedEntity<>(bundle.getString("enum.role.user"),UserRole.USER));
         return collection;
     }
 

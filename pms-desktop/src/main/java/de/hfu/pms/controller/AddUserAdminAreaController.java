@@ -4,12 +4,19 @@ import com.google.common.eventbus.EventBus;
 import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.RequestAddUserEvent;
 import de.hfu.pms.shared.dto.UserDTO;
+import de.hfu.pms.shared.enums.UserRole;
 import de.hfu.pms.utils.FormValidator;
+import de.hfu.pms.utils.RepresentationWrapper;
+import de.hfu.pms.utils.WrappedEntity;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
-public class AddUserAdminAreaController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class AddUserAdminAreaController implements Initializable {
 
         private EventBus eventBus = EventBusSystem.getEventBus();
 
@@ -32,7 +39,7 @@ public class AddUserAdminAreaController {
         private Button ButtonExitScene;
 
         @FXML
-        private ComboBox<UserDTO> ComboboxRole;
+        private ComboBox<WrappedEntity<UserRole>> comboboxRole;
 
         @FXML
         private TextField TextFieldEmail;
@@ -44,6 +51,10 @@ public class AddUserAdminAreaController {
         private TextField TextfieldForname;
 
         private UserDTO user;
+        private void initComboBox() {
+                // personal data combo boxes
+                comboboxRole.getItems().addAll(RepresentationWrapper.getWrappedRole());
+        }
 
         public void edit(UserDTO user) {
                 this.user = user;
@@ -54,6 +65,9 @@ public class AddUserAdminAreaController {
                 TextfieldLastname.setText(user.getLastname());
                 TextfieldPassword.setText(user.getPassword());
                 TextFieldEmail.setText(user.getEmail());
+                comboboxRole.getSelectionModel().select(RepresentationWrapper.find(user.getRole(), comboboxRole.getItems()));
+                //qualifiedGraduationUniversityComboBox.getItems().addAll(RepresentationWrapper.getWrappedUniversities(universities));
+                // comboboxRole.getSelectionModel().select(RepresentationWrapper.find(Role.Benutzer, comboboxRole.getItems()));
         }
 
         @FXML
@@ -107,4 +121,9 @@ public class AddUserAdminAreaController {
 
         }
 
-    }
+        @Override
+        public void initialize(URL location, ResourceBundle resources) {
+                eventBus.register(this);
+                initComboBox();
+        }
+}
