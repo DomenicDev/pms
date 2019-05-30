@@ -50,7 +50,7 @@ public interface ApplicationServices {
 
     FacultyDTO deleteFaculty(FacultyDTO facultyDTO);
 
-    FacultyDTO updateFaculty(Long id, FacultyDTO facultyDTO);
+    FacultyDTO updateFaculty(FacultyDTO facultyDTO);
 
     void logout();
 

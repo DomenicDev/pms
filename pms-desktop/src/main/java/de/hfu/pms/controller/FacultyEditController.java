@@ -113,27 +113,25 @@ public class FacultyEditController implements Initializable {
         facultiesListView.getItems().clear();
         facultiesListView.getItems().addAll(EntityPool.getInstance().getFaculties());
 
-        logger.log(Level.DEBUG, "Currently known faculties:");
+        String logMessage = "Currently known faculties: ";
         for(FacultyDTO faculty : EntityPool.getInstance().getFaculties()){
-            logger.log(Level.DEBUG, "-> " + faculty.getId() + ")" + faculty.getFacultyName());
+            logMessage += "[" + faculty.getId() + ":" + faculty.getFacultyName() + "]";
         }
+        logger.log(Level.DEBUG, logMessage);
     }
 
     @Subscribe
     public void handleAddedFacultyEvent(SuccessfullyAddedFacultyEvent event){
-        EntityPool.getInstance().addFaculty(event.getFaculty());
         updateListView();
     }
 
     @Subscribe
     public void handleDeletedFacultyEvent(SuccessfullyDeletedFacultyEvent event){
-        EntityPool.getInstance().deleteFaculty(event.getFaculty());
         updateListView();
     }
 
     @Subscribe
     public void handleDeletedFacultyEvent(SuccessfullyUpdatedFacultyEvent event){
-        // update list after the name was changed
         updateListView();
     }
 }

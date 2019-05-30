@@ -5,6 +5,7 @@ import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.events.*;
 import de.hfu.pms.exceptions.BusinessException;
 import de.hfu.pms.exceptions.LoginFailedException;
+import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.service.ApplicationServices;
 import de.hfu.pms.shared.dto.DoctoralStudentDTO;
 import de.hfu.pms.shared.dto.FacultyDTO;
@@ -117,13 +118,14 @@ public class GuiEventHandler {
     public void handleAddFacultyEvent(RequestAddFacultyEvent requestSaveEvent){
         FacultyDTO facultyDTO = requestSaveEvent.getFaculty();
         FacultyDTO response = applicationServices.addFaculty(facultyDTO);
+        EntityPool.getInstance().addFaculty(facultyDTO);
         eventBus.post(new SuccessfullyAddedFacultyEvent(response));
     }
 
     @Subscribe
     public void handleUpdateFacultyEvent(RequestUpdateFacultyEvent requestUpdateFacultyEvent){
         FacultyDTO facultyDTO = requestUpdateFacultyEvent.getFaculty();
-        FacultyDTO response = applicationServices.updateFaculty(facultyDTO.getId(), facultyDTO);
+        FacultyDTO response = applicationServices.updateFaculty(facultyDTO);
         eventBus.post(new SuccessfullyUpdatedFacultyEvent(response));
     }
 

@@ -224,10 +224,10 @@ public class ApplicationServiceImpl implements ApplicationServices {
 
 
     @Override
-    public FacultyDTO updateFaculty(Long id, FacultyDTO facultyDTO) {
+    public FacultyDTO updateFaculty(FacultyDTO facultyDTO) {
         try {
             String json = mapper.writeValueAsString(facultyDTO);
-            String response = restClient.postJson(HOST_URL + FACULTY_PREFIX + "update/" + id,json);
+            String response = restClient.postJson(HOST_URL + FACULTY_PREFIX + "update/" + facultyDTO.getId(),json);
             FacultyDTO dto = mapper.readValue(response, FacultyDTO.class);
             logger.log(Level.INFO, "Faculty updated: " + dto);
             return dto;

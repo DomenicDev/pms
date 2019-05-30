@@ -1,23 +1,17 @@
 package de.hfu.pms.pool;
 
 import com.google.common.eventbus.EventBus;
-import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
-import de.hfu.pms.events.SuccessfullyAddedFacultyEvent;
-import de.hfu.pms.events.SuccessfullyAddedUniversityEvent;
 import de.hfu.pms.service.ApplicationServices;
 import de.hfu.pms.shared.dto.FacultyDTO;
 import de.hfu.pms.shared.dto.PreviewDoctoralStudentDTO;
 import de.hfu.pms.shared.dto.UniversityDTO;
 import de.hfu.pms.shared.dto.UserDTO;
-import javafx.fxml.Initializable;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import java.net.URL;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.ResourceBundle;
 
 public final class EntityPool{
 
@@ -108,10 +102,5 @@ public final class EntityPool{
 
     public Collection<UserDTO> getUsers() {
         return users;
-    }
-
-    @Subscribe
-    public void handleCreateUniversityEvent(SuccessfullyAddedUniversityEvent event) {
-        universities.add(event.getUniversity());
     }
 }
