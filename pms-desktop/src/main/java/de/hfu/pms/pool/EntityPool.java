@@ -2,6 +2,7 @@ package de.hfu.pms.pool;
 
 import com.google.common.eventbus.EventBus;
 import de.hfu.pms.eventbus.EventBusSystem;
+import de.hfu.pms.events.SuccessfullyAddedUniversityEvent;
 import de.hfu.pms.service.ApplicationServices;
 import de.hfu.pms.shared.dto.FacultyDTO;
 import de.hfu.pms.shared.dto.PreviewDoctoralStudentDTO;
@@ -102,5 +103,14 @@ public final class EntityPool{
 
     public Collection<UserDTO> getUsers() {
         return users;
+    }
+
+    public UserDTO getLoggedInUser() {
+        return applicationServices.getCurrentUser();
+    }
+
+    @Subscribe
+    public void handleCreateUniversityEvent(SuccessfullyAddedUniversityEvent event) {
+        universities.add(event.getUniversity());
     }
 }

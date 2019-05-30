@@ -1,13 +1,14 @@
 package de.hfu.pms.controller;
 
+import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.utils.GuiLoader;
 import de.hfu.pms.utils.JavaFxUtils;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -57,7 +58,18 @@ public class DashboardController {
         homeParent = GuiLoader.loadFXML("/screens/home.fxml");
         doctoralStudentsParent = GuiLoader.loadFXML("/screens/doctoral_students_content.fxml");
         universitiesParent = GuiLoader.loadFXML("/screens/university_screen.fxml");
-        accountInformationParent = GuiLoader.loadFXML("/screens/account_infoscreen.fxml");
+
+
+        // account information
+        // accountInformationParent = GuiLoader.loadFXML("/screens/account_infoscreen.fxml");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(GuiLoader.ACCOUNT_INFORMATION));
+        loader.setResources(GuiLoader.getResourceBundle());
+        this.accountInformationParent = loader.load();
+
+        AccountInformationController accountInformationController = loader.getController();
+        accountInformationController.showUser(EntityPool.getInstance().getLoggedInUser());
+
+
         adminArea =GuiLoader.loadFXML("/screens/admin_Area.fxml");
 
         // todo add more

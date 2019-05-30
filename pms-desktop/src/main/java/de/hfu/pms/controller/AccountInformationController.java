@@ -64,7 +64,7 @@ public class AccountInformationController implements Initializable {
         }
     }
 
-    private void initLable(ResourceBundle resources){
+    private void initLable() {
 
         LabelUsername.setText(user.getUsername());
         labelForname.setText(user.getForename());
@@ -73,22 +73,25 @@ public class AccountInformationController implements Initializable {
         LableRole.setText(user.getRole().name());
     }
 
-@Subscribe
-public void handleUserChangeEvent(SuccessfullyAddedUserEvent event){
-        UserDTO user =event.getUser();
+    public void showUser(UserDTO user) {
+        this.user = user;
+        initLable();
+    }
+
+    @Subscribe
+    public void handleUserChangeEvent(SuccessfullyAddedUserEvent event) {
+        UserDTO user = event.getUser();
         LabelUsername.getText();
         LableLastname.getText();
         labelForname.getText();
         LableEmail.getText();
         LableRole.getText();
         //todo remove null pointer exception, i think in initLabel the init is wrong but dont know how to do like a labelProperty or so, you need to initialize the label with the keyword new, but i haven't a clue how
-}
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         eventBus.register(this);
-
-        //initLable(resources);
-
     }
 }
 

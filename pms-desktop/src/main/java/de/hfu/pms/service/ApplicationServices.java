@@ -38,6 +38,11 @@ public interface ApplicationServices {
      */
     void login(String username, String pwHash) throws LoginFailedException;
 
+    /**
+     * @return the current logged in user
+     */
+    UserDTO getCurrentUser();
+
     Collection<UniversityDTO> getAllUniversities();
 
     UniversityDTO addUniversity(UniversityDTO universityDTO);

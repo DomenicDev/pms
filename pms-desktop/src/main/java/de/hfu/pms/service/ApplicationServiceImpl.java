@@ -151,6 +151,13 @@ public class ApplicationServiceImpl implements ApplicationServices {
     }
 
     @Override
+    public UserDTO getCurrentUser() {
+        // dummy object
+        // todo return real one
+        return new UserDTO("admin", "1234","Bob","Baumeister","test@example.com", UserRole.ADMIN);
+    }
+
+    @Override
     public List<UniversityDTO> getAllUniversities() {
         try {
             String response = restClient.get(HOST_URL + UNIVERSITY_PREFIX + "getList");
