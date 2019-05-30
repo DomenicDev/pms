@@ -90,7 +90,7 @@ public class FormValidator {
     }
 
     public boolean passwordFieldsAreSimilar (PasswordField passwordField,PasswordField passwordFieldRewrite){
-        if (passwordField.getText() == passwordFieldRewrite.getText()){
+        if (passwordField.getText().equals(passwordFieldRewrite.getText())) {
             return true;
         }
         else{
