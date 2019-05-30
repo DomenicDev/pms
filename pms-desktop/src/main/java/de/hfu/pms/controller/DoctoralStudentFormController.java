@@ -9,10 +9,8 @@ import de.hfu.pms.events.SuccessfullyAddedUniversityEvent;
 import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.*;
 import de.hfu.pms.shared.enums.*;
-import de.hfu.pms.utils.FormValidator;
-import de.hfu.pms.utils.GuiLoader;
-import de.hfu.pms.utils.RepresentationWrapper;
-import de.hfu.pms.utils.WrappedEntity;
+import de.hfu.pms.utils.*;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -27,6 +25,7 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.controlsfx.control.textfield.TextFields;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -222,6 +221,10 @@ public class DoctoralStudentFormController implements Initializable {
     @FXML
     private CheckBox agreementEvaluationCheckBox;
 
+    // ---------------------------- //
+    //        CONTROL FLAGS         //
+    // ---------------------------- //
+    private boolean changedImage;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -271,7 +274,7 @@ public class DoctoralStudentFormController implements Initializable {
         familyStatusComboBox.getItems().addAll(RepresentationWrapper.getWrappedFamilyStatus());
         salutationComboBox.getItems().addAll(RepresentationWrapper.getWrappedSalutations());
         genderComboBox.getItems().addAll(RepresentationWrapper.getWrappedGenders());
-        childrenCountComboBox.getItems().addAll(0, 1, 2, 3, 4, 5, 6 ,7, 8 ,9);
+        childrenCountComboBox.getItems().addAll(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
         childrenCountComboBox.getSelectionModel().select(0);
 
         // graduation
@@ -318,6 +321,18 @@ public class DoctoralStudentFormController implements Initializable {
         titleTextField.setText(personalData.getTitle());
         dateOfBirthDatePicker.setValue(personalData.getDateOfBirth());
         emailTextField.setText(personalData.getEmail());
+
+        // photo
+        byte[] photoData = personalData.getPhoto();
+        if (photoData != null) {
+            try {
+                BufferedImage bufferedImage = ImageUtils.getImage(photoData);
+                Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+                photoImageView.setImage(image);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         // personal data combo boxes
         salutationComboBox.getSelectionModel().select(RepresentationWrapper.find(personalData.getSalutation(), salutationComboBox.getItems()));
@@ -503,7 +518,7 @@ public class DoctoralStudentFormController implements Initializable {
     public void handleOnActionChangePhotoButton(ActionEvent event) {
         // create file chooser
         FileChooser fileChooser = new FileChooser();
-       // fileChooser.setInitialDirectory(new File(System.getProperty("user.name")));
+        // fileChooser.setInitialDirectory(new File(System.getProperty("user.name")));
 
         //Set extension filter
         FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
@@ -521,6 +536,9 @@ public class DoctoralStudentFormController implements Initializable {
         String path = imageFile.toURI().toString();
         Image image = new Image(path);
         photoImageView.setImage(image);
+
+        // set control flag
+        changedImage = true;
     }
 
     private void refreshCheckBoxes() {
@@ -597,6 +615,24 @@ public class DoctoralStudentFormController implements Initializable {
         personalAddress.setLocation((locationTextField.getText()));
         personalAddress.setStreet((streetTextField.getText()));
 
+        // check if photo has changed
+        if (changedImage) {
+            // we changed the picture so entity
+            Image image = photoImageView.getImage();
+
+            try {
+                byte[] imageBytes;
+                BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
+                imageBytes = ImageUtils.getImageData(bufferedImage);
+                personalData.setPhoto(imageBytes);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            // unset control flag
+            this.changedImage = false;
+        } else {
+            // photo did not change so we do not want to pass it again
+        }
 
         // process graduation
         if (validator.comboBoxHasSelectedItem(graduationComboBox)) {
