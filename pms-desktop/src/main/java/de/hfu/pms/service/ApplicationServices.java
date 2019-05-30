@@ -2,10 +2,7 @@ package de.hfu.pms.service;
 
 import de.hfu.pms.exceptions.BusinessException;
 import de.hfu.pms.exceptions.LoginFailedException;
-import de.hfu.pms.shared.dto.DoctoralStudentDTO;
-import de.hfu.pms.shared.dto.PreviewDoctoralStudentDTO;
-import de.hfu.pms.shared.dto.UniversityDTO;
-import de.hfu.pms.shared.dto.UserDTO;
+import de.hfu.pms.shared.dto.*;
 import de.hfu.pms.shared.enums.UserRole;
 import javafx.collections.transformation.SortedList;
 
@@ -44,6 +41,12 @@ public interface ApplicationServices {
     void addUniversity(UniversityDTO universityDTO);
 
     void updateUniversity(Long id, UniversityDTO universityDTO);
+
+    Collection<FacultyDTO> getAllFaculties();
+
+    void addFaculty(FacultyDTO facultyDTO);
+
+    void updateFaculty(Long id, FacultyDTO facultyDTO);
 
     void logout();
 

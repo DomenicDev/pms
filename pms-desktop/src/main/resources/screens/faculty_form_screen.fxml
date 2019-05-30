@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.hfu.pms.controller.FacultyEditController">
+  <children>
+    <Label fx:id="title" text="Fakultäten Bearbeiten" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="30.0">
+      <font>
+        <Font name="System Bold" size="12.0" />
+      </font>
+    </Label>
+    <Button mnemonicParsing="false" onAction="#handleCancelButton" text="Abbrechen" AnchorPane.leftAnchor="411.0" AnchorPane.topAnchor="290.0" />
+    <Button mnemonicParsing="false" onAction="#handleAddButton" text="Hinzufügen" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="290.0" />
+    <ListView layoutX="50.0" layoutY="72.0" prefHeight="207.0" prefWidth="439.0" />
+    <Button mnemonicParsing="false" onAction="#handleDeleteButton" text="Löschen" AnchorPane.leftAnchor="154.0" AnchorPane.topAnchor="290.0"    />
+  </children>
+</AnchorPane>

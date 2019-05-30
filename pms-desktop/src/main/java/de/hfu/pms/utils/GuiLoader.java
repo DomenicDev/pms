@@ -24,6 +24,7 @@ public class GuiLoader {
     public static final String QUALIFICATION = "/screens/qualification_screen.fxml";
     public static final String DOCTORAL_STUDENT_FORM_MASK = "/screens/doctoral_student_form_mask.fxml";
     public static final String UNIVERSITY_FORM_SCREEN = "/screens/university_form_screen.fxml";
+    public static final String FACULTY_FORM_SCREEN = "/screens/faculty_form_screen.fxml";
 
     static {
         // load resource bundle file

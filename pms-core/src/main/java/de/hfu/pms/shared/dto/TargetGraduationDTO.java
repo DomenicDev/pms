@@ -1,6 +1,5 @@
 package de.hfu.pms.shared.dto;
 
-import de.hfu.pms.shared.enums.FacultyHFU;
 import de.hfu.pms.shared.enums.Rating;
 
 import java.time.LocalDate;
@@ -10,7 +9,7 @@ public class TargetGraduationDTO {
     private String targetGraduationDegree;
     private String nameOfDissertation;
     private String internalSupervisor;
-    private FacultyHFU facultyHFU;
+    private FacultyDTO facultyHFU;
     private String externalSupervisor;
     private String externalFaculty;
     private UniversityDTO externalUniversity;
@@ -52,11 +51,11 @@ public class TargetGraduationDTO {
         this.internalSupervisor = internalSupervisor;
     }
 
-    public FacultyHFU getFacultyHFU() {
+    public FacultyDTO getFacultyHFU() {
         return facultyHFU;
     }
 
-    public void setFacultyHFU(FacultyHFU facultyHFU) {
+    public void setFacultyHFU(FacultyDTO facultyHFU) {
         this.facultyHFU = facultyHFU;
     }
 
@@ -186,7 +185,7 @@ public class TargetGraduationDTO {
                 "targetGraduationDegree='" + targetGraduationDegree + '\'' +
                 ", nameOfDissertation='" + nameOfDissertation + '\'' +
                 ", internalSupervisor='" + internalSupervisor + '\'' +
-                ", facultyHFU=" + facultyHFU +
+                ", facultyHFU=" + facultyHFU.getFacultyName() +
                 ", externalSupervisor='" + externalSupervisor + '\'' +
                 ", externalFaculty='" + externalFaculty + '\'' +
                 ", externalUniversity=" + externalUniversity +

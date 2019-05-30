@@ -11,10 +11,7 @@ import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.*;
 import de.hfu.pms.exceptions.LoginFailedException;
 import de.hfu.pms.pool.EntityPool;
-import de.hfu.pms.shared.dto.DoctoralStudentDTO;
-import de.hfu.pms.shared.dto.PreviewDoctoralStudentDTO;
-import de.hfu.pms.shared.dto.UniversityDTO;
-import de.hfu.pms.shared.dto.UserDTO;
+import de.hfu.pms.shared.dto.*;
 import de.hfu.pms.shared.enums.UserRole;
 import javafx.collections.transformation.SortedList;
 import org.apache.log4j.Level;
@@ -37,6 +34,7 @@ public class ApplicationServiceImpl implements ApplicationServices {
     private final String STUDENT_PREFIX = "/student/";
     private final String USER_PREFIX = "/user/";
     private final String UNIVERSITY_PREFIX = "/university/";
+    private final String FACULTY_PREFIX ="/faculty/";
 
     private final String STUDENT_SERVICES = HOST_URL + STUDENT_PREFIX;
 
@@ -183,6 +181,48 @@ public class ApplicationServiceImpl implements ApplicationServices {
     }
 
     @Override
+    public List<FacultyDTO> getAllFaculties(){
+        try {
+            String response = restClient.get(HOST_URL + FACULTY_PREFIX + "getList");
+            return mapper.readValue(response, new TypeReference<List<FacultyDTO>>(){});
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public void addFaculty(FacultyDTO facultyDTO) {
+        try {
+            String json = mapper.writeValueAsString(facultyDTO);
+            String response = restClient.postJson(HOST_URL + FACULTY_PREFIX + "create", json);
+            FacultyDTO dto = mapper.readValue(response, FacultyDTO.class);
+            eventBus.post(new SuccessfullyAddedFacultyEvent(dto));
+            logger.log(Level.INFO, "Faculty created: " + dto);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void updateFaculty(Long id, FacultyDTO facultyDTO) {
+        try {
+            String json = mapper.writeValueAsString(facultyDTO);
+            String response = restClient.postJson(HOST_URL + FACULTY_PREFIX + "update/" + id,json);
+            FacultyDTO dto = mapper.readValue(response, FacultyDTO.class);
+            eventBus.post(new SuccessfullyUpdatedFacultyEvent(dto));
+            logger.log(Level.INFO, "Faculty updated: " + dto);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void logout() {
 
     }
@@ -264,7 +304,9 @@ public class ApplicationServiceImpl implements ApplicationServices {
     @Override
     public void initEntityPool() {
         Collection<UniversityDTO> universities = getAllUniversities();
+        Collection<FacultyDTO> faculties = getAllFaculties();
         EntityPool.getInstance().addAll(universities);
+        EntityPool.getInstance().initFaculties(faculties);
 
         EntityPool.getInstance().initPreviews(getPreviews());
         EntityPool.getInstance().initUsers(getAllUsers());

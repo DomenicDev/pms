@@ -1,5 +1,6 @@
 package de.hfu.pms.utils;
 
+import de.hfu.pms.shared.dto.FacultyDTO;
 import de.hfu.pms.shared.dto.UniversityDTO;
 import de.hfu.pms.shared.enums.*;
 import org.apache.log4j.Level;
@@ -71,19 +72,18 @@ public class RepresentationWrapper {
         return collection;
     }
 
-    public static Collection<WrappedEntity<FacultyHFU>> getWrappedHFUFaculties() {
-        Collection<WrappedEntity<FacultyHFU>> collection = new ArrayList<>();
-        collection.add(new WrappedEntity<>(bundle.getString("enum.hfu_faculty.informatik"), FacultyHFU.Informatik));
-        collection.add(new WrappedEntity<>(bundle.getString("enum.hfu_faculty.wirtschaftsinformatik"), FacultyHFU.Wirtschaftsinformatik));
-        collection.add(new WrappedEntity<>(bundle.getString("enum.hfu_faculty.digitale_medien"), FacultyHFU.Digitale_Medien));
-        collection.add(new WrappedEntity<>(bundle.getString("enum.hfu_faculty.industrial_technologies"), FacultyHFU.Industrial_Technologies));
-        collection.add(new WrappedEntity<>(bundle.getString("enum.hfu_faculty.medical_and_life_sciences"), FacultyHFU.Medical_and_Life_Sciences));
-        collection.add(new WrappedEntity<>(bundle.getString("enum.hfu_faculty.wirtschaft"), FacultyHFU.Wirtschaft));
-        collection.add(new WrappedEntity<>(bundle.getString("enum.hfu_faculty.wirtschaftsingenieurwesen"), FacultyHFU.Wirtschaftsingenieurwesen));
-        collection.add(new WrappedEntity<>(bundle.getString("enum.hfu_faculty.gesundheit_sicherheit_gesellschaft"), FacultyHFU.Gesundheit_Sicherheit_Gesellschaft));
-        collection.add(new WrappedEntity<>(bundle.getString("enum.hfu_faculty.mechanical_and_medical_engineering"), FacultyHFU.Mechanical_and_Medical_Engineering));
+    public static Collection<WrappedEntity<FacultyDTO>> getWrappedFaculties(Collection<FacultyDTO> faculties) {
+        Collection<WrappedEntity<FacultyDTO>> collection = new ArrayList<>();
+        for (FacultyDTO faculty : faculties) {
+            collection.add(getWrappedFaculty(faculty));
+        }
         return collection;
     }
+
+    public static WrappedEntity<FacultyDTO> getWrappedFaculty(FacultyDTO faculty) {
+        return new WrappedEntity<>(faculty.getFacultyName(), faculty);
+    }
+
     public static Collection<WrappedEntity<Role>> getWrappedRole(){
         Collection<WrappedEntity<Role>> collection =new ArrayList<>();
         collection.add(new WrappedEntity<>(bundle.getString("enum.role.administrator"), Role.Administrator));

@@ -47,6 +47,10 @@ public class DatabaseInit implements CommandLineRunner {
         university.setCountry("Deutschland");
         university = universityDao.save(university);
 
+        // add a test faculty
+        Faculty facultyHFU = new Faculty();
+        facultyHFU.setFacultyName("Informatik");
+
         // add simple doctoral student
         DoctoralStudent student = new DoctoralStudent();
 
@@ -76,9 +80,11 @@ public class DatabaseInit implements CommandLineRunner {
         // target graduation
         student.getTargetGraduation().setExternalUniversity(university);
         student.getTargetGraduation().setExternalSupervisor("Müller");
-        student.getTargetGraduation().setFacultyHFU(FacultyHFU.Informatik);
+        //student.getTargetGraduation().setFacultyHFU(FacultyHFU.Informatik);
+        student.getTargetGraduation().setFacultyHFU(facultyHFU);
         student.getTargetGraduation().setNameOfDissertation("Thema der Dissertation");
         student.getTargetGraduation().setTargetDegree(DoctoralGraduation.Dr_sc_nat.name());
+
 
 
         student.getQualifiedGraduation().setGradedUniversity(university);

@@ -9,8 +9,8 @@ import de.hfu.pms.events.SuccessfullyAddedDoctoralStudentEvent;
 import de.hfu.pms.events.SuccessfullyUpdatedDoctoralStudentEvent;
 import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.DoctoralStudentDTO;
+import de.hfu.pms.shared.dto.FacultyDTO;
 import de.hfu.pms.shared.dto.PreviewDoctoralStudentDTO;
-import de.hfu.pms.shared.enums.FacultyHFU;
 import de.hfu.pms.shared.enums.Gender;
 import de.hfu.pms.shared.utils.Converter;
 import de.hfu.pms.utils.CollectionUtils;
@@ -53,7 +53,7 @@ public class DoctoralStudentOverviewController implements Initializable {
     @FXML
     private TableColumn<PreviewDoctoralStudentDTO, String> searchResultForeNameTableColumn;
     @FXML
-    private TableColumn<PreviewDoctoralStudentDTO, FacultyHFU> searchResultFacultyTableColumn;
+    private TableColumn<PreviewDoctoralStudentDTO, FacultyDTO> searchResultFacultyTableColumn;
     @FXML
     private TableColumn<PreviewDoctoralStudentDTO, String> searchResultEmailTableColumn;
     @FXML
@@ -123,8 +123,9 @@ public class DoctoralStudentOverviewController implements Initializable {
 
         String searchterm = searchTextField.getText();
 
-        PreviewDoctoralStudentDTO student1 = new PreviewDoctoralStudentDTO(500L, "Jahnsen", "Jan", FacultyHFU.Medical_and_Life_Sciences, "jan.jahnsen@mail.com", "017322497814", Gender.Male);
-        PreviewDoctoralStudentDTO student2 = new PreviewDoctoralStudentDTO(501L, "Fröhlich", "Alina", FacultyHFU.Medical_and_Life_Sciences, "ali.fr@mail.com", "015121639248", Gender.Female);
+        FacultyDTO faculty = new FacultyDTO((long)1, "Informatik");
+        PreviewDoctoralStudentDTO student1 = new PreviewDoctoralStudentDTO(500L, "Jahnsen", "Jan", faculty, "jan.jahnsen@mail.com", "017322497814", Gender.Male);
+        PreviewDoctoralStudentDTO student2 = new PreviewDoctoralStudentDTO(501L, "Fröhlich", "Alina", faculty, "ali.fr@mail.com", "015121639248", Gender.Female);
 
         Collection<PreviewDoctoralStudentDTO> students = new HashSet<>(Arrays.asList(student1, student2));
 

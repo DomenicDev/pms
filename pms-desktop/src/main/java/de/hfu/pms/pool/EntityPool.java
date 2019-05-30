@@ -5,6 +5,7 @@ import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.SuccessfullyAddedUniversityEvent;
 import de.hfu.pms.service.ApplicationServices;
+import de.hfu.pms.shared.dto.FacultyDTO;
 import de.hfu.pms.shared.dto.PreviewDoctoralStudentDTO;
 import de.hfu.pms.shared.dto.UniversityDTO;
 import de.hfu.pms.shared.dto.UserDTO;
@@ -21,6 +22,7 @@ public final class EntityPool {
     private EventBus eventBus = EventBusSystem.getEventBus();
     private static Logger logger = Logger.getLogger(EntityPool.class);
     private Collection<UniversityDTO> universities = new HashSet<>();
+    private Collection<FacultyDTO> faculties = new HashSet<>();
     private Collection<PreviewDoctoralStudentDTO> previewStudents = new HashSet<>();
     private Collection<UserDTO> users = new HashSet<>();
     private ApplicationServices applicationServices;
@@ -64,8 +66,20 @@ public final class EntityPool {
         users.addAll(initUsers);
     }
 
+    public void initFaculties(Collection<FacultyDTO> initFaculties){
+        if (initFaculties == null){
+            return;
+        }
+        logger.log(Level.DEBUG, "Adding " + initFaculties.size() + " items to faculty pool.");
+        faculties.addAll(initFaculties);
+    }
+
     public Collection<UniversityDTO> getUniversities() {
         return universities;
+    }
+
+    public Collection<FacultyDTO> getFaculties() {
+        return faculties;
     }
 
     public Collection<PreviewDoctoralStudentDTO> getPreviewStudents() {

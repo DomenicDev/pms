@@ -247,7 +247,12 @@
                                                             <Label prefHeight="24.0" prefWidth="211.0" text="Wissenschaftliche Betreuung (HFU)" GridPane.rowIndex="2" />
                                                             <TextField fx:id="internalSupervisorTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                             <Label text="Zuordnung HFU-Fakultät" GridPane.rowIndex="3" />
-                                                             <ComboBox fx:id="facultyHFUComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                             <HBox spacing="15.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                                 <children>
+                                                                     <ComboBox fx:id="facultyHFUComboBox" prefWidth="150.0" />
+                                                                     <Button mnemonicParsing="false" onAction="#handleOnActionEditFacultyButton" text="Bearbeiten" />
+                                                                 </children>
+                                                             </HBox>
                                                             <Label text="Zweitbetreuung (Uni)" GridPane.rowIndex="4" />
                                                             <Label text="Promovierende Fakultät" GridPane.rowIndex="6" />
                                                             <Label text="Angenommen zur Promotion zum" GridPane.rowIndex="7" />
@@ -258,9 +263,7 @@
                                                             <TextField fx:id="externalFacultyTextField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                                             <HBox spacing="15.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                                                <children>
-                                                                  <ComboBox fx:id="externalUniversityComboBox" prefWidth="150.0">
-
-                                                            </ComboBox>
+                                                                  <ComboBox fx:id="externalUniversityComboBox" prefWidth="150.0" />
                                                                   <Button mnemonicParsing="false" onAction="#handleOnActionAddUniversityButton" text="Hinzufügen" />
                                                                </children>
                                                             </HBox>

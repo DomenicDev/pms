@@ -15,8 +15,6 @@ import javafx.scene.control.TextField;
 
 public class UniversityAddController {
 
-
-
     private EventBus eventBus = EventBusSystem.getEventBus();
 
     @FXML

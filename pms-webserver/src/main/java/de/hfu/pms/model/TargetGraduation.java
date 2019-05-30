@@ -1,6 +1,5 @@
 package de.hfu.pms.model;
 
-import de.hfu.pms.shared.enums.FacultyHFU;
 import de.hfu.pms.shared.enums.Rating;
 
 import javax.persistence.*;
@@ -21,9 +20,8 @@ public class TargetGraduation {
     @Column
     private String internalSupervisor;
 
-    @Column
-    @Enumerated
-    private FacultyHFU facultyHFU;
+    @ManyToOne(targetEntity = Faculty.class)
+    private Faculty facultyHFU;
 
     @Column
     private String externalSupervisor;
@@ -97,11 +95,11 @@ public class TargetGraduation {
         this.internalSupervisor = internalSupervisor;
     }
 
-    public FacultyHFU getFacultyHFU() {
+    public Faculty getFacultyHFU() {
         return facultyHFU;
     }
 
-    public void setFacultyHFU(FacultyHFU facultyHFU) {
+    public void setFacultyHFU(Faculty facultyHFU) {
         this.facultyHFU = facultyHFU;
     }
 

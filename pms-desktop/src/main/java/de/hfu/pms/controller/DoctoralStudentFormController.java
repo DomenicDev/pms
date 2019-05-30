@@ -104,7 +104,7 @@ public class DoctoralStudentFormController implements Initializable {
     @FXML
     private TextField internalSupervisorTextField;
     @FXML
-    private ComboBox<WrappedEntity<FacultyHFU>> facultyHFUComboBox;
+    private ComboBox<WrappedEntity<FacultyDTO>> facultyHFUComboBox;
     @FXML
     private TextField externalSupervisorTextField;
     @FXML
@@ -280,8 +280,11 @@ public class DoctoralStudentFormController implements Initializable {
         // add some common target degrees to show for auto completion
         TextFields.bindAutoCompletion(targetGraduationDegreeTextField, RepresentationWrapper.getTargetDegreeSuggestions());
 
+        // faculty
+        Collection<FacultyDTO> faculties = EntityPool.getInstance().getFaculties();
+
         // init combo boxes with wrapped entities of the specific type
-        facultyHFUComboBox.getItems().addAll(RepresentationWrapper.getWrappedHFUFaculties());
+        facultyHFUComboBox.getItems().addAll(RepresentationWrapper.getWrappedFaculties(faculties));
         ratingComboBox.getItems().addAll(RepresentationWrapper.getWrappedRatings());
 
         // university
@@ -489,6 +492,11 @@ public class DoctoralStudentFormController implements Initializable {
     @FXML
     public void handleOnActionAddUniversityButton() throws IOException {
         GuiLoader.createModalWindow(GuiLoader.UNIVERSITY_FORM_SCREEN, 250, 300, false);
+    }
+
+    @FXML
+    public void handleOnActionEditFacultyButton() throws IOException {
+        GuiLoader.createModalWindow(GuiLoader.FACULTY_FORM_SCREEN, 250, 300, false);
     }
 
     @FXML
