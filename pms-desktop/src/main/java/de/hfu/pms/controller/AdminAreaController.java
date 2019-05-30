@@ -5,8 +5,11 @@ import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.AlertNotificationEvent;
 import de.hfu.pms.events.SuccessfullyAddedUserEvent;
+import de.hfu.pms.events.SuccessfullyChangedPasswordEvent;
+import de.hfu.pms.events.SuccessfullyChangedUserRoleEvent;
 import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.UserDTO;
+import de.hfu.pms.utils.CollectionUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -115,11 +118,25 @@ private Logger logger = Logger.getLogger(AdminAreaController.class);
        UserDTO user = event.getUser();
        tableAdminArea.getItems().add(user);
     }
-    /*@Subscribe
+   @Subscribe
     public void handleAdminUpdateEvent(SuccessfullyChangedPasswordEvent event){
-        UserDTO user1 =event.getUser;
+        UserDTO user1 =event.getUser();
+        CollectionUtils.removeFromList(user1, tableAdminArea.getItems(), (original, collectionItem) -> original.getUsername().equals(collectionItem.getUsername()));
 
-    }*/
+        tableAdminArea.getItems().add(user1);
+        //tableAdminArea.refresh();
+    }
+
+
+    @Subscribe
+    public void handleAdminRoleUpdateEvent(SuccessfullyChangedUserRoleEvent event){
+        UserDTO user2 = event.getUser();
+
+        CollectionUtils.removeFromList(user2, tableAdminArea.getItems(), (original, collectionItem) -> original.getUsername().equals(collectionItem.getUsername()));
+        tableAdminArea.getItems().add(user2);
+        //tableAdminArea.refresh();
+
+    }
 
 
     @Override
