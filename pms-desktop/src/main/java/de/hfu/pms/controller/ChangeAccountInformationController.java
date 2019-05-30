@@ -1,16 +1,21 @@
 package de.hfu.pms.controller;
+
 import com.google.common.eventbus.EventBus;
 import de.hfu.pms.eventbus.EventBusSystem;
-import de.hfu.pms.events.RequestAddUserEvent;
+import de.hfu.pms.events.RequestChangeUserRoleEvent;
 import de.hfu.pms.shared.dto.UserDTO;
+import de.hfu.pms.shared.enums.UserRole;
 import de.hfu.pms.utils.FormValidator;
+import de.hfu.pms.utils.WrappedEntity;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
 
-public class ChangeAccountInformationController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class ChangeAccountInformationController implements Initializable {
         private EventBus eventBus = EventBusSystem.getEventBus();
 
         @FXML
@@ -34,6 +39,14 @@ public class ChangeAccountInformationController {
         @FXML
         private TextField textfieldLastname;
 
+        @FXML
+        private PasswordField passwordfielPassword;
+
+
+        @FXML
+        private ComboBox<WrappedEntity<UserRole>> ComboboxRole;
+
+
         private UserDTO user;
 
         @FXML
@@ -46,7 +59,7 @@ public class ChangeAccountInformationController {
                         return;
                 }
                 if (validationSuccessful){
-                        eventBus.post(new RequestAddUserEvent(user));
+                        eventBus.post(new RequestChangeUserRoleEvent(user));
 
                 }
                 ((Button)event.getSource()).getScene().getWindow().hide();
@@ -63,6 +76,7 @@ public class ChangeAccountInformationController {
                 labelChangeUsername.setText(user.getUsername());
                 lableChangeRole.setText(user.getRole().name());
                 textfieldLastname.setText(user.getLastname());
+                passwordfielPassword.setText(user.getPassword());
         }
 
         @FXML
@@ -77,7 +91,9 @@ public class ChangeAccountInformationController {
                 String vorname =textfieldForname.getText();
                 String email= textfieldChangeEmail.getText();
                 String nachname =textfieldLastname.getText();
-                String rolle =lableChangeRole.getText();
+                String password =passwordfielPassword.getText();
+
+
 
                 if (userValidator.textFieldNotEmpty((textfieldForname))){
                         user.setForename(vorname);
@@ -88,9 +104,21 @@ public class ChangeAccountInformationController {
                 if (userValidator.textFieldNotEmpty((textfieldChangeEmail))){
                         user.setEmail(email);
                 }
-                //user.setRole(rolle);
+                if (userValidator.comboBoxHasSelectedItem(ComboboxRole)) {
+                        user.setRole(ComboboxRole.getValue().getEntity());
+                }
+                if (userValidator.textFieldNotEmpty(passwordfielPassword)){
+                        user.setPassword(password);
+                }
+
+
                 user.setUsername(benutzername);
 
                 return userValidator.validationSuccessful();
+        }
+
+        @Override
+        public void initialize(URL location, ResourceBundle resources) {
+                eventBus.register(this);
         }
 }

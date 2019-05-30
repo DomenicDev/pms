@@ -93,8 +93,11 @@ public class AddUserAdminAreaController implements Initializable {
                 String lastname = TextfieldLastname.getText();
                 String password = TextfieldPassword.getText();
                 String email = TextFieldEmail.getText();
-
                 String username = TextfieldUsername.getText();
+
+                if (userValidator.comboBoxHasSelectedItem(comboboxRole)) {
+                user.setRole(comboboxRole.getValue().getEntity());
+                }
 
                 if (userValidator.textFieldNotEmpty(TextfieldForname)) {
                         user.setForename(forename);
