@@ -60,11 +60,16 @@ public class UserController {
         return convertToDTO(user);
     }
 
+    @PostMapping("/updateEmail/{username}")
+    @ResponseStatus(HttpStatus.OK)
+    public UserDTO updateUserEmail(@PathVariable String username, @RequestBody String email) {
+        return convertToDTO(service.updateUserEmail(username , email));
+    }
+
     @GetMapping("/get/{username}")
     @ResponseStatus(HttpStatus.OK)
     public UserDTO getUser(@PathVariable String username) {
-        User returnUser = service.getUser(username);
-        return convertToDTO(returnUser);
+        return convertToDTO(service.getUser(username));
     }
 
     @GetMapping("/getList")

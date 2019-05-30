@@ -76,6 +76,18 @@ public class UserServiceImpl implements UserService {
         throw new UserNotFoundException(username);
     }
 
+    @Override
+    public User updateUserEmail(String username, String email) {
+        for(User user : userDao.findAll()){
+            if(user.getUsername().equals(username)){
+                user.setEmail(email);
+                userDao.save(user);
+                return user;
+            }
+        }
+        throw new UserNotFoundException(username);
+    }
+
 
     @Override
     public User getUser(String username) {

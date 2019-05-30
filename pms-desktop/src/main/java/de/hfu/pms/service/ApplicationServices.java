@@ -60,6 +60,8 @@ public interface ApplicationServices {
 
     void changeUserPrivileges(String username, UserRole newUserRole);
 
+    void changeUserEmail(String username, String email);
+
     UserDTO getUser(String username);
 
     List<UserDTO> getAllUsers();

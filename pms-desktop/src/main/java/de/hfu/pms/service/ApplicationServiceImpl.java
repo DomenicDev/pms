@@ -299,6 +299,18 @@ public class ApplicationServiceImpl implements ApplicationServices {
     }
 
     @Override
+    public void changeUserEmail(String username, String email) {
+        try {
+            String response = restClient.postJson(HOST_URL + USER_PREFIX +"updateEmail/" + username, email);
+            UserDTO dto = mapper.readValue(response, UserDTO.class);
+            eventBus.post(new SuccessfullyChangedEmailEvent(dto));
+            logger.log(Level.INFO, response);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public UserDTO getUser(String username) {
         try {
             String response = restClient.get(HOST_URL + USER_PREFIX + "get/" + username);
