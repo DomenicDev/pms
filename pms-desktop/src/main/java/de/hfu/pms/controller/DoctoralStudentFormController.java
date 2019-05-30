@@ -27,7 +27,6 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.controlsfx.control.textfield.TextFields;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -863,17 +862,12 @@ public class DoctoralStudentFormController implements Initializable {
 
     @FXML
     private void handleOnActionBrowseDocuments(ActionEvent actionEvent){
-        // todo
-        FileDialog dialog = new FileDialog((Frame)null, "Select File to Open");
-        dialog.setMode(FileDialog.LOAD);
-        dialog.setMultipleMode(true);
-        dialog.setVisible(true);
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Dokumentenauswahl");
+        Collection<File> selectedFiles = fileChooser.showOpenMultipleDialog(null);
 
-        if(dialog.getFiles() != null) {
-            documents.addAll(Set.of(dialog.getFiles()));
-            //String fullFileName = dialog.getDirectory() + dialog.getFile();
-            //documents.add(new File(fullFileName));
-            //logger.log(Level.DEBUG, "selected file: \"" + fullFileName + "\" for document upload");
+        if(selectedFiles.size() > 0){
+            documents.addAll(selectedFiles);
             updateDocumentsListView();
         }
     }
@@ -890,20 +884,17 @@ public class DoctoralStudentFormController implements Initializable {
         alert.setTitle("Dokumente Entfernen");
         alert.setHeaderText("Sie sind dabei folgende Dokumente aus der Liste zu entfernen: ");
 
-        documentsListView.getSelectionModel().getSelectedItem().toString();
         String documentNames = "";
         for(File file : documentsListView.getSelectionModel().getSelectedItems()){
             documentNames += file.toString() + "\n";
         }
         alert.setContentText(documentNames);
 
-
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK){
             documents.removeAll(documentsListView.getSelectionModel().getSelectedItems());
             updateDocumentsListView();
         }
-        // else do nothing, closes automatically on cancel button;
     }
 
 
