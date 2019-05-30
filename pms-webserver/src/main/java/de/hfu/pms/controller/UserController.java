@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -57,19 +58,14 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public UserDTO updateUserRole(@PathVariable String username, @RequestBody UserRole newRole) {
         User user = service.updateUserRole(username , newRole);
-        UserDTO userDTO = convertToDTO(user);
-        return userDTO;
+        return convertToDTO(user);
     }
 
     @GetMapping("/get/{username}")
     @ResponseStatus(HttpStatus.OK)
     public UserDTO getUser(@PathVariable String username) {
-        try {
-            User returnUser = service.getUser(username);
-            return convertToDTO(returnUser);
-        } catch (NullPointerException e) {
-            throw new UserNotFoundException(username);
-        }
+        User returnUser = service.getUser(username);
+        return convertToDTO(returnUser);
     }
 
     @GetMapping("/getList")
@@ -88,7 +84,7 @@ public class UserController {
 
     //Error Response
 
-    @ResponseStatus(value = HttpStatus.CONFLICT, reason = "This Username already exists.")
+    @ResponseStatus(value = HttpStatus.CONFLICT, reason = "This username already exists.")
     @ExceptionHandler(org.springframework.dao.DataIntegrityViolationException.class)
     public void uniqueUsernameViolation() {
     }

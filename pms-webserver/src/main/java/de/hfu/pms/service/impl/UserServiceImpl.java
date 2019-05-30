@@ -55,8 +55,10 @@ public class UserServiceImpl implements UserService {
                 if (passwordEncoder.matches(oldPassword, user.getPassword())) {
                     user.setPassword(encodedNewPassword);
                     userDao.save(user);
-                } else throw new WrongPasswordException();
+                }
+                else throw new WrongPasswordException();
             }
+            else throw new UserNotFoundException(username);
         }
     }
 
@@ -80,7 +82,7 @@ public class UserServiceImpl implements UserService {
                 return user;
             }
         }
-        return null;
+        throw new UserNotFoundException(username);
     }
 
     @Override
