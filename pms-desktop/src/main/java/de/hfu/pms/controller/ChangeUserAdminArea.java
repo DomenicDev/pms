@@ -12,10 +12,7 @@ import de.hfu.pms.utils.WrappedEntity;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
+import javafx.scene.control.*;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -48,13 +45,14 @@ public class ChangeUserAdminArea  implements Initializable {
     private Button ButtonDeleteUser;
 
     @FXML
+    private TextField TextFieldEmail;
+
+    @FXML
     private ComboBox<WrappedEntity<UserRole>> ComboboxRole;
 
     @FXML
     private Label labelUsername;
 
-    @FXML
-    private PasswordField TextFieldEmail;
     private UserDTO user;
 
     public void edit(UserDTO user) {
@@ -62,32 +60,11 @@ public class ChangeUserAdminArea  implements Initializable {
 
         labelFornameLastname.setText(user.getUsername()+user.getLastname());
         labelUsername.setText(user.getUsername());
-        ComboboxRole.getSelectionModel().select(RepresentationWrapper.find(UserRole.USER, ComboboxRole.getItems()));
+        ComboboxRole.getSelectionModel().select(RepresentationWrapper.find(user.getRole(), ComboboxRole.getItems()));
         TextfieldPassword.setText(user.getPassword());
         TextFieldEmail.setText(user.getEmail());
 
     }
-  /*  public void writeProperty() throws IllegalArgumentException{
-        String username = this.labelUsername.getText();
-        String forname = this.labelFornameLastname.getText();
-        WrappedEntity role = this.ComboboxRole.getValue();
-        String password = this.TextfieldPassword.getText();
-        String email =this.TextFieldEmail.getText();
-
-        property =new UserDTO();
-        property.setUsername(username);
-        property.setForename(forname);
-        property.setRole(role);
-        property.setEmail(email);
-        property.setPassword(password);
-
-
-
-    }
-
-    @Override
-    public void readProperty(UserDTO property) {throw new UnsupportedOperationException();}
-*/
     @FXML
     void handleActionEventChangeUserInformation(ActionEvent event) {
         if(user == null){

@@ -25,6 +25,6 @@
       </Label>
       <Label fx:id="labelUsername" layoutX="210.0" layoutY="77.0" text="Benutzername" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="100.0" />
       <Label layoutX="50.0" layoutY="272.0" text="E-mail:" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="260.0" />
-      <PasswordField fx:id="TextFieldEmail" layoutX="199.0" layoutY="268.0" prefHeight="25.0" prefWidth="225.0" promptText="neue E-mail " AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="257.0" />
+      <TextField fx:id="TextFieldEmail" layoutX="201.0" layoutY="256.0" prefHeight="25.0" prefWidth="225.0" promptText="neue Email" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="257.0" />
    </children>
 </AnchorPane>

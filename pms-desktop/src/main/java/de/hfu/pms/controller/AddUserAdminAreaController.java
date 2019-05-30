@@ -52,22 +52,21 @@ public class AddUserAdminAreaController implements Initializable {
 
         private UserDTO user;
         private void initComboBox() {
-                // personal data combo boxes
+                // personal role combo boxes
                 comboboxRole.getItems().addAll(RepresentationWrapper.getWrappedRole());
         }
 
         public void edit(UserDTO user) {
                 this.user = user;
 
-                // fill text fields with university attributes
+                // fill text fields with admin area attributes
                 TextfieldUsername.setText(user.getUsername());
                 TextfieldForname.setText(user.getForename());
                 TextfieldLastname.setText(user.getLastname());
                 TextfieldPassword.setText(user.getPassword());
                 TextFieldEmail.setText(user.getEmail());
                 comboboxRole.getSelectionModel().select(RepresentationWrapper.find(user.getRole(), comboboxRole.getItems()));
-                //qualifiedGraduationUniversityComboBox.getItems().addAll(RepresentationWrapper.getWrappedUniversities(universities));
-                // comboboxRole.getSelectionModel().select(RepresentationWrapper.find(Role.Benutzer, comboboxRole.getItems()));
+
         }
 
         @FXML
