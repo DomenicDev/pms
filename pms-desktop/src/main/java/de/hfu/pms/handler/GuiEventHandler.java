@@ -100,13 +100,15 @@ public class GuiEventHandler {
     @Subscribe
     public void handleAddUniversityEvent(RequestAddUniversityEvent requestSaveEvent){
         UniversityDTO universityDTO = requestSaveEvent.getUniversity();
-        applicationServices.addUniversity(universityDTO);
+        UniversityDTO response = applicationServices.addUniversity(universityDTO);
+        eventBus.post(new SuccessfullyAddedUniversityEvent(response));
     }
 
     @Subscribe
     public void handleUpdateUniversityEvent(RequestUpdateUniversityEvent requestUpdateUniversityEvent){
         UniversityDTO universityDTO = requestUpdateUniversityEvent.getUniversity();
-        applicationServices.updateUniversity(universityDTO.getId(), universityDTO);
+        UniversityDTO response = applicationServices.updateUniversity(universityDTO.getId(), universityDTO);
+        eventBus.post(new SuccessfullyUpdatedUniversityEvent(response));
     }
 
     // todo: delete university
@@ -114,38 +116,44 @@ public class GuiEventHandler {
     @Subscribe
     public void handleAddFacultyEvent(RequestAddFacultyEvent requestSaveEvent){
         FacultyDTO facultyDTO = requestSaveEvent.getFaculty();
-        applicationServices.addFaculty(facultyDTO);
+        FacultyDTO response = applicationServices.addFaculty(facultyDTO);
+        eventBus.post(new SuccessfullyAddedFacultyEvent(response));
     }
 
     @Subscribe
     public void handleUpdateFacultyEvent(RequestUpdateFacultyEvent requestUpdateFacultyEvent){
         FacultyDTO facultyDTO = requestUpdateFacultyEvent.getFaculty();
-        applicationServices.updateFaculty(facultyDTO.getId(), facultyDTO);
+        FacultyDTO response = applicationServices.updateFaculty(facultyDTO.getId(), facultyDTO);
+        eventBus.post(new SuccessfullyUpdatedFacultyEvent(response));
     }
 
     @Subscribe
     public void handleDeleteFacultyEvent(RequestDeleteFacultyEvent requestDeleteEvent){
         FacultyDTO facultyDTO = requestDeleteEvent.getFaculty();
-        applicationServices.deleteFaculty(facultyDTO);
+        FacultyDTO response = applicationServices.deleteFaculty(facultyDTO);
+        eventBus.post(new SuccessfullyDeletedFacultyEvent(response));
     }
 
     @Subscribe
     public void handleAddUserEvent(RequestAddUserEvent requestAddUserEvent){
         UserDTO userDTO = requestAddUserEvent.getUser();
-        applicationServices.addUser(userDTO);
+        UserDTO response = applicationServices.addUser(userDTO);
+        eventBus.post(new SuccessfullyAddedUserEvent(response));
     }
 
     @Subscribe
     public void handlePasswordChange(RequestChangePasswordEvent requestChangePasswordEvent){
         UserDTO userDTO = requestChangePasswordEvent.getUser();
         String newPassword = requestChangePasswordEvent.getNewPassword();
-        applicationServices.changePassword(userDTO,newPassword);
+        UserDTO response = applicationServices.changePassword(userDTO,newPassword);
+        eventBus.post(new SuccessfullyChangedPasswordEvent(response));
     }
 
     @Subscribe
     public void handleRoleChange(RequestChangeUserRoleEvent requestChangeUserRoleEvent){
         UserDTO userDTO = requestChangeUserRoleEvent.getUser();
-        applicationServices.changeUserPrivileges(userDTO.getUsername(),userDTO.getRole());
+        UserDTO response = applicationServices.changeUserPrivileges(userDTO.getUsername(),userDTO.getRole());
+        eventBus.post(new SuccessfullyChangedUserRoleEvent(response));
     }
 
     @Subscribe

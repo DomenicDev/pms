@@ -150,34 +150,35 @@ public class ApplicationServiceImpl implements ApplicationServices {
     }
 
     @Override
-    public void addUniversity(UniversityDTO universityDTO) {
+    public UniversityDTO addUniversity(UniversityDTO universityDTO) {
         try {
             String json = mapper.writeValueAsString(universityDTO);
             String response = restClient.postJson(HOST_URL + UNIVERSITY_PREFIX + "create", json);
             UniversityDTO dto = mapper.readValue(response, UniversityDTO.class);
-            eventBus.post(new SuccessfullyAddedUniversityEvent(dto));
             logger.log(Level.INFO, "University created: " + dto);
+            return dto;
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        return null;
     }
 
     @Override
-    public void updateUniversity(Long id, UniversityDTO universityDTO) {
+    public UniversityDTO updateUniversity(Long id, UniversityDTO universityDTO) {
         try {
             String json = mapper.writeValueAsString(universityDTO);
             String response = restClient.postJson(HOST_URL + UNIVERSITY_PREFIX + "update/" + id,json);
             UniversityDTO dto = mapper.readValue(response, UniversityDTO.class);
-            eventBus.post(new SuccessfullyUpdatedUniversityEvent(dto));
             logger.log(Level.INFO, "University updated: " + dto);
+            return dto;
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     // todo deleteUniversity
@@ -194,50 +195,53 @@ public class ApplicationServiceImpl implements ApplicationServices {
     }
 
     @Override
-    public void addFaculty(FacultyDTO facultyDTO) {
+    public FacultyDTO addFaculty(FacultyDTO facultyDTO) {
         try {
             String json = mapper.writeValueAsString(facultyDTO);
             String response = restClient.postJson(HOST_URL + FACULTY_PREFIX + "create", json);
             FacultyDTO dto = mapper.readValue(response, FacultyDTO.class);
-            eventBus.post(new SuccessfullyAddedFacultyEvent(dto));
             logger.log(Level.INFO, "Faculty created: " + dto);
+            return dto;
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
 
     @Override
-    public void updateFaculty(Long id, FacultyDTO facultyDTO) {
+    public FacultyDTO updateFaculty(Long id, FacultyDTO facultyDTO) {
         try {
             String json = mapper.writeValueAsString(facultyDTO);
             String response = restClient.postJson(HOST_URL + FACULTY_PREFIX + "update/" + id,json);
             FacultyDTO dto = mapper.readValue(response, FacultyDTO.class);
-            eventBus.post(new SuccessfullyUpdatedFacultyEvent(dto));
             logger.log(Level.INFO, "Faculty updated: " + dto);
+            return dto;
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     @Override
-    public void deleteFaculty(FacultyDTO facultyDTO) {
+    public FacultyDTO deleteFaculty(FacultyDTO facultyDTO) {
         // todo: not working
         try {
             String json = mapper.writeValueAsString(facultyDTO);
             String response = restClient.postJson(HOST_URL + FACULTY_PREFIX + "delete", json);
             FacultyDTO dto = mapper.readValue(response, FacultyDTO.class);
-            eventBus.post(new SuccessfullyDeletedFacultyEvent(dto));
             logger.log(Level.INFO, "Faculty deleted: " + dto);
+            return dto;
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     @Override
@@ -246,34 +250,35 @@ public class ApplicationServiceImpl implements ApplicationServices {
     }
 
     @Override
-    public void changePassword(UserDTO userDTO, String newPassword) {
+    public UserDTO changePassword(UserDTO userDTO, String newPassword) {
         try {
             String json = "{\"newPassword\": \"" + newPassword + "\",\"oldPassword\": \"" + userDTO.getPassword() + "\"}";
             String response = restClient.postJson(HOST_URL + UNIVERSITY_PREFIX + "updatePassword/" + userDTO.getPassword(), json);
             UserDTO dto = mapper.readValue(response, UserDTO.class);
-            eventBus.post(new SuccessfullyChangedPasswordEvent(dto));
             logger.log(Level.INFO, response);
+            return dto;
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     @Override
-    public void addUser(UserDTO userDTO) {
+    public UserDTO addUser(UserDTO userDTO) {
         try {
             String json = mapper.writeValueAsString(userDTO);
             String response = restClient.postJson(HOST_URL + USER_PREFIX + "create", json);
             UserDTO dto = mapper.readValue(response, UserDTO.class);
-            eventBus.post(new SuccessfullyAddedUserEvent(dto));
             logger.log(Level.INFO, "User created: " + dto);
+            return dto;
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        return null;
     }
 
     @Override
@@ -287,27 +292,28 @@ public class ApplicationServiceImpl implements ApplicationServices {
     }
 
     @Override
-    public void changeUserPrivileges(String username, UserRole newUserRole) {
+    public UserDTO changeUserPrivileges(String username, UserRole newUserRole) {
         try {
             String response = restClient.get(HOST_URL + USER_PREFIX +"updateRole/" + username);
-            UserDTO dto = mapper.readValue(response, UserDTO.class);
-            eventBus.post(new SuccessfullyChangedUserRoleEvent(dto));
             logger.log(Level.INFO, response);
+            return mapper.readValue(response, UserDTO.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     @Override
-    public void changeUserEmail(String username, String email) {
+    public UserDTO changeUserEmail(String username, String email) {
         try {
             String response = restClient.postJson(HOST_URL + USER_PREFIX +"updateEmail/" + username, email);
             UserDTO dto = mapper.readValue(response, UserDTO.class);
-            eventBus.post(new SuccessfullyChangedEmailEvent(dto));
             logger.log(Level.INFO, response);
+            return dto;
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     @Override

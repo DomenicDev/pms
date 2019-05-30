@@ -38,29 +38,29 @@ public interface ApplicationServices {
 
     Collection<UniversityDTO> getAllUniversities();
 
-    void addUniversity(UniversityDTO universityDTO);
+    UniversityDTO addUniversity(UniversityDTO universityDTO);
 
-    void updateUniversity(Long id, UniversityDTO universityDTO);
+    UniversityDTO updateUniversity(Long id, UniversityDTO universityDTO);
 
     Collection<FacultyDTO> getAllFaculties();
 
-    void addFaculty(FacultyDTO facultyDTO);
+    FacultyDTO addFaculty(FacultyDTO facultyDTO);
 
-    void deleteFaculty(FacultyDTO facultyDTO);
+    FacultyDTO deleteFaculty(FacultyDTO facultyDTO);
 
-    void updateFaculty(Long id, FacultyDTO facultyDTO);
+    FacultyDTO updateFaculty(Long id, FacultyDTO facultyDTO);
 
     void logout();
 
-    void changePassword(UserDTO userDTO, String newPassword);
+    UserDTO changePassword(UserDTO userDTO, String newPassword);
 
-    void addUser(UserDTO userDTO);
+    UserDTO addUser(UserDTO userDTO);
 
     void removeUser(String username);
 
-    void changeUserPrivileges(String username, UserRole newUserRole);
+    UserDTO changeUserPrivileges(String username, UserRole newUserRole);
 
-    void changeUserEmail(String username, String email);
+    UserDTO changeUserEmail(String username, String email);
 
     UserDTO getUser(String username);
 
