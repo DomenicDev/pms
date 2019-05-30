@@ -29,6 +29,10 @@ public class DoctoralStudent implements Serializable {
     @Embedded
     private AlumniState alumniState;
 
+    @Lob // large object
+    @Column(columnDefinition="BLOB")
+    private byte[] photo; // saved as blob
+
 
     /**
      * Default constructor.
@@ -119,5 +123,11 @@ public class DoctoralStudent implements Serializable {
         this.alumniState = alumniState;
     }
 
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
+    }
 
+    public byte[] getPhoto() {
+        return photo;
+    }
 }

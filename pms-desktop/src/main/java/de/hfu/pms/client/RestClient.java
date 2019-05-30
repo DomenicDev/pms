@@ -6,10 +6,7 @@ import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.HttpResponseException;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.methods.*;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
@@ -79,6 +76,19 @@ public class RestClient {
         post.setEntity(new StringEntity(json, ContentType.APPLICATION_JSON));
 
         return execute(post);
+    }
+
+    public String patchJson(String url, String json) throws IOException {
+        checkForNull(url);
+        checkForNull(json);
+
+        HttpPatch patch = new HttpPatch(url);
+        patch.setHeader("Accept", "application/json");
+        patch.setHeader("Content-type", "application/json");
+
+        patch.setEntity(new StringEntity(json, ContentType.APPLICATION_JSON));
+
+        return execute(patch);
     }
 
     /**

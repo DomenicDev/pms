@@ -4,7 +4,10 @@ import de.hfu.pms.shared.enums.FamilyStatus;
 import de.hfu.pms.shared.enums.Gender;
 import de.hfu.pms.shared.enums.Salutation;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
+import javax.persistence.Enumerated;
 import java.time.LocalDate;
 
 @Embeddable
@@ -54,10 +57,6 @@ public class PersonalData {
 
     public PersonalData() {
     }
-
-    @Lob // large object
-    @Column(columnDefinition="BLOB")
-    private byte[] photo; // saved as blob
 
     public void setForename(String forename) {
         this.forename = forename;
@@ -163,11 +162,4 @@ public class PersonalData {
         this.telephone = telephone;
     }
 
-    public byte[] getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(byte[] photo) {
-        this.photo = photo;
-    }
 }
