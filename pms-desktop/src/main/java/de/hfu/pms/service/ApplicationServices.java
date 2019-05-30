@@ -52,7 +52,7 @@ public interface ApplicationServices {
 
     void logout();
 
-    UserDTO changePassword(UserDTO userDTO, String newPassword);
+    UserDTO changePassword(UserDTO userDTO, String newPassword) throws BusinessException;
 
     UserDTO addUser(UserDTO userDTO);
 

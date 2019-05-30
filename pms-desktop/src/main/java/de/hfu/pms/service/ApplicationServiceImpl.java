@@ -8,7 +8,7 @@ import com.google.common.eventbus.EventBus;
 import de.hfu.pms.client.RestClient;
 import de.hfu.pms.config.AppConfig;
 import de.hfu.pms.eventbus.EventBusSystem;
-import de.hfu.pms.events.*;
+import de.hfu.pms.exceptions.BusinessException;
 import de.hfu.pms.exceptions.LoginFailedException;
 import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.*;
@@ -250,10 +250,10 @@ public class ApplicationServiceImpl implements ApplicationServices {
     }
 
     @Override
-    public UserDTO changePassword(UserDTO userDTO, String newPassword) {
+    public UserDTO changePassword(UserDTO userDTO, String newPassword) throws BusinessException {
         try {
             String json = newPassword;
-            String response = restClient.postJson(HOST_URL + UNIVERSITY_PREFIX + "updatePassword/" + userDTO.getUsername(), json);
+            String response = restClient.postJson(HOST_URL + USER_PREFIX + "updatePassword/" + userDTO.getUsername(), json);
             UserDTO dto = mapper.readValue(response, UserDTO.class);
             logger.log(Level.INFO, response);
             return dto;
@@ -262,7 +262,7 @@ public class ApplicationServiceImpl implements ApplicationServices {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        throw new BusinessException("could not change password...");
     }
 
     @Override

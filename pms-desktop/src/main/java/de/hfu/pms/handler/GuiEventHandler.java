@@ -143,10 +143,17 @@ public class GuiEventHandler {
 
     @Subscribe
     public void handlePasswordChange(RequestChangePasswordEvent requestChangePasswordEvent){
-        UserDTO userDTO = requestChangePasswordEvent.getUser();
-        String newPassword = requestChangePasswordEvent.getNewPassword();
-        UserDTO response = applicationServices.changePassword(userDTO,newPassword);
-        eventBus.post(new SuccessfullyChangedPasswordEvent(response));
+        try {
+            UserDTO userDTO = requestChangePasswordEvent.getUser();
+            String newPassword = requestChangePasswordEvent.getNewPassword();
+            UserDTO response = null;
+            response = applicationServices.changePassword(userDTO,newPassword);
+            eventBus.post(new SuccessfullyChangedPasswordEvent(response));
+        } catch (BusinessException e) {
+            e.printStackTrace();
+            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.ERROR, "Konnte Passwort nicht ändern..."));
+        }
+
     }
 
     @Subscribe

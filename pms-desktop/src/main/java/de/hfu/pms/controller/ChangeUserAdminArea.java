@@ -4,6 +4,7 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.SuccessfullyChangedEmailEvent;
+import de.hfu.pms.events.SuccessfullyChangedPasswordEvent;
 import de.hfu.pms.shared.dto.UserDTO;
 import de.hfu.pms.shared.enums.UserRole;
 import de.hfu.pms.utils.WrappedEntity;
@@ -71,7 +72,7 @@ public class ChangeUserAdminArea  implements Initializable {
             Parent root = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Bestehenden Benutzer bearbeiten");
+            stage.setTitle("Email von " + user.getUsername()+ " ändern" );
             stage.setScene(new Scene(root));
             stage.show();
 
@@ -94,9 +95,12 @@ public class ChangeUserAdminArea  implements Initializable {
             Parent root = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Bestehenden Benutzer bearbeiten");
+            stage.setTitle("Passwort von " +user.getUsername()+ " ändern" );
             stage.setScene(new Scene(root));
             stage.show();
+
+            PasswordAdminAreaController controller = fxmlLoader.getController();
+            controller.edit(user);
 
 
         } catch (Exception e) {
@@ -115,7 +119,7 @@ public class ChangeUserAdminArea  implements Initializable {
             Parent root = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Bestehenden Benutzer bearbeiten");
+            stage.setTitle("Rolle von " +user.getUsername()+ " ändern");
             stage.setScene(new Scene(root));
             stage.show();
 
@@ -147,6 +151,10 @@ public class ChangeUserAdminArea  implements Initializable {
     public void handleEmailChangeRequestEvent(SuccessfullyChangedEmailEvent event){
 
         labelEmail.setText(user.getEmail());
+    }
+    @Subscribe
+    public void  handlePasswordChangeButton(SuccessfullyChangedPasswordEvent event){
+
     }
 
     @FXML

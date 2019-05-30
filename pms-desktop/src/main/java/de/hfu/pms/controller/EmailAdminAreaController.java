@@ -20,8 +20,7 @@ public class EmailAdminAreaController implements Initializable {
 
     private EventBus eventBus = EventBusSystem.getEventBus();
 
- private UserDTO user;
-
+    private UserDTO user;
 
     @FXML
     private Label lableUsername;
@@ -44,10 +43,7 @@ public class EmailAdminAreaController implements Initializable {
         }else{
             eventBus.post(new RequestChangeEmailEvent(user));
             ((Button)event.getSource()).getScene().getWindow().hide();
-
         }
-
-
     }
 
     private boolean writeToUserDTO() {
@@ -66,9 +62,9 @@ public class EmailAdminAreaController implements Initializable {
         this.user = user;
 
         textFieldChangeEmail.setText(user.getEmail());
+        lableUsername.setText(user.getUsername());
 
     }
-
     @FXML
     void handleExitEvent(ActionEvent event) {
         ((Button) event.getSource()).getScene().getWindow().hide();
@@ -80,6 +76,7 @@ public class EmailAdminAreaController implements Initializable {
         eventBus.register(this);
 
         labelAlert.setVisible(false);
+
 
     }
 }

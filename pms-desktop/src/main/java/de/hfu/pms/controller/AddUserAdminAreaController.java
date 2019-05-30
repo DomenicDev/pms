@@ -24,7 +24,7 @@ public class AddUserAdminAreaController implements Initializable {
         private TextField TextfieldUsername;
 
         @FXML
-        private PasswordField TextfieldPassword;
+        private PasswordField passwordfielPassword;
 
         @FXML
         private PasswordField TextfieldPasswordRewrite;
@@ -63,7 +63,7 @@ public class AddUserAdminAreaController implements Initializable {
                 TextfieldUsername.setText(user.getUsername());
                 TextfieldForname.setText(user.getForename());
                 TextfieldLastname.setText(user.getLastname());
-                TextfieldPassword.setText(user.getPassword());
+                passwordfielPassword.setText(user.getPassword());
                 TextFieldEmail.setText(user.getEmail());
                 comboboxRole.getSelectionModel().select(RepresentationWrapper.find(user.getRole(), comboboxRole.getItems()));
 
@@ -91,7 +91,7 @@ public class AddUserAdminAreaController implements Initializable {
 
                 String forename = TextfieldForname.getText();
                 String lastname = TextfieldLastname.getText();
-                String password = TextfieldPassword.getText();
+                String password = passwordfielPassword.getText();
                 String email = TextFieldEmail.getText();
                 String username = TextfieldUsername.getText();
 
@@ -105,7 +105,7 @@ public class AddUserAdminAreaController implements Initializable {
                 if (userValidator.textFieldNotEmpty(TextfieldLastname)) {
                         user.setLastname(lastname);
                 }
-                if (userValidator.textFieldNotEmpty((TextfieldPassword))) {
+                if (userValidator.textFieldNotEmpty((passwordfielPassword))) {
                         user.setPassword(password);
                 }
                 if (userValidator.textFieldNotEmpty(TextfieldUsername)) {
