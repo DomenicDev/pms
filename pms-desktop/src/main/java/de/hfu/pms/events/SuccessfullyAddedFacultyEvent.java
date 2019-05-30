@@ -6,8 +6,8 @@ public class SuccessfullyAddedFacultyEvent {
 
     private FacultyDTO facultyDTO;
 
-    public SuccessfullyAddedFacultyEvent(FacultyDTO universityDTO) {
-        this.facultyDTO = universityDTO;
+    public SuccessfullyAddedFacultyEvent(FacultyDTO facultyDTO) {
+        this.facultyDTO = facultyDTO;
     }
 
     public FacultyDTO getFaculty() {

@@ -86,6 +86,14 @@ public final class EntityPool{
         faculties.add(faculty);
     }
 
+    public void deleteFaculty(FacultyDTO faculty){
+        if (faculty == null){
+            return;
+        }
+        logger.log(Level.DEBUG, "Removing faculty (" + faculty.getFacultyName() + " from faculty pool.");
+        faculties.remove(faculty);
+    }
+
     public Collection<UniversityDTO> getUniversities() {
         return universities;
     }

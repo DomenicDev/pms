@@ -123,7 +123,11 @@ public class GuiEventHandler {
         applicationServices.updateFaculty(facultyDTO.getId(), facultyDTO);
     }
 
-    // todo delete faculty
+    @Subscribe
+    public void handleDeleteFacultyEvent(RequestDeleteFacultyEvent requestDeleteEvent){
+        FacultyDTO facultyDTO = requestDeleteEvent.getFaculty();
+        applicationServices.deleteFaculty(facultyDTO);
+    }
 
     @Subscribe
     public void handleAddUserEvent(RequestAddUserEvent requestAddUserEvent){

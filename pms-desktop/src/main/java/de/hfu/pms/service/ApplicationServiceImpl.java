@@ -206,8 +206,8 @@ public class ApplicationServiceImpl implements ApplicationServices {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
+
 
     @Override
     public void updateFaculty(Long id, FacultyDTO facultyDTO) {
@@ -224,7 +224,21 @@ public class ApplicationServiceImpl implements ApplicationServices {
         }
     }
 
-    // todo deleteFaculty
+    @Override
+    public void deleteFaculty(FacultyDTO facultyDTO) {
+        // todo: not working
+        try {
+            String json = mapper.writeValueAsString(facultyDTO);
+            String response = restClient.postJson(HOST_URL + FACULTY_PREFIX + "delete", json);
+            FacultyDTO dto = mapper.readValue(response, FacultyDTO.class);
+            eventBus.post(new SuccessfullyDeletedFacultyEvent(dto));
+            logger.log(Level.INFO, "Faculty deleted: " + dto);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void logout() {

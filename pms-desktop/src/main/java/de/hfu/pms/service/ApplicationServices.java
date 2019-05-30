@@ -46,6 +46,8 @@ public interface ApplicationServices {
 
     void addFaculty(FacultyDTO facultyDTO);
 
+    void deleteFaculty(FacultyDTO facultyDTO);
+
     void updateFaculty(Long id, FacultyDTO facultyDTO);
 
     void logout();

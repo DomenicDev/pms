@@ -2,12 +2,12 @@ package de.hfu.pms.events;
 
 import de.hfu.pms.shared.dto.FacultyDTO;
 
-public class SuccessfullyUpdatedFacultyEvent {
+public class SuccessfullyDeletedFacultyEvent {
 
     private FacultyDTO facultyDTO;
 
-    public SuccessfullyUpdatedFacultyEvent(FacultyDTO facultyDTOO) {
-        this.facultyDTO = facultyDTOO;
+    public SuccessfullyDeletedFacultyEvent(FacultyDTO facultyDTODTO) {
+        this.facultyDTO = facultyDTO;
     }
 
     public FacultyDTO getFaculty() {
