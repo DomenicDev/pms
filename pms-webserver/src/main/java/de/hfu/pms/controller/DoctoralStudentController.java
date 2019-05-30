@@ -3,6 +3,7 @@ package de.hfu.pms.controller;
 import de.hfu.pms.exceptions.DoctoralStudentNotFoundException;
 import de.hfu.pms.model.*;
 import de.hfu.pms.service.DoctoralStudentService;
+import de.hfu.pms.service.DocumentService;
 import de.hfu.pms.shared.dto.*;
 import de.hfu.pms.shared.utils.Converter;
 import org.modelmapper.ModelMapper;
@@ -11,25 +12,26 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/student")
 public class DoctoralStudentController {
 
+    private final DocumentService documentService;
     private final DoctoralStudentService doctoralStudentService;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public DoctoralStudentController(DoctoralStudentService doctoralStudentService, ModelMapper modelMapper) {
+    public DoctoralStudentController(DoctoralStudentService doctoralStudentService, ModelMapper modelMapper, DocumentService documentService) {
         this.doctoralStudentService = doctoralStudentService;
         this.modelMapper = modelMapper;
+        this.documentService = documentService;
     }
 
     @PostMapping(value= "/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public DoctoralStudentDTO createDoctoralStudent(@RequestBody DoctoralStudentDTO doctoralStudentDTO) {
+    public DoctoralStudentDTO createDoctoralStudent(@RequestBody CreateDoctoralStudentDTO doctoralStudentDTO) {
         DoctoralStudent student = convertToEntity(doctoralStudentDTO);
         DoctoralStudent studentCreated = doctoralStudentService.create(student);
         return convertToDTO(studentCreated);
@@ -111,15 +113,66 @@ public class DoctoralStudentController {
         doctoralStudentService.remove(id);
     }
 
+    // ------------------ //
+    //      DOCUMENTS     //
+    // ------------------ //
+
+    @PostMapping("/docs/{studentId}")
+    public ResponseEntity<?> uploadDocument(@RequestBody DocumentDTO document, @PathVariable Long studentId) {
+        Document entity = convertToEntity(document);
+        documentService.assignDocument(studentId, entity);
+        return ResponseEntity.ok("document uploaded");
+    }
+
+    @GetMapping("/docs/{id}")
+    public DocumentDTO getDocumentById(@PathVariable Long id) {
+        Document document = documentService.getDocumentById(id);
+        return convertToDTO(document);
+    }
+
+
+    private DocumentDTO convertToDTO(Document document) {
+        DocumentDTO documentDTO = new DocumentDTO();
+        documentDTO.setId(document.getId());
+        documentDTO.setFilename(document.getFilename());
+        documentDTO.setData(document.getData());
+        return documentDTO;
+    }
+
+    private Document convertToEntity(DocumentDTO documentDTO) {
+        Document entity = new Document();
+        entity.setFilename(documentDTO.getFilename());
+        entity.setData(documentDTO.getData());
+        return entity;
+    }
+
 
     private DoctoralStudent convertToEntity(DoctoralStudentDTO doctoralStudentDTO) {
         DoctoralStudent doctoralStudent = modelMapper.map(doctoralStudentDTO, DoctoralStudent.class);
         return doctoralStudent;
     }
 
+    private DoctoralStudent convertToEntity(CreateDoctoralStudentDTO doctoralStudentDTO) {
+        DoctoralStudent doctoralStudent = modelMapper.map(doctoralStudentDTO, DoctoralStudent.class);
+        return doctoralStudent;
+    }
+
     private DoctoralStudentDTO convertToDTO(DoctoralStudent doctoralStudent) {
         DoctoralStudentDTO doctoralStudentDTO = modelMapper.map(doctoralStudent, DoctoralStudentDTO.class);
+
+        // create document meta information list
+        doctoralStudentDTO.setDocuments(getMetaInformation(doctoralStudent.getDocuments()));
+
         return doctoralStudentDTO;
+    }
+
+    private Set<DocumentInformationDTO> getMetaInformation(Collection<Document> documents) {
+        Set<DocumentInformationDTO> metas = new HashSet<>();
+        for (Document document : documents) {
+            DocumentInformationDTO info = modelMapper.map(document, DocumentInformationDTO.class);
+            metas.add(info);
+        }
+        return metas;
     }
 
     @ResponseBody

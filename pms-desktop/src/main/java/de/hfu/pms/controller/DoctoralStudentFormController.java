@@ -14,9 +14,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -32,6 +29,7 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.nio.file.Files;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -237,6 +235,10 @@ public class DoctoralStudentFormController implements Initializable {
     private boolean employmentChanged;
     private boolean supportChanged;
     private boolean alumniStateChanged;
+    private boolean documentsChanged;
+
+    private Collection<File> addedDocuments = new ArrayList<>();
+    private Collection<DocumentInformationDTO> deletedDocuments = new ArrayList<>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -532,6 +534,32 @@ public class DoctoralStudentFormController implements Initializable {
                 RequestPatchDoctoralStudentEvent updateEvent = new RequestPatchDoctoralStudentEvent(patchDTO);
                 eventBus.post(updateEvent);
             } else {
+
+
+                CreateDoctoralStudentDTO createDTO = new CreateDoctoralStudentDTO();
+                createDTO.setPersonalData(doctoralStudent.getPersonalData());
+                createDTO.setQualifiedGraduation(doctoralStudent.getQualifiedGraduation());
+                createDTO.setTargetGraduation(doctoralStudent.getTargetGraduation());
+                createDTO.setEmployment(doctoralStudent.getEmployment());
+                createDTO.setSupport(doctoralStudent.getSupport());
+                createDTO.setAlumniState(doctoralStudent.getAlumniState());
+                createDTO.setPhoto(doctoralStudent.getPhoto());
+
+                // documents
+                Set<DocumentDTO> documentsToAdd = new HashSet<>();
+                for (File fileToLoad : addedDocuments) {
+
+                    try {
+                        String name = fileToLoad.getName();
+                        byte[] data = Files.readAllBytes(fileToLoad.toPath());
+                        DocumentDTO documentDTO = new DocumentDTO(null, name, data);
+                        documentsToAdd.add(documentDTO);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                createDTO.setDocuments(documentsToAdd);
+
                 // post a new save event to notify subscribers about the save action
                 // they should take care about the actual saving process
                 eventBus.post(new SaveDoctoralStudentEvent(doctoralStudent));
@@ -852,8 +880,10 @@ public class DoctoralStudentFormController implements Initializable {
         alumniState.setAgreementNews(agreementNewsCheckBox.isSelected());
         alumniState.setAgreementEvaluation(agreementEvaluationCheckBox.isSelected());
 
+
         return validator.validationSuccessful();
     }
+
 
     private void initDocumentsListView() {
         documentsListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -866,10 +896,16 @@ public class DoctoralStudentFormController implements Initializable {
         fileChooser.setTitle("Dokumentenauswahl");
         Collection<File> selectedFiles = fileChooser.showOpenMultipleDialog(null);
 
+        addedDocuments.addAll(selectedFiles);
+
+
+
         if(selectedFiles.size() > 0){
             documents.addAll(selectedFiles);
             updateDocumentsListView();
         }
+
+
     }
 
     @FXML
@@ -895,6 +931,9 @@ public class DoctoralStudentFormController implements Initializable {
             documents.removeAll(documentsListView.getSelectionModel().getSelectedItems());
             updateDocumentsListView();
         }
+
+
+
     }
 
 

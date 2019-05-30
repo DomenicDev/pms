@@ -1,56 +1,25 @@
 package de.hfu.pms.shared.dto;
 
-import java.util.HashSet;
 import java.util.Set;
 
-public class DoctoralStudentDTO {
+/**
+ * Used for creating a new doctoral student entity.
+ */
+public class CreateDoctoralStudentDTO {
 
-    // IDENTIFICATION NUMBER
-    private Long id;
-
-    // PERSONAL DATA
     private PersonalDataDTO personalData;
-
-    // QUALIFIED GRADUATION
     private QualifiedGraduationDTO qualifiedGraduation;
-
-    // TARGET GRADUATION
     private TargetGraduationDTO targetGraduation;
-
-    // EMPLOYMENT
     private EmploymentDTO employment;
-
-    // SUPPORT
     private SupportDTO support;
-
-    // ALUMNI STATE
     private AlumniStateDTO alumniState;
-
-    // profile photo
     private byte[] photo;
+    private Set<DocumentDTO> documents;
 
-    // DOCUMENTS (META DATA ONLY)
-    private Set<DocumentInformationDTO> documents;
-
-    public DoctoralStudentDTO() {
-        this.personalData = new PersonalDataDTO();
-        this.qualifiedGraduation = new QualifiedGraduationDTO();
-        this.targetGraduation = new TargetGraduationDTO();
-        this.employment = new EmploymentDTO();
-        this.support = new SupportDTO();
-        this.alumniState = new AlumniStateDTO();
-        this.documents = new HashSet<>();
+    public CreateDoctoralStudentDTO() {
+        // empty no-args constructor
     }
 
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public PersonalDataDTO getPersonalData() {
         return personalData;
@@ -100,32 +69,19 @@ public class DoctoralStudentDTO {
         this.alumniState = alumniState;
     }
 
-    public void setPhoto(byte[] photo) {
-        this.photo = photo;
-    }
-
     public byte[] getPhoto() {
         return photo;
     }
 
-    public void setDocuments(Set<DocumentInformationDTO> documents) {
-        this.documents = documents;
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
     }
 
-    public Set<DocumentInformationDTO> getDocuments() {
+    public Set<DocumentDTO> getDocuments() {
         return documents;
     }
 
-    @Override
-    public String toString() {
-        return "DoctoralStudentDTO{" +
-                "id=" + id +
-                ", personalData=" + personalData +
-                ", qualifiedGraduation=" + qualifiedGraduation +
-                ", targetGraduation=" + targetGraduation +
-                ", employment=" + employment +
-                ", support=" + support +
-                ", alumniState=" + alumniState +
-                '}';
+    public void setDocuments(Set<DocumentDTO> documents) {
+        this.documents = documents;
     }
 }
