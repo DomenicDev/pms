@@ -250,8 +250,9 @@ public class ApplicationServiceImpl implements ApplicationServices {
         try {
             String json = "{\"newPassword\": \"" + newPassword + "\",\"oldPassword\": \"" + userDTO.getPassword() + "\"}";
             String response = restClient.postJson(HOST_URL + UNIVERSITY_PREFIX + "updatePassword/" + userDTO.getPassword(), json);
+            UserDTO dto = mapper.readValue(response, UserDTO.class);
+            eventBus.post(new SuccessfullyChangedPasswordEvent(dto));
             logger.log(Level.INFO, response);
-            eventBus.post(new SuccessfullyChangedPasswordEvent(response));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         } catch (IOException e) {
