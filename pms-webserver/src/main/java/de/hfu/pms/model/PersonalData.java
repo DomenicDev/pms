@@ -58,7 +58,7 @@ public class PersonalData {
     public PersonalData() {
     }
 
-    @Column
+    @Column(length = 4000000)
     private byte[] photo; // saved as blob
 
     public void setForename(String forename) {
