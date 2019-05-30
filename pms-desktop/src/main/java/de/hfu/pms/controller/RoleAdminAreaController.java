@@ -69,6 +69,9 @@ public class RoleAdminAreaController implements Initializable {
         if (userValidator.comboBoxHasSelectedItem((comboBoxRole))) {
             user.setRole(comboBoxRole.getValue().getEntity());
         }
+        if (!userValidator.comboBoxHasSelectedItem(comboBoxRole)){
+            labelAlert.setVisible(true);
+        }
         return userValidator.validationSuccessful();
 
 

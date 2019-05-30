@@ -55,6 +55,9 @@ public class EmailAdminAreaController implements Initializable {
         if (userValidator.textFieldNotEmpty((textFieldChangeEmail))) {
             user.setEmail(email);
         }
+        if(!userValidator.textFieldNotEmpty(textFieldChangeEmail)){
+            labelAlert.setVisible(true);
+        }
         return userValidator.validationSuccessful();
     }
 

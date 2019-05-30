@@ -77,6 +77,11 @@ public class PasswordAdminAreaController implements Initializable {
                 if (userValidator.textFieldNotEmpty((PasswordFieldPassword))) {
                         user.getPassword();
                 }
+
+                if (!userValidator.passwordFieldsAreSimilar(PasswordFieldPassword,PasswordFieldRewrite)){
+                        labelAlert.setVisible(true);
+                }
+
                 if(userValidator.textFieldNotEmpty(PasswordFieldRewrite)){}
 
                 return userValidator.validationSuccessful();
