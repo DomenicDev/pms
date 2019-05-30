@@ -179,6 +179,17 @@ public class GuiEventHandler {
     }
 
     @Subscribe
+    public void handle(RequestPatchDoctoralStudentEvent event) {
+        try {
+            applicationServices.patchDoctoralStudent(event.getPatchDoctoralStudentDTO());
+            // successfully patched
+            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.INFO, "Successfully patched"));
+        } catch (BusinessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Subscribe
     public void handleNotificationEvent(AlertNotificationEvent event) {
         Alert.AlertType type;
 

@@ -4,12 +4,14 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.CreateDocStudentPropertyEvent;
+import de.hfu.pms.events.RequestPatchDoctoralStudentEvent;
 import de.hfu.pms.events.SaveDoctoralStudentEvent;
 import de.hfu.pms.events.SuccessfullyAddedUniversityEvent;
 import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.*;
 import de.hfu.pms.shared.enums.*;
 import de.hfu.pms.utils.*;
+import javafx.collections.ListChangeListener;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -225,6 +227,12 @@ public class DoctoralStudentFormController implements Initializable {
     //        CONTROL FLAGS         //
     // ---------------------------- //
     private boolean changedImage;
+    private boolean personalDataChanged;
+    private boolean qualificationChanged;
+    private boolean promotionChanged;
+    private boolean employmentChanged;
+    private boolean supportChanged;
+    private boolean alumniStateChanged;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -245,6 +253,11 @@ public class DoctoralStudentFormController implements Initializable {
         employmentCampusTableColumn.setCellValueFactory(new PropertyValueFactory<>("campusOfDeployment"));
         employmentBeginTableColumn.setCellValueFactory(new PropertyValueFactory<>("employmentBegin"));
         employmentEndTableColumn.setCellValueFactory(new PropertyValueFactory<>("employmentEnd"));
+
+        // listener for change flag
+        employmentTableView.getItems().addListener((ListChangeListener<EmploymentEntryDTO>) c -> {
+            onEmploymentChanged();
+        });
     }
 
     private void initSupportTables(ResourceBundle resources) {
@@ -266,6 +279,12 @@ public class DoctoralStudentFormController implements Initializable {
         // Qualifications
         qualificationDateTableColumn.setCellValueFactory(new PropertyValueFactory<>("qualificationDate"));
         qualificationNameTableColumn.setCellValueFactory(new PropertyValueFactory<>("nameOfQualification"));
+
+        // add listener for control flag
+        travelCostConferenceTableView.getItems().addListener((ListChangeListener<TravelCostConferenceDTO>) c -> onSupportChanged());
+        travelCostUniversityTableView.getItems().addListener((ListChangeListener<TravelCostUniversityDTO>) c -> onSupportChanged());
+        consultingSupportTableView.getItems().addListener((ListChangeListener<ConsultingSupportDTO>) c -> onSupportChanged());
+        qualificationTableView.getItems().addListener((ListChangeListener<VisitedQualificationDTO>) c -> onSupportChanged());
 
     }
 
@@ -323,7 +342,7 @@ public class DoctoralStudentFormController implements Initializable {
         emailTextField.setText(personalData.getEmail());
 
         // photo
-        byte[] photoData = personalData.getPhoto();
+        byte[] photoData = doctoralStudent.getPhoto();
         if (photoData != null) {
             try {
                 BufferedImage bufferedImage = ImageUtils.getImage(photoData);
@@ -433,27 +452,90 @@ public class DoctoralStudentFormController implements Initializable {
 
     @FXML
     public void handleOnActionSaveButton() {
+
+        boolean editMode = false;
+
         if (doctoralStudent == null) {
             // we are not editing an existing object but actually creating a new one
             this.doctoralStudent = new DoctoralStudentDTO();
             this.doctoralStudent.setPersonalData(new PersonalDataDTO());
             this.doctoralStudent.setSupport(new SupportDTO());
             // todo add missing parts....
+
+            // write form data to java object
+
+
+
         } else {
+            editMode = true;
             // if we are here, we edit an already existing student
             // we must not set the ID !!!
+
+
+
+
         }
-        // write form data to java object
+
         boolean validationSuccessful = writeToDoctoralStudentDTO();
 
         if (validationSuccessful) {
-            // post a new save event to notify subscribers about the save action
-            // they should take care about the actual saving process
-            eventBus.post(new SaveDoctoralStudentEvent(doctoralStudent));
+
+            if (editMode) {
+
+                DoctoralStudentDTO doctoralStudentDTO = this.doctoralStudent; // maybe replace this one
+
+                Long id = doctoralStudentDTO.getId();
+
+
+                // we are updating an already created entity
+                // to make granular updated we look up what has been changed
+                // and patch the specific fields
+                PatchDoctoralStudentDTO patchDTO = new PatchDoctoralStudentDTO(id);
+
+                // see what has been changed
+                if (changedImage) {
+                    patchDTO.setPhoto(doctoralStudent.getPhoto());
+                    logger.log(Level.DEBUG, "profile photo has been changed");
+                }
+                if (personalDataChanged) {
+                    patchDTO.setPatchedPersonalData(doctoralStudent.getPersonalData());
+                    logger.log(Level.DEBUG, "personal data has been changed");
+                }
+                if (qualificationChanged) {
+                    patchDTO.setPatchedQualifiedGraduation(doctoralStudent.getQualifiedGraduation());
+                    logger.log(Level.DEBUG, "qualification data has been changed");
+                }
+                if (promotionChanged) {
+                    patchDTO.setPatchedTargetGraduation(doctoralStudent.getTargetGraduation());
+                    logger.log(Level.DEBUG, "promotion data has been changed");
+                }
+                if (employmentChanged) {
+                    patchDTO.setPatchedEmployment(doctoralStudent.getEmployment());
+                    logger.log(Level.DEBUG, "employment data has been changed");
+                }
+                if (supportChanged) {
+                    patchDTO.setPatchedSupport(doctoralStudent.getSupport());
+                    logger.log(Level.DEBUG, "support data has been changed");
+                }
+                if (alumniStateChanged) {
+                    patchDTO.setPatchedAlumniState(doctoralStudent.getAlumniState());
+                    logger.log(Level.DEBUG, "alumni state data has been changed");
+                }
+
+                // post patch event
+                RequestPatchDoctoralStudentEvent updateEvent = new RequestPatchDoctoralStudentEvent(patchDTO);
+                eventBus.post(updateEvent);
+            } else {
+                // post a new save event to notify subscribers about the save action
+                // they should take care about the actual saving process
+                eventBus.post(new SaveDoctoralStudentEvent(doctoralStudent));
+            }
 
             // after saving, we can reset our input fields
             resetAllInputFields();
+
         }
+
 
     }
 
@@ -541,6 +623,35 @@ public class DoctoralStudentFormController implements Initializable {
         changedImage = true;
     }
 
+    //----------------------------------//
+    //      HANDLE CHANGE EVENTS        //
+    //----------------------------------//
+    @FXML
+    public void onPersonalDataChange() {
+        this.personalDataChanged = true;
+    }
+    @FXML
+    public void onQualificationChanged() {
+        this.qualificationChanged = true;
+    }
+    @FXML
+    public void onPromotionChanged() {
+        this.promotionChanged = true;
+    }
+    @FXML
+    public void onEmploymentChanged() {
+        this.employmentChanged = true;
+    }
+    @FXML
+    public void onSupportChanged() {
+        this.supportChanged = true;
+    }
+    @FXML
+    public void onAlumniStateChanged() {
+        this.alumniStateChanged = true;
+    }
+
+
     private void refreshCheckBoxes() {
         hfuMembershipVBox.setDisable(!hfuMemberCheckBox.isSelected());
         extensionMembershipHBox.setDisable(!prolongMembershipCheckBox.isSelected());
@@ -624,12 +735,10 @@ public class DoctoralStudentFormController implements Initializable {
                 byte[] imageBytes;
                 BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
                 imageBytes = ImageUtils.getImageData(bufferedImage);
-                personalData.setPhoto(imageBytes);
+                doctoralStudent.setPhoto(imageBytes);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            // unset control flag
-            this.changedImage = false;
         } else {
             // photo did not change so we do not want to pass it again
         }

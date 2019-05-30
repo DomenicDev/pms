@@ -23,6 +23,9 @@ public class DoctoralStudentDTO {
     // ALUMNI STATE
     private AlumniStateDTO alumniState;
 
+    // profile photo
+    private byte[] photo;
+
     public DoctoralStudentDTO() {
         this.personalData = new PersonalDataDTO();
         this.qualifiedGraduation = new QualifiedGraduationDTO();
@@ -88,6 +91,14 @@ public class DoctoralStudentDTO {
 
     public void setAlumniState(AlumniStateDTO alumniState) {
         this.alumniState = alumniState;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
+    }
+
+    public byte[] getPhoto() {
+        return photo;
     }
 
     @Override

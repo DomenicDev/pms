@@ -18,6 +18,8 @@ public interface ApplicationServices {
 
     DoctoralStudentDTO editDoctoralStudent(DoctoralStudentDTO student) throws BusinessException;
 
+    void patchDoctoralStudent(PatchDoctoralStudentDTO patchDoctoralStudentDTO) throws BusinessException;
+
     void deleteDoctoralStudent(int studentID);
 
     void pseudonymisate(int studentID);

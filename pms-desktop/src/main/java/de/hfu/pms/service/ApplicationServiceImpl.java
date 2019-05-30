@@ -77,6 +77,18 @@ public class ApplicationServiceImpl implements ApplicationServices {
     }
 
     @Override
+    public void patchDoctoralStudent(PatchDoctoralStudentDTO patchDoctoralStudentDTO) throws BusinessException {
+        Long id = patchDoctoralStudentDTO.getId();
+        System.out.println(id);
+        try {
+            String json = toJSON(patchDoctoralStudentDTO);
+            restClient.patchJson(STUDENT_SERVICES + "update/" + id, json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void deleteDoctoralStudent(int studentID) {
 
     }
@@ -347,5 +359,14 @@ public class ApplicationServiceImpl implements ApplicationServices {
 
         EntityPool.getInstance().initPreviews(getPreviews());
         EntityPool.getInstance().initUsers(getAllUsers());
+    }
+
+
+    private <T> String toJSON(T object) throws JsonProcessingException {
+        return mapper.writeValueAsString(object);
+    }
+
+    private <T> T toObject(String json, Class<T> c) throws IOException {
+        return mapper.readValue(json, c);
     }
 }

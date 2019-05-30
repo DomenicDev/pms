@@ -62,23 +62,23 @@
                                                               </rowConstraints>
                                                                <children>
                                                                   <Label alignment="CENTER" text="Nachname*" GridPane.rowIndex="2" />
-                                                                  <TextField fx:id="lastNameTextField" prefHeight="25.0" prefWidth="130.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                                  <TextField fx:id="lastNameTextField" onKeyTyped="#onPersonalDataChange" prefHeight="25.0" prefWidth="130.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                                   <Label text="Vorname*" GridPane.rowIndex="4" />
-                                                                  <TextField fx:id="foreNameTextField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                                  <TextField fx:id="foreNameTextField" onKeyTyped="#onPersonalDataChange" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                                                   <Label text="Anrede*" />
                                                                   <Label text="Ehem. Name" GridPane.rowIndex="3" />
-                                                                  <TextField fx:id="formerLastNameTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                                   <ComboBox fx:id="salutationComboBox" prefHeight="26.0" prefWidth="147.0" GridPane.columnIndex="1" />
+                                                                  <TextField fx:id="formerLastNameTextField" onKeyTyped="#onPersonalDataChange" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                                   <ComboBox fx:id="salutationComboBox" onAction="#onPersonalDataChange" prefHeight="26.0" prefWidth="147.0" GridPane.columnIndex="1" />
                                                                   <Label text="Titel" GridPane.rowIndex="1" />
-                                                                  <TextField fx:id="titleTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                                  <TextField fx:id="titleTextField" onKeyTyped="#onPersonalDataChange" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                                   <Label text="Geschlecht*" GridPane.rowIndex="5" />
-                                                                   <ComboBox fx:id="genderComboBox" prefHeight="26.0" prefWidth="199.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                                   <ComboBox fx:id="genderComboBox" onAction="#onPersonalDataChange" prefHeight="26.0" prefWidth="199.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                                                   <Label text="Geburtsdatum*" GridPane.rowIndex="6" />
-                                                                  <DatePicker fx:id="dateOfBirthDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                                                  <DatePicker fx:id="dateOfBirthDatePicker" onAction="#onPersonalDataChange" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                                                   <Label text="Anzahl Kinder" GridPane.rowIndex="8" />
-                                                                   <ComboBox fx:id="childrenCountComboBox" prefHeight="26.0" prefWidth="90.0" promptText="Bitte auswählen" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                                                   <ComboBox fx:id="childrenCountComboBox" onAction="#onPersonalDataChange" prefHeight="26.0" prefWidth="90.0" promptText="Bitte auswählen" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                                                                   <Label text="Familienstand" GridPane.rowIndex="7" />
-                                                                  <ComboBox fx:id="familyStatusComboBox" prefHeight="26.0" prefWidth="199.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                                                  <ComboBox fx:id="familyStatusComboBox" onAction="#onPersonalDataChange" prefHeight="26.0" prefWidth="199.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                                                                </children>
                                                             </GridPane>
                                                          </children>
@@ -127,20 +127,20 @@
                                                               </rowConstraints>
                                                                <children>
                                                                   <Label text="Straße" />
-                                                                  <TextField fx:id="streetTextField" prefHeight="25.0" prefWidth="206.0" GridPane.columnIndex="1" />
+                                                                  <TextField fx:id="streetTextField" onKeyTyped="#onPersonalDataChange" prefHeight="25.0" prefWidth="206.0" GridPane.columnIndex="1" />
                                                                   <Label text="PLZ / Ort" GridPane.rowIndex="1" />
                                                                   <HBox alignment="CENTER_LEFT" spacing="5.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
                                                                      <children>
-                                                                        <TextField fx:id="plzTextField" prefHeight="25.0" prefWidth="65.0" />
-                                                                        <TextField fx:id="locationTextField" prefHeight="25.0" prefWidth="223.0" />
+                                                                        <TextField fx:id="plzTextField" onKeyTyped="#onPersonalDataChange" prefHeight="25.0" prefWidth="65.0" />
+                                                                        <TextField fx:id="locationTextField" onKeyTyped="#onPersonalDataChange" prefHeight="25.0" prefWidth="223.0" />
                                                                      </children>
                                                                   </HBox>
                                                                   <Label text="Land" GridPane.rowIndex="2" />
-                                                                  <TextField fx:id="countryTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                                  <TextField fx:id="countryTextField" onKeyTyped="#onPersonalDataChange" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                                   <Label text="Email*" GridPane.rowIndex="3" />
-                                                                  <TextField fx:id="emailTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                                  <TextField fx:id="emailTextField" onKeyTyped="#onPersonalDataChange" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                                                   <Label text="Telefon" GridPane.rowIndex="4" />
-                                                                  <TextField fx:id="phoneTextField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                                  <TextField fx:id="phoneTextField" onKeyTyped="#onPersonalDataChange" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                                                </children>
                                                             </GridPane>
                                                          </children>
@@ -166,20 +166,20 @@
                                                               </rowConstraints>
                                                                <children>
                                                                   <Label text="Fachbereich *" GridPane.rowIndex="1" />
-                                                                  <TextField fx:id="subjectAreaTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                                  <TextField fx:id="subjectAreaTextField" onKeyTyped="#onQualificationChanged" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                                   <Label text="Note *" GridPane.rowIndex="2" />
-                                                                  <TextField fx:id="gradeTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                                  <TextField fx:id="gradeTextField" onKeyTyped="#onQualificationChanged" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                                   <Label text="Einrichtung *" GridPane.rowIndex="3" />
                                                                   <HBox spacing="15.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                                                      <children>
-                                                                        <ComboBox fx:id="qualifiedGraduationUniversityComboBox" prefWidth="150.0">
+                                                                        <ComboBox fx:id="qualifiedGraduationUniversityComboBox" onAction="#onQualificationChanged" prefWidth="150.0">
 
                                                       </ComboBox>
                                                                         <Button mnemonicParsing="false" onAction="#handleOnActionAddUniversityButton" text="Hinzufügen" />
                                                                      </children>
                                                                   </HBox>
                                                                   <Label text="Grad *" />
-                                                                   <ComboBox fx:id="graduationComboBox" prefWidth="150.0" GridPane.columnIndex="1" />
+                                                                   <ComboBox fx:id="graduationComboBox" onAction="#onQualificationChanged" prefWidth="150.0" GridPane.columnIndex="1" />
                                                                </children>
                                                             </GridPane>
                                                          </children>
@@ -237,19 +237,19 @@
                                                         </rowConstraints>
                                                          <children>
                                                             <Label text="Thema der Dissertation" GridPane.rowIndex="1" />
-                                                            <TextField fx:id="nameOfDissertationTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                            <TextField fx:id="nameOfDissertationTextField" onKeyTyped="#onPromotionChanged" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                             <Label text="Grad" />
                                                             <VBox GridPane.columnIndex="1">
                                                                <children>
-                                                                  <TextField fx:id="targetGraduationDegreeTextField" />
+                                                                  <TextField fx:id="targetGraduationDegreeTextField" onKeyTyped="#onPromotionChanged" />
                                                                </children>
                                                             </VBox>
                                                             <Label prefHeight="24.0" prefWidth="211.0" text="Wissenschaftliche Betreuung (HFU)" GridPane.rowIndex="2" />
-                                                            <TextField fx:id="internalSupervisorTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                            <TextField fx:id="internalSupervisorTextField" onKeyTyped="#onPromotionChanged" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                             <Label text="Zuordnung HFU-Fakultät" GridPane.rowIndex="3" />
                                                              <HBox spacing="15.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                                                  <children>
-                                                                     <ComboBox fx:id="facultyHFUComboBox" prefWidth="150.0" />
+                                                                     <ComboBox fx:id="facultyHFUComboBox" onAction="#onPromotionChanged" prefWidth="150.0" />
                                                                      <Button mnemonicParsing="false" onAction="#handleOnActionEditFacultyButton" text="Bearbeiten" />
                                                                  </children>
                                                              </HBox>
@@ -259,17 +259,17 @@
                                                             <Label text="Promovierende Einrichtung" GridPane.rowIndex="5" />
                                                             <Label text="Verfahren abgeschlossen zum" GridPane.rowIndex="8" />
                                                             <Label text="Bewertung" GridPane.rowIndex="9" />
-                                                            <TextField fx:id="externalSupervisorTextField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                                            <TextField fx:id="externalFacultyTextField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                                            <TextField fx:id="externalSupervisorTextField" onKeyTyped="#onPromotionChanged" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                            <TextField fx:id="externalFacultyTextField" onKeyTyped="#onPromotionChanged" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                                             <HBox spacing="15.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                                                <children>
-                                                                  <ComboBox fx:id="externalUniversityComboBox" prefWidth="150.0" />
+                                                                  <ComboBox fx:id="externalUniversityComboBox" onAction="#onPromotionChanged" prefWidth="150.0" />
                                                                   <Button mnemonicParsing="false" onAction="#handleOnActionAddUniversityButton" text="Hinzufügen" />
                                                                </children>
                                                             </HBox>
-                                                            <DatePicker fx:id="promotionAcceptedDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                                                            <DatePicker fx:id="procedureCompletedDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                                                             <ComboBox fx:id="ratingComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                                                            <DatePicker fx:id="promotionAcceptedDatePicker" onAction="#onPromotionChanged" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                                            <DatePicker fx:id="procedureCompletedDatePicker" onAction="#onPromotionChanged" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                                             <ComboBox fx:id="ratingComboBox" onAction="#onPromotionChanged" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                                                          </children>
                                                       </GridPane>
                                                    </children>
@@ -294,9 +294,9 @@
                                                         </rowConstraints>
                                                          <children>
                                                             <Label text="Beginn der Promotion *" />
-                                                            <DatePicker fx:id="promotionBeginDatePicker" GridPane.columnIndex="1" />
-                                                            <DatePicker fx:id="predictedGraduationDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                            <DatePicker fx:id="promotionAgreementDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                            <DatePicker fx:id="promotionBeginDatePicker" onAction="#onPromotionChanged" GridPane.columnIndex="1" />
+                                                            <DatePicker fx:id="predictedGraduationDatePicker" onAction="#onPromotionChanged" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                            <DatePicker fx:id="promotionAgreementDatePicker" onAction="#onPromotionChanged" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                             <Label text="Prognostizierter Abschluss *" GridPane.rowIndex="1" />
                                                             <Label text="Promotionsvereinbarung *" GridPane.rowIndex="2" />
                                                          </children>
@@ -320,7 +320,7 @@
                                                                </rowConstraints>
                                                                <children>
                                                                   <Label prefWidth="61.0" text="Grund" />
-                                                                  <TextField fx:id="cancelReasonTextField" GridPane.columnIndex="1" />
+                                                                  <TextField fx:id="cancelReasonTextField" onAction="#onPromotionChanged" GridPane.columnIndex="1" />
                                                                </children>
                                                             </GridPane>
                                                          </children>
@@ -356,8 +356,8 @@
                                                               </rowConstraints>
                                                                <children>
                                                                   <Label prefHeight="25.0" prefWidth="49.0" text="bis" />
-                                                                  <DatePicker fx:id="memberUntilDatePicker" GridPane.columnIndex="1" />
-                                                                  <DatePicker fx:id="memberSinceDatePicker" prefHeight="18.0" prefWidth="174.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                                  <DatePicker fx:id="memberUntilDatePicker" onAction="#onPromotionChanged" GridPane.columnIndex="1" />
+                                                                  <DatePicker fx:id="memberSinceDatePicker" onAction="#onPromotionChanged" prefHeight="18.0" prefWidth="174.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                                   <Label prefHeight="25.0" prefWidth="24.0" text="seit" GridPane.rowIndex="1" />
                                                                </children>
                                                             </GridPane>
@@ -365,7 +365,7 @@
                                                             <HBox fx:id="extensionMembershipHBox" alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="503.0" spacing="20.0">
                                                                <children>
                                                                   <Label text="bis" />
-                                                                  <DatePicker fx:id="prolongTillDatePicker" />
+                                                                  <DatePicker fx:id="prolongTillDatePicker" onAction="#onPromotionChanged" />
                                                                </children>
                                                                <VBox.margin>
                                                                   <Insets left="20.0" />
@@ -397,7 +397,7 @@
                                                         </rowConstraints>
                                                          <children>
                                                             <Label text="Externes Kolleg" />
-                                                            <TextField fx:id="externalCollegeNameTextField" prefHeight="25.0" prefWidth="194.0" GridPane.columnIndex="1" />
+                                                            <TextField fx:id="externalCollegeNameTextField" onAction="#onPromotionChanged" prefHeight="25.0" prefWidth="194.0" GridPane.columnIndex="1" />
                                                          </children>
                                                       </GridPane>
                                                    </children>
@@ -589,11 +589,11 @@
                                                         </rowConstraints>
                                                          <children>
                                                             <Label text="Stipendium" />
-                                                            <TextField fx:id="scholarshipTextField" GridPane.columnIndex="1" />
+                                                            <TextField fx:id="scholarshipTextField" onKeyTyped="#onSupportChanged" GridPane.columnIndex="1" />
                                                             <Label text="Auzeichnungen" GridPane.rowIndex="1" />
-                                                            <TextField fx:id="awardsTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                            <TextField fx:id="awardsTextField" onKeyTyped="#onSupportChanged" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                             <Label text="Sonstiges" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-                                                            <TextArea fx:id="miscellaneousTextArea" prefHeight="52.0" prefWidth="640.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                            <TextArea fx:id="miscellaneousTextArea" onKeyTyped="#onSupportChanged" prefHeight="52.0" prefWidth="640.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                          </children>
                                                       </GridPane>
                                                    </children>
@@ -632,8 +632,8 @@
                                              <children>
                                                 <Label text="Tätigkeit Berufsbezeichnung" />
                                                 <Label text="Arbeitgeber" GridPane.rowIndex="1" />
-                                                <TextField fx:id="jobTitleTextField" prefHeight="25.0" prefWidth="273.0" GridPane.columnIndex="1" />
-                                                <TextField fx:id="employerTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <TextField fx:id="jobTitleTextField" onKeyTyped="#onAlumniStateChanged" prefHeight="25.0" prefWidth="273.0" GridPane.columnIndex="1" />
+                                                <TextField fx:id="employerTextField" onKeyTyped="#onAlumniStateChanged" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                              </children>
                                           </GridPane>
                                           <Label text="Einwilligungen">
@@ -641,8 +641,8 @@
                                                 <Font name="System Bold" size="12.0" />
                                              </font>
                                           </Label>
-                                          <CheckBox fx:id="agreementNewsCheckBox" mnemonicParsing="false" text="Einwilligung zu Kontakt / News" />
-                                          <CheckBox fx:id="agreementEvaluationCheckBox" mnemonicParsing="false" text="Einwilligung zur Auswertung" />
+                                          <CheckBox fx:id="agreementNewsCheckBox" mnemonicParsing="false" onAction="#onAlumniStateChanged" text="Einwilligung zu Kontakt / News" />
+                                          <CheckBox fx:id="agreementEvaluationCheckBox" mnemonicParsing="false" onAction="#onAlumniStateChanged" text="Einwilligung zur Auswertung" />
                                        </children>
                                     </VBox>
                                  </content>
