@@ -3,10 +3,7 @@ package de.hfu.pms.controller;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
-import de.hfu.pms.events.CreateDocStudentPropertyEvent;
-import de.hfu.pms.events.RequestPatchDoctoralStudentEvent;
-import de.hfu.pms.events.SaveDoctoralStudentEvent;
-import de.hfu.pms.events.SuccessfullyAddedUniversityEvent;
+import de.hfu.pms.events.*;
 import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.*;
 import de.hfu.pms.shared.enums.*;
@@ -17,6 +14,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -27,16 +27,14 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.controlsfx.control.textfield.TextFields;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
 
 public class DoctoralStudentFormController implements Initializable {
 
@@ -45,6 +43,9 @@ public class DoctoralStudentFormController implements Initializable {
     private DoctoralStudentDTO doctoralStudent = null;
 
     private EventBus eventBus = EventBusSystem.getEventBus();
+
+    private Collection<File> documents = new HashSet<>();
+
 
     @FXML
     private Button saveButton;
@@ -223,6 +224,10 @@ public class DoctoralStudentFormController implements Initializable {
     @FXML
     private CheckBox agreementEvaluationCheckBox;
 
+    // Documents
+    @FXML
+    private ListView<File> documentsListView;
+
     // ---------------------------- //
     //        CONTROL FLAGS         //
     // ---------------------------- //
@@ -241,6 +246,8 @@ public class DoctoralStudentFormController implements Initializable {
         // setup table columns
         initEmploymentTable(resources);
         initSupportTables(resources);
+
+        initDocumentsListView();
 
         initComboBoxes();
 
@@ -306,7 +313,7 @@ public class DoctoralStudentFormController implements Initializable {
         Collection<FacultyDTO> faculties = EntityPool.getInstance().getFaculties();
 
         // init combo boxes with wrapped entities of the specific type
-        facultyHFUComboBox.getItems().addAll(RepresentationWrapper.getWrappedFaculties(faculties));
+        updateFacultyCombobox();
         ratingComboBox.getItems().addAll(RepresentationWrapper.getWrappedRatings());
 
         // university
@@ -847,5 +854,81 @@ public class DoctoralStudentFormController implements Initializable {
         alumniState.setAgreementEvaluation(agreementEvaluationCheckBox.isSelected());
 
         return validator.validationSuccessful();
+    }
+
+    private void initDocumentsListView() {
+        documentsListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        // todo: load documents if editing an entry
+    }
+
+    @FXML
+    private void handleOnActionBrowseDocuments(ActionEvent actionEvent){
+        // todo
+        FileDialog dialog = new FileDialog((Frame)null, "Select File to Open");
+        dialog.setMode(FileDialog.LOAD);
+        dialog.setMultipleMode(true);
+        dialog.setVisible(true);
+
+        if(dialog.getFiles() != null) {
+            documents.addAll(Set.of(dialog.getFiles()));
+            //String fullFileName = dialog.getDirectory() + dialog.getFile();
+            //documents.add(new File(fullFileName));
+            //logger.log(Level.DEBUG, "selected file: \"" + fullFileName + "\" for document upload");
+            updateDocumentsListView();
+        }
+    }
+
+    @FXML
+    private void handleOnActionDeleteDocument(ActionEvent actionEvent){
+        if(documentsListView.getSelectionModel().getSelectedItems().size() < 1) {
+            eventBus.post(new AlertNotificationEvent(1, "Bitte wählen Sie ein zu entfernendes Dokument aus."));
+            return;
+        }
+
+        //confirm dialog
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Dokumente Entfernen");
+        alert.setHeaderText("Sie sind dabei folgende Dokumente aus der Liste zu entfernen: ");
+
+        documentsListView.getSelectionModel().getSelectedItem().toString();
+        String documentNames = "";
+        for(File file : documentsListView.getSelectionModel().getSelectedItems()){
+            documentNames += file.toString() + "\n";
+        }
+        alert.setContentText(documentNames);
+
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            documents.removeAll(documentsListView.getSelectionModel().getSelectedItems());
+            updateDocumentsListView();
+        }
+        // else do nothing, closes automatically on cancel button;
+    }
+
+
+    private void updateDocumentsListView() {
+        documentsListView.getItems().clear();
+        documentsListView.getItems().addAll(documents);
+    }
+
+    private void updateFacultyCombobox(){
+        facultyHFUComboBox.getItems().clear();
+        facultyHFUComboBox.getItems().addAll(RepresentationWrapper.getWrappedFaculties(EntityPool.getInstance().getFaculties()));
+    }
+
+    @Subscribe
+    public void handleAddedFacultyEvent(SuccessfullyAddedFacultyEvent event){
+        updateFacultyCombobox();
+    }
+
+    @Subscribe
+    public void handleDeletedFacultyEvent(SuccessfullyDeletedFacultyEvent event){
+        updateFacultyCombobox();
+    }
+
+    @Subscribe
+    public void handleDeletedFacultyEvent(SuccessfullyUpdatedFacultyEvent event){
+        updateFacultyCombobox();
     }
 }
