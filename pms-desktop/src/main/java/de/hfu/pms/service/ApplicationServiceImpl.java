@@ -45,7 +45,7 @@ public class ApplicationServiceImpl implements ApplicationServices {
 
     //TODO: Add good exception handling and logging
     @Override
-    public DoctoralStudentDTO addDoctoralStudent(DoctoralStudentDTO student) {
+    public DoctoralStudentDTO addDoctoralStudent(CreateDoctoralStudentDTO student)throws BusinessException {
         try {
             String json = mapper.writeValueAsString(student);
             String response = restClient.postJson(HOST_URL + STUDENT_PREFIX + "create" , json);
@@ -57,7 +57,7 @@ public class ApplicationServiceImpl implements ApplicationServices {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null; // todo: better throw exception
+        throw new BusinessException("could not create student");
     }
 
     @Override

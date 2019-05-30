@@ -237,6 +237,8 @@ public class DoctoralStudentFormController implements Initializable {
     private boolean alumniStateChanged;
     private boolean documentsChanged;
 
+    private boolean editMode = false;
+
     private Collection<File> addedDocuments = new ArrayList<>();
     private Collection<DocumentInformationDTO> deletedDocuments = new ArrayList<>();
 
@@ -331,6 +333,7 @@ public class DoctoralStudentFormController implements Initializable {
 
     public void fillFormMask(DoctoralStudentDTO doctoralStudent) {
         this.doctoralStudent = doctoralStudent;
+        this.editMode = true;
 
         PersonalDataDTO personalData = doctoralStudent.getPersonalData();
         AddressDTO personalAddress = personalData.getAddress();
@@ -461,7 +464,6 @@ public class DoctoralStudentFormController implements Initializable {
     @FXML
     public void handleOnActionSaveButton() {
 
-        boolean editMode = false;
 
         if (doctoralStudent == null) {
             // we are not editing an existing object but actually creating a new one
@@ -475,7 +477,7 @@ public class DoctoralStudentFormController implements Initializable {
 
 
         } else {
-            editMode = true;
+
             // if we are here, we edit an already existing student
             // we must not set the ID !!!
 
@@ -562,11 +564,13 @@ public class DoctoralStudentFormController implements Initializable {
 
                 // post a new save event to notify subscribers about the save action
                 // they should take care about the actual saving process
-                eventBus.post(new SaveDoctoralStudentEvent(doctoralStudent));
+                eventBus.post(new RequestCreateDoctoralStudentEvent(createDTO));
             }
 
             // after saving, we can reset our input fields
             resetAllInputFields();
+
+        } else {
 
         }
 

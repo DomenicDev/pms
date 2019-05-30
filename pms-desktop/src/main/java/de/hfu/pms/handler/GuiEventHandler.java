@@ -7,10 +7,7 @@ import de.hfu.pms.exceptions.BusinessException;
 import de.hfu.pms.exceptions.LoginFailedException;
 import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.service.ApplicationServices;
-import de.hfu.pms.shared.dto.DoctoralStudentDTO;
-import de.hfu.pms.shared.dto.FacultyDTO;
-import de.hfu.pms.shared.dto.UniversityDTO;
-import de.hfu.pms.shared.dto.UserDTO;
+import de.hfu.pms.shared.dto.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -76,8 +73,18 @@ public class GuiEventHandler {
     }
 
     @Subscribe
-    public void handleSaveDoctoralStudentEvent(SaveDoctoralStudentEvent saveEvent) {
-        DoctoralStudentDTO doctoralStudent = saveEvent.getDoctoralStudent();
+    public void handleCreateDoctoralStudentEvent(RequestCreateDoctoralStudentEvent saveEvent) {
+        CreateDoctoralStudentDTO doctoralStudent = saveEvent.getCreateDoctoralStudentDTO();
+
+        try {
+            DoctoralStudentDTO createdEntity = applicationServices.addDoctoralStudent(doctoralStudent);
+            eventBus.post(new SuccessfullyAddedDoctoralStudentEvent(createdEntity));
+        } catch (BusinessException e) {
+            e.printStackTrace();
+        }
+
+
+        /*
         // we check if a new entity has been created or if an existing one has been edited
         if (doctoralStudent.getId() == null) {
             DoctoralStudentDTO createdStudent = applicationServices.addDoctoralStudent(doctoralStudent);
@@ -96,6 +103,7 @@ public class GuiEventHandler {
 
         }
 
+         */
     }
 
     @Subscribe

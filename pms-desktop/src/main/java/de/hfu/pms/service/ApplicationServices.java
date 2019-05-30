@@ -14,7 +14,7 @@ public interface ApplicationServices {
 
     // todo: add Documents to DoctoralStudentDTO-class or separate them?
 
-    DoctoralStudentDTO addDoctoralStudent(DoctoralStudentDTO student);
+    DoctoralStudentDTO addDoctoralStudent(CreateDoctoralStudentDTO student) throws BusinessException;
 
     DoctoralStudentDTO editDoctoralStudent(DoctoralStudentDTO student) throws BusinessException;
 
