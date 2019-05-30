@@ -1,6 +1,8 @@
 package de.hfu.pms.model;
 
 import de.hfu.pms.shared.enums.Rating;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -20,6 +22,7 @@ public class TargetGraduation {
     @Column
     private String internalSupervisor;
 
+    @Cascade(value = CascadeType.ALL)
     @ManyToOne(targetEntity = Faculty.class)
     private Faculty facultyHFU;
 
