@@ -1,6 +1,7 @@
 package de.hfu.pms;
 
 import de.hfu.pms.dao.DoctoralStudentDao;
+import de.hfu.pms.dao.FacultyDao;
 import de.hfu.pms.dao.UniversityDao;
 import de.hfu.pms.dao.UserDao;
 import de.hfu.pms.model.UserRole;
@@ -24,13 +25,15 @@ public class DatabaseInit implements CommandLineRunner {
 
     private final DoctoralStudentDao doctoralStudentDao;
     private final UniversityDao universityDao;
+    private final FacultyDao facultyDao;
 
     @Autowired
-    public DatabaseInit(UserDao userDao, PasswordEncoder passwordEncoder, DoctoralStudentDao doctoralStudentDao, UniversityDao universityDao) {
+    public DatabaseInit(UserDao userDao, PasswordEncoder passwordEncoder, DoctoralStudentDao doctoralStudentDao, UniversityDao universityDao, FacultyDao facultyDao) {
         this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
         this.doctoralStudentDao = doctoralStudentDao;
         this.universityDao = universityDao;
+        this.facultyDao = facultyDao;
     }
 
     @Override
@@ -50,6 +53,7 @@ public class DatabaseInit implements CommandLineRunner {
         // add a test faculty
         Faculty facultyHFU = new Faculty();
         facultyHFU.setFacultyName("Informatik");
+        facultyDao.save(facultyHFU);
 
         // add simple doctoral student
         DoctoralStudent student = new DoctoralStudent();
@@ -78,20 +82,14 @@ public class DatabaseInit implements CommandLineRunner {
         student.getQualifiedGraduation().setSubjectArea("Thema meiner Wahl");
 
         // target graduation
+        student.getTargetGraduation().setInternalSupervisor("Hollunder");
         student.getTargetGraduation().setExternalUniversity(university);
         student.getTargetGraduation().setExternalSupervisor("Müller");
-        //student.getTargetGraduation().setFacultyHFU(FacultyHFU.Informatik);
         student.getTargetGraduation().setFacultyHFU(facultyHFU);
         student.getTargetGraduation().setNameOfDissertation("Thema der Dissertation");
         student.getTargetGraduation().setTargetDegree(DoctoralGraduation.Dr_sc_nat.name());
 
-
-
-        student.getQualifiedGraduation().setGradedUniversity(university);
-
-
-
-
+        // save test doctoral student
         doctoralStudentDao.save(student);
     }
 }
