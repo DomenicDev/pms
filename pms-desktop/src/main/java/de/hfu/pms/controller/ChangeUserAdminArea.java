@@ -1,12 +1,11 @@
 package de.hfu.pms.controller;
 
 import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
-import de.hfu.pms.events.RequestChangePasswordEvent;
-import de.hfu.pms.events.RequestChangeUserRoleEvent;
+import de.hfu.pms.events.SuccessfullyChangedEmailEvent;
 import de.hfu.pms.shared.dto.UserDTO;
 import de.hfu.pms.shared.enums.UserRole;
-import de.hfu.pms.utils.FormValidator;
 import de.hfu.pms.utils.WrappedEntity;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,7 +13,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.apache.log4j.Level;
@@ -74,10 +75,13 @@ public class ChangeUserAdminArea  implements Initializable {
             stage.setScene(new Scene(root));
             stage.show();
 
+            EmailAdminAreaController controller = fxmlLoader.getController();
+            controller.edit(user);
 
         } catch (Exception e) {
             logger.log(Level.ERROR, "Unable to load the Change E-mail - AdminArea Screen ");
         }
+
     }
 
 
@@ -121,41 +125,33 @@ public class ChangeUserAdminArea  implements Initializable {
         }
     }
 
-
-
-
-    @FXML
-    private PasswordField TextfieldPassword;
-
-    @FXML
-    private PasswordField TextfieldPasswordRewrite;
-
-    @FXML
-    private Label LabelAreBothPasswortsSimilar;
-
-    @FXML
-    private TextField TextFieldEmail;
-
     @FXML
     private ComboBox<WrappedEntity<UserRole>> ComboboxRole;
 
 
     private UserDTO user;
 
-    public void edit(UserDTO user) {/*
+    public void edit(UserDTO user) {
         this.user = user;
 
-        labelFornameLastname.setText(user.getUsername()+user.getLastname());
+        labelFornameLastname.setText(user.getUsername()+ " " +user.getLastname());
         labelUsername.setText(user.getUsername());
-        ComboboxRole.getSelectionModel().select(RepresentationWrapper.find(user.getRole(), ComboboxRole.getItems()));
+        //labelRole.setText(user.getRole().);
+        labelEmail.setText(user.getEmail());
+        /*ComboboxRole.getSelectionModel().select(RepresentationWrapper.find(user.getRole(), ComboboxRole.getItems()));
         TextfieldPassword.setText(user.getPassword());
         TextFieldEmail.setText(user.getEmail());
 */
     }
+    @Subscribe
+    public void handleEmailChangeRequestEvent(SuccessfullyChangedEmailEvent event){
+
+        labelEmail.setText(user.getEmail());
+    }
 
     @FXML
     void handleActionEventChangeUserInformation(ActionEvent event) {
-        if(user == null){
+        /*if(user == null){
             user =new UserDTO();
 
         }
@@ -169,11 +165,11 @@ public class ChangeUserAdminArea  implements Initializable {
 
             ((Button)event.getSource()).getScene().getWindow().hide();
 
-        }
+        }*/
 
     }
 
-    private boolean writeToUserDTO() {
+   /*private boolean writeToUserDTO() {
 
         FormValidator userValidator = new FormValidator();
 
@@ -193,7 +189,7 @@ public class ChangeUserAdminArea  implements Initializable {
         {
         }
         return userValidator.validationSuccessful();
-    }
+    }*/
 
     @FXML
     void handleActionEventCloseScene(ActionEvent event) {

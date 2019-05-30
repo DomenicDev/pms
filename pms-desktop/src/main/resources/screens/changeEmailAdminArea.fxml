@@ -9,7 +9,7 @@
       <Label layoutX="50.0" layoutY="69.0" text="Email:" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="80.0" />
       <Button layoutX="66.0" layoutY="165.0" mnemonicParsing="false" onAction="#handleChangeEmailEvent" text="Ändern" AnchorPane.leftAnchor="66.0" AnchorPane.topAnchor="165.0" />
       <Button layoutX="206.0" layoutY="165.0" mnemonicParsing="false" onAction="#handleExitEvent" text="Abbrechen" AnchorPane.leftAnchor="206.0" AnchorPane.topAnchor="165.0" />
-      <TextField layoutX="96.0" layoutY="76.0" prefHeight="25.0" prefWidth="182.0" promptText="neue Email" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="76.0" />
+      <TextField fx:id="textFieldChangeEmail" layoutX="96.0" layoutY="76.0" prefHeight="25.0" prefWidth="182.0" promptText="neue Email" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="76.0" />
       <Label fx:id="labelAlert" layoutX="67.0" layoutY="116.0" text="es muss eine E-mail angegeben werden!" AnchorPane.leftAnchor="67.0" AnchorPane.topAnchor="120.0" />
    </children>
 </AnchorPane>
