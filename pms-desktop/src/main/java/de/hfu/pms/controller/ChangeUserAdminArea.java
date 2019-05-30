@@ -5,6 +5,7 @@ import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.SuccessfullyChangedEmailEvent;
 import de.hfu.pms.events.SuccessfullyChangedPasswordEvent;
+import de.hfu.pms.events.SuccessfullyChangedUserRoleEvent;
 import de.hfu.pms.shared.dto.UserDTO;
 import de.hfu.pms.shared.enums.UserRole;
 import de.hfu.pms.utils.WrappedEntity;
@@ -123,6 +124,9 @@ public class ChangeUserAdminArea  implements Initializable {
             stage.setScene(new Scene(root));
             stage.show();
 
+            RoleAdminAreaController controller = fxmlLoader.getController();
+            controller.edit(user);
+
 
         } catch (Exception e) {
             logger.log(Level.ERROR, "Unable to load the Change Role - AdminArea Screen ");
@@ -140,7 +144,7 @@ public class ChangeUserAdminArea  implements Initializable {
 
         labelFornameLastname.setText(user.getUsername()+ " " +user.getLastname());
         labelUsername.setText(user.getUsername());
-        //labelRole.setText(user.getRole().);
+        labelRole.setText(user.getRole().toString());
         labelEmail.setText(user.getEmail());
         /*ComboboxRole.getSelectionModel().select(RepresentationWrapper.find(user.getRole(), ComboboxRole.getItems()));
         TextfieldPassword.setText(user.getPassword());
@@ -149,13 +153,20 @@ public class ChangeUserAdminArea  implements Initializable {
     }
     @Subscribe
     public void handleEmailChangeRequestEvent(SuccessfullyChangedEmailEvent event){
-
+        System.out.println("In Subscribe Email");
         labelEmail.setText(user.getEmail());
     }
     @Subscribe
     public void  handlePasswordChangeButton(SuccessfullyChangedPasswordEvent event){
 
     }
+    @Subscribe
+    public void handleChangeRoleEvent(SuccessfullyChangedUserRoleEvent event){
+        System.out.println("In Subscribe Role");
+
+        labelRole.setText((user.getRole().toString()));
+    }
+
 
     @FXML
     void handleActionEventChangeUserInformation(ActionEvent event) {
