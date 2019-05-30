@@ -18,6 +18,9 @@ import java.util.ResourceBundle;
 public class ChangeAccountInformationController implements Initializable {
         private EventBus eventBus = EventBusSystem.getEventBus();
 
+
+
+
         @FXML
         private Button saveChangesButton;
 

@@ -7,12 +7,18 @@ import de.hfu.pms.events.RequestChangeUserRoleEvent;
 import de.hfu.pms.shared.dto.UserDTO;
 import de.hfu.pms.shared.enums.UserRole;
 import de.hfu.pms.utils.FormValidator;
-import de.hfu.pms.utils.RepresentationWrapper;
 import de.hfu.pms.utils.WrappedEntity;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -23,14 +29,6 @@ public class ChangeUserAdminArea  implements Initializable {
 
     private EventBus eventBus = EventBusSystem.getEventBus();
 
-    @FXML
-    private PasswordField TextfieldPassword;
-
-    @FXML
-    private PasswordField TextfieldPasswordRewrite;
-
-    @FXML
-    private Label LabelAreBothPasswortsSimilar;
 
     @FXML
     private Button ButtonChange;
@@ -45,17 +43,106 @@ public class ChangeUserAdminArea  implements Initializable {
     private Button ButtonDeleteUser;
 
     @FXML
+    private Label labelUsername;
+
+    @FXML
+    private Label labelRole;
+
+    @FXML
+    private Button buttonChangePassword;
+
+    @FXML
+    private Button buttonChangeRole;
+
+    @FXML
+    private Button buttonChangeEmail;
+
+    @FXML
+    private Label labelEmail;
+
+    private Logger logger = Logger.getLogger(ChangeUserAdminArea.class);
+
+    @FXML
+    void handleButtonChangeEmail(ActionEvent event) {
+        try {
+            ResourceBundle bundle = ResourceBundle.getBundle("lang/strings");
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/screens/changeEmailAdminArea.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Bestehenden Benutzer bearbeiten");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+
+        } catch (Exception e) {
+            logger.log(Level.ERROR, "Unable to load the Change E-mail - AdminArea Screen ");
+        }
+    }
+
+
+    @FXML
+    void handleButtonChangePassword(ActionEvent event) {
+
+        try {
+            ResourceBundle bundle = ResourceBundle.getBundle("lang/strings");
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/screens/ChangePasswordAdminArea.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Bestehenden Benutzer bearbeiten");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+
+        } catch (Exception e) {
+            logger.log(Level.ERROR, "Unable to load the Change Password - AdminArea Screen ");
+        }
+    }
+
+
+
+    @FXML
+            void handleButtonChangeRole (ActionEvent event) {
+
+        try {
+            ResourceBundle bundle = ResourceBundle.getBundle("lang/strings");
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/screens/changeRoleAdminArea.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Bestehenden Benutzer bearbeiten");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+
+        } catch (Exception e) {
+            logger.log(Level.ERROR, "Unable to load the Change Role - AdminArea Screen ");
+        }
+    }
+
+
+
+
+    @FXML
+    private PasswordField TextfieldPassword;
+
+    @FXML
+    private PasswordField TextfieldPasswordRewrite;
+
+    @FXML
+    private Label LabelAreBothPasswortsSimilar;
+
+    @FXML
     private TextField TextFieldEmail;
 
     @FXML
     private ComboBox<WrappedEntity<UserRole>> ComboboxRole;
 
-    @FXML
-    private Label labelUsername;
 
     private UserDTO user;
 
-    public void edit(UserDTO user) {
+    public void edit(UserDTO user) {/*
         this.user = user;
 
         labelFornameLastname.setText(user.getUsername()+user.getLastname());
@@ -63,8 +150,9 @@ public class ChangeUserAdminArea  implements Initializable {
         ComboboxRole.getSelectionModel().select(RepresentationWrapper.find(user.getRole(), ComboboxRole.getItems()));
         TextfieldPassword.setText(user.getPassword());
         TextFieldEmail.setText(user.getEmail());
-
+*/
     }
+
     @FXML
     void handleActionEventChangeUserInformation(ActionEvent event) {
         if(user == null){
@@ -122,7 +210,7 @@ public class ChangeUserAdminArea  implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         eventBus.register(this);
-        ComboboxRole.getItems().addAll(RepresentationWrapper.getWrappedRole());
+        //ComboboxRole.getItems().addAll(RepresentationWrapper.getWrappedRole());
     }
 }
 
