@@ -900,6 +900,11 @@ public class DoctoralStudentFormController implements Initializable {
         fileChooser.setTitle("Dokumentenauswahl");
         Collection<File> selectedFiles = fileChooser.showOpenMultipleDialog(null);
 
+        if (selectedFiles == null) {
+            // return if user did not select any files
+            return;
+        }
+
         addedDocuments.addAll(selectedFiles);
 
 
