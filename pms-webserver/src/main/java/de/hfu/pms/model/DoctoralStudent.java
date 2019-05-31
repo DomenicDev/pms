@@ -35,7 +35,7 @@ public class DoctoralStudent implements Serializable {
     @Column(columnDefinition="BLOB")
     private byte[] photo; // saved as blob
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_student")
     private Set<Document> documents;
 

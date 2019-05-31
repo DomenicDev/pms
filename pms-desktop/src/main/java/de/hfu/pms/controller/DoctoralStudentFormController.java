@@ -36,19 +36,8 @@ import java.util.*;
 public class DoctoralStudentFormController implements Initializable {
 
     private Logger logger = Logger.getLogger(DoctoralStudentFormController.class);
-
     private DoctoralStudentDTO doctoralStudent = null;
-
     private EventBus eventBus = EventBusSystem.getEventBus();
-
-    private Collection<File> documents = new HashSet<>();
-
-
-    @FXML
-    private Button saveButton;
-
-    @FXML
-    private Button cancelButton;
 
     // Personal Data
     @FXML
@@ -223,7 +212,7 @@ public class DoctoralStudentFormController implements Initializable {
 
     // Documents
     @FXML
-    private ListView<File> documentsListView;
+    private ListView<DocumentInformationDTO> documentsListView;
 
     // ---------------------------- //
     //        CONTROL FLAGS         //
@@ -235,11 +224,10 @@ public class DoctoralStudentFormController implements Initializable {
     private boolean employmentChanged;
     private boolean supportChanged;
     private boolean alumniStateChanged;
-    private boolean documentsChanged;
 
     private boolean editMode = false;
 
-    private Collection<File> addedDocuments = new ArrayList<>();
+    private Map<DocumentInformationDTO, File> addedDocuments = new HashMap<>();
     private Collection<DocumentInformationDTO> deletedDocuments = new ArrayList<>();
 
     @Override
@@ -450,6 +438,11 @@ public class DoctoralStudentFormController implements Initializable {
         agreementNewsCheckBox.setSelected(alumniState.isAgreementNews());
         alumniState.setAgreementEvaluation(alumniState.isAgreementEvaluation());
 
+        // documents
+        if (doctoralStudent.getDocuments() != null) {
+            documentsListView.getItems().addAll(doctoralStudent.getDocuments());
+        }
+
     }
 
     @FXML
@@ -532,6 +525,23 @@ public class DoctoralStudentFormController implements Initializable {
                     logger.log(Level.DEBUG, "alumni state data has been changed");
                 }
 
+                // process documents
+                if (!addedDocuments.isEmpty()) {
+                    Collection<DocumentDTO> docsToAdd = createCollectionFromFiles(addedDocuments.values());
+                    patchDTO.setDocumentsToAdd(docsToAdd);
+                }
+
+                if (!deletedDocuments.isEmpty()) {
+                    Collection<Long> docsToRemove = new HashSet<>();
+                    for (DocumentInformationDTO informationDTO : deletedDocuments) {
+                        Long docId = informationDTO.getId();
+                        if (docId != null) {
+                            docsToRemove.add(docId);
+                        }
+                    }
+                    patchDTO.setDocumentsToRemove(docsToRemove);
+                }
+
                 // post patch event
                 RequestPatchDoctoralStudentEvent updateEvent = new RequestPatchDoctoralStudentEvent(patchDTO);
                 eventBus.post(updateEvent);
@@ -548,18 +558,9 @@ public class DoctoralStudentFormController implements Initializable {
                 createDTO.setPhoto(doctoralStudent.getPhoto());
 
                 // documents
-                Set<DocumentDTO> documentsToAdd = new HashSet<>();
-                for (File fileToLoad : addedDocuments) {
+                Collection<DocumentDTO> documentsToAdd = createCollectionFromFiles(addedDocuments.values());
+                logger.log(Level.DEBUG, "Adding " + documentsToAdd.size() + " documents for upload");
 
-                    try {
-                        String name = fileToLoad.getName();
-                        byte[] data = Files.readAllBytes(fileToLoad.toPath());
-                        DocumentDTO documentDTO = new DocumentDTO(null, name, data);
-                        documentsToAdd.add(documentDTO);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
                 createDTO.setDocuments(documentsToAdd);
 
                 // post a new save event to notify subscribers about the save action
@@ -575,6 +576,30 @@ public class DoctoralStudentFormController implements Initializable {
         }
 
 
+    }
+
+    private Collection<DocumentDTO> createCollectionFromFiles(Collection<File> files) {
+        Collection<DocumentDTO> documents = new HashSet<>();
+        for (File file : files) {
+            DocumentDTO documentDTO = createDocumentDTO(file);
+            if (documentDTO != null) {
+                documents.add(documentDTO);
+            }
+        }
+        return documents;
+    }
+
+    private DocumentDTO createDocumentDTO(File fileToLoad) {
+        DocumentDTO documentDTO = new DocumentDTO();
+        documentDTO.setFilename(fileToLoad.getName());
+        // try to read document
+        try {
+            documentDTO.setData(Files.readAllBytes(fileToLoad.toPath()));
+        } catch (IOException e) {
+            logger.log(Level.DEBUG, "Failed to read document " + fileToLoad.getName() + ". Cancel saving process.");
+            return null;
+        }
+        return documentDTO;
     }
 
     // DEPLOYMENT
@@ -905,15 +930,13 @@ public class DoctoralStudentFormController implements Initializable {
             return;
         }
 
-        addedDocuments.addAll(selectedFiles);
-
-
-
-        if(selectedFiles.size() > 0){
-            documents.addAll(selectedFiles);
-            updateDocumentsListView();
+        // convert files to DocumentInformationDTO
+        for (File f : selectedFiles) {
+            DocumentInformationDTO docInfo = new DocumentInformationDTO();
+            docInfo.setFilename(f.getName());
+            documentsListView.getItems().add(docInfo);
+            addedDocuments.put(docInfo, f);
         }
-
 
     }
 
@@ -930,25 +953,28 @@ public class DoctoralStudentFormController implements Initializable {
         alert.setHeaderText("Sie sind dabei folgende Dokumente aus der Liste zu entfernen: ");
 
         String documentNames = "";
-        for(File file : documentsListView.getSelectionModel().getSelectedItems()){
-            documentNames += file.toString() + "\n";
+        for(DocumentInformationDTO file : documentsListView.getSelectionModel().getSelectedItems()){
+            documentNames += file.getFilename() + "\n";
         }
         alert.setContentText(documentNames);
 
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK){
-            documents.removeAll(documentsListView.getSelectionModel().getSelectedItems());
-            updateDocumentsListView();
+        if (result.get() == ButtonType.OK) {
+            for (DocumentInformationDTO dto : documentsListView.getSelectionModel().getSelectedItems()) {
+                // if the user wants to remove a not yet uploaded document
+                // we need to remove it from the addedDocuments map
+                addedDocuments.remove(dto);
+
+                // for documents which have already been uploaded (we know that if id is set)
+                // we need to make sure to that we save which documents shall be removed on save
+                if (dto.getId() != null) {
+                    deletedDocuments.add(dto);
+                }
+            }
+
+            // in any way we want to remove it from the list view
+            documentsListView.getItems().remove(documentsListView.getSelectionModel().getSelectedItem());
         }
-
-
-
-    }
-
-
-    private void updateDocumentsListView() {
-        documentsListView.getItems().clear();
-        documentsListView.getItems().addAll(documents);
     }
 
     private void updateFacultyCombobox(){

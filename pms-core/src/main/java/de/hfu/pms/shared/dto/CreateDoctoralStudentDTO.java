@@ -1,6 +1,6 @@
 package de.hfu.pms.shared.dto;
 
-import java.util.Set;
+import java.util.Collection;
 
 /**
  * Used for creating a new doctoral student entity.
@@ -14,7 +14,7 @@ public class CreateDoctoralStudentDTO {
     private SupportDTO support;
     private AlumniStateDTO alumniState;
     private byte[] photo;
-    private Set<DocumentDTO> documents;
+    private Collection<DocumentDTO> documents;
 
     public CreateDoctoralStudentDTO() {
         // empty no-args constructor
@@ -77,11 +77,11 @@ public class CreateDoctoralStudentDTO {
         this.photo = photo;
     }
 
-    public Set<DocumentDTO> getDocuments() {
+    public Collection<DocumentDTO> getDocuments() {
         return documents;
     }
 
-    public void setDocuments(Set<DocumentDTO> documents) {
+    public void setDocuments(Collection<DocumentDTO> documents) {
         this.documents = documents;
     }
 }

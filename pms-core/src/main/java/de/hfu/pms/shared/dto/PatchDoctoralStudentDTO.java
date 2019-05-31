@@ -1,5 +1,7 @@
 package de.hfu.pms.shared.dto;
 
+import java.util.Collection;
+
 /**
  * This transfer object is used for partially update
  * the doctoral student entity.
@@ -30,6 +32,11 @@ public class PatchDoctoralStudentDTO {
 
     // profile photo
     private byte[] photo;
+
+    // documents
+    private Collection<DocumentDTO> documentsToAdd;
+
+    private Collection<Long> documentsToRemove;
 
     public PatchDoctoralStudentDTO() {
     }
@@ -100,5 +107,21 @@ public class PatchDoctoralStudentDTO {
 
     public void setPhoto(byte[] photo) {
         this.photo = photo;
+    }
+
+    public Collection<DocumentDTO> getDocumentsToAdd() {
+        return documentsToAdd;
+    }
+
+    public void setDocumentsToAdd(Collection<DocumentDTO> documentsToAdd) {
+        this.documentsToAdd = documentsToAdd;
+    }
+
+    public Collection<Long> getDocumentsToRemove() {
+        return documentsToRemove;
+    }
+
+    public void setDocumentsToRemove(Collection<Long> documentsToRemove) {
+        this.documentsToRemove = documentsToRemove;
     }
 }

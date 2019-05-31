@@ -54,6 +54,8 @@ public class DoctoralStudentController {
         SupportDTO supportDTO = patchDTO.getPatchedSupport();
         AlumniStateDTO alumniStateDTO = patchDTO.getPatchedAlumniState();
         byte[] photo = patchDTO.getPhoto();
+        Collection<DocumentDTO> documentsToAdd = patchDTO.getDocumentsToAdd();
+        Collection<Long> documentsToRemove = patchDTO.getDocumentsToRemove();
 
 
         // check what has been changed
@@ -83,6 +85,16 @@ public class DoctoralStudentController {
         }
         if (photo != null) {
             doctoralStudentService.updatePhoto(id, photo);
+        }
+        if (documentsToAdd != null && !documentsToAdd.isEmpty()) {
+            for (DocumentDTO documentDTO : documentsToAdd) {
+                uploadDocument(documentDTO, id);
+            }
+        }
+        if (documentsToRemove != null && !documentsToRemove.isEmpty()) {
+            for (Long docId : documentsToRemove) {
+                documentService.deleteDocument(docId);
+            }
         }
 
         return ResponseEntity.ok("resource patched");
