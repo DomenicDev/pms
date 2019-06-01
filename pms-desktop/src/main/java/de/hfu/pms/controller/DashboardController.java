@@ -1,5 +1,9 @@
 package de.hfu.pms.controller;
 
+import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.Subscribe;
+import de.hfu.pms.eventbus.EventBusSystem;
+import de.hfu.pms.events.ShowDoctoralStudentEvent;
 import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.utils.GuiLoader;
 import de.hfu.pms.utils.JavaFxUtils;
@@ -14,6 +18,8 @@ import org.apache.log4j.Logger;
 import java.io.IOException;
 
 public class DashboardController {
+
+    private EventBus eventBus = EventBusSystem.getEventBus();
 
     @FXML
     private Button startButton;
@@ -52,6 +58,7 @@ public class DashboardController {
 
     @FXML
     public void initialize() throws IOException {
+        eventBus.register(this);
         // for the main content pane we need to load
         // all the separated fxml files
         // to later dynamically switch between them
@@ -117,5 +124,14 @@ public class DashboardController {
     public void  handleAdminArea() {
         switchMainContent((adminArea));
 
+    }
+
+    @Subscribe
+    public void onEdit(ShowDoctoralStudentEvent event) {
+        // if the user wants to edit a doctoral student we need
+        // to make sure to switch to the specific content screen.
+        // This is important if the call of this event comes
+        // from another screen than this one
+        switchMainContent(doctoralStudentsParent);
     }
 }

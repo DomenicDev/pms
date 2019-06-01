@@ -30,6 +30,8 @@ public interface ApplicationServices {
 
     SortedList<DoctoralStudentDTO> searchDoctoralStudents(String keyword);
 
+    Collection<PreviewDoctoralStudentDTO> getAlertedDoctoralStudents() throws IOException;
+
     /**
      * Login with the specified credentials.
      * @param username the username to login with

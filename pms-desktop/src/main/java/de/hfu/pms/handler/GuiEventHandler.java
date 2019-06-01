@@ -20,7 +20,10 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.apache.commons.io.FilenameUtils;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -206,6 +209,17 @@ public class GuiEventHandler {
             // successfully patched
             eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.INFO, "Successfully patched"));
         } catch (BusinessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Subscribe
+    public void handleRequest(RequestAlertedDoctoralStudentEvent event) {
+        try {
+            Collection<PreviewDoctoralStudentDTO> alertedStudents = applicationServices.getAlertedDoctoralStudents();
+            // send response event to everybody who is interested
+            eventBus.post(new ShowAlertedDoctoralStudentsEvent(alertedStudents));
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

@@ -88,6 +88,7 @@ public class DatabaseInit implements CommandLineRunner {
         student.getTargetGraduation().setFacultyHFU(facultyHFU);
         student.getTargetGraduation().setNameOfDissertation("Thema der Dissertation");
         student.getTargetGraduation().setTargetDegree(DoctoralGraduation.Dr_sc_nat.name());
+        student.getTargetGraduation().setPromotionAdmissionDate(LocalDate.of(2014, 4, 22));
 
         // save test doctoral student
         doctoralStudentDao.save(student);

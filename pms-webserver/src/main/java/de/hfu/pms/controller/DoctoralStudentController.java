@@ -12,7 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.time.LocalDate;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/student")
@@ -102,21 +105,47 @@ public class DoctoralStudentController {
 
 
     @GetMapping("/previews")
-    public List<PreviewDoctoralStudentDTO> getAllDoctoralStudentsAsPreview() {
-        List<DoctoralStudent> doctoralStudents = doctoralStudentService.getAll();
-        List<PreviewDoctoralStudentDTO> previews = new ArrayList<>();
-        for (DoctoralStudent student : doctoralStudents) {
-            DoctoralStudentDTO dto = convertToDTO(student);
-            PreviewDoctoralStudentDTO preview = Converter.convert(dto);
-            previews.add(preview);
-        }
-        return previews;
+    public Collection<PreviewDoctoralStudentDTO> getAllDoctoralStudentsAsPreview() {
+        Collection<DoctoralStudent> doctoralStudents = doctoralStudentService.getAll();
+        return convertToPreview(doctoralStudents);
     }
 
     @GetMapping("/get/{id}")
     public DoctoralStudentDTO getDoctoralStudent(@PathVariable Long id) {
         DoctoralStudent student = doctoralStudentService.findById(id);
         return convertToDTO(student);
+    }
+
+    @GetMapping("get/exceeded")
+    public Collection<PreviewDoctoralStudentDTO> getAlerts() {
+        Collection<DoctoralStudent> all = doctoralStudentService.getAll();
+        Collection<DoctoralStudent> exceededStudents = new HashSet<>();
+        LocalDate now = LocalDate.now();
+
+        // ToDo: THIS LOGIC IS TOTALLY WRONG !!! WE NEED TO IMPLEMENT THE CORRECT ONE LATER !!!
+
+        for (DoctoralStudent student : all) {
+            TargetGraduation targetGraduation = student.getTargetGraduation();
+            if (targetGraduation == null) continue;
+            LocalDate beginDate = targetGraduation.getPromotionAdmissionDate(); // begin of promotion
+            if (beginDate == null) continue;
+
+            // todo: we need to check some pre conditions still...
+            // e.g. checking for canceled promotion, already finished promotion etc.
+
+            // we compute the date the alert should start
+            LocalDate exceedingDate = beginDate.plusYears(4).minusMonths(4);
+
+            // if we already reached that exceeding date we know
+            // that this student needs to be alerted
+            if (now.isAfter(exceedingDate)) {
+                exceededStudents.add(student);
+            }
+
+        }
+
+        // return preview dto objects for exceeding students
+        return convertToPreview(exceededStudents);
     }
 
     @PostMapping("/delete/{id}")
@@ -142,6 +171,15 @@ public class DoctoralStudentController {
         return convertToDTO(document);
     }
 
+    private Collection<PreviewDoctoralStudentDTO> convertToPreview(Collection<DoctoralStudent> students) {
+        Collection<PreviewDoctoralStudentDTO> previews = new HashSet<>();
+        for (DoctoralStudent student : students) {
+            DoctoralStudentDTO dto = convertToDTO(student);
+            PreviewDoctoralStudentDTO preview = Converter.convert(dto);
+            previews.add(preview);
+        }
+        return previews;
+    }
 
     private DocumentDTO convertToDTO(Document document) {
         DocumentDTO documentDTO = new DocumentDTO();

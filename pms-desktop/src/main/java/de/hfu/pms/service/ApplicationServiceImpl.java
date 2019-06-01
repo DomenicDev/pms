@@ -17,7 +17,6 @@ import javafx.collections.transformation.SortedList;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import javax.print.Doc;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
@@ -125,6 +124,17 @@ public class ApplicationServiceImpl implements ApplicationServices {
     @Override
     public SortedList<DoctoralStudentDTO> searchDoctoralStudents(String keyword) {
         return null;
+    }
+
+    @Override
+    public Collection<PreviewDoctoralStudentDTO> getAlertedDoctoralStudents() throws IOException {
+        try {
+            String response = restClient.get(STUDENT_SERVICES + "get/exceeded");
+            return mapper.readValue(response, new TypeReference<List<PreviewDoctoralStudentDTO>>(){});
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new IOException();
+        }
     }
 
     @Override

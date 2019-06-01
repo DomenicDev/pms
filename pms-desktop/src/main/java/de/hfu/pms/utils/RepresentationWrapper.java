@@ -1,6 +1,7 @@
 package de.hfu.pms.utils;
 
 import de.hfu.pms.shared.dto.FacultyDTO;
+import de.hfu.pms.shared.dto.PreviewDoctoralStudentDTO;
 import de.hfu.pms.shared.dto.UniversityDTO;
 import de.hfu.pms.shared.enums.*;
 import org.apache.log4j.Level;
@@ -143,5 +144,13 @@ public class RepresentationWrapper {
 
     public static WrappedEntity<UniversityDTO> getWrappedUniversity(UniversityDTO university) {
         return new WrappedEntity<>(university.getName(), university);
+    }
+
+    public static String getPreviewRepresentation(PreviewDoctoralStudentDTO preview) {
+        return preview.getName() + ", "
+                + preview.getForeName() + ", "
+                + preview.getFaculty() + ", "
+                + "Email: " + preview.getEmail() + ", "
+                + "Phone: " + preview.getPhoneNumber();
     }
 }
