@@ -1,13 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.DoctoralStudentFormController">
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.DoctoralStudentFormController">
    <children>
       <HBox alignment="CENTER" spacing="15.0" style="-fx-background-color: lightgray;">
          <children>
@@ -659,6 +677,7 @@
                                         <VBox spacing="10.0">
                                             <children>
                                                 <Button mnemonicParsing="false" onAction="#handleOnActionBrowseDocuments" text="Durchsuchen" />
+                                                <Button mnemonicParsing="false" onAction="#handleOnActionDownloadDocuments" text="Herunterladen" />
                                                 <Button mnemonicParsing="false" onAction="#handleOnActionDeleteDocument" text="Entfernen" />
                                             </children>
                                             <VBox.margin>
@@ -673,7 +692,7 @@
                                                 <Insets left="10.0" />
                                             </VBox.margin>
                                         </Label>
-                                        <ListView fx:id="documentsListView" prefHeight="200.0" prefWidth="200.0"/>
+                                        <ListView fx:id="documentsListView" prefHeight="200.0" prefWidth="200.0" />
                                     </children>
                                     <padding>
                                         <Insets top="20.0" />

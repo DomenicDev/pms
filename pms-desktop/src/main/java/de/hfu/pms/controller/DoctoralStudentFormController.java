@@ -19,6 +19,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -975,6 +976,48 @@ public class DoctoralStudentFormController implements Initializable {
             // in any way we want to remove it from the list view
             documentsListView.getItems().remove(documentsListView.getSelectionModel().getSelectedItem());
         }
+    }
+
+    @FXML
+    private void handleOnActionDownloadDocuments(ActionEvent actionEvent){
+        Collection<DocumentInformationDTO> selectedFiles = documentsListView.getSelectionModel().getSelectedItems();
+        if(selectedFiles.size() < 1) {
+            eventBus.post(new AlertNotificationEvent(1, "Bitte wählen Sie ein zu herunterladendes Dokument aus."));
+            return;
+        }
+        Collection<DocumentInformationDTO> downloadable = new HashSet<>();
+        Collection<DocumentInformationDTO> notDownloadable = new HashSet<>();
+
+        // ensure that only documents that have already been added to the doctoralStudent are downloaded
+        for(DocumentInformationDTO doc : selectedFiles){
+            if(doctoralStudent.getDocuments().contains(doc)){
+                downloadable.add(doc);
+            }
+            else{
+                notDownloadable.add(doc);
+            }
+        }
+
+        // select download location
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Ablageort");
+        File defaultDirectory = new File(System.getProperty("user.home")+"/Downloads/");
+        directoryChooser.setInitialDirectory(defaultDirectory);
+        File selectedDirectory = directoryChooser.showDialog(null);
+
+        if (selectedDirectory == null) {
+            // return if user did not select a directory
+            return;
+        }
+
+        logger.log(Level.DEBUG, "Preparing to download " + downloadable.size() + " document(s).");
+
+        // todo request downloadable items and store them in the defined directory
+        //Collection<DocumentDTO> downloadedDocuments = new HashSet<>(); // DocumentService
+        //eventBus.post(new RequestDocumentsEvent(downloadable, selectedDirectory)); //provide the selectedDirectory so it doesn't have to be remembered in a global variable
+        //logger.log(Level.DEBUG, "requested the selected documents from the server... waiting for success or failed event response");
+
+        //logger.log(Level.DEBUG, "Successfully stored " + downloadedDocuments.size() + " document(s) in " + selectedDirectory);
     }
 
     private void updateFacultyCombobox(){
