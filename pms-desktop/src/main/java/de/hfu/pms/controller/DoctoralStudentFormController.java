@@ -987,7 +987,6 @@ public class DoctoralStudentFormController implements Initializable {
         }
         Collection<DocumentInformationDTO> downloadable = new HashSet<>();
         Collection<DocumentInformationDTO> notDownloadable = new HashSet<>();
-        String locals = "";
 
         // ensure that only documents that have already been added to the doctoralStudent are downloaded
         for(DocumentInformationDTO doc : selectedFiles){
@@ -996,7 +995,6 @@ public class DoctoralStudentFormController implements Initializable {
             }
             else{
                 notDownloadable.add(doc);
-                locals += doc.getFilename() + "\n";
             }
         }
 
