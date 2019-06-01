@@ -19,7 +19,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -321,6 +320,10 @@ public class DoctoralStudentFormController implements Initializable {
     }
 
     public void fillFormMask(DoctoralStudentDTO doctoralStudent) {
+        if (doctoralStudent == null) {
+            return;
+        }
+
         this.doctoralStudent = doctoralStudent;
         this.editMode = true;
 
