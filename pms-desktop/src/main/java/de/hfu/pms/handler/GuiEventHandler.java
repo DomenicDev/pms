@@ -14,12 +14,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.apache.commons.io.FilenameUtils;
 
-import java.io.IOException;
+import java.io.*;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class GuiEventHandler {
 
@@ -230,4 +234,45 @@ public class GuiEventHandler {
         alert.show();
     }
 
+    @Subscribe
+    public void handleDocumentRequestEvent(RequestDocumentsEvent event){
+        Collection<DocumentDTO> documents = new HashSet<>();
+        Collection<DocumentInformationDTO> requestedDocuments = event.getDocuments();
+        for(DocumentInformationDTO doc : requestedDocuments){
+            // todo: show some kind of progress window
+            documents.add(applicationServices.getDocument(doc));
+        }
+
+        // select file storage location
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Ablageort");
+        File defaultDirectory = new File(System.getProperty("user.home")+"/Downloads/");
+        directoryChooser.setInitialDirectory(defaultDirectory);
+        File selectedDirectory = directoryChooser.showDialog(null);
+
+        if (selectedDirectory == null) {
+            // return if user did not select a directory
+            return;
+        }
+        try {
+            for(DocumentDTO doc : documents){
+                // rename file according to the Windows naming convention if a file with the same name already exists
+                String ext = FilenameUtils.getExtension(doc.getFilename());
+                String fileNameWithoutExt = FilenameUtils.removeExtension(doc.getFilename());
+                File document = new File(selectedDirectory + "/" + fileNameWithoutExt + "." + ext);
+                int i = 2;
+                while(document.exists()){
+                    document = new File(selectedDirectory + "/" + fileNameWithoutExt + "(" + i++ + ")." + ext);
+                }
+
+                // write file
+                OutputStream os = new FileOutputStream(document);
+                os.write(doc.getData());
+                os.close();
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 }

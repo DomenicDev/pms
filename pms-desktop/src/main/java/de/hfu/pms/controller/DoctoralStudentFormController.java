@@ -987,6 +987,7 @@ public class DoctoralStudentFormController implements Initializable {
         }
         Collection<DocumentInformationDTO> downloadable = new HashSet<>();
         Collection<DocumentInformationDTO> notDownloadable = new HashSet<>();
+        String locals = "";
 
         // ensure that only documents that have already been added to the doctoralStudent are downloaded
         for(DocumentInformationDTO doc : selectedFiles){
@@ -995,29 +996,30 @@ public class DoctoralStudentFormController implements Initializable {
             }
             else{
                 notDownloadable.add(doc);
+                locals += doc.getFilename() + "\n";
             }
         }
 
-        // select download location
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setTitle("Ablageort");
-        File defaultDirectory = new File(System.getProperty("user.home")+"/Downloads/");
-        directoryChooser.setInitialDirectory(defaultDirectory);
-        File selectedDirectory = directoryChooser.showDialog(null);
+        if(notDownloadable.size() > 0){
+            //confirm dialog
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Dokument(e) nicht zugeordnet");
+            alert.setHeaderText("Folgende Dokumente sind dem Datensatz noch nicht zugeordnet und werden deshalb beim Download ignoriert:");
 
-        if (selectedDirectory == null) {
-            // return if user did not select a directory
-            return;
+            String documentNames = "";
+            for(DocumentInformationDTO file : notDownloadable){
+                documentNames += file.getFilename() + "\n";
+            }
+            alert.setContentText(documentNames);
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() != ButtonType.OK) {
+                // cancel
+                return;
+            }
         }
-
-        logger.log(Level.DEBUG, "Preparing to download " + downloadable.size() + " document(s).");
-
-        // todo request downloadable items and store them in the defined directory
-        //Collection<DocumentDTO> downloadedDocuments = new HashSet<>(); // DocumentService
-        //eventBus.post(new RequestDocumentsEvent(downloadable, selectedDirectory)); //provide the selectedDirectory so it doesn't have to be remembered in a global variable
-        //logger.log(Level.DEBUG, "requested the selected documents from the server... waiting for success or failed event response");
-
-        //logger.log(Level.DEBUG, "Successfully stored " + downloadedDocuments.size() + " document(s) in " + selectedDirectory);
+        eventBus.post(new RequestDocumentsEvent(downloadable));
+        logger.log(Level.DEBUG, "requested the selected documents(" + downloadable.size() +") from the server...");
     }
 
     private void updateFacultyCombobox(){

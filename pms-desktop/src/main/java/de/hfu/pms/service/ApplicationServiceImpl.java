@@ -17,6 +17,7 @@ import javafx.collections.transformation.SortedList;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
+import javax.print.Doc;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
@@ -357,6 +358,18 @@ public class ApplicationServiceImpl implements ApplicationServices {
         try {
             String response = restClient.get(HOST_URL + USER_PREFIX + "getList");
             return mapper.readValue(response, new TypeReference<List<UserDTO>>(){});
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public DocumentDTO getDocument(DocumentInformationDTO documentInformation){
+        try {
+            String json = restClient.get(STUDENT_SERVICES + "/docs/" + documentInformation.getId());
+            DocumentDTO dto = mapper.readValue(json, DocumentDTO.class);
+            return dto;
         } catch (IOException e) {
             e.printStackTrace();
         }

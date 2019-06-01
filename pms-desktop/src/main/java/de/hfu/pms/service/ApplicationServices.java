@@ -75,6 +75,8 @@ public interface ApplicationServices {
 
     List<UserDTO> getAllUsers();
 
+    DocumentDTO getDocument(DocumentInformationDTO documentInformation);
+
     void initEntityPool();
 
 
