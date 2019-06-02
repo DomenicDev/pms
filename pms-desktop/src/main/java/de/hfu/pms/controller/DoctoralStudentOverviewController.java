@@ -16,12 +16,17 @@ import de.hfu.pms.shared.utils.Converter;
 import de.hfu.pms.utils.CollectionUtils;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import org.apache.log4j.Level;
@@ -61,6 +66,15 @@ public class DoctoralStudentOverviewController implements Initializable {
     @FXML
     private TableColumn<PreviewDoctoralStudentDTO, Gender> searchResultGenderTableColumn;
 
+    ObservableList<PreviewDoctoralStudentDTO> masterData = FXCollections.observableArrayList();
+
+    public DoctoralStudentOverviewController(){
+        FacultyDTO faculty = new FacultyDTO((long)1, "Informatik");
+        masterData.add(new PreviewDoctoralStudentDTO(500L, "Jahnsen", "Jan", faculty, "jan.jahnsen@mail.com", "017322497814", Gender.Male));
+        masterData.add(new PreviewDoctoralStudentDTO(500L, "Jahnsen", "Meli", faculty, "jan.jahnsen@mail.com", "017322497814", Gender.Male));
+        masterData.add(new PreviewDoctoralStudentDTO(500L, "Jahnsen", "Kurt", faculty, "jan.jahnsen@mail.com", "017322497814", Gender.Male));
+
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -85,6 +99,9 @@ public class DoctoralStudentOverviewController implements Initializable {
                 }
             }
         });
+
+
+
     }
 
     @FXML
@@ -116,11 +133,11 @@ public class DoctoralStudentOverviewController implements Initializable {
     }
 
     @FXML
-    public void handleOnActionSearchButton(ActionEvent event) {
+    public void handleOnActionSearchButton(KeyEvent event) {
         // todo
         // request a Search
         // print result
-
+/*
         String searchterm = searchTextField.getText();
 
         FacultyDTO faculty = new FacultyDTO((long)1, "Informatik");
@@ -130,6 +147,29 @@ public class DoctoralStudentOverviewController implements Initializable {
         Collection<PreviewDoctoralStudentDTO> students = new HashSet<>(Arrays.asList(student1, student2));
 
         searchResultTableView.getItems().addAll(students);
+
+ */
+
+        FilteredList<PreviewDoctoralStudentDTO> filterStudent = new FilteredList<>(masterData, p ->true);
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filterStudent.setPredicate(pers ->{
+                if (newValue == null || newValue.isEmpty()){
+                    return true;
+                }
+                String input = newValue.toLowerCase();
+               if(pers.getName().toLowerCase().indexOf(input) != -1){
+                   return true;
+               }
+                return false;
+            });
+            SortedList<PreviewDoctoralStudentDTO> sortedList = new SortedList<>(filterStudent);
+            sortedList.comparatorProperty().bind(searchResultTableView.comparatorProperty());
+            searchResultTableView.setItems(sortedList);
+        });
+
+
+
+
     }
 
     private void initPreviewTables() {
