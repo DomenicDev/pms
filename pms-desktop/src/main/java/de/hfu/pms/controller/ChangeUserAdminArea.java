@@ -185,7 +185,7 @@ public class ChangeUserAdminArea  implements Initializable {
             ((Button)event.getSource()).getScene().getWindow().hide();
 
         }*/
-
+        ((Button) event.getSource()).getScene().getWindow().hide();
     }
 
    /*private boolean writeToUserDTO() {
@@ -209,6 +209,7 @@ public class ChangeUserAdminArea  implements Initializable {
         }
         return userValidator.validationSuccessful();
     }*/
+
 
     @FXML
     void handleActionEventCloseScene(ActionEvent event) {

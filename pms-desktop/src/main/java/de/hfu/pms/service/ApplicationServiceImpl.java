@@ -330,7 +330,7 @@ public class ApplicationServiceImpl implements ApplicationServices {
     @Override
     public UserDTO changeUserPrivileges(String username, UserRole newUserRole) {
         try {
-            String response = restClient.get(HOST_URL + USER_PREFIX +"updateRole/" + username);
+            String response = restClient.postJson(HOST_URL + USER_PREFIX +"updateRole/" + username, mapper.writeValueAsString(newUserRole));
             logger.log(Level.INFO, response);
             return mapper.readValue(response, UserDTO.class);
         } catch (IOException e) {
