@@ -49,10 +49,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updatePassword(String username, String newPassword) {
-        String encodedNewPassword = passwordEncoder.encode(newPassword);
         for (User user : userDao.findAll()) {
             if (user.getUsername().equals(username)) {
-                user.setPassword(encodedNewPassword);
+                user.setPassword(passwordEncoder.encode(newPassword));
                 userDao.save(user);
                 return user;
             }

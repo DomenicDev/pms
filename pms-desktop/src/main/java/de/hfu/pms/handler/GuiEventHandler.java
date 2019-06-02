@@ -153,9 +153,14 @@ public class GuiEventHandler {
 
     @Subscribe
     public void handleAddUserEvent(RequestAddUserEvent requestAddUserEvent){
-        UserDTO userDTO = requestAddUserEvent.getUser();
-        UserDTO response = applicationServices.addUser(userDTO);
-        eventBus.post(new SuccessfullyAddedUserEvent(response));
+        try {
+            UserDTO userDTO = requestAddUserEvent.getUser();
+            UserDTO response = applicationServices.addUser(userDTO);
+            eventBus.post(new SuccessfullyAddedUserEvent(response));
+        }catch (BusinessException e){
+            e.printStackTrace();
+            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.ERROR,"User konnte nicht hinzugefügt werden."));
+        }
     }
 
     @Subscribe
@@ -175,9 +180,15 @@ public class GuiEventHandler {
 
     @Subscribe
     public void handleRoleChange(RequestChangeUserRoleEvent requestChangeUserRoleEvent){
-        UserDTO userDTO = requestChangeUserRoleEvent.getUser();
-        UserDTO response = applicationServices.changeUserPrivileges(userDTO.getUsername(),userDTO.getRole());
-        eventBus.post(new SuccessfullyChangedUserRoleEvent(response));
+        try {
+            UserDTO userDTO = requestChangeUserRoleEvent.getUser();
+            UserDTO response = null;
+            response = applicationServices.changeUserPrivileges(userDTO.getUsername(),userDTO.getRole());
+            eventBus.post(new SuccessfullyChangedUserRoleEvent(response));
+        } catch (BusinessException e) {
+            e.printStackTrace();
+            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.ERROR, "Konnte Rolle nicht ändern"));
+        }
     }
 
     @Subscribe void RequestChangeUserInformation( RequestChangeUserInformationEvent requestChangeUserInformationEvent){

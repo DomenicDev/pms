@@ -65,15 +65,15 @@ public interface ApplicationServices {
 
     UserDTO changePassword(UserDTO userDTO, String newPassword) throws BusinessException;
 
-    UserDTO addUser(UserDTO userDTO);
+    UserDTO addUser(UserDTO userDTO) throws BusinessException;
 
-    void removeUser(String username);
+    void removeUser(String username) throws BusinessException;
 
-    UserDTO changeUserPrivileges(String username, UserRole newUserRole);
+    UserDTO changeUserPrivileges(String username, UserRole newUserRole) throws BusinessException;
 
-    UserDTO changeUserEmail(String username, String email);
+    UserDTO changeUserEmail(String username, String email) throws BusinessException;
 
-    UserDTO getUser(String username);
+    UserDTO getUser(String username) throws BusinessException;
 
     List<UserDTO> getAllUsers();
 

@@ -302,7 +302,7 @@ public class ApplicationServiceImpl implements ApplicationServices {
     }
 
     @Override
-    public UserDTO addUser(UserDTO userDTO) {
+    public UserDTO addUser(UserDTO userDTO) throws BusinessException {
         try {
             String json = mapper.writeValueAsString(userDTO);
             String response = restClient.postJson(HOST_URL + USER_PREFIX + "create", json);
@@ -314,21 +314,22 @@ public class ApplicationServiceImpl implements ApplicationServices {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        throw new BusinessException("could not add new User...");
     }
 
     @Override
-    public void removeUser(String username) {
+    public void removeUser(String username) throws BusinessException {
         try {
             String response = restClient.get(HOST_URL + USER_PREFIX +"delete/" + username);
             logger.log(Level.INFO, response);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        throw new BusinessException("could nut remove User...");
     }
 
     @Override
-    public UserDTO changeUserPrivileges(String username, UserRole newUserRole) {
+    public UserDTO changeUserPrivileges(String username, UserRole newUserRole) throws BusinessException {
         try {
             String response = restClient.postJson(HOST_URL + USER_PREFIX +"updateRole/" + username, mapper.writeValueAsString(newUserRole));
             logger.log(Level.INFO, response);
@@ -336,11 +337,11 @@ public class ApplicationServiceImpl implements ApplicationServices {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        throw new BusinessException("could not change User privileges...");
     }
 
     @Override
-    public UserDTO changeUserEmail(String username, String email) {
+    public UserDTO changeUserEmail(String username, String email) throws BusinessException {
         try {
             String response = restClient.postJson(HOST_URL + USER_PREFIX +"updateEmail/" + username, email);
             UserDTO dto = mapper.readValue(response, UserDTO.class);
@@ -349,18 +350,18 @@ public class ApplicationServiceImpl implements ApplicationServices {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        throw new BusinessException("could not change email...");
     }
 
     @Override
-    public UserDTO getUser(String username) {
+    public UserDTO getUser(String username) throws BusinessException {
         try {
             String response = restClient.get(HOST_URL + USER_PREFIX + "get/" + username);
             return mapper.readValue(response,UserDTO.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        throw new BusinessException("could not get User");
     }
 
     @Override
