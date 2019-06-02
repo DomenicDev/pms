@@ -114,6 +114,9 @@ public class AddUserAdminAreaController implements Initializable {
                 if (userValidator.textFieldNotEmpty((TextFieldEmail))) {
                         user.setEmail(email);
                 }
+                if (!userValidator.passwordFieldsAreSimilar(passwordfielPassword,TextfieldPasswordRewrite))
+                        LabelAreBothPasswortsSimilar.setVisible(true);
+
                 if (userValidator.textFieldNotEmpty(TextfieldPasswordRewrite)){}
                 return userValidator.validationSuccessful();
         }
@@ -127,5 +130,6 @@ public class AddUserAdminAreaController implements Initializable {
         public void initialize(URL location, ResourceBundle resources) {
                 eventBus.register(this);
                 initComboBox();
+                LabelAreBothPasswortsSimilar.setVisible(false);
         }
 }

@@ -168,11 +168,6 @@ public class ApplicationServiceImpl implements ApplicationServices {
         return new UserDTO("admin", "1234","Bob","Baumeister","test@example.com", UserRole.ADMIN);
     }
 
-    @Override
-    public UserDTO ChangeAccountinformation(String forename, String lastname, String email) {
-
-        return null;
-    }
 
     @Override
     public List<UniversityDTO> getAllUniversities() {
@@ -301,6 +296,42 @@ public class ApplicationServiceImpl implements ApplicationServices {
         throw new BusinessException("could not change password...");
     }
 
+    public UserDTO changeUserEmail(UserDTO userDTO,String newEmail)throws BusinessException{
+        //todo is never used?
+        try {
+            {
+                String json = newEmail;
+                String response = restClient.postJson(HOST_URL +USER_PREFIX+"updateEmail/" +userDTO.getUsername(),json);
+                UserDTO dto =mapper.readValue(response,UserDTO.class);
+                logger.log(Level.INFO,response);
+                return dto;
+            }
+        }catch (JsonProcessingException e) {
+        e.printStackTrace();
+        } catch (IOException e) {
+        e.printStackTrace();
+    }
+        throw new BusinessException("could not change email...");
+    }
+
+      @Override
+    public UserDTO ChangeAccountinformation(String newForname, String newLastname, String newEmail)throws BusinessException {
+          try {
+              String json = newForname;
+              String response = restClient.postJson(HOST_URL + USER_PREFIX + "updateForname/" + "updateLastname" + "updateEmail", json);
+              UserDTO dto = mapper.readValue(response,UserDTO.class);
+              logger.log(Level.INFO,response);
+              return dto;
+          } catch (JsonProcessingException e) {
+              e.printStackTrace();
+          } catch (IOException e) {
+              e.printStackTrace();
+          }
+          throw new BusinessException("Could not change AccountInformation");
+      }
+
+
+
     @Override
     public UserDTO addUser(UserDTO userDTO) throws BusinessException {
         try {
@@ -338,6 +369,12 @@ public class ApplicationServiceImpl implements ApplicationServices {
             e.printStackTrace();
         }
         throw new BusinessException("could not change User privileges...");
+    }
+
+    @Override
+    public UserDTO changeAccountInformation(String forename, String lastname, String email) throws BusinessException {
+        return null;
+        //todo impl a event for lastname forename and email also on webserver side
     }
 
     @Override

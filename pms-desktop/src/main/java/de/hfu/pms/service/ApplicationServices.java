@@ -45,7 +45,7 @@ public interface ApplicationServices {
      */
     UserDTO getCurrentUser();
 
-    UserDTO ChangeAccountinformation(String forename, String lastname, String email);
+    UserDTO ChangeAccountinformation(String forename, String lastname, String email) throws BusinessException;
 
     Collection<UniversityDTO> getAllUniversities();
 
@@ -70,6 +70,8 @@ public interface ApplicationServices {
     void removeUser(String username) throws BusinessException;
 
     UserDTO changeUserPrivileges(String username, UserRole newUserRole) throws BusinessException;
+
+    UserDTO changeAccountInformation( String forename, String lastname, String email)throws BusinessException;
 
     UserDTO changeUserEmail(String username, String email) throws BusinessException;
 

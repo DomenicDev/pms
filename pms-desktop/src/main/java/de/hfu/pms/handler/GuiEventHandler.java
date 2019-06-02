@@ -191,10 +191,30 @@ public class GuiEventHandler {
         }
     }
 
-    @Subscribe void RequestChangeUserInformation( RequestChangeUserInformationEvent requestChangeUserInformationEvent){
-        UserDTO userDTO =requestChangeUserInformationEvent.getUserDTO();
+    @Subscribe
+    public void handleEmailChange(RequestChangeEmailEvent requestChangeEmailEvent) {
+        try {
+
+
+            UserDTO userDTO = requestChangeEmailEvent.getUser();
+            String newEmail = requestChangeEmailEvent.getNewEmail();
+            UserDTO response = null;
+            response = applicationServices.changeUserEmail(userDTO.getUsername(), newEmail);
+            eventBus.post(new SuccessfullyChangedEmailEvent(response));
+        }catch (BusinessException e){
+            e.printStackTrace();
+            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.ERROR,"Konnte Email nicht ändern"));
+        }
+    }
+
+    @Subscribe void requestChangeUserInformation( RequestChangeUserInformationEvent requestChangeUserInformationEvent) throws BusinessException {
         UserDTO user = requestChangeUserInformationEvent.getUserDTO();
-        eventBus.post((new SuccessfullyChangedUserInformationEvent(user)));
+        String newForename = requestChangeUserInformationEvent.getNewForename();
+        String newLastname =requestChangeUserInformationEvent.getNewLastname();
+        String newEmail =requestChangeUserInformationEvent.getNewEmail();
+        UserDTO response = null;
+        response =applicationServices.changeAccountInformation(user.getForename(),user.getLastname(),user.getEmail());
+        eventBus.post((new SuccessfullyChangedUserInformationEvent(response)));
 
     }
 
