@@ -55,7 +55,7 @@ public class PasswordAdminAreaController implements Initializable {
         public void edit(UserDTO user) {
                 this.user = user;
 
-                PasswordFieldPassword.setText(user.getPassword());
+                //PasswordFieldPassword.setText(user.getPassword());
                 lableUsername.setText(user.getUsername());
 
         }
