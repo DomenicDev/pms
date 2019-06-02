@@ -14,12 +14,12 @@ public class PreviewDoctoralStudentDTO {
 
     public PreviewDoctoralStudentDTO() {
     }
-/*
+
     public PreviewDoctoralStudentDTO(String forname, String lastname){
         this.foreName = forname;
         this.name = lastname;
     }
-*/
+
     public PreviewDoctoralStudentDTO(Long id, String name, String foreName, FacultyDTO faculty, String email, String phoneNumber, Gender gender) {
         this.id = id;
         this.name = name;

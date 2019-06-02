@@ -1,11 +1,15 @@
 package de.hfu.pms.controller;
 
 import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.AlertNotificationEvent;
+import de.hfu.pms.events.RequestAlertedDoctoralStudentEvent;
+import de.hfu.pms.events.ShowAlertedDoctoralStudentsEvent;
 import de.hfu.pms.shared.dto.FacultyDTO;
 import de.hfu.pms.shared.dto.PreviewDoctoralStudentDTO;
 import de.hfu.pms.shared.enums.Gender;
+import de.hfu.pms.utils.RepresentationWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -14,10 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.PieChart;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.awt.event.KeyEvent;
@@ -47,6 +48,8 @@ public class HomeController implements Initializable {
     private TableColumn<PreviewDoctoralStudentDTO, String> lastname;
     @FXML
     private TextField searchBox;
+    @FXML
+    private ListView<PreviewDoctoralStudentDTO> alertListView;
 
     ObservableList<PreviewDoctoralStudentDTO> masterData = FXCollections.observableArrayList();
 
@@ -68,6 +71,24 @@ public class HomeController implements Initializable {
         pieChart.setData(pieChartData);
 
 
+        // create cell factory for alert list view to customize representation
+        alertListView.setCellFactory((param -> new ListCell<>() {
+
+            @Override
+            protected void updateItem(PreviewDoctoralStudentDTO item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null) {
+                    return;
+                }
+
+                setText(RepresentationWrapper.getPreviewRepresentation(item));
+            }
+        }));
+
+        // post event for receiving data for alert list view
+        eventBus.post(new RequestAlertedDoctoralStudentEvent());
+
+
         //Suchfunktion
 
 
@@ -75,11 +96,13 @@ public class HomeController implements Initializable {
         // PreviewDoctoralStudentDTO student1 = new PreviewDoctoralStudentDTO(500L, "Jahnsen", "Jan", faculty, "jan.jahnsen@mail.com", "017322497814", Gender.Male);
         //PreviewDoctoralStudentDTO student2 = new PreviewDoctoralStudentDTO(501L, "Fröhlich", "Alina", faculty, "ali.fr@mail.com", "015121639248", Gender.Female);
         //PreviewDoctoralStudentDTO student3 = new PreviewDoctoralStudentDTO(500L, "test", "test", faculty, "jan.jahnsen@mail.com", "017322497814", Gender.Male);
-        //  PreviewDoctoralStudentDTO student4 = new PreviewDoctoralStudentDTO("ilker","coban");
+         PreviewDoctoralStudentDTO student4 = new PreviewDoctoralStudentDTO("ilker","coban");
+        PreviewDoctoralStudentDTO student5 = new PreviewDoctoralStudentDTO("test","test");
         // masterData.add(student1);
         // masterData.add(student2);
         // masterData.add(student3);
-        // masterData.add(student4);
+         masterData.add(student4);
+         masterData.add(student5);
 
         personen.setItems(masterData);
         forname.setCellValueFactory(new PropertyValueFactory<>("foreName"));
@@ -88,14 +111,20 @@ public class HomeController implements Initializable {
 
     }
 
+    @Subscribe
+    public void updateAlertListView(ShowAlertedDoctoralStudentsEvent event) {
+        alertListView.getItems().clear();
+        alertListView.getItems().addAll(event.getAlertedStudents());
+    }
+
 
     @FXML
     public void handleOnActionAlertTestButton(ActionEvent event) {
         eventBus.post(new AlertNotificationEvent(1, "Ihre Mitgliedschaft endet bald!\r\nSie werden aus der Datenbank geloescht sofern sie innerhalb von XXX keinen Widerspruch einlegen"));
     }
-/*
+
     @FXML
-    public void searchRecord(KeyEvent ke) {
+    public void searchRecord() {
         FilteredList<PreviewDoctoralStudentDTO> filteredData = new FilteredList<>(masterData, p -> true);
 
         searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -112,11 +141,12 @@ public class HomeController implements Initializable {
                 }
                 return false;
             });
+
             SortedList<PreviewDoctoralStudentDTO> sortedList = new SortedList<>(filteredData);
             sortedList.comparatorProperty().bind(personen.comparatorProperty());
             personen.setItems(sortedList);
         });
 
     }
-*/
+
 }

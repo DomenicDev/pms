@@ -36,7 +36,7 @@
             <font>
                 <Font size="18.0" />
             </font></Label>
-        <TextField fx:id="searchBox" /> <!--onKeyTyped="#searchRecord" -->
+        <TextField fx:id="searchBox" onKeyTyped="#searchRecord" /> <!--onKeyTyped="#searchRecord" -->
         <TableView fx:id="personen"  prefHeight="400.0" prefWidth="200.0">
             <columns>
                 <TableColumn fx:id="forname" prefWidth="75.0" text="vorname" />
