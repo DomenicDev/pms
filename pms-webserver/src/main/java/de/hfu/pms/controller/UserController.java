@@ -3,7 +3,6 @@ package de.hfu.pms.controller;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import de.hfu.pms.exceptions.UserNotFoundException;
-import de.hfu.pms.dao.UserDao;
 import de.hfu.pms.exceptions.WrongPasswordException;
 import de.hfu.pms.model.User;
 import de.hfu.pms.model.UserRole;
@@ -13,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -20,14 +20,12 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
-    private final UserDao userDao;
     private final UserService service;
     private final ModelMapper modelMapper;
 
 
     @Autowired
-    public UserController(UserDao userDao, UserService userService, ModelMapper modelMapper) {
-        this.userDao = userDao;
+    public UserController(UserService userService, ModelMapper modelMapper) {
         this.service = userService;
         this.modelMapper = modelMapper;
     }
@@ -49,30 +47,27 @@ public class UserController {
 
     @PostMapping("/updatePassword/{username}")
     @ResponseStatus(HttpStatus.OK)
-    public String updatePassword(@PathVariable String username, @RequestBody ObjectNode json) {
-        String newPassword = json.findValue("newPassword").asText();
-        String oldPassword = json.findValue("oldPassword").asText();
-        service.updatePassword(username, oldPassword, newPassword);
-        return "Password sucessfully changed";
+    public UserDTO updatePassword(@PathVariable String username, @RequestBody String newPassword) {
+        return convertToDTO(service.updatePassword(username, newPassword));
     }
 
     @PostMapping("/updateRole/{username}")
     @ResponseStatus(HttpStatus.OK)
     public UserDTO updateUserRole(@PathVariable String username, @RequestBody UserRole newRole) {
         User user = service.updateUserRole(username , newRole);
-        UserDTO userDTO = convertToDTO(user);
-        return userDTO;
+        return convertToDTO(user);
+    }
+
+    @PostMapping("/updateEmail/{username}")
+    @ResponseStatus(HttpStatus.OK)
+    public UserDTO updateUserEmail(@PathVariable String username, @RequestBody String email) {
+        return convertToDTO(service.updateUserEmail(username , email));
     }
 
     @GetMapping("/get/{username}")
     @ResponseStatus(HttpStatus.OK)
     public UserDTO getUser(@PathVariable String username) {
-        try {
-            User returnUser = service.getUser(username);
-            return convertToDTO(returnUser);
-        } catch (NullPointerException e) {
-            throw new UserNotFoundException(username);
-        }
+        return convertToDTO(service.getUser(username));
     }
 
     @GetMapping("/getList")
@@ -91,7 +86,7 @@ public class UserController {
 
     //Error Response
 
-    @ResponseStatus(value = HttpStatus.CONFLICT, reason = "This Username already exists.")
+    @ResponseStatus(value = HttpStatus.CONFLICT, reason = "This username already exists.")
     @ExceptionHandler(org.springframework.dao.DataIntegrityViolationException.class)
     public void uniqueUsernameViolation() {
     }

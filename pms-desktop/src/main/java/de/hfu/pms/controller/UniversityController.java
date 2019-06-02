@@ -8,6 +8,7 @@ import de.hfu.pms.events.SuccessfullyAddedUniversityEvent;
 import de.hfu.pms.events.SuccessfullyUpdatedUniversityEvent;
 import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.UniversityDTO;
+import de.hfu.pms.utils.CollectionUtils;
 import de.hfu.pms.utils.GuiLoader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,11 +26,7 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import java.net.URL;
-import java.util.LinkedList;
 import java.util.ResourceBundle;
-
-
-
 
 public class UniversityController implements Initializable {
 
@@ -52,6 +49,9 @@ public class UniversityController implements Initializable {
     private TableColumn<UniversityDTO, String> TableColumnKuerzel;
 
     @FXML
+    private TableColumn<UniversityDTO,String> TableColumnContacttoUniversity;
+
+    @FXML
     private Button universityAddButton;
 
     @FXML
@@ -60,7 +60,7 @@ public class UniversityController implements Initializable {
 
             ResourceBundle bundle = ResourceBundle.getBundle("lang/strings");
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/screens/Univerity_add_screen.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/screens/university_form_screen.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.setTitle("Universität Hinzufügen");
@@ -72,6 +72,7 @@ public class UniversityController implements Initializable {
             logger.log(Level.ERROR, "Unable to load the University add screen");
         }
     }
+
     @FXML
     void handleChangeUniversityButton(ActionEvent event) {
         try {
@@ -83,7 +84,7 @@ public class UniversityController implements Initializable {
             }
 
             ResourceBundle bundle = GuiLoader.getResourceBundle();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/screens/Univerity_add_screen.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/screens/university_form_screen.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.setTitle("Universität Ändern");
@@ -99,11 +100,23 @@ public class UniversityController implements Initializable {
         }
     }
 
+    @FXML
+    void handleDeleteUniversityButton(ActionEvent event) {
+        UniversityDTO university = tableViewUniversity.getSelectionModel().getSelectedItem();
+        if (university == null) {
+            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.INFO, "Bitte Uni auswählen"));
+            return;
+        }
+        // todo: confirm dialog + check for dependencies & delete if there are none
+        // ...
+    }
+
     private void initUniversityTable (ResourceBundle resources){
         TableColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         TableColumnOrt.setCellValueFactory(new PropertyValueFactory<>("location"));
         TableColumnLand.setCellValueFactory(new PropertyValueFactory<>("country"));
         TableColumnKuerzel.setCellValueFactory(new PropertyValueFactory<>("abbreviation"));
+        TableColumnContacttoUniversity.setCellValueFactory(new PropertyValueFactory<>("contact"));
     }
 
     @Subscribe
@@ -115,15 +128,10 @@ public class UniversityController implements Initializable {
     @Subscribe
     public void handleUpdateEvent(SuccessfullyUpdatedUniversityEvent event){
         UniversityDTO newUniversity = event.getUniversity();
-        LinkedList<UniversityDTO> itemsToRemove = new LinkedList<UniversityDTO>();
+        CollectionUtils.removeFromList(newUniversity, tableViewUniversity.getItems(), (original, collectionItem) -> original.getId().equals(collectionItem.getId()));
 
-        for ( UniversityDTO universityDTO : tableViewUniversity.getItems()){
-            if(universityDTO.getId().equals(newUniversity.getId())) {
-                itemsToRemove.add(universityDTO);
-            }
-        }
-        tableViewUniversity.getItems().removeAll(itemsToRemove);
         tableViewUniversity.getItems().add(newUniversity);
+        tableViewUniversity.refresh();
     }
 
     @Override

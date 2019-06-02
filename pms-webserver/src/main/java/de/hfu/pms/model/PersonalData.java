@@ -58,9 +58,6 @@ public class PersonalData {
     public PersonalData() {
     }
 
-    @Column
-    private byte[] photo; // saved as blob
-
     public void setForename(String forename) {
         this.forename = forename;
     }
@@ -165,11 +162,4 @@ public class PersonalData {
         this.telephone = telephone;
     }
 
-    public byte[] getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(byte[] photo) {
-        this.photo = photo;
-    }
 }

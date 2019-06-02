@@ -3,49 +3,41 @@ package de.hfu.pms.controller;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
-import de.hfu.pms.events.CreateDocStudentPropertyEvent;
-import de.hfu.pms.events.SaveDoctoralStudentEvent;
-import de.hfu.pms.events.SuccessfullyAddedUniversityEvent;
+import de.hfu.pms.events.*;
 import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.*;
 import de.hfu.pms.shared.enums.*;
-import de.hfu.pms.utils.FormValidator;
-import de.hfu.pms.utils.GuiLoader;
-import de.hfu.pms.utils.RepresentationWrapper;
-import de.hfu.pms.utils.WrappedEntity;
-import javafx.beans.property.SimpleStringProperty;
+import de.hfu.pms.utils.*;
+import javafx.collections.ListChangeListener;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.controlsfx.control.textfield.TextFields;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.nio.file.Files;
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
 
 public class DoctoralStudentFormController implements Initializable {
 
     private Logger logger = Logger.getLogger(DoctoralStudentFormController.class);
-
     private DoctoralStudentDTO doctoralStudent = null;
-
     private EventBus eventBus = EventBusSystem.getEventBus();
-
-    @FXML
-    private Button saveButton;
-
-    @FXML
-    private Button cancelButton;
 
     // Personal Data
     @FXML
@@ -78,6 +70,8 @@ public class DoctoralStudentFormController implements Initializable {
     private ComboBox<WrappedEntity<FamilyStatus>> familyStatusComboBox;
     @FXML
     private ComboBox<Integer> childrenCountComboBox;
+    @FXML
+    private ImageView photoImageView;
 
     /* *********** Graduation ***************** */
     // Qualified Graduation
@@ -92,13 +86,13 @@ public class DoctoralStudentFormController implements Initializable {
 
     // Target Graduation
     @FXML
-    private ComboBox<String> targetGraduationDegreeComboBox;
+    private TextField targetGraduationDegreeTextField;
     @FXML
     private TextField nameOfDissertationTextField;
     @FXML
     private TextField internalSupervisorTextField;
     @FXML
-    private ComboBox<WrappedEntity<FacultyHFU>> facultyHFUComboBox;
+    private ComboBox<WrappedEntity<FacultyDTO>> facultyHFUComboBox;
     @FXML
     private TextField externalSupervisorTextField;
     @FXML
@@ -156,8 +150,9 @@ public class DoctoralStudentFormController implements Initializable {
     @FXML
     private TableColumn<EmploymentEntryDTO, Campus> employmentCampusTableColumn;
     @FXML
-    private TableColumn<EmploymentEntryDTO, String> preTimesTableColumn;
-
+    private TableColumn<EmploymentEntryDTO, LocalDate> employmentBeginTableColumn;
+    @FXML
+    private TableColumn<EmploymentEntryDTO, LocalDate> employmentEndTableColumn;
     /* ***********Support ***************** */
     // travel cost university
     @FXML
@@ -215,7 +210,25 @@ public class DoctoralStudentFormController implements Initializable {
     @FXML
     private CheckBox agreementEvaluationCheckBox;
 
+    // Documents
+    @FXML
+    private ListView<DocumentInformationDTO> documentsListView;
 
+    // ---------------------------- //
+    //        CONTROL FLAGS         //
+    // ---------------------------- //
+    private boolean changedImage;
+    private boolean personalDataChanged;
+    private boolean qualificationChanged;
+    private boolean promotionChanged;
+    private boolean employmentChanged;
+    private boolean supportChanged;
+    private boolean alumniStateChanged;
+
+    private boolean editMode = false;
+
+    private Map<DocumentInformationDTO, File> addedDocuments = new HashMap<>();
+    private Collection<DocumentInformationDTO> deletedDocuments = new ArrayList<>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -224,6 +237,8 @@ public class DoctoralStudentFormController implements Initializable {
         // setup table columns
         initEmploymentTable(resources);
         initSupportTables(resources);
+
+        initDocumentsListView();
 
         initComboBoxes();
 
@@ -234,9 +249,12 @@ public class DoctoralStudentFormController implements Initializable {
         employmentLocationTableColumn.setCellValueFactory(new PropertyValueFactory<>("employmentLocation"));
         kindOfEmploymentTableColumn.setCellValueFactory(new PropertyValueFactory<>("kindOfEmployment"));
         employmentCampusTableColumn.setCellValueFactory(new PropertyValueFactory<>("campusOfDeployment"));
-        preTimesTableColumn.setCellValueFactory(param -> {
-            String text = (param.getValue().isPreEmploymentTimeToBeCharged()) ? resources.getString("yes") : resources.getString("no");
-            return new SimpleStringProperty(text);
+        employmentBeginTableColumn.setCellValueFactory(new PropertyValueFactory<>("employmentBegin"));
+        employmentEndTableColumn.setCellValueFactory(new PropertyValueFactory<>("employmentEnd"));
+
+        // listener for change flag
+        employmentTableView.getItems().addListener((ListChangeListener<EmploymentEntryDTO>) c -> {
+            onEmploymentChanged();
         });
     }
 
@@ -260,6 +278,12 @@ public class DoctoralStudentFormController implements Initializable {
         qualificationDateTableColumn.setCellValueFactory(new PropertyValueFactory<>("qualificationDate"));
         qualificationNameTableColumn.setCellValueFactory(new PropertyValueFactory<>("nameOfQualification"));
 
+        // add listener for control flag
+        travelCostConferenceTableView.getItems().addListener((ListChangeListener<TravelCostConferenceDTO>) c -> onSupportChanged());
+        travelCostUniversityTableView.getItems().addListener((ListChangeListener<TravelCostUniversityDTO>) c -> onSupportChanged());
+        consultingSupportTableView.getItems().addListener((ListChangeListener<ConsultingSupportDTO>) c -> onSupportChanged());
+        qualificationTableView.getItems().addListener((ListChangeListener<VisitedQualificationDTO>) c -> onSupportChanged());
+
     }
 
     private void initComboBoxes() {
@@ -267,16 +291,20 @@ public class DoctoralStudentFormController implements Initializable {
         familyStatusComboBox.getItems().addAll(RepresentationWrapper.getWrappedFamilyStatus());
         salutationComboBox.getItems().addAll(RepresentationWrapper.getWrappedSalutations());
         genderComboBox.getItems().addAll(RepresentationWrapper.getWrappedGenders());
-        childrenCountComboBox.getItems().addAll(0, 1, 2, 3, 4, 5, 6 ,7, 8 ,9);
+        childrenCountComboBox.getItems().addAll(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
         childrenCountComboBox.getSelectionModel().select(0);
 
         // graduation
         graduationComboBox.getItems().addAll(RepresentationWrapper.getWrappedGraduations());
-        for (WrappedEntity<DoctoralGraduation> wrappedEntity : RepresentationWrapper.getWrappedDoctoralGraduations()) {
-            targetGraduationDegreeComboBox.getItems().add(wrappedEntity.getRepresentation());
-        }
 
-        facultyHFUComboBox.getItems().addAll(RepresentationWrapper.getWrappedHFUFaculties());
+        // add some common target degrees to show for auto completion
+        TextFields.bindAutoCompletion(targetGraduationDegreeTextField, RepresentationWrapper.getTargetDegreeSuggestions());
+
+        // faculty
+        Collection<FacultyDTO> faculties = EntityPool.getInstance().getFaculties();
+
+        // init combo boxes with wrapped entities of the specific type
+        updateFacultyCombobox();
         ratingComboBox.getItems().addAll(RepresentationWrapper.getWrappedRatings());
 
         // university
@@ -292,7 +320,12 @@ public class DoctoralStudentFormController implements Initializable {
     }
 
     public void fillFormMask(DoctoralStudentDTO doctoralStudent) {
+        if (doctoralStudent == null) {
+            return;
+        }
+
         this.doctoralStudent = doctoralStudent;
+        this.editMode = true;
 
         PersonalDataDTO personalData = doctoralStudent.getPersonalData();
         AddressDTO personalAddress = personalData.getAddress();
@@ -311,6 +344,18 @@ public class DoctoralStudentFormController implements Initializable {
         dateOfBirthDatePicker.setValue(personalData.getDateOfBirth());
         emailTextField.setText(personalData.getEmail());
 
+        // photo
+        byte[] photoData = doctoralStudent.getPhoto();
+        if (photoData != null) {
+            try {
+                BufferedImage bufferedImage = ImageUtils.getImage(photoData);
+                Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+                photoImageView.setImage(image);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         // personal data combo boxes
         salutationComboBox.getSelectionModel().select(RepresentationWrapper.find(personalData.getSalutation(), salutationComboBox.getItems()));
         genderComboBox.getSelectionModel().select(RepresentationWrapper.find(personalData.getGender(), genderComboBox.getItems()));
@@ -326,11 +371,11 @@ public class DoctoralStudentFormController implements Initializable {
         graduationComboBox.getSelectionModel().select(RepresentationWrapper.find(qualifiedGraduation.getGraduation(), graduationComboBox.getItems()));
         subjectAreaTextField.setText(qualifiedGraduation.getSubjectArea());
         gradeTextField.setText(qualifiedGraduation.getGrade());
+        qualifiedGraduationUniversityComboBox.getSelectionModel().select(RepresentationWrapper.find(qualifiedGraduation.getGradedUniversity(), RepresentationWrapper.getWrappedUniversities(EntityPool.getInstance().getUniversities())));
+
 
         // target graduation
-        // todo
-        //targetGraduationDegreeComboBox.
-
+        targetGraduationDegreeTextField.setText(targetGraduationDTO.getTargetGraduationDegree());
         nameOfDissertationTextField.setText(targetGraduationDTO.getNameOfDissertation());
         internalSupervisorTextField.setText(targetGraduationDTO.getInternalSupervisor());
         facultyHFUComboBox.getSelectionModel().select(RepresentationWrapper.find(targetGraduationDTO.getFacultyHFU(), facultyHFUComboBox.getItems()));
@@ -359,20 +404,22 @@ public class DoctoralStudentFormController implements Initializable {
         prolongTillDatePicker.setValue(targetGraduationDTO.getExtendedMembershipEnd());
 
         if (memberSinceDatePicker.getValue() == null || memberUntilDatePicker.getValue() == null) {
-            hfuMemberCheckBox.setSelected(true);
-        } else {
             hfuMemberCheckBox.setSelected(false);
+        } else {
+            hfuMemberCheckBox.setSelected(true);
         }
+
 
         // external membership
         String externalProgram = externalCollegeNameTextField.getText();
+        System.out.println(externalProgram);
         externalCollegeNameTextField.setText(externalProgram);
-        externalMemberCheckBox.setSelected(externalProgram != null);
+        externalMemberCheckBox.setSelected(externalProgram != null && !externalProgram.isEmpty());
 
         // cancel
         String cancelReason = targetGraduationDTO.getCancelReason();
         cancelReasonTextField.setText(cancelReason);
-        promotionCanceledCheckBox.setSelected(cancelReason != null);
+        promotionCanceledCheckBox.setSelected(cancelReason != null && !cancelReason.isEmpty());
 
         // employments
         Set<EmploymentEntryDTO> employmentEntries = employment.getEmploymentEntries();
@@ -395,6 +442,11 @@ public class DoctoralStudentFormController implements Initializable {
         agreementNewsCheckBox.setSelected(alumniState.isAgreementNews());
         alumniState.setAgreementEvaluation(alumniState.isAgreementEvaluation());
 
+        // documents
+        if (doctoralStudent.getDocuments() != null) {
+            documentsListView.getItems().addAll(doctoralStudent.getDocuments());
+        }
+
     }
 
     @FXML
@@ -408,28 +460,150 @@ public class DoctoralStudentFormController implements Initializable {
 
     @FXML
     public void handleOnActionSaveButton() {
+
+
         if (doctoralStudent == null) {
             // we are not editing an existing object but actually creating a new one
             this.doctoralStudent = new DoctoralStudentDTO();
             this.doctoralStudent.setPersonalData(new PersonalDataDTO());
             this.doctoralStudent.setSupport(new SupportDTO());
             // todo add missing parts....
+
+            // write form data to java object
+
+
+
         } else {
+
             // if we are here, we edit an already existing student
             // we must not set the ID !!!
+
+
+
+
         }
-        // write form data to java object
+
         boolean validationSuccessful = writeToDoctoralStudentDTO();
 
         if (validationSuccessful) {
-            // post a new save event to notify subscribers about the save action
-            // they should take care about the actual saving process
-            eventBus.post(new SaveDoctoralStudentEvent(doctoralStudent));
+
+            if (editMode) {
+
+                DoctoralStudentDTO doctoralStudentDTO = this.doctoralStudent; // maybe replace this one
+
+                Long id = doctoralStudentDTO.getId();
+
+
+                // we are updating an already created entity
+                // to make granular updated we look up what has been changed
+                // and patch the specific fields
+                PatchDoctoralStudentDTO patchDTO = new PatchDoctoralStudentDTO(id);
+
+                // see what has been changed
+                if (changedImage) {
+                    patchDTO.setPhoto(doctoralStudent.getPhoto());
+                    logger.log(Level.DEBUG, "profile photo has been changed");
+                }
+                if (personalDataChanged) {
+                    patchDTO.setPatchedPersonalData(doctoralStudent.getPersonalData());
+                    logger.log(Level.DEBUG, "personal data has been changed");
+                }
+                if (qualificationChanged) {
+                    patchDTO.setPatchedQualifiedGraduation(doctoralStudent.getQualifiedGraduation());
+                    logger.log(Level.DEBUG, "qualification data has been changed");
+                }
+                if (promotionChanged) {
+                    patchDTO.setPatchedTargetGraduation(doctoralStudent.getTargetGraduation());
+                    logger.log(Level.DEBUG, "promotion data has been changed");
+                }
+                if (employmentChanged) {
+                    patchDTO.setPatchedEmployment(doctoralStudent.getEmployment());
+                    logger.log(Level.DEBUG, "employment data has been changed");
+                }
+                if (supportChanged) {
+                    patchDTO.setPatchedSupport(doctoralStudent.getSupport());
+                    logger.log(Level.DEBUG, "support data has been changed");
+                }
+                if (alumniStateChanged) {
+                    patchDTO.setPatchedAlumniState(doctoralStudent.getAlumniState());
+                    logger.log(Level.DEBUG, "alumni state data has been changed");
+                }
+
+                // process documents
+                if (!addedDocuments.isEmpty()) {
+                    Collection<DocumentDTO> docsToAdd = createCollectionFromFiles(addedDocuments.values());
+                    patchDTO.setDocumentsToAdd(docsToAdd);
+                }
+
+                if (!deletedDocuments.isEmpty()) {
+                    Collection<Long> docsToRemove = new HashSet<>();
+                    for (DocumentInformationDTO informationDTO : deletedDocuments) {
+                        Long docId = informationDTO.getId();
+                        if (docId != null) {
+                            docsToRemove.add(docId);
+                        }
+                    }
+                    patchDTO.setDocumentsToRemove(docsToRemove);
+                }
+
+                // post patch event
+                RequestPatchDoctoralStudentEvent updateEvent = new RequestPatchDoctoralStudentEvent(patchDTO);
+                eventBus.post(updateEvent);
+            } else {
+
+
+                CreateDoctoralStudentDTO createDTO = new CreateDoctoralStudentDTO();
+                createDTO.setPersonalData(doctoralStudent.getPersonalData());
+                createDTO.setQualifiedGraduation(doctoralStudent.getQualifiedGraduation());
+                createDTO.setTargetGraduation(doctoralStudent.getTargetGraduation());
+                createDTO.setEmployment(doctoralStudent.getEmployment());
+                createDTO.setSupport(doctoralStudent.getSupport());
+                createDTO.setAlumniState(doctoralStudent.getAlumniState());
+                createDTO.setPhoto(doctoralStudent.getPhoto());
+
+                // documents
+                Collection<DocumentDTO> documentsToAdd = createCollectionFromFiles(addedDocuments.values());
+                logger.log(Level.DEBUG, "Adding " + documentsToAdd.size() + " documents for upload");
+
+                createDTO.setDocuments(documentsToAdd);
+
+                // post a new save event to notify subscribers about the save action
+                // they should take care about the actual saving process
+                eventBus.post(new RequestCreateDoctoralStudentEvent(createDTO));
+            }
 
             // after saving, we can reset our input fields
             resetAllInputFields();
+
+        } else {
+
         }
 
+
+    }
+
+    private Collection<DocumentDTO> createCollectionFromFiles(Collection<File> files) {
+        Collection<DocumentDTO> documents = new HashSet<>();
+        for (File file : files) {
+            DocumentDTO documentDTO = createDocumentDTO(file);
+            if (documentDTO != null) {
+                documents.add(documentDTO);
+            }
+        }
+        return documents;
+    }
+
+    private DocumentDTO createDocumentDTO(File fileToLoad) {
+        DocumentDTO documentDTO = new DocumentDTO();
+        documentDTO.setFilename(fileToLoad.getName());
+        // try to read document
+        try {
+            documentDTO.setData(Files.readAllBytes(fileToLoad.toPath()));
+        } catch (IOException e) {
+            logger.log(Level.DEBUG, "Failed to read document " + fileToLoad.getName() + ". Cancel saving process.");
+            return null;
+        }
+        return documentDTO;
     }
 
     // DEPLOYMENT
@@ -478,6 +652,72 @@ public class DoctoralStudentFormController implements Initializable {
     public void handleOnActionPromotionCanceledCheckBox() {
         refreshCheckBoxes();
     }
+
+    @FXML
+    public void handleOnActionAddUniversityButton() throws IOException {
+        GuiLoader.createModalWindow(GuiLoader.UNIVERSITY_FORM_SCREEN, 250, 300, false);
+    }
+
+    @FXML
+    public void handleOnActionEditFacultyButton() throws IOException {
+        GuiLoader.createModalWindow(GuiLoader.FACULTY_FORM_SCREEN, 250, 300, false);
+    }
+
+    @FXML
+    public void handleOnActionChangePhotoButton(ActionEvent event) {
+        // create file chooser
+        FileChooser fileChooser = new FileChooser();
+        // fileChooser.setInitialDirectory(new File(System.getProperty("user.name")));
+
+        //Set extension filter
+        FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
+        FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
+        fileChooser.getExtensionFilters().addAll(extFilterJPG, extFilterPNG);
+
+        // open dialog
+        File imageFile = fileChooser.showOpenDialog(((Button) event.getSource()).getScene().getWindow());
+        if (imageFile == null) {
+            // no image has been selected, so we just return
+            return;
+        }
+
+        // show image in image view
+        String path = imageFile.toURI().toString();
+        Image image = new Image(path);
+        photoImageView.setImage(image);
+
+        // set control flag
+        changedImage = true;
+    }
+
+    //----------------------------------//
+    //      HANDLE CHANGE EVENTS        //
+    //----------------------------------//
+    @FXML
+    public void onPersonalDataChange() {
+        this.personalDataChanged = true;
+    }
+    @FXML
+    public void onQualificationChanged() {
+        this.qualificationChanged = true;
+    }
+    @FXML
+    public void onPromotionChanged() {
+        this.promotionChanged = true;
+    }
+    @FXML
+    public void onEmploymentChanged() {
+        this.employmentChanged = true;
+    }
+    @FXML
+    public void onSupportChanged() {
+        this.supportChanged = true;
+    }
+    @FXML
+    public void onAlumniStateChanged() {
+        this.alumniStateChanged = true;
+    }
+
 
     private void refreshCheckBoxes() {
         hfuMembershipVBox.setDisable(!hfuMemberCheckBox.isSelected());
@@ -553,6 +793,22 @@ public class DoctoralStudentFormController implements Initializable {
         personalAddress.setLocation((locationTextField.getText()));
         personalAddress.setStreet((streetTextField.getText()));
 
+        // check if photo has changed
+        if (changedImage) {
+            // we changed the picture so entity
+            Image image = photoImageView.getImage();
+
+            try {
+                byte[] imageBytes;
+                BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
+                imageBytes = ImageUtils.getImageData(bufferedImage);
+                doctoralStudent.setPhoto(imageBytes);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // photo did not change so we do not want to pass it again
+        }
 
         // process graduation
         if (validator.comboBoxHasSelectedItem(graduationComboBox)) {
@@ -568,12 +824,8 @@ public class DoctoralStudentFormController implements Initializable {
         }
 
         // target graduation
-        // todo: add more complex logic for evaluating custom text field if there is no match in the combobox
-        if (targetGraduationDegreeComboBox.getValue() == null) {
-            targetGraduationDTO.setTargetGraduationDegree(null);
-        } else {
-            // todo VERY IMPORTANT !!!
-         //   targetGraduationDTO.setTargetGraduationDegree(targetGraduationDegreeComboBox.getValue().getRepresentation());
+        if (validator.textFieldNotEmpty(targetGraduationDegreeTextField)) {
+            targetGraduationDTO.setTargetGraduationDegree(targetGraduationDegreeTextField.getText());
         }
 
         if (validator.textFieldNotEmpty(nameOfDissertationTextField)) {
@@ -661,6 +913,133 @@ public class DoctoralStudentFormController implements Initializable {
         alumniState.setAgreementNews(agreementNewsCheckBox.isSelected());
         alumniState.setAgreementEvaluation(agreementEvaluationCheckBox.isSelected());
 
+
         return validator.validationSuccessful();
+    }
+
+
+    private void initDocumentsListView() {
+        documentsListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        // todo: load documents if editing an entry
+    }
+
+    @FXML
+    private void handleOnActionBrowseDocuments(ActionEvent actionEvent){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Dokumentenauswahl");
+        Collection<File> selectedFiles = fileChooser.showOpenMultipleDialog(null);
+
+        if (selectedFiles == null) {
+            // return if user did not select any files
+            return;
+        }
+
+        // convert files to DocumentInformationDTO
+        for (File f : selectedFiles) {
+            DocumentInformationDTO docInfo = new DocumentInformationDTO();
+            docInfo.setFilename(f.getName());
+            documentsListView.getItems().add(docInfo);
+            addedDocuments.put(docInfo, f);
+        }
+
+    }
+
+    @FXML
+    private void handleOnActionDeleteDocument(ActionEvent actionEvent){
+        if(documentsListView.getSelectionModel().getSelectedItems().size() < 1) {
+            eventBus.post(new AlertNotificationEvent(1, "Bitte wählen Sie ein zu entfernendes Dokument aus."));
+            return;
+        }
+
+        //confirm dialog
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Dokumente Entfernen");
+        alert.setHeaderText("Sie sind dabei folgende Dokumente aus der Liste zu entfernen: ");
+
+        String documentNames = "";
+        for(DocumentInformationDTO file : documentsListView.getSelectionModel().getSelectedItems()){
+            documentNames += file.getFilename() + "\n";
+        }
+        alert.setContentText(documentNames);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            for (DocumentInformationDTO dto : documentsListView.getSelectionModel().getSelectedItems()) {
+                // if the user wants to remove a not yet uploaded document
+                // we need to remove it from the addedDocuments map
+                addedDocuments.remove(dto);
+
+                // for documents which have already been uploaded (we know that if id is set)
+                // we need to make sure to that we save which documents shall be removed on save
+                if (dto.getId() != null) {
+                    deletedDocuments.add(dto);
+                }
+            }
+
+            // in any way we want to remove it from the list view
+            documentsListView.getItems().remove(documentsListView.getSelectionModel().getSelectedItem());
+        }
+    }
+
+    @FXML
+    private void handleOnActionDownloadDocuments(ActionEvent actionEvent){
+        Collection<DocumentInformationDTO> selectedFiles = documentsListView.getSelectionModel().getSelectedItems();
+        if(selectedFiles.size() < 1) {
+            eventBus.post(new AlertNotificationEvent(1, "Bitte wählen Sie ein zu herunterladendes Dokument aus."));
+            return;
+        }
+        Collection<DocumentInformationDTO> downloadable = new HashSet<>();
+        Collection<DocumentInformationDTO> notDownloadable = new HashSet<>();
+
+        // ensure that only documents that have already been added to the doctoralStudent are downloaded
+        for(DocumentInformationDTO doc : selectedFiles){
+            if(doctoralStudent.getDocuments().contains(doc)){
+                downloadable.add(doc);
+            }
+            else{
+                notDownloadable.add(doc);
+            }
+        }
+
+        if(notDownloadable.size() > 0){
+            //confirm dialog
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Dokument(e) nicht zugeordnet");
+            alert.setHeaderText("Folgende Dokumente sind dem Datensatz noch nicht zugeordnet und werden deshalb beim Download ignoriert:");
+
+            String documentNames = "";
+            for(DocumentInformationDTO file : notDownloadable){
+                documentNames += file.getFilename() + "\n";
+            }
+            alert.setContentText(documentNames);
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() != ButtonType.OK) {
+                // cancel
+                return;
+            }
+        }
+        eventBus.post(new RequestDocumentsEvent(downloadable));
+        logger.log(Level.DEBUG, "requested the selected documents(" + downloadable.size() +") from the server...");
+    }
+
+    private void updateFacultyCombobox(){
+        facultyHFUComboBox.getItems().clear();
+        facultyHFUComboBox.getItems().addAll(RepresentationWrapper.getWrappedFaculties(EntityPool.getInstance().getFaculties()));
+    }
+
+    @Subscribe
+    public void handleAddedFacultyEvent(SuccessfullyAddedFacultyEvent event){
+        updateFacultyCombobox();
+    }
+
+    @Subscribe
+    public void handleDeletedFacultyEvent(SuccessfullyDeletedFacultyEvent event){
+        updateFacultyCombobox();
+    }
+
+    @Subscribe
+    public void handleDeletedFacultyEvent(SuccessfullyUpdatedFacultyEvent event){
+        updateFacultyCombobox();
     }
 }

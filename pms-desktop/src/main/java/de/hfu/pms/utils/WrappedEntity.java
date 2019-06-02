@@ -1,5 +1,7 @@
 package de.hfu.pms.utils;
 
+import java.util.Objects;
+
 /**
  * The WrappedEntity class does simply wrap a specified object plus a representation string.<br/>
  *
@@ -38,6 +40,20 @@ public class WrappedEntity<T> {
 
     public T getEntity() {
         return entity;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        WrappedEntity<?> that = (WrappedEntity<?>) o;
+        return Objects.equals(representation, that.representation) &&
+                Objects.equals(entity, that.entity);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(representation, entity);
     }
 
     @Override

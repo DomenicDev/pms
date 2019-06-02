@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UniversityService {
 
-    void createUniversity(University newUniversity);
+    University createUniversity(University newUniversity);
     void deleteUniversity(Long id);
     University getUniversity(Long id);
     University updateUniversity(Long id, University newUniversity);

@@ -1,7 +1,5 @@
 package de.hfu.pms.model;
 
-import de.hfu.pms.shared.enums.DoctoralGraduation;
-import de.hfu.pms.shared.enums.FacultyHFU;
 import de.hfu.pms.shared.enums.Rating;
 
 import javax.persistence.*;
@@ -14,8 +12,7 @@ public class TargetGraduation {
      * Represents the target degree.
      */
     @Column
-    @Enumerated
-    private DoctoralGraduation targetDegree;
+    private String targetDegree;
 
     @Column
     private String nameOfDissertation;
@@ -23,9 +20,9 @@ public class TargetGraduation {
     @Column
     private String internalSupervisor;
 
-    @Column
-    @Enumerated
-    private FacultyHFU facultyHFU;
+    @ManyToOne
+    @JoinColumn
+    private Faculty facultyHFU;
 
     @Column
     private String externalSupervisor;
@@ -75,11 +72,11 @@ public class TargetGraduation {
     private LocalDate promotionAgreement;
 
 
-    public DoctoralGraduation getTargetDegree() {
+    public String getTargetDegree() {
         return targetDegree;
     }
 
-    public void setTargetDegree(DoctoralGraduation targetDegree) {
+    public void setTargetDegree(String targetDegree) {
         this.targetDegree = targetDegree;
     }
 
@@ -99,11 +96,11 @@ public class TargetGraduation {
         this.internalSupervisor = internalSupervisor;
     }
 
-    public FacultyHFU getFacultyHFU() {
+    public Faculty getFacultyHFU() {
         return facultyHFU;
     }
 
-    public void setFacultyHFU(FacultyHFU facultyHFU) {
+    public void setFacultyHFU(Faculty facultyHFU) {
         this.facultyHFU = facultyHFU;
     }
 

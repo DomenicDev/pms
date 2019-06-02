@@ -2,20 +2,20 @@ package de.hfu.pms.controller;
 
 import de.hfu.pms.shared.dto.EmploymentEntryDTO;
 import de.hfu.pms.shared.enums.Campus;
-import de.hfu.pms.shared.enums.EmploymentLocation;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 
 public class EmploymentController extends AbstractPropertyFormController<EmploymentEntryDTO> {
 
     @FXML
-    private ComboBox<EmploymentLocation> employmentLocationComboBox;
+    private TextField employmentLocationTextField;
 
     @FXML
     private TextField kindOfEmploymentTextField;
@@ -24,21 +24,24 @@ public class EmploymentController extends AbstractPropertyFormController<Employm
     private ComboBox<Campus> employmentCampusComboBox;
 
     @FXML
-    private CheckBox preTimesCheckBox;
+    private DatePicker employmentBeginDatePicker;
+
+    @FXML
+    private DatePicker employmentEndDatePicker;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.employmentLocationComboBox.getItems().addAll(EmploymentLocation.values());
         this.employmentCampusComboBox.getItems().addAll(Campus.values());
     }
 
     @Override
     public void writeProperty() throws IllegalArgumentException {
         // extract values from gui elements
-        EmploymentLocation location = this.employmentLocationComboBox.getValue();
+        String location = this.employmentLocationTextField.getText();
         String kindOfEmployment = this.kindOfEmploymentTextField.getText();
         Campus campus = this.employmentCampusComboBox.getValue();
-        boolean preTimes = this.preTimesCheckBox.isSelected();
+        LocalDate begin = employmentBeginDatePicker.getValue();
+        LocalDate end = employmentEndDatePicker.getValue();
         // ToDo: check for null values or empty strings
 
         // create dto object and fill with data
@@ -46,7 +49,8 @@ public class EmploymentController extends AbstractPropertyFormController<Employm
         property.setEmploymentLocation(location);
         property.setKindOfEmployment(kindOfEmployment);
         property.setCampusOfDeployment(campus);
-        property.setPreEmploymentTimeToBeCharged(preTimes);
+        property.setEmploymentBegin(begin);
+        property.setEmploymentEnd(end);
     }
 
     @Override

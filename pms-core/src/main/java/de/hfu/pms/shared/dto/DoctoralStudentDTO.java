@@ -1,5 +1,8 @@
 package de.hfu.pms.shared.dto;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class DoctoralStudentDTO {
 
     // IDENTIFICATION NUMBER
@@ -23,6 +26,12 @@ public class DoctoralStudentDTO {
     // ALUMNI STATE
     private AlumniStateDTO alumniState;
 
+    // profile photo
+    private byte[] photo;
+
+    // DOCUMENTS (META DATA ONLY)
+    private Set<DocumentInformationDTO> documents;
+
     public DoctoralStudentDTO() {
         this.personalData = new PersonalDataDTO();
         this.qualifiedGraduation = new QualifiedGraduationDTO();
@@ -30,6 +39,7 @@ public class DoctoralStudentDTO {
         this.employment = new EmploymentDTO();
         this.support = new SupportDTO();
         this.alumniState = new AlumniStateDTO();
+        this.documents = new HashSet<>();
     }
 
 
@@ -88,6 +98,22 @@ public class DoctoralStudentDTO {
 
     public void setAlumniState(AlumniStateDTO alumniState) {
         this.alumniState = alumniState;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
+    }
+
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setDocuments(Set<DocumentInformationDTO> documents) {
+        this.documents = documents;
+    }
+
+    public Set<DocumentInformationDTO> getDocuments() {
+        return documents;
     }
 
     @Override

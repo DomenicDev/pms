@@ -48,16 +48,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updatePassword(String username, String oldPassword, String newPassword) {
-        String encodedNewPassword = passwordEncoder.encode(newPassword);
+    public User updatePassword(String username, String newPassword) {
         for (User user : userDao.findAll()) {
             if (user.getUsername().equals(username)) {
-                if (passwordEncoder.matches(oldPassword, user.getPassword())) {
-                    user.setPassword(encodedNewPassword);
-                    userDao.save(user);
-                } else throw new WrongPasswordException();
+                user.setPassword(passwordEncoder.encode(newPassword));
+                userDao.save(user);
+                return user;
             }
         }
+        throw new UserNotFoundException(username);
     }
 
     @Override
@@ -65,6 +64,18 @@ public class UserServiceImpl implements UserService {
         for (User user : userDao.findAll()) {
             if (user.getUsername().equals(username)) {
                 user.setRole(role);
+                userDao.save(user);
+                return user;
+            }
+        }
+        throw new UserNotFoundException(username);
+    }
+
+    @Override
+    public User updateUserEmail(String username, String email) {
+        for(User user : userDao.findAll()){
+            if(user.getUsername().equals(username)){
+                user.setEmail(email);
                 userDao.save(user);
                 return user;
             }
@@ -80,7 +91,7 @@ public class UserServiceImpl implements UserService {
                 return user;
             }
         }
-        return null;
+        throw new UserNotFoundException(username);
     }
 
     @Override

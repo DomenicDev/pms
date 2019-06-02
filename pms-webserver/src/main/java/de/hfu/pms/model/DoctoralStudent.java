@@ -2,6 +2,8 @@ package de.hfu.pms.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table
@@ -29,6 +31,13 @@ public class DoctoralStudent implements Serializable {
     @Embedded
     private AlumniState alumniState;
 
+    @Lob // large object
+    @Column(columnDefinition="BLOB")
+    private byte[] photo; // saved as blob
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_student")
+    private Set<Document> documents;
 
     /**
      * Default constructor.
@@ -40,6 +49,7 @@ public class DoctoralStudent implements Serializable {
         this.employment = new Employment();
         this.support = new Support();
         this.alumniState = new AlumniState();
+        this.documents = new HashSet<>();
     }
 
     /**
@@ -51,17 +61,22 @@ public class DoctoralStudent implements Serializable {
      * @param support
      * @param alumniState
      */
-    public DoctoralStudent(PersonalData personalData, QualifiedGraduation qualifiedGraduation, TargetGraduation targetGraduation, Employment employment, Support support, AlumniState alumniState) {
+    public DoctoralStudent(PersonalData personalData, QualifiedGraduation qualifiedGraduation, TargetGraduation targetGraduation, Employment employment, Support support, AlumniState alumniState, Set<Document> documents) {
         this.personalData = personalData;
         this.qualifiedGraduation = qualifiedGraduation;
         this.targetGraduation = targetGraduation;
         this.employment = employment;
         this.support = support;
         this.alumniState = alumniState;
+        this.documents = documents;
     }
 
     // GETTER AND SETTER
 
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Long getId() {
         return id;
@@ -115,5 +130,19 @@ public class DoctoralStudent implements Serializable {
         this.alumniState = alumniState;
     }
 
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
+    }
 
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setDocuments(Set<Document> documents) {
+        this.documents = documents;
+    }
+
+    public Set<Document> getDocuments() {
+        return documents;
+    }
 }

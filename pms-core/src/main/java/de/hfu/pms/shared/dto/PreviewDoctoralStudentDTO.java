@@ -1,6 +1,5 @@
 package de.hfu.pms.shared.dto;
 
-import de.hfu.pms.shared.enums.FacultyHFU;
 import de.hfu.pms.shared.enums.Gender;
 
 public class PreviewDoctoralStudentDTO {
@@ -8,7 +7,7 @@ public class PreviewDoctoralStudentDTO {
     private Long id;
     private String foreName;
     private String name;
-    private FacultyHFU faculty;
+    private FacultyDTO faculty;
     private String email;
     private String phoneNumber;
     private Gender gender;
@@ -16,7 +15,12 @@ public class PreviewDoctoralStudentDTO {
     public PreviewDoctoralStudentDTO() {
     }
 
-    public PreviewDoctoralStudentDTO(Long id, String name, String foreName, FacultyHFU faculty, String email, String phoneNumber, Gender gender) {
+    public PreviewDoctoralStudentDTO(String forname, String lastname){
+        this.foreName = forname;
+        this.name = lastname;
+    }
+
+    public PreviewDoctoralStudentDTO(Long id, String name, String foreName, FacultyDTO faculty, String email, String phoneNumber, Gender gender) {
         this.id = id;
         this.name = name;
         this.foreName = foreName;
@@ -50,9 +54,9 @@ public class PreviewDoctoralStudentDTO {
         this.name = name;
     }
 
-    public FacultyHFU getFaculty() { return faculty; }
+    public FacultyDTO getFaculty() { return faculty; }
 
-    public void setFaculty(FacultyHFU faculty){ this.faculty = faculty; }
+    public void setFaculty(FacultyDTO faculty){ this.faculty = faculty; }
 
     public String getEmail() {
         return email;

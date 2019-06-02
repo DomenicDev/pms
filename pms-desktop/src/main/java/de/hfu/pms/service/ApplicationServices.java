@@ -1,23 +1,24 @@
 package de.hfu.pms.service;
 
+import de.hfu.pms.exceptions.BusinessException;
 import de.hfu.pms.exceptions.LoginFailedException;
-import de.hfu.pms.shared.dto.DoctoralStudentDTO;
-import de.hfu.pms.shared.dto.PreviewDoctoralStudentDTO;
-import de.hfu.pms.shared.dto.UniversityDTO;
-import de.hfu.pms.shared.dto.UserDTO;
+import de.hfu.pms.shared.dto.*;
 import de.hfu.pms.shared.enums.UserRole;
 import javafx.collections.transformation.SortedList;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
 
 public interface ApplicationServices {
 
     // todo: add Documents to DoctoralStudentDTO-class or separate them?
 
-    DoctoralStudentDTO addDoctoralStudent(DoctoralStudentDTO student);
+    DoctoralStudentDTO addDoctoralStudent(CreateDoctoralStudentDTO student) throws BusinessException;
 
-    void editDoctoralStudent(DoctoralStudentDTO student);
+    DoctoralStudentDTO editDoctoralStudent(DoctoralStudentDTO student) throws BusinessException;
+
+    void patchDoctoralStudent(PatchDoctoralStudentDTO patchDoctoralStudentDTO) throws BusinessException;
 
     void deleteDoctoralStudent(int studentID);
 
@@ -29,6 +30,8 @@ public interface ApplicationServices {
 
     SortedList<DoctoralStudentDTO> searchDoctoralStudents(String keyword);
 
+    Collection<PreviewDoctoralStudentDTO> getAlertedDoctoralStudents() throws IOException;
+
     /**
      * Login with the specified credentials.
      * @param username the username to login with
@@ -37,25 +40,46 @@ public interface ApplicationServices {
      */
     void login(String username, String pwHash) throws LoginFailedException;
 
+    /**
+     * @return the current logged in user
+     */
+    UserDTO getCurrentUser();
+
+    UserDTO ChangeAccountinformation(String forename, String lastname, String email) throws BusinessException;
+
     Collection<UniversityDTO> getAllUniversities();
 
-    void addUniversity(UniversityDTO universityDTO);
+    UniversityDTO addUniversity(UniversityDTO universityDTO);
 
-    void updateUniversity(Long id, UniversityDTO universityDTO);
+    UniversityDTO updateUniversity(Long id, UniversityDTO universityDTO);
+
+    Collection<FacultyDTO> getAllFaculties();
+
+    FacultyDTO addFaculty(FacultyDTO facultyDTO);
+
+    FacultyDTO deleteFaculty(FacultyDTO facultyDTO);
+
+    FacultyDTO updateFaculty(FacultyDTO facultyDTO);
 
     void logout();
 
-    void changePassword(String Username, String newPwHash, String previousPwHash);
+    UserDTO changePassword(UserDTO userDTO, String newPassword) throws BusinessException;
 
-    void addUser(UserDTO userDTO);
+    UserDTO addUser(UserDTO userDTO) throws BusinessException;
 
-    void removeUser(String username);
+    void removeUser(String username) throws BusinessException;
 
-    void changeUserPrivileges(String username, UserRole newUserRole);
+    UserDTO changeUserPrivileges(String username, UserRole newUserRole) throws BusinessException;
 
-    UserDTO getUser(String username);
+    UserDTO changeAccountInformation( String forename, String lastname, String email)throws BusinessException;
 
-    SortedList<UserDTO> getAllUsers();
+    UserDTO changeUserEmail(String username, String email) throws BusinessException;
+
+    UserDTO getUser(String username) throws BusinessException;
+
+    List<UserDTO> getAllUsers();
+
+    DocumentDTO getDocument(DocumentInformationDTO documentInformation);
 
     void initEntityPool();
 

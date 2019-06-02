@@ -7,7 +7,7 @@ public class QualifiedGraduationDTO {
     private Graduation graduation;
     private String subjectArea;
     private String grade;
-    private UniversityDTO qualifiedGraduationUniversity;
+    private UniversityDTO gradedUniversity;
 
     public Graduation getGraduation() {
         return graduation;
@@ -33,12 +33,12 @@ public class QualifiedGraduationDTO {
         this.grade = grade;
     }
 
-    public UniversityDTO getQualifiedGraduationUniversity() {
-        return qualifiedGraduationUniversity;
+    public UniversityDTO getGradedUniversity() {
+        return gradedUniversity;
     }
 
-    public void setQualifiedGraduationUniversity(UniversityDTO qualifiedGraduationUniversity) {
-        this.qualifiedGraduationUniversity = qualifiedGraduationUniversity;
+    public void setGradedUniversity(UniversityDTO gradedUniversity) {
+        this.gradedUniversity = gradedUniversity;
     }
 
     @Override
@@ -47,7 +47,7 @@ public class QualifiedGraduationDTO {
                 "graduation=" + graduation +
                 ", subjectArea='" + subjectArea + '\'' +
                 ", grade='" + grade + '\'' +
-                ", qualifiedGraduationUniversity=" + qualifiedGraduationUniversity +
+                ", gradedUniversity=" + gradedUniversity +
                 '}';
     }
 }

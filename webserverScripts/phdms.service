@@ -1,0 +1,14 @@
+[Unit]
+Description=The Webserver of a Managementsystem for Doctoral Students
+After=syslog.target network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/etc/phdms.d
+ExecStart=/usr/bin/java -cp phfms.jar &
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s QUIT $MAINPID
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target

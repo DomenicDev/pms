@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class ConsultingSupportDTO {
 
-    private int id;
+    private Long id;
     private String consultingType;
     private LocalDate consultingDate;
     private int consultingDuration; // in minutes
@@ -19,18 +19,18 @@ public class ConsultingSupportDTO {
         this.consultingDuration = consultingDuration;
     }
 
-    public ConsultingSupportDTO(int id, String consultingType, LocalDate consultingDate, int consultingDuration) {
+    public ConsultingSupportDTO(Long id, String consultingType, LocalDate consultingDate, int consultingDuration) {
         this.id = id;
         this.consultingType = consultingType;
         this.consultingDate = consultingDate;
         this.consultingDuration = consultingDuration;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

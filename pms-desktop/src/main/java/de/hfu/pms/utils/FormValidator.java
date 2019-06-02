@@ -2,6 +2,7 @@ package de.hfu.pms.utils;
 
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 import java.util.ResourceBundle;
@@ -88,6 +89,15 @@ public class FormValidator {
         }
     }
 
+    public boolean passwordFieldsAreSimilar (PasswordField passwordField,PasswordField passwordFieldRewrite){
+        if (passwordField.getText().equals(passwordFieldRewrite.getText())) {
+            return true;
+        }
+        else{
+            failValidation();
+            return false;
+        }
+    }
     private static void addClass(Node control, String className) {
         control.getStyleClass().add(className);
     }

@@ -20,6 +20,9 @@ public class ConsultingSupport {
     @Column
     private int consultingDuration; // in minutes
 
+    public ConsultingSupport() {
+    }
+
     public ConsultingSupport(LocalDate consultingDate, String consultingType, int consultingDuration) {
         this.consultingDate = consultingDate;
         this.consultingType = consultingType;

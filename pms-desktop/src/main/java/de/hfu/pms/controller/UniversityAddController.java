@@ -15,8 +15,6 @@ import javafx.scene.control.TextField;
 
 public class UniversityAddController {
 
-
-
     private EventBus eventBus = EventBusSystem.getEventBus();
 
     @FXML
@@ -35,6 +33,9 @@ public class UniversityAddController {
     private Button ButtonUniversityAdd;
 
     @FXML
+    private TextField textFieldContacttoUniversity;
+
+    @FXML
     private Label title;
 
     private UniversityDTO university;
@@ -49,6 +50,7 @@ public class UniversityAddController {
         textFieldCountry.setText(university.getCountry());
         textFieldLocation.setText(university.getLocation());
         textFieldShortForm.setText(university.getAbbreviation());
+        textFieldContacttoUniversity.setText(university.getContact());
         setEditMode(true);
     }
 
@@ -97,6 +99,7 @@ public class UniversityAddController {
         String location =textFieldLocation.getText();
         String country = textFieldCountry.getText();
         String shortForm =textFieldShortForm.getText();
+        String contact =textFieldContacttoUniversity.getText();
 
         if(universityValidator.textFieldNotEmpty(textFieldNameOfUniverity)){
             university.setName(name);
@@ -110,6 +113,7 @@ public class UniversityAddController {
 
         }
         university.setAbbreviation(shortForm);
+        university.setContact(contact);
 
         return universityValidator.validationSuccessful();
 

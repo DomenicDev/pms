@@ -22,6 +22,9 @@ public class University {
     @Column
     private String abbreviation;
 
+    @Column
+    private String contact;
+
     public Long getId() {
         return id;
     }
@@ -60,5 +63,13 @@ public class University {
 
     public void setAbbreviation(String abbreviation) {
         this.abbreviation = abbreviation;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
     }
 }

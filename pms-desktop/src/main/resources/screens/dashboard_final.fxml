@@ -1,22 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import org.kordamp.ikonli.javafx.FontIcon?>
-
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import org.kordamp.ikonli.javafx.*?>
 <VBox prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.DashboardController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
@@ -58,21 +49,30 @@
         </Menu>
       </menus>
     </MenuBar>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" stylesheets="@../styles/style.css" VBox.vgrow="ALWAYS">
          <children>
             <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <left>
-                  <VBox prefHeight="695.0" prefWidth="205.0" spacing="25.0" style="-fx-background-color: green;" BorderPane.alignment="CENTER">
+                  <VBox spacing="25.0" styleClass="vbox-sidebar" BorderPane.alignment="CENTER">
                      <children>
-                        <Label alignment="CENTER" prefHeight="43.0" prefWidth="227.0" text="PhDMS HFU" textFill="WHITE">
-                           <font>
-                              <Font name="Berlin Sans FB Demi Bold" size="29.0" />
-                           </font>
-                        </Label>
-                        <Separator prefWidth="200.0" />
-                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+                        <HBox>
                            <children>
-                              <Button fx:id="startButton" alignment="TOP_LEFT" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleOnActionStartButton" prefHeight="38.0" prefWidth="309.0" text="Start">
+                              <VBox>
+                                 <children>
+                                    <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="97.0" prefWidth="282.0" text="PhDMS HFU" textFill="WHITE">
+                                       <font>
+                                          <Font name="Rockwell Bold" size="36.0" />
+                                       </font>
+                                    </Label>
+                                    <Separator prefHeight="0.0" prefWidth="219.0" styleClass="separator-sidebar" />
+                                 </children>
+                              </VBox>
+                              <Separator halignment="RIGHT" orientation="VERTICAL" prefHeight="100.0" prefWidth="0.0" />
+                           </children>
+                        </HBox>
+                        <VBox prefHeight="203.0" prefWidth="219.0" spacing="20.0" styleClass="vbox-sidebar">
+                           <children>
+                              <Button fx:id="startButton" alignment="TOP_LEFT" graphicTextGap="20.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleOnActionStartButton" styleClass="button-sidebar" text="%ui.button.start">
                                  <graphic>
                                     <FontIcon iconLiteral="fa-home" iconSize="30" />
                                  </graphic>
@@ -80,7 +80,7 @@
                                     <Font name="System Bold" size="20.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="doctoralStudentsButton" alignment="TOP_LEFT" graphicTextGap="10.0" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleOnActionDoctoralStudentsButton" prefHeight="38.0" prefWidth="309.0" text="Doktoranten">
+                              <Button fx:id="doctoralStudentsButton" alignment="TOP_LEFT" graphicTextGap="10.0" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleOnActionDoctoralStudentsButton" styleClass="button-sidebar" text="%ui.button.doctoral_students">
                                  <graphic>
                                     <FontIcon iconLiteral="fa-graduation-cap" iconSize="30" wrappingWidth="36.57143020629883" />
                                  </graphic>
@@ -88,7 +88,7 @@
                                     <Font name="System Bold" size="20.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="universityButton" alignment="TOP_LEFT" graphicTextGap="10.0" layoutX="10.0" layoutY="164.0" mnemonicParsing="false" onAction="#handleUniversityButton" prefHeight="38.0" prefWidth="309.0" text="Universitäten">
+                              <Button fx:id="universityButton" alignment="TOP_LEFT" graphicTextGap="10.0" layoutX="10.0" layoutY="164.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleUniversityButton" styleClass="button-sidebar" text="%ui.button.universities">
                                  <graphic>
                                     <FontIcon iconLiteral="fa-university" iconSize="30" />
                                  </graphic>
@@ -98,15 +98,15 @@
                               </Button>
                            </children>
                         </VBox>
-                        <Separator prefWidth="200.0" />
-                        <VBox prefHeight="106.0" prefWidth="219.0" spacing="20.0">
+                        <Separator prefWidth="200.0" styleClass="separator-sidebar" />
+                        <VBox spacing="20.0">
                            <children>
-                              <Button fx:id="accountSettingsButton" mnemonicParsing="false" onAction="#handleAccountnformationButton" text="Accounteinstellungen">
+                              <Button fx:id="accountSettingsButton" mnemonicParsing="false" onAction="#handleAccountnformationButton" styleClass="button-sidebar" text="%ui.button.account_settings" VBox.vgrow="ALWAYS">
                                  <graphic>
                                     <FontIcon iconLiteral="fa-gear" />
                                  </graphic>
                               </Button>
-                              <Button fx:id="adminAreaButton" mnemonicParsing="false" onAction="#handleAdminArea" text="Admin-Bereich">
+                              <Button fx:id="adminAreaButton" mnemonicParsing="false" onAction="#handleAdminArea" styleClass="button-sidebar" text="%ui.button.admin_area" VBox.vgrow="ALWAYS">
                                  <graphic>
                                     <FontIcon iconLiteral="fa-lock" />
                                  </graphic>
@@ -115,10 +115,13 @@
                         </VBox>
                         <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
                            <children>
-                              <ImageView fitHeight="87.0" fitWidth="219.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="100.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../images/Logo_HFU_A6_RGB.jpg" />
                                  </image>
+                                 <viewport>
+                                    <Rectangle2D />
+                                 </viewport>
                               </ImageView>
                            </children>
                         </VBox>
@@ -128,9 +131,9 @@
                <center>
                   <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                      <children>
-                        <HBox prefHeight="70.0" prefWidth="1061.0" style="-fx-background-color: lightgreen;">
+                        <HBox prefHeight="97.0" prefWidth="1061.0" styleClass="hbox-top">
                            <children>
-                              <Label fx:id="mainContentTitle" text="Title">
+                              <Label fx:id="mainContentTitle" styleClass="label-top" text="Title">
                                  <font>
                                     <Font name="System Bold" size="65.0" />
                                  </font>

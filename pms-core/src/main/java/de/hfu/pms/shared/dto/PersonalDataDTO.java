@@ -5,7 +5,6 @@ import de.hfu.pms.shared.enums.Gender;
 import de.hfu.pms.shared.enums.Salutation;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 
 public class PersonalDataDTO {
 
@@ -22,7 +21,6 @@ public class PersonalDataDTO {
     private AddressDTO address = new AddressDTO();
     private String telephone;
     private String email;
-    private byte[] photo;
 
     public String getForename() {
         return forename;
@@ -128,14 +126,6 @@ public class PersonalDataDTO {
         this.email = email;
     }
 
-    public byte[] getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(byte[] photo) {
-        this.photo = photo;
-    }
-
     @Override
     public String toString() {
         return "PersonalDataDTO{" +
@@ -152,7 +142,6 @@ public class PersonalDataDTO {
                 ", address=" + address +
                 ", telephone='" + telephone + '\'' +
                 ", email=" + email +
-                ", photo=" + Arrays.toString(photo) +
                 '}';
     }
 }

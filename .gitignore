@@ -3,6 +3,7 @@
 .gradle/
 out/
 *.iml
+*.log
 
 # Compiled source #
 ###################

@@ -3,14 +3,14 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.ChangeAccountInformationController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.ChangeAccountInformationController">
    <children>
       <Label layoutX="55.0" layoutY="131.0" text="Vorname" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="120.0" />
       <Label layoutX="55.0" layoutY="99.0" text="Benutzername:" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="80.0" />
-      <Button fx:id="saveChangesButton" layoutX="50.0" layoutY="272.0" mnemonicParsing="false" onAction="#handleChangeUserInformationbutton" text="Änderungen Speichern" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="275.0" />
+      <Button fx:id="saveChangesButton" layoutX="50.0" layoutY="272.0" mnemonicParsing="false" onAction="#handleChangeUserInformationbutton" styleClass="button-NOT-sidebar" text="Änderungen Speichern" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="275.0" />
       <Label layoutX="55.0" layoutY="200.0" text="Email:" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="240.0" />
       <Label layoutX="55.0" layoutY="169.0" text="Rolle:" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="200.0" />
-      <Button fx:id="ButtonExitScreen" layoutX="250.0" layoutY="275.0" mnemonicParsing="false" onAction="#handleExitButton" text="Abbrechen" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="275.0" />
+      <Button fx:id="ButtonExitScreen" layoutX="250.0" layoutY="275.0" mnemonicParsing="false" onAction="#handleExitButton" styleClass="button-NOT-sidebar" text="Abbrechen" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="275.0" />
       <TextField fx:id="textfieldChangeEmail" layoutX="200.0" layoutY="196.0" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="236.0" />
       <TextField fx:id="textfieldForname" layoutX="200.0" layoutY="116.0" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="116.0" />
       <Label fx:id="labelChangeUsername" layoutX="200.0" layoutY="80.0" text="/Benutername" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="80.0" />

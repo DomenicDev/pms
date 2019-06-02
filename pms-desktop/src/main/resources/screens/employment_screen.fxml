@@ -1,62 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity" prefHeight="288.0" prefWidth="407.0" xmlns="http://javafx.com/javafx/11.0.1"
-            fx:controller="de.hfu.pms.controller.EmploymentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="288.0" prefWidth="407.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.EmploymentController">
     <children>
-        <VBox layoutX="139.0" layoutY="58.0" prefHeight="276.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0"
-              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox layoutX="139.0" layoutY="58.0" prefHeight="276.0" prefWidth="600.0" styleClass="button-NOT-sidebar" stylesheets="@../styles/style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <Label text="Beschäftigungsverhältnis hinzufügen">
                     <font>
-                        <Font name="System Bold" size="12.0"/>
+                        <Font name="System Bold" size="12.0" />
                     </font>
                     <padding>
-                        <Insets bottom="10.0"/>
+                        <Insets bottom="10.0" />
                     </padding>
                 </Label>
-                <GridPane prefHeight="120.0" prefWidth="571.0">
+                <GridPane prefHeight="120.0" prefWidth="571.0" VBox.vgrow="SOMETIMES">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="290.0" minWidth="-Infinity" prefWidth="141.0"/>
-                        <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="462.0" minWidth="10.0"
-                                           prefWidth="449.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="290.0" minWidth="-Infinity" prefWidth="141.0" />
+                        <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="462.0" minWidth="10.0" prefWidth="449.0" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <Label text="Ort der Beschäftigung"/>
-                        <Label text="Art der Beschäftigung" GridPane.rowIndex="1"/>
-                        <Label text="Dienstort / Campus" GridPane.rowIndex="2"/>
-                        <TextField fx:id="kindOfEmploymentTextField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                        <ComboBox fx:id="employmentCampusComboBox" prefWidth="150.0" GridPane.columnIndex="1"
-                                  GridPane.rowIndex="2"/>
-                        <ComboBox fx:id="employmentLocationComboBox" prefWidth="150.0" GridPane.columnIndex="1"/>
+                        <Label text="Ort der Beschäftigung" />
+                        <Label text="Art der Beschäftigung" GridPane.rowIndex="1" />
+                        <Label text="Dienstort / Campus" GridPane.rowIndex="2" />
+                        <TextField fx:id="kindOfEmploymentTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <ComboBox fx:id="employmentCampusComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="employmentLocationTextField" GridPane.columnIndex="1" />
+                  <DatePicker fx:id="employmentBeginDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <DatePicker fx:id="employmentEndDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Label text="Beginn der Beschäftigung" GridPane.rowIndex="3" />
+                  <Label text="Ende der Beschäftigung" GridPane.rowIndex="4" />
                     </children>
                     <VBox.margin>
-                        <Insets/>
+                        <Insets />
                     </VBox.margin>
                 </GridPane>
-                <CheckBox fx:id="preTimesCheckBox" mnemonicParsing="false"
-                          text="Anzurechnende Beschäftigungsvorzeiten"/>
                 <HBox alignment="CENTER" prefHeight="60.0" prefWidth="590.0" spacing="25.0">
                     <children>
-                        <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOnActionSubmitButton"
-                                text="Übernehmen"/>
-                        <Button cancelButton="true" mnemonicParsing="false" onAction="#handleOnActionCancelButton"
-                                text="Abbrechen"/>
+                        <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOnActionSubmitButton" text="Übernehmen" />
+                        <Button cancelButton="true" mnemonicParsing="false" onAction="#handleOnActionCancelButton" styleClass="button-NOT-sidebar" text="Abbrechen" />
                     </children>
                 </HBox>
             </children>
             <padding>
-                <Insets left="10.0" top="15.0"/>
+                <Insets left="10.0" top="15.0" />
             </padding>
         </VBox>
     </children>

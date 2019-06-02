@@ -10,12 +10,23 @@ public class Address {
     private String plz;
 
     @Column
-    private String name;
+    private String street;
+
+    @Column
+    private String location;
 
     @Column
     private String country;
 
     public Address() {
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getPlz() {
@@ -26,12 +37,12 @@ public class Address {
         this.plz = plz;
     }
 
-    public String getName() {
-        return name;
+    public String getStreet() {
+        return street;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setStreet(String street) {
+        this.street = street;
     }
 
     public String getCountry() {

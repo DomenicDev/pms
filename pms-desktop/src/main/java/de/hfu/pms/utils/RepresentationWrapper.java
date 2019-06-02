@@ -1,7 +1,11 @@
 package de.hfu.pms.utils;
 
+import de.hfu.pms.shared.dto.FacultyDTO;
+import de.hfu.pms.shared.dto.PreviewDoctoralStudentDTO;
 import de.hfu.pms.shared.dto.UniversityDTO;
 import de.hfu.pms.shared.enums.*;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,6 +16,8 @@ import java.util.ResourceBundle;
  * data representation in the graphical user interface.
  */
 public class RepresentationWrapper {
+
+    private static Logger logger = Logger.getLogger(RepresentationWrapper.class.getName());
 
     /**
      * Used to get the actual string representation that are shown in the gui.
@@ -67,25 +73,22 @@ public class RepresentationWrapper {
         return collection;
     }
 
-    public static Collection<WrappedEntity<FacultyHFU>> getWrappedHFUFaculties() {
-        Collection<WrappedEntity<FacultyHFU>> collection = new ArrayList<>();
-        collection.add(new WrappedEntity<>(bundle.getString("enum.hfu_faculty.informatik"), FacultyHFU.Informatik));
-        collection.add(new WrappedEntity<>(bundle.getString("enum.hfu_faculty.wirtschaftsinformatik"), FacultyHFU.Wirtschaftsinformatik));
-        collection.add(new WrappedEntity<>(bundle.getString("enum.hfu_faculty.digitale_medien"), FacultyHFU.Digitale_Medien));
-        collection.add(new WrappedEntity<>(bundle.getString("enum.hfu_faculty.industrial_technologies"), FacultyHFU.Industrial_Technologies));
-        collection.add(new WrappedEntity<>(bundle.getString("enum.hfu_faculty.medical_and_life_sciences"), FacultyHFU.Medical_and_Life_Sciences));
-        collection.add(new WrappedEntity<>(bundle.getString("enum.hfu_faculty.wirtschaft"), FacultyHFU.Wirtschaft));
-        collection.add(new WrappedEntity<>(bundle.getString("enum.hfu_faculty.wirtschaftsingenieurwesen"), FacultyHFU.Wirtschaftsingenieurwesen));
-        collection.add(new WrappedEntity<>(bundle.getString("enum.hfu_faculty.gesundheit_sicherheit_gesellschaft"), FacultyHFU.Gesundheit_Sicherheit_Gesellschaft));
-        collection.add(new WrappedEntity<>(bundle.getString("enum.hfu_faculty.mechanical_and_medical_engineering"), FacultyHFU.Mechanical_and_Medical_Engineering));
+    public static Collection<WrappedEntity<FacultyDTO>> getWrappedFaculties(Collection<FacultyDTO> faculties) {
+        Collection<WrappedEntity<FacultyDTO>> collection = new ArrayList<>();
+        for (FacultyDTO faculty : faculties) {
+            collection.add(getWrappedFaculty(faculty));
+        }
         return collection;
     }
-    public static Collection<WrappedEntity<Role>> getWrappedRole(){
-        Collection<WrappedEntity<Role>> collection =new ArrayList<>();
-        collection.add(new WrappedEntity<>(bundle.getString("enum.role.administrator"), Role.Administrator));
-        collection.add(new WrappedEntity<>(bundle.getString("enum.role.benutzer"),Role.Benutzer));
-        collection.add(new WrappedEntity<>(bundle.getString("enum.role.anderer_benutzer"),Role.AndereRolle));
 
+    public static WrappedEntity<FacultyDTO> getWrappedFaculty(FacultyDTO faculty) {
+        return new WrappedEntity<>(faculty.getFacultyName(), faculty);
+    }
+
+    public static Collection<WrappedEntity<UserRole>> getWrappedRole(){
+        Collection<WrappedEntity<UserRole>> collection =new ArrayList<>();
+        collection.add(new WrappedEntity<>(bundle.getString("enum.role.administrator"), UserRole.ADMIN));
+        collection.add(new WrappedEntity<>(bundle.getString("enum.role.user"),UserRole.USER));
         return collection;
     }
 
@@ -104,6 +107,7 @@ public class RepresentationWrapper {
                 return wrappedEntity;
             }
         }
+        logger.log(Level.DEBUG, "Could not find entity in WrappedEntity collection. Entity to find: '" + entity + "' in Collection: '" + collection + "'");
         return null;
     }
 
@@ -117,6 +121,19 @@ public class RepresentationWrapper {
         return collection;
     }
 
+    public static Collection<String> getTargetDegreeSuggestions() {
+        Collection<String> collection = new ArrayList<>();
+        collection.add(bundle.getString("enum.doctoral_graduation.dr_ing"));
+        collection.add(bundle.getString("enum.doctoral_graduation.dr_phil"));
+        collection.add(bundle.getString("enum.doctoral_graduation.dr_rer_nat"));
+        collection.add(bundle.getString("enum.doctoral_graduation.dr_sc_nat"));
+        collection.add(bundle.getString("enum.doctoral_graduation.dr_rer_soc"));
+        collection.add(bundle.getString("enum.doctoral_graduation.dr_rer_tech"));
+        collection.add(bundle.getString("enum.doctoral_graduation.dr_sc_techn"));
+        collection.add(bundle.getString("enum.doctoral_graduation.ph_d"));
+        return collection;
+    }
+
     public static Collection<WrappedEntity<UniversityDTO>> getWrappedUniversities(Collection<UniversityDTO> universities) {
         Collection<WrappedEntity<UniversityDTO>> collection = new ArrayList<>();
         for (UniversityDTO uni : universities) {
@@ -127,5 +144,13 @@ public class RepresentationWrapper {
 
     public static WrappedEntity<UniversityDTO> getWrappedUniversity(UniversityDTO university) {
         return new WrappedEntity<>(university.getName(), university);
+    }
+
+    public static String getPreviewRepresentation(PreviewDoctoralStudentDTO preview) {
+        return preview.getName() + ", "
+                + preview.getForeName() + ", "
+                + preview.getFaculty() + ", "
+                + "Email: " + preview.getEmail() + ", "
+                + "Phone: " + preview.getPhoneNumber();
     }
 }

@@ -2,11 +2,11 @@ package de.hfu.pms.events;
 
 import de.hfu.pms.shared.dto.UserDTO;
 
-public class RequestSaveUserEvent {
+public class SuccessfullyChangedUserRoleEvent {
 
     private final UserDTO userDTO;
 
-    public RequestSaveUserEvent(UserDTO userDTO) {
+    public SuccessfullyChangedUserRoleEvent(UserDTO userDTO) {
         this.userDTO = userDTO;
     }
 

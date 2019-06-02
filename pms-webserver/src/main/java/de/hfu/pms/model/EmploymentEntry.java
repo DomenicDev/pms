@@ -1,9 +1,9 @@
 package de.hfu.pms.model;
 
 import de.hfu.pms.shared.enums.Campus;
-import de.hfu.pms.shared.enums.EmploymentLocation;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table
@@ -14,8 +14,7 @@ public class EmploymentEntry {
     private Long id;
 
     @Column
-    @Enumerated
-    private EmploymentLocation employmentLocation;
+    private String employmentLocation;
 
     @Column
     private String kindOfEmployment;
@@ -25,7 +24,10 @@ public class EmploymentEntry {
     private Campus campusOfDeployment;
 
     @Column
-    private boolean preEmploymentTimeToBeCharged;
+    private LocalDate employmentBegin;
+
+    @Column 
+    private LocalDate employmentEnd;
 
     public void setId(Long id) {
         this.id = id;
@@ -35,11 +37,11 @@ public class EmploymentEntry {
         return id;
     }
 
-    public EmploymentLocation getEmploymentLocation() {
+    public String getEmploymentLocation() {
         return employmentLocation;
     }
 
-    public void setEmploymentLocation(EmploymentLocation employmentLocation) {
+    public void setEmploymentLocation(String employmentLocation) {
         this.employmentLocation = employmentLocation;
     }
 
@@ -59,11 +61,19 @@ public class EmploymentEntry {
         this.campusOfDeployment = campusOfDeployment;
     }
 
-    public boolean isPreEmploymentTimeToBeCharged() {
-        return preEmploymentTimeToBeCharged;
+    public LocalDate getEmploymentBegin() {
+        return employmentBegin;
     }
 
-    public void setPreEmploymentTimeToBeCharged(boolean preEmploymentTimeToBeCharged) {
-        this.preEmploymentTimeToBeCharged = preEmploymentTimeToBeCharged;
+    public void setEmploymentBegin(LocalDate employmentBegin) {
+        this.employmentBegin = employmentBegin;
+    }
+
+    public LocalDate getEmploymentEnd() {
+        return employmentEnd;
+    }
+
+    public void setEmploymentEnd(LocalDate employmentEnd) {
+        this.employmentEnd = employmentEnd;
     }
 }
