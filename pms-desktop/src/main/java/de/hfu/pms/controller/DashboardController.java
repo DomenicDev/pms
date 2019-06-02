@@ -56,6 +56,9 @@ public class DashboardController {
     private Parent adminArea;
     private Logger logger = Logger.getLogger(DashboardController.class);
 
+    // we store a reference to the last focused button of the dashboard
+    private Button lastFocusedButton;
+
     @FXML
     public void initialize() throws IOException {
         eventBus.register(this);
@@ -83,6 +86,7 @@ public class DashboardController {
 
 
         // set home to be showed at first
+        this.lastFocusedButton = startButton;
         switchMainContent(homeParent);
     }
 
@@ -101,28 +105,44 @@ public class DashboardController {
         JavaFxUtils.setAllAnchorPaneConstraints(parentToShow, 0);
     }
 
+    private void setFocusedButton(Button button) {
+        if (button == null) {
+            return;
+        }
+        if (lastFocusedButton != null) {
+            lastFocusedButton.getStyleClass().remove("selected");
+        }
+        button.getStyleClass().add("selected");
+        this.lastFocusedButton = button;
+    }
+
     @FXML
     public void handleOnActionStartButton() {
+        setFocusedButton(startButton);
         switchMainContent(homeParent);
     }
 
     @FXML
     public void handleOnActionDoctoralStudentsButton() {
+        setFocusedButton(doctoralStudentsButton);
         switchMainContent(doctoralStudentsParent);
     }
 
     @FXML
     public void handleUniversityButton() {
+        setFocusedButton(universityButton);
         switchMainContent(universitiesParent);
     }
 
     @FXML
     public void handleAccountnformationButton() {
+        setFocusedButton(accountSettingsButton);
         switchMainContent(accountInformationParent);
     }
     @FXML
-    public void  handleAdminArea() {
-        switchMainContent((adminArea));
+    public void handleAdminArea() {
+        setFocusedButton(adminAreaButton);
+        switchMainContent(adminArea);
 
     }
 
