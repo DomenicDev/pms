@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -54,12 +55,21 @@
                <left>
                   <VBox spacing="25.0" styleClass="vbox-sidebar" BorderPane.alignment="CENTER">
                      <children>
-                        <Label alignment="CENTER" prefHeight="43.0" prefWidth="227.0" text="PhDMS HFU" textFill="#008d58">
-                           <font>
-                              <Font name="System Bold" size="29.0" />
-                           </font>
-                        </Label>
-                        <Separator prefHeight="0.0" prefWidth="219.0" styleClass="separator-sidebar" />
+                        <HBox>
+                           <children>
+                              <VBox>
+                                 <children>
+                                    <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="97.0" prefWidth="282.0" text="PhDMS HFU" textFill="WHITE">
+                                       <font>
+                                          <Font name="Rockwell Bold" size="36.0" />
+                                       </font>
+                                    </Label>
+                                    <Separator prefHeight="0.0" prefWidth="219.0" styleClass="separator-sidebar" />
+                                 </children>
+                              </VBox>
+                              <Separator halignment="RIGHT" orientation="VERTICAL" prefHeight="100.0" prefWidth="0.0" />
+                           </children>
+                        </HBox>
                         <VBox prefHeight="203.0" prefWidth="219.0" spacing="20.0" styleClass="vbox-sidebar">
                            <children>
                               <Button fx:id="startButton" alignment="TOP_LEFT" graphicTextGap="20.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleOnActionStartButton" styleClass="button-sidebar" text="%ui.button.start">
@@ -105,10 +115,13 @@
                         </VBox>
                         <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
                            <children>
-                              <ImageView fitHeight="87.0" fitWidth="219.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="100.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../images/Logo_HFU_A6_RGB.jpg" />
                                  </image>
+                                 <viewport>
+                                    <Rectangle2D />
+                                 </viewport>
                               </ImageView>
                            </children>
                         </VBox>
