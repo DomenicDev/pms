@@ -57,7 +57,7 @@ private Logger logger = Logger.getLogger(AdminAreaController.class);
             }
 
             ResourceBundle bundle = ResourceBundle.getBundle("lang/strings");
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/screens/ChangeUserAdminArea.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/screens/changeUserAdminArea.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
