@@ -24,6 +24,7 @@ public class NewGuiTest extends Application {
 
         Parent root = GuiLoader.loadFXML("/screens/dashboard_final.fxml");
         Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("/styles/style.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.show();
     }

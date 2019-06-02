@@ -3,7 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="207.0" prefWidth="407.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.TravelCostConferenceController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="207.0" prefWidth="407.0" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.TravelCostConferenceController">
     <children>
         <VBox layoutX="139.0" layoutY="58.0" prefHeight="207.0" prefWidth="407.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -34,8 +34,8 @@
                 </GridPane>
                 <HBox alignment="CENTER" prefHeight="60.0" prefWidth="590.0" spacing="25.0">
                     <children>
-                        <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOnActionSubmitButton" text="Übernehmen" />
-                        <Button cancelButton="true" mnemonicParsing="false" onAction="#handleOnActionCancelButton" text="Abbrechen" />
+                        <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOnActionSubmitButton" styleClass="button-NOT-sidebar" text="Übernehmen" />
+                        <Button cancelButton="true" mnemonicParsing="false" onAction="#handleOnActionCancelButton" styleClass="button-NOT-sidebar" text="Abbrechen" />
                     </children>
                 </HBox>
             </children>

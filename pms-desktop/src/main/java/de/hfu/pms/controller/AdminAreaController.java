@@ -87,11 +87,8 @@ private Logger logger = Logger.getLogger(AdminAreaController.class);
     @FXML
         void handleAddUserAdminEvent(ActionEvent event){
             try {
-                logger.log(Level.ERROR, "until here it works1");
                 ResourceBundle bundle = ResourceBundle.getBundle("lang/strings");
-                logger.log(Level.ERROR, "until here it works2 ");
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/screens/AddUserAdminArea.fxml"));
-                logger.log(Level.ERROR, "until here it works3 ");
                 Parent root = (Parent) fxmlLoader.load();
                 Stage stage = new Stage();
                 stage.initModality(Modality.APPLICATION_MODAL);

@@ -7,7 +7,7 @@
    <children>
       <Label layoutX="55.0" layoutY="131.0" text="Vor- und Nachname:" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="120.0" />
       <Label layoutX="55.0" layoutY="99.0" text="Benutzername:" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="80.0" />
-      <Button fx:id="changeUserInformationButton" layoutX="50.0" layoutY="272.0" mnemonicParsing="false" onAction="#handleChangeUserInformationButton" text="Benutzerinformationen Ändern" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="275.0" />
+      <Button fx:id="changeUserInformationButton" layoutX="50.0" layoutY="272.0" mnemonicParsing="false" onAction="#handleChangeUserInformationButton" styleClass="button-NOT-sidebar" stylesheets="@../styles/style.css" text="Benutzerinformationen Ändern" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="275.0" />
       <Label layoutX="55.0" layoutY="200.0" text="Email:" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="200.0" />
       <Label layoutX="55.0" layoutY="169.0" text="Rolle:" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="160.0" />
       <Label fx:id="LabelUsername" layoutX="65.0" layoutY="141.0" text="/Benutername" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="80.0" />

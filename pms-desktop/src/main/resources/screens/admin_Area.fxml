@@ -3,9 +3,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<ScrollPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.AdminAreaController">
+<ScrollPane style="-fx-background-color: #FAFAFA;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.AdminAreaController">
    <content>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="789.0" prefWidth="1106.0">
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="789.0" prefWidth="1106.0" stylesheets="@../styles/style.css">
          <children>
             <Label layoutX="80.0" layoutY="43.0" text="Admin Bereich" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
                <font>
@@ -21,8 +21,8 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <Button fx:id="ButtonAddUserAdmin" layoutX="462.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleAddUserAdminEvent" text="Benutzer Hinzufügen" AnchorPane.leftAnchor="230.0" AnchorPane.topAnchor="46.0" />
-            <Button fx:id="ButtonChangeUserAdmin" layoutX="444.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleChangeUserAdminEvent" text="Ausgewählten Benutzer bearbeiten" AnchorPane.leftAnchor="444.0" AnchorPane.topAnchor="46.0" />
+            <Button fx:id="ButtonAddUserAdmin" layoutX="462.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleAddUserAdminEvent" styleClass="button-NOT-sidebar" text="Benutzer Hinzufügen" AnchorPane.leftAnchor="230.0" AnchorPane.topAnchor="46.0" />
+            <Button fx:id="ButtonChangeUserAdmin" layoutX="444.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleChangeUserAdminEvent" styleClass="button-NOT-sidebar" text="Ausgewählten Benutzer bearbeiten" AnchorPane.leftAnchor="444.0" AnchorPane.topAnchor="46.0" />
          </children>
       </AnchorPane>
    </content>

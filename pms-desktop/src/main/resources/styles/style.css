@@ -1,22 +1,90 @@
 
-.button {
-    background-color: rgb(132, 182, 45);
-}
-
-.my_button {
-
-}
-
-/*
-hfu brighter green  rgb(107, 150, 36)
-hfu darker green    rgb(132, 182, 45)
- */
-
-
-.background_color-green_hfu {
-    background-color: rgb(132, 182, 45);
-}
-#TextFont {
-    -fx-font: 30px Arial;
+.button-sidebar
+{
+    -fx-background-color:  #92C8FF;
+    -fx-background-radius: 0em;
 
 }
+.button-sidebar:hover
+{
+    -fx-background-color: #FAFAFA;
+
+}
+.button-sidebar:pressed
+{
+    -fx-background-color: #92C8FF;
+
+}
+.button-sidebar:focused
+{
+    -fx-background-color: #008D58;
+    -fx-border-color: #92C8FF;
+    -fx-border-width: 0px 0px 0px 0px;
+}
+.vbox-sidebar{
+    -fx-background-color: #C5E2FF;
+}
+.hbox-top{
+    -fx-background-color: #008D58;
+}
+
+
+.separator-sidebar{
+    -fx-background-color: #C5E2FF;
+}
+.label-top{
+    -fx-text-fill: #FAFAFA;
+}
+
+
+
+
+
+.button-NOT-sidebar:hover{
+    -fx-background-color: #BFBFBF;
+    /*box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);*/
+}
+.button-NOT-sidebar:focused{
+    -fx-background-color: #92C8FF;
+
+}
+.button-NOT-sidebar:pressed {
+    -fx-background-color: #008D58;
+}
+.tool-bar-Doctoral-students{
+    -fx-background-color: #FAFAFA;
+    -fx-border-color: #92C8FF;
+    -fx-border-width: 0px 0px 5px 0px;
+}
+
+.tab-pane{
+
+    -fx-background-color:#FAFAFA;
+    }
+
+.tab{
+
+    -fx-background-color: #F0F0F0;
+
+}
+
+.tab:hover{
+    -fx-background-color: #BFBFBF;
+}
+.tab:pressed{
+
+    -fx-background-color: #008D58;
+
+}
+.tab:selected
+{
+    -fx-background-color: #92C8FF;
+    -fx-border-color: #92C8FF;
+    -fx-border-width: 0px 0px 0px 0px;
+}/*
+.tab-pane *.tab-header-background
+{
+    -fx-background-color: #FFFFFF;
+}
+
+*/

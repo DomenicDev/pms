@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.DoctoralStudentOverviewController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="20.0" style="-fx-background-color: #FAFAFA;" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.DoctoralStudentOverviewController">
    <children>
       <HBox prefHeight="62.0" prefWidth="600.0" spacing="15.0">
          <children>
@@ -14,9 +14,9 @@
                <HBox.margin>
                   <Insets right="15.0" />
                </HBox.margin></TextField>
-            <Button mnemonicParsing="false" onAction="#handleOnActionSearchButton" text="Suchen" />
-            <Button mnemonicParsing="false" onAction="#handleOnActionEditButton" text="Bearbeiten" />
-            <Button mnemonicParsing="false" onAction="#handleOnActionDeleteButton" text="Löschen" />
+            <Button mnemonicParsing="false" onAction="#handleOnActionSearchButton" styleClass="button-NOT-sidebar" text="Suchen" />
+            <Button mnemonicParsing="false" onAction="#handleOnActionEditButton" styleClass="button-NOT-sidebar" text="Bearbeiten" />
+            <Button mnemonicParsing="false" onAction="#handleOnActionDeleteButton" styleClass="button-NOT-sidebar" text="Löschen" />
          </children>
          <padding>
             <Insets left="10.0" top="20.0" />
