@@ -13,14 +13,14 @@
             </font>
         </Label>
         <Button mnemonicParsing="false" onAction="#handleOnActionAlertTestButton" text="AlertTestButton" />
-        <VBox prefHeight="500.0" prefWidth="1094.0">
+        <VBox prefHeight="81.0" prefWidth="1094.0">
             <children>
                 <Label text="Promovierende, bei denen eine Zeitüberschreitung droht">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>
                 </Label>
-                <ListView fx:id="alertListView" prefHeight="200.0" />
+                <ListView fx:id="alertListView" prefHeight="162.0" prefWidth="1094.0" />
             </children>
             <VBox.margin>
                 <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
@@ -31,12 +31,12 @@
                 <Font size="18.0" />
             </font></Label>
         <TextField fx:id="searchBox" onKeyTyped="#searchRecord" /> <!--onKeyTyped="#searchRecord" -->
-        <TableView fx:id="personen" prefHeight="400.0" prefWidth="200.0">
+        <TableView fx:id="personen" prefHeight="122.0" prefWidth="1134.0">
             <columns>
                 <TableColumn fx:id="forname" prefWidth="75.0" text="vorname" />
                 <TableColumn fx:id="lastname" prefWidth="75.0" text="nachname" />
             </columns>
         </TableView>
-        <PieChart fx:id="pieChart" prefHeight="500.0" prefWidth="600.0" title="Statistik" />
+        <PieChart fx:id="pieChart" prefHeight="115.0" prefWidth="1134.0" title="Statistik" />
     </children>
 </VBox>
