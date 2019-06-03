@@ -101,7 +101,7 @@
                         <Separator prefWidth="200.0" styleClass="separator-sidebar" />
                         <VBox spacing="20.0">
                            <children>
-                              <Button fx:id="accountSettingsButton" mnemonicParsing="false" onAction="#handleAccountnformationButton" styleClass="button-sidebar" text="%ui.button.account_settings" VBox.vgrow="ALWAYS">
+                              <Button fx:id="accountSettingsButton" mnemonicParsing="false" onAction="#handleAccountInformationButton" styleClass="button-sidebar" text="%ui.button.account_settings" VBox.vgrow="ALWAYS">
                                  <graphic>
                                     <FontIcon iconLiteral="fa-gear" />
                                  </graphic>

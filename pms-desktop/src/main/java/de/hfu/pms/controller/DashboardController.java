@@ -147,7 +147,7 @@ public class DashboardController implements Initializable {
     }
 
     @FXML
-    public void handleAccountnformationButton() {
+    public void handleAccountInformationButton() {
         switchScreen(accountSettingsButton, bundle.getString("ui.section.account_settings"), accountInformationParent);
     }
     @FXML
