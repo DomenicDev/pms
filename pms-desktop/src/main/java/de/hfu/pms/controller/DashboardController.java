@@ -9,6 +9,7 @@ import de.hfu.pms.utils.GuiLoader;
 import de.hfu.pms.utils.JavaFxUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,10 +17,14 @@ import javafx.scene.layout.AnchorPane;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class DashboardController {
+public class DashboardController implements Initializable {
 
     private EventBus eventBus = EventBusSystem.getEventBus();
+
+    private ResourceBundle bundle;
 
     @FXML
     private Button startButton;
@@ -42,12 +47,6 @@ public class DashboardController {
     @FXML
     private AnchorPane mainContentPane;
 
-    @FXML
-    private Button changeUserInformationButton;
-
-    @FXML
-    private Button universityAddButton;
-
     // custom fields
     private Parent homeParent;
     private Parent doctoralStudentsParent;
@@ -59,35 +58,35 @@ public class DashboardController {
     // we store a reference to the last focused button of the dashboard
     private Button lastFocusedButton;
 
-    @FXML
-    public void initialize() throws IOException {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        this.bundle = resources;
+
         eventBus.register(this);
         // for the main content pane we need to load
         // all the separated fxml files
         // to later dynamically switch between them
-        homeParent = GuiLoader.loadFXML("/screens/home.fxml");
-        doctoralStudentsParent = GuiLoader.loadFXML("/screens/doctoral_students_content.fxml");
-        universitiesParent = GuiLoader.loadFXML("/screens/university_screen.fxml");
+        try {
+            homeParent = GuiLoader.loadFXML("/screens/home.fxml");
+            doctoralStudentsParent = GuiLoader.loadFXML("/screens/doctoral_students_content.fxml");
+            universitiesParent = GuiLoader.loadFXML("/screens/university_screen.fxml");
 
+            // account information
+            // accountInformationParent = GuiLoader.loadFXML("/screens/account_infoscreen.fxml");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(GuiLoader.ACCOUNT_INFORMATION));
+            loader.setResources(GuiLoader.getResourceBundle());
+            this.accountInformationParent = loader.load();
 
-        // account information
-        // accountInformationParent = GuiLoader.loadFXML("/screens/account_infoscreen.fxml");
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(GuiLoader.ACCOUNT_INFORMATION));
-        loader.setResources(GuiLoader.getResourceBundle());
-        this.accountInformationParent = loader.load();
+            AccountInformationController accountInformationController = loader.getController();
+            accountInformationController.showUser(EntityPool.getInstance().getLoggedInUser());
 
-        AccountInformationController accountInformationController = loader.getController();
-        accountInformationController.showUser(EntityPool.getInstance().getLoggedInUser());
-
-
-        adminArea =GuiLoader.loadFXML("/screens/admin_Area.fxml");
-
-        // todo add more
-
+            adminArea = GuiLoader.loadFXML("/screens/admin_Area.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         // set home to be showed at first
-        this.lastFocusedButton = startButton;
-        switchMainContent(homeParent);
+        switchScreen(startButton, bundle.getString("ui.section.home"), homeParent);
     }
 
     private void switchMainContent(Parent parentToShow) {
@@ -116,34 +115,44 @@ public class DashboardController {
         this.lastFocusedButton = button;
     }
 
+    private void setTitle(String title) {
+        if (title == null) {
+            return;
+        }
+        mainContentTitle.setText(title);
+    }
+
+    private void switchScreen(Button origin, String title, Parent parent) {
+        if (origin == null || title == null || parent == null) {
+            return;
+        }
+        setFocusedButton(origin);
+        setTitle(title);
+        switchMainContent(parent);
+    }
+
     @FXML
     public void handleOnActionStartButton() {
-        setFocusedButton(startButton);
-        switchMainContent(homeParent);
+        switchScreen(startButton, bundle.getString("ui.section.home"), homeParent);
     }
 
     @FXML
     public void handleOnActionDoctoralStudentsButton() {
-        setFocusedButton(doctoralStudentsButton);
-        switchMainContent(doctoralStudentsParent);
+        switchScreen(doctoralStudentsButton, bundle.getString("ui.section.doctoral_students"), doctoralStudentsParent);
     }
 
     @FXML
     public void handleUniversityButton() {
-        setFocusedButton(universityButton);
-        switchMainContent(universitiesParent);
+        switchScreen(universityButton, bundle.getString("ui.section.universities"), universitiesParent);
     }
 
     @FXML
     public void handleAccountnformationButton() {
-        setFocusedButton(accountSettingsButton);
-        switchMainContent(accountInformationParent);
+        switchScreen(accountSettingsButton, bundle.getString("ui.section.account_settings"), accountInformationParent);
     }
     @FXML
     public void handleAdminArea() {
-        setFocusedButton(adminAreaButton);
-        switchMainContent(adminArea);
-
+        switchScreen(adminAreaButton, bundle.getString("ui.section.admin_area"), adminArea);
     }
 
     @Subscribe
@@ -154,4 +163,5 @@ public class DashboardController {
         // from another screen than this one
         switchMainContent(doctoralStudentsParent);
     }
+
 }
