@@ -118,7 +118,11 @@ public class DoctoralStudentFormController implements Initializable {
     @FXML
     private CheckBox promotionCanceledCheckBox;
     @FXML
+    private DatePicker cancelDateDatePicker;
+    @FXML
     private TextField cancelReasonTextField;
+    @FXML
+    private VBox cancelChildrenBox;
 
     // Membership
     @FXML
@@ -390,12 +394,14 @@ public class DoctoralStudentFormController implements Initializable {
         promotionAgreementDatePicker.setValue(targetGraduationDTO.getPromotionAgreement());
 
         // cancel
-        if (targetGraduationDTO.getCancelReason() != null && !targetGraduationDTO.getCancelReason().isEmpty()) {
+        if (targetGraduationDTO.getCancelDate() != null || (targetGraduationDTO.getCancelReason() != null && !targetGraduationDTO.getCancelReason().isEmpty())) {
             promotionCanceledCheckBox.setSelected(true);
             cancelReasonTextField.setText(targetGraduationDTO.getCancelReason());
+            cancelDateDatePicker.setValue(targetGraduationDTO.getCancelDate());
         } else {
             promotionCanceledCheckBox.setSelected(false);
             cancelReasonTextField.setText(null);
+            cancelDateDatePicker.setValue(null);
         }
 
         // hfu membership
@@ -418,8 +424,10 @@ public class DoctoralStudentFormController implements Initializable {
 
         // cancel
         String cancelReason = targetGraduationDTO.getCancelReason();
+        LocalDate cancelDate = targetGraduationDTO.getCancelDate();
         cancelReasonTextField.setText(cancelReason);
-        promotionCanceledCheckBox.setSelected(cancelReason != null && !cancelReason.isEmpty());
+        cancelDateDatePicker.setValue(cancelDate);
+        promotionCanceledCheckBox.setSelected((cancelReason != null && !cancelReason.isEmpty()) || cancelDate != null);
 
         // employments
         Set<EmploymentEntryDTO> employmentEntries = employment.getEmploymentEntries();
@@ -446,6 +454,9 @@ public class DoctoralStudentFormController implements Initializable {
         if (doctoralStudent.getDocuments() != null) {
             documentsListView.getItems().addAll(doctoralStudent.getDocuments());
         }
+
+        // will enable/disable children based on their value
+        refreshCheckBoxes();
 
     }
 
@@ -634,22 +645,26 @@ public class DoctoralStudentFormController implements Initializable {
     }
 
     @FXML
-    public void handleHfuMemberCheckBox(ActionEvent event) {
+    public void handleHfuMemberCheckBox() {
+        onPromotionChanged();
         refreshCheckBoxes();
     }
 
     @FXML
     public void handleOnActionExtendMembershipCheckBox() {
+        onPromotionChanged();
         refreshCheckBoxes();
     }
 
     @FXML
     public void handleOnActionExternalMemberCheckBox() {
+        onPromotionChanged();
         refreshCheckBoxes();
     }
 
     @FXML
     public void handleOnActionPromotionCanceledCheckBox() {
+        onPromotionChanged();
         refreshCheckBoxes();
     }
 
@@ -723,7 +738,7 @@ public class DoctoralStudentFormController implements Initializable {
         hfuMembershipVBox.setDisable(!hfuMemberCheckBox.isSelected());
         extensionMembershipHBox.setDisable(!prolongMembershipCheckBox.isSelected());
         externalCollegeNameTextField.setDisable(!externalMemberCheckBox.isSelected());
-        cancelReasonTextField.setDisable(!promotionCanceledCheckBox.isSelected());
+        cancelChildrenBox.setDisable(!promotionCanceledCheckBox.isSelected());
     }
 
     @Subscribe
@@ -864,6 +879,7 @@ public class DoctoralStudentFormController implements Initializable {
         targetGraduationDTO.setPromotionAgreement(promotionAgreementDatePicker.getValue());
 
         if (promotionCanceledCheckBox.isSelected()) {
+            targetGraduationDTO.setCancelDate(cancelDateDatePicker.getValue());
             targetGraduationDTO.setCancelReason(cancelReasonTextField.getText());
         } else {
             targetGraduationDTO.setCancelReason(null);
@@ -890,7 +906,8 @@ public class DoctoralStudentFormController implements Initializable {
 
         // cancel reason
         targetGraduationDTO.setCancelReason(promotionCanceledCheckBox.isSelected() ? cancelReasonTextField.getText() : null);
-
+        // cancel date
+        targetGraduationDTO.setCancelDate(promotionCanceledCheckBox.isSelected() ? promotionBeginDatePicker.getValue(): null);
 
         // process employment relationship
         Set<EmploymentEntryDTO> employmentEntries = new HashSet<>(employmentTableView.getItems());
