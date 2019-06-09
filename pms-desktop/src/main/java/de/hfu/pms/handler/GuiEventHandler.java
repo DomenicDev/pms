@@ -207,15 +207,14 @@ public class GuiEventHandler {
         }
     }
 
-    @Subscribe void requestChangeUserInformation( RequestChangeUserInformationEvent requestChangeUserInformationEvent) throws BusinessException {
-        UserDTO user = requestChangeUserInformationEvent.getUserDTO();
+    @Subscribe
+    public void requestChangeUserInformation(RequestChangeUserInformationEvent requestChangeUserInformationEvent) throws BusinessException {
+        UserInfoDTO user = requestChangeUserInformationEvent.getUserDTO();
         String newForename = requestChangeUserInformationEvent.getNewForename();
         String newLastname =requestChangeUserInformationEvent.getNewLastname();
         String newEmail =requestChangeUserInformationEvent.getNewEmail();
-        UserDTO response = null;
-        response =applicationServices.changeAccountInformation(user.getForename(),user.getLastname(),user.getEmail());
-        eventBus.post((new SuccessfullyChangedUserInformationEvent(response)));
-
+        UserDTO response = applicationServices.changeAccountInformation(newForename, newLastname, newEmail);
+        eventBus.post(new SuccessfullyChangedUserInformationEvent(response));
     }
 
     @Subscribe

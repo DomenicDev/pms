@@ -5,6 +5,7 @@ import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.SuccessfullyAddedUserEvent;
 import de.hfu.pms.shared.dto.UserDTO;
+import de.hfu.pms.shared.dto.UserInfoDTO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,7 +38,7 @@ public class AccountInformationController implements Initializable {
 
     private Logger logger = Logger.getLogger(AccountInformationController.class);
 
-    private UserDTO user;
+    private UserInfoDTO user;
 
     @FXML
     void handleChangeUserInformationButton(ActionEvent event) {
@@ -74,7 +75,7 @@ public class AccountInformationController implements Initializable {
         LableRole.setText(user.getRole().name());
     }
 
-    public void showUser(UserDTO user) {
+    public void showUser(UserInfoDTO user) {
         this.user = user;
         initLable();
     }

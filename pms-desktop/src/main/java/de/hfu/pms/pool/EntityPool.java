@@ -4,18 +4,16 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.SuccessfullyAddedUniversityEvent;
+import de.hfu.pms.exceptions.BusinessException;
 import de.hfu.pms.service.ApplicationServices;
-import de.hfu.pms.shared.dto.FacultyDTO;
-import de.hfu.pms.shared.dto.PreviewDoctoralStudentDTO;
-import de.hfu.pms.shared.dto.UniversityDTO;
-import de.hfu.pms.shared.dto.UserDTO;
+import de.hfu.pms.shared.dto.*;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import java.util.Collection;
 import java.util.HashSet;
 
-public final class EntityPool{
+public final class EntityPool {
 
     private static EntityPool entityPool = new EntityPool();
 
@@ -58,32 +56,32 @@ public final class EntityPool{
         this.previewStudents.addAll(previews);
     }
 
-    public void initUsers(Collection<UserDTO> initUsers){
-        if (initUsers == null){
+    public void initUsers(Collection<UserDTO> initUsers) {
+        if (initUsers == null) {
             return;
         }
         logger.log(Level.DEBUG, "Adding " + initUsers.size() + " items to users pool.");
         users.addAll(initUsers);
     }
 
-    public void initFaculties(Collection<FacultyDTO> initFaculties){
-        if (initFaculties == null){
+    public void initFaculties(Collection<FacultyDTO> initFaculties) {
+        if (initFaculties == null) {
             return;
         }
         logger.log(Level.DEBUG, "Adding " + initFaculties.size() + " items to faculty pool.");
         faculties.addAll(initFaculties);
     }
 
-    public void addFaculty(FacultyDTO faculty){
-        if (faculty == null){
+    public void addFaculty(FacultyDTO faculty) {
+        if (faculty == null) {
             return;
         }
         logger.log(Level.DEBUG, "Adding new faculty (" + faculty.getFacultyName() + " to faculty pool.");
         faculties.add(faculty);
     }
 
-    public void deleteFaculty(FacultyDTO faculty){
-        if (faculty == null){
+    public void deleteFaculty(FacultyDTO faculty) {
+        if (faculty == null) {
             return;
         }
         logger.log(Level.DEBUG, "Removing faculty (" + faculty.getFacultyName() + " from faculty pool.");
@@ -106,7 +104,7 @@ public final class EntityPool{
         return users;
     }
 
-    public UserDTO getLoggedInUser() {
+    public UserInfoDTO getLoggedInUser() throws BusinessException {
         return applicationServices.getCurrentUser();
     }
 

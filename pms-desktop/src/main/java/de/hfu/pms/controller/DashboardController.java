@@ -4,6 +4,7 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.ShowDoctoralStudentEvent;
+import de.hfu.pms.exceptions.BusinessException;
 import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.utils.GuiLoader;
 import de.hfu.pms.utils.JavaFxUtils;
@@ -70,6 +71,7 @@ public class DashboardController implements Initializable {
             homeParent = GuiLoader.loadFXML("/screens/home.fxml");
             doctoralStudentsParent = GuiLoader.loadFXML("/screens/doctoral_students_content.fxml");
             universitiesParent = GuiLoader.loadFXML("/screens/university_screen.fxml");
+            adminArea = GuiLoader.loadFXML("/screens/admin_Area.fxml");
 
             // account information
             // accountInformationParent = GuiLoader.loadFXML("/screens/account_infoscreen.fxml");
@@ -80,8 +82,10 @@ public class DashboardController implements Initializable {
             AccountInformationController accountInformationController = loader.getController();
             accountInformationController.showUser(EntityPool.getInstance().getLoggedInUser());
 
-            adminArea = GuiLoader.loadFXML("/screens/admin_Area.fxml");
+
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (BusinessException e) {
             e.printStackTrace();
         }
 

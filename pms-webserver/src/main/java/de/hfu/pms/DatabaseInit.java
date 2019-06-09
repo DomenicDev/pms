@@ -39,7 +39,7 @@ public class DatabaseInit implements CommandLineRunner {
     @Override
     public void run(String... args) {
         // add test user with admin rights
-        User testAdmin = new User("admin", passwordEncoder.encode("1234"),"Bob","Baumeister","test@example.com");
+        User testAdmin = new User("admin", passwordEncoder.encode("1234"),"Boby","Baumeister","test@example.com");
         testAdmin.setRole(UserRole.ADMIN);
         userDao.save(testAdmin);
 

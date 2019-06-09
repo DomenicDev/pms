@@ -34,9 +34,10 @@ public class ApplicationServiceImpl implements ApplicationServices {
     private final String STUDENT_PREFIX = "/student/";
     private final String USER_PREFIX = "/user/";
     private final String UNIVERSITY_PREFIX = "/university/";
-    private final String FACULTY_PREFIX ="/faculty/";
+    private final String FACULTY_PREFIX = "/faculty/";
 
     private final String STUDENT_SERVICES = HOST_URL + STUDENT_PREFIX;
+    private final String USER_SERVICES = HOST_URL + USER_PREFIX;
 
     public ApplicationServiceImpl() {
         this.restClient = new RestClient();
@@ -45,10 +46,10 @@ public class ApplicationServiceImpl implements ApplicationServices {
 
     //TODO: Add good exception handling and logging
     @Override
-    public DoctoralStudentDTO addDoctoralStudent(CreateDoctoralStudentDTO student)throws BusinessException {
+    public DoctoralStudentDTO addDoctoralStudent(CreateDoctoralStudentDTO student) throws BusinessException {
         try {
             String json = mapper.writeValueAsString(student);
-            String response = restClient.postJson(HOST_URL + STUDENT_PREFIX + "create" , json);
+            String response = restClient.postJson(HOST_URL + STUDENT_PREFIX + "create", json);
             DoctoralStudentDTO dto = mapper.readValue(response, DoctoralStudentDTO.class);
             logger.log(Level.INFO, "Doctoral Student created: " + dto);
             return dto;
@@ -65,7 +66,7 @@ public class ApplicationServiceImpl implements ApplicationServices {
         try {
             String json = mapper.writeValueAsString(student);
             String response = restClient.postJson(STUDENT_SERVICES + "update/" + student.getId(), json);
-            DoctoralStudentDTO updatedEntity =  mapper.readValue(response, DoctoralStudentDTO.class);
+            DoctoralStudentDTO updatedEntity = mapper.readValue(response, DoctoralStudentDTO.class);
             logger.log(Level.DEBUG, "Doctoral student has been updated successfully: " + updatedEntity);
             return updatedEntity;
         } catch (JsonProcessingException e) {
@@ -102,7 +103,8 @@ public class ApplicationServiceImpl implements ApplicationServices {
     public Collection<PreviewDoctoralStudentDTO> getPreviews() {
         try {
             String response = restClient.get(HOST_URL + STUDENT_PREFIX + "previews");
-            return mapper.readValue(response, new TypeReference<List<PreviewDoctoralStudentDTO>>(){});
+            return mapper.readValue(response, new TypeReference<List<PreviewDoctoralStudentDTO>>() {
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -130,7 +132,8 @@ public class ApplicationServiceImpl implements ApplicationServices {
     public Collection<PreviewDoctoralStudentDTO> getAlertedDoctoralStudents() throws IOException {
         try {
             String response = restClient.get(STUDENT_SERVICES + "get/exceeded");
-            return mapper.readValue(response, new TypeReference<List<PreviewDoctoralStudentDTO>>(){});
+            return mapper.readValue(response, new TypeReference<List<PreviewDoctoralStudentDTO>>() {
+            });
         } catch (IOException e) {
             e.printStackTrace();
             throw new IOException();
@@ -162,10 +165,14 @@ public class ApplicationServiceImpl implements ApplicationServices {
     }
 
     @Override
-    public UserDTO getCurrentUser() {
-        // dummy object
-        // todo return real one
-        return new UserDTO("admin", "1234","Bob","Baumeister","test@example.com", UserRole.ADMIN);
+    public UserInfoDTO getCurrentUser() throws BusinessException {
+        try {
+            String json = restClient.get(USER_SERVICES + "user");
+            return toObject(json, UserInfoDTO.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new BusinessException("could not receive current user");
+        }
     }
 
 
@@ -173,7 +180,8 @@ public class ApplicationServiceImpl implements ApplicationServices {
     public List<UniversityDTO> getAllUniversities() {
         try {
             String response = restClient.get(HOST_URL + UNIVERSITY_PREFIX + "getList");
-            return mapper.readValue(response, new TypeReference<List<UniversityDTO>>(){});
+            return mapper.readValue(response, new TypeReference<List<UniversityDTO>>() {
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -200,7 +208,7 @@ public class ApplicationServiceImpl implements ApplicationServices {
     public UniversityDTO updateUniversity(Long id, UniversityDTO universityDTO) {
         try {
             String json = mapper.writeValueAsString(universityDTO);
-            String response = restClient.postJson(HOST_URL + UNIVERSITY_PREFIX + "update/" + id,json);
+            String response = restClient.postJson(HOST_URL + UNIVERSITY_PREFIX + "update/" + id, json);
             UniversityDTO dto = mapper.readValue(response, UniversityDTO.class);
             logger.log(Level.INFO, "University updated: " + dto);
             return dto;
@@ -215,10 +223,11 @@ public class ApplicationServiceImpl implements ApplicationServices {
     // todo deleteUniversity
 
     @Override
-    public List<FacultyDTO> getAllFaculties(){
+    public List<FacultyDTO> getAllFaculties() {
         try {
             String response = restClient.get(HOST_URL + FACULTY_PREFIX + "getList");
-            return mapper.readValue(response, new TypeReference<List<FacultyDTO>>(){});
+            return mapper.readValue(response, new TypeReference<List<FacultyDTO>>() {
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -246,7 +255,7 @@ public class ApplicationServiceImpl implements ApplicationServices {
     public FacultyDTO updateFaculty(FacultyDTO facultyDTO) {
         try {
             String json = mapper.writeValueAsString(facultyDTO);
-            String response = restClient.postJson(HOST_URL + FACULTY_PREFIX + "update/" + facultyDTO.getId(),json);
+            String response = restClient.postJson(HOST_URL + FACULTY_PREFIX + "update/" + facultyDTO.getId(), json);
             FacultyDTO dto = mapper.readValue(response, FacultyDTO.class);
             logger.log(Level.INFO, "Faculty updated: " + dto);
             return dto;
@@ -296,40 +305,39 @@ public class ApplicationServiceImpl implements ApplicationServices {
         throw new BusinessException("could not change password...");
     }
 
-    public UserDTO changeUserEmail(UserDTO userDTO,String newEmail)throws BusinessException{
+    public UserDTO changeUserEmail(UserDTO userDTO, String newEmail) throws BusinessException {
         //todo is never used?
         try {
             {
                 String json = newEmail;
-                String response = restClient.postJson(HOST_URL +USER_PREFIX+"updateEmail/" +userDTO.getUsername(),json);
-                UserDTO dto =mapper.readValue(response,UserDTO.class);
-                logger.log(Level.INFO,response);
+                String response = restClient.postJson(HOST_URL + USER_PREFIX + "updateEmail/" + userDTO.getUsername(), json);
+                UserDTO dto = mapper.readValue(response, UserDTO.class);
+                logger.log(Level.INFO, response);
                 return dto;
             }
-        }catch (JsonProcessingException e) {
-        e.printStackTrace();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
         } catch (IOException e) {
-        e.printStackTrace();
-    }
+            e.printStackTrace();
+        }
         throw new BusinessException("could not change email...");
     }
 
-      @Override
-    public UserDTO ChangeAccountinformation(String newForname, String newLastname, String newEmail)throws BusinessException {
-          try {
-              String json = newForname;
-              String response = restClient.postJson(HOST_URL + USER_PREFIX + "updateForname/" + "updateLastname" + "updateEmail", json);
-              UserDTO dto = mapper.readValue(response,UserDTO.class);
-              logger.log(Level.INFO,response);
-              return dto;
-          } catch (JsonProcessingException e) {
-              e.printStackTrace();
-          } catch (IOException e) {
-              e.printStackTrace();
-          }
-          throw new BusinessException("Could not change AccountInformation");
-      }
-
+    @Override
+    public UserDTO ChangeAccountinformation(String newForname, String newLastname, String newEmail) throws BusinessException {
+        try {
+            String json = newForname;
+            String response = restClient.postJson(HOST_URL + USER_PREFIX + "updateForname/" + "updateLastname" + "updateEmail", json);
+            UserDTO dto = mapper.readValue(response, UserDTO.class);
+            logger.log(Level.INFO, response);
+            return dto;
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        throw new BusinessException("Could not change AccountInformation");
+    }
 
 
     @Override
@@ -351,7 +359,7 @@ public class ApplicationServiceImpl implements ApplicationServices {
     @Override
     public void removeUser(String username) throws BusinessException {
         try {
-            String response = restClient.get(HOST_URL + USER_PREFIX +"delete/" + username);
+            String response = restClient.get(HOST_URL + USER_PREFIX + "delete/" + username);
             logger.log(Level.INFO, response);
         } catch (IOException e) {
             e.printStackTrace();
@@ -362,7 +370,7 @@ public class ApplicationServiceImpl implements ApplicationServices {
     @Override
     public UserDTO changeUserPrivileges(String username, UserRole newUserRole) throws BusinessException {
         try {
-            String response = restClient.postJson(HOST_URL + USER_PREFIX +"updateRole/" + username, mapper.writeValueAsString(newUserRole));
+            String response = restClient.postJson(HOST_URL + USER_PREFIX + "updateRole/" + username, mapper.writeValueAsString(newUserRole));
             logger.log(Level.INFO, response);
             return mapper.readValue(response, UserDTO.class);
         } catch (IOException e) {
@@ -380,7 +388,7 @@ public class ApplicationServiceImpl implements ApplicationServices {
     @Override
     public UserDTO changeUserEmail(String username, String email) throws BusinessException {
         try {
-            String response = restClient.postJson(HOST_URL + USER_PREFIX +"updateEmail/" + username, email);
+            String response = restClient.postJson(HOST_URL + USER_PREFIX + "updateEmail/" + username, email);
             UserDTO dto = mapper.readValue(response, UserDTO.class);
             logger.log(Level.INFO, response);
             return dto;
@@ -394,7 +402,7 @@ public class ApplicationServiceImpl implements ApplicationServices {
     public UserDTO getUser(String username) throws BusinessException {
         try {
             String response = restClient.get(HOST_URL + USER_PREFIX + "get/" + username);
-            return mapper.readValue(response,UserDTO.class);
+            return mapper.readValue(response, UserDTO.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -405,7 +413,8 @@ public class ApplicationServiceImpl implements ApplicationServices {
     public List<UserDTO> getAllUsers() {
         try {
             String response = restClient.get(HOST_URL + USER_PREFIX + "getList");
-            return mapper.readValue(response, new TypeReference<List<UserDTO>>(){});
+            return mapper.readValue(response, new TypeReference<List<UserDTO>>() {
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -413,7 +422,7 @@ public class ApplicationServiceImpl implements ApplicationServices {
     }
 
     @Override
-    public DocumentDTO getDocument(DocumentInformationDTO documentInformation){
+    public DocumentDTO getDocument(DocumentInformationDTO documentInformation) {
         try {
             String json = restClient.get(STUDENT_SERVICES + "/docs/" + documentInformation.getId());
             DocumentDTO dto = mapper.readValue(json, DocumentDTO.class);

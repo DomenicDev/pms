@@ -1,22 +1,22 @@
 package de.hfu.pms.events;
 
-import de.hfu.pms.shared.dto.UserDTO;
+import de.hfu.pms.shared.dto.UserInfoDTO;
 
 public class RequestChangeUserInformationEvent {
 
-    private UserDTO userDTO;
+    private UserInfoDTO userDTO;
     private String newForename;
     private String newLastname;
     private String newEmail;
 
-    public RequestChangeUserInformationEvent(UserDTO user) {
+    public RequestChangeUserInformationEvent(UserInfoDTO user) {
         this.userDTO = user;
         this.newEmail =newEmail;
         this.newForename =newForename;
         this.newLastname =newLastname;
     }
 
-    public UserDTO getUserDTO() {
+    public UserInfoDTO getUserDTO() {
         return userDTO;
     }
     public String getNewEmail(){

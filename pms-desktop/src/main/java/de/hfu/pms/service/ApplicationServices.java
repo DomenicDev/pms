@@ -43,7 +43,7 @@ public interface ApplicationServices {
     /**
      * @return the current logged in user
      */
-    UserDTO getCurrentUser();
+    UserInfoDTO getCurrentUser() throws BusinessException;
 
     UserDTO ChangeAccountinformation(String forename, String lastname, String email) throws BusinessException;
 

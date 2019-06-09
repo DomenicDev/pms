@@ -3,7 +3,7 @@ package de.hfu.pms.controller;
 import com.google.common.eventbus.EventBus;
 import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.RequestChangeUserInformationEvent;
-import de.hfu.pms.shared.dto.UserDTO;
+import de.hfu.pms.shared.dto.UserInfoDTO;
 import de.hfu.pms.utils.FormValidator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -41,7 +41,7 @@ public class ChangeAccountInformationController implements Initializable {
     private TextField textfieldLastname;
 
 
-    private UserDTO user;
+    private UserInfoDTO user;
 
     @FXML
     void handleChangeUserInformationbutton(ActionEvent event) {
@@ -62,7 +62,7 @@ public class ChangeAccountInformationController implements Initializable {
     }
 
 
-    public void edit(UserDTO user) {
+    public void edit(UserInfoDTO user) {
         this.user = user;
         textfieldChangeEmail.setText((user.getEmail()));
         textfieldForname.setText(user.getForename());

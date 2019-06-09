@@ -1,19 +1,19 @@
 package de.hfu.pms.controller;
 
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import de.hfu.pms.exceptions.UserNotFoundException;
 import de.hfu.pms.exceptions.WrongPasswordException;
 import de.hfu.pms.model.User;
 import de.hfu.pms.model.UserRole;
 import de.hfu.pms.service.UserService;
 import de.hfu.pms.shared.dto.UserDTO;
+import de.hfu.pms.shared.dto.UserInfoDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -28,6 +28,17 @@ public class UserController {
     public UserController(UserService userService, ModelMapper modelMapper) {
         this.service = userService;
         this.modelMapper = modelMapper;
+    }
+
+    @GetMapping("/user")
+    @ResponseStatus(HttpStatus.OK)
+    public UserInfoDTO getCurrentUser(Principal principal) {
+        String name = principal.getName();
+        if (name == null) {
+            return null;
+        }
+        User user = service.getUser(name);
+        return convertToInfoDTO(user);
     }
 
     @PostMapping("/create")
@@ -84,6 +95,9 @@ public class UserController {
         return modelMapper.map(user, UserDTO.class);
     }
 
+    private UserInfoDTO convertToInfoDTO(User user) {
+        return modelMapper.map(user, UserInfoDTO.class);
+    }
     //Error Response
 
     @ResponseStatus(value = HttpStatus.CONFLICT, reason = "This username already exists.")
