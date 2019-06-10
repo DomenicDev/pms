@@ -29,58 +29,165 @@
                     <tabs>
                       <Tab text="%ui.tab.personal_data">
                            <content>
-                              <ScrollPane prefHeight="464.0" prefWidth="1279.0">
+                              <ScrollPane prefHeight="464.0">
                                  <content>
-                                    <HBox prefHeight="711.0" prefWidth="996.0">
+                                    <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="25.0">
                                        <children>
-                                          <VBox fillWidth="false" prefHeight="691.0" prefWidth="509.0" spacing="5.0" HBox.hgrow="ALWAYS">
+                                          <VBox fillWidth="false" spacing="50.0" HBox.hgrow="ALWAYS">
                                              <children>
-                                                <HBox>
+                                                <HBox spacing="50.0">
                                                    <children>
-                                                      <VBox>
+                                                      <VBox spacing="10.0">
                                                          <children>
                                                             <Label text="%ui.label.general">
                                                                <font>
                                                                   <Font name="System Bold" size="12.0" />
                                                                </font>
                                                             </Label>
-                                                            <GridPane vgap="5.0">
-                                                              <columnConstraints>
-                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="185.0" minWidth="10.0" prefWidth="103.0" />
-                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="279.0" minWidth="10.0" prefWidth="277.0" />
-                                                              </columnConstraints>
-                                                              <rowConstraints>
-                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                              </rowConstraints>
+                                                            <VBox>
                                                                <children>
-                                                                  <Label alignment="CENTER" text="%ui.label.surname" GridPane.rowIndex="2" />
-                                                                  <TextField fx:id="lastNameTextField" onKeyTyped="#onPersonalDataChange" prefHeight="25.0" prefWidth="130.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                                  <Label text="%ui.label.forename" GridPane.rowIndex="4" />
-                                                                  <TextField fx:id="foreNameTextField" onKeyTyped="#onPersonalDataChange" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                                                   <Label text="%ui.label.salutation" />
-                                                                  <Label text="%ui.label.former_name" GridPane.rowIndex="3" />
-                                                                  <TextField fx:id="formerLastNameTextField" onKeyTyped="#onPersonalDataChange" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                                   <ComboBox fx:id="salutationComboBox" onAction="#onPersonalDataChange" prefHeight="26.0" prefWidth="147.0" GridPane.columnIndex="1" />
-                                                                  <Label text="%ui.label.title" GridPane.rowIndex="1" />
-                                                                  <TextField fx:id="titleTextField" onKeyTyped="#onPersonalDataChange" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                                  <Label text="%ui.label.sex" GridPane.rowIndex="5" />
-                                                                   <ComboBox fx:id="genderComboBox" onAction="#onPersonalDataChange" prefHeight="26.0" prefWidth="199.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                                                  <Label text="%ui.label.birthday" GridPane.rowIndex="6" />
-                                                                  <DatePicker fx:id="dateOfBirthDatePicker" onAction="#onPersonalDataChange" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                                                  <Label text="%ui.label.count_children" GridPane.rowIndex="8" />
-                                                                   <ComboBox fx:id="childrenCountComboBox" onAction="#onPersonalDataChange" prefHeight="26.0" prefWidth="90.0" promptText="Bitte auswählen" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                                                                  <Label text="%ui.label.family_status" GridPane.rowIndex="7" />
-                                                                  <ComboBox fx:id="familyStatusComboBox" onAction="#onPersonalDataChange" prefHeight="26.0" prefWidth="199.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                                                   <ComboBox fx:id="salutationComboBox" onAction="#onPersonalDataChange" prefHeight="26.0" prefWidth="147.0" />
                                                                </children>
-                                                            </GridPane>
+                                                            </VBox>
+                                                            <VBox>
+                                                               <children>
+                                                                  <Label text="%ui.label.title" />
+                                                                  <TextField fx:id="titleTextField" onKeyTyped="#onPersonalDataChange" />
+                                                               </children>
+                                                            </VBox>
+                                                            <HBox spacing="5.0">
+                                                               <children>
+                                                                  <VBox>
+                                                                     <children>
+                                                                        <Label alignment="CENTER" text="%ui.label.surname" />
+                                                                        <TextField fx:id="lastNameTextField" onKeyTyped="#onPersonalDataChange" prefHeight="26.0" prefWidth="167.0" />
+                                                                     </children>
+                                                                  </VBox>
+                                                                  <VBox>
+                                                                     <children>
+                                                                        <Label text="%ui.label.forename" />
+                                                                        <TextField fx:id="foreNameTextField" onKeyTyped="#onPersonalDataChange" />
+                                                                     </children>
+                                                                  </VBox>
+                                                               </children>
+                                                            </HBox>
+                                                            <VBox>
+                                                               <children>
+                                                                  <Label text="%ui.label.former_name" />
+                                                                  <TextField fx:id="formerLastNameTextField" onKeyTyped="#onPersonalDataChange" />
+                                                               </children>
+                                                            </VBox>
+                                                            <VBox>
+                                                               <children>
+                                                                  <Label text="%ui.label.sex" />
+                                                                   <ComboBox fx:id="genderComboBox" onAction="#onPersonalDataChange" prefHeight="26.0" prefWidth="199.0" />
+                                                               </children>
+                                                            </VBox>
+                                                            <VBox>
+                                                               <children>
+                                                                  <Label text="%ui.label.birthday" />
+                                                                  <DatePicker fx:id="dateOfBirthDatePicker" onAction="#onPersonalDataChange" />
+                                                               </children>
+                                                            </VBox>
+                                                            <VBox>
+                                                               <children>
+                                                                  <Label text="%ui.label.family_status" />
+                                                                  <ComboBox fx:id="familyStatusComboBox" onAction="#onPersonalDataChange" prefHeight="26.0" prefWidth="199.0" />
+                                                               </children>
+                                                            </VBox>
+                                                            <VBox>
+                                                               <children>
+                                                                  <Label text="%ui.label.count_children" />
+                                                                   <ComboBox fx:id="childrenCountComboBox" onAction="#onPersonalDataChange" prefHeight="26.0" prefWidth="90.0" promptText="Bitte auswählen" />
+                                                               </children>
+                                                            </VBox>
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox spacing="20.0">
+                                                         <children>
+                                                            <VBox spacing="10.0">
+                                                               <children>
+                                                                  <Label text="%ui.label.address_and_contact">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="12.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <VBox>
+                                                                     <children>
+                                                                        <Label text="%ui.label.street" />
+                                                                        <TextField fx:id="streetTextField" onKeyTyped="#onPersonalDataChange" prefHeight="25.0" prefWidth="206.0" />
+                                                                     </children>
+                                                                  </VBox>
+                                                                  <VBox>
+                                                                     <children>
+                                                                        <Label text="%ui.label.post_code_and_location" />
+                                                                        <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                                                           <children>
+                                                                              <TextField fx:id="plzTextField" onKeyTyped="#onPersonalDataChange" prefHeight="25.0" prefWidth="65.0" />
+                                                                              <TextField fx:id="locationTextField" onKeyTyped="#onPersonalDataChange" prefHeight="25.0" prefWidth="223.0" />
+                                                                           </children>
+                                                                        </HBox>
+                                                                     </children>
+                                                                  </VBox>
+                                                                  <VBox>
+                                                                     <children>
+                                                                        <Label text="%ui.label.country" />
+                                                                        <TextField fx:id="countryTextField" onKeyTyped="#onPersonalDataChange" />
+                                                                     </children>
+                                                                  </VBox>
+                                                                  <VBox>
+                                                                     <children>
+                                                                        <Label text="%ui.label.email" />
+                                                                        <TextField fx:id="emailTextField" onKeyTyped="#onPersonalDataChange" />
+                                                                     </children>
+                                                                  </VBox>
+                                                                  <VBox>
+                                                                     <children>
+                                                                        <Label text="%ui.label.telephone" />
+                                                                        <TextField fx:id="phoneTextField" onKeyTyped="#onPersonalDataChange" />
+                                                                     </children>
+                                                                  </VBox>
+                                                               </children>
+                                                            </VBox>
+                                                            <VBox prefHeight="146.0" prefWidth="384.0">
+                                                               <children>
+                                                                  <Label text="%ui.label.qualified_graduation_information">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="12.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <GridPane hgap="5.0" prefHeight="120.0" prefWidth="482.0" vgap="5.0">
+                                                                    <columnConstraints>
+                                                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="585.0" minWidth="10.0" prefWidth="121.0" />
+                                                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="1076.0" minWidth="10.0" prefWidth="295.0" />
+                                                                    </columnConstraints>
+                                                                    <rowConstraints>
+                                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                    </rowConstraints>
+                                                                     <children>
+                                                                        <Label text="%ui.label.subject" GridPane.rowIndex="1" />
+                                                                        <TextField fx:id="subjectAreaTextField" onKeyTyped="#onQualificationChanged" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                                        <Label text="%ui.label.grade" GridPane.rowIndex="2" />
+                                                                        <TextField fx:id="gradeTextField" onKeyTyped="#onQualificationChanged" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                                        <Label text="%ui.label.qualified_graduation_university" GridPane.rowIndex="3" />
+                                                                        <HBox spacing="15.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                                           <children>
+                                                                              <ComboBox fx:id="qualifiedGraduationUniversityComboBox" onAction="#onQualificationChanged" prefWidth="150.0">
+
+                                                      </ComboBox>
+                                                                              <Button mnemonicParsing="false" onAction="#handleOnActionAddUniversityButton" text="%ui.button.add" />
+                                                                           </children>
+                                                                        </HBox>
+                                                                        <Label text="%ui.label.qualified_graduation_degree" />
+                                                                         <ComboBox fx:id="graduationComboBox" onAction="#onQualificationChanged" prefWidth="150.0" GridPane.columnIndex="1" />
+                                                                     </children>
+                                                                  </GridPane>
+                                                               </children>
+                                                            </VBox>
                                                          </children>
                                                       </VBox>
                                                       <VBox fillWidth="false" prefHeight="344.0" prefWidth="183.0" spacing="20.0">
@@ -101,88 +208,6 @@
                                                          <padding>
                                                             <Insets left="10.0" />
                                                          </padding>
-                                                      </VBox>
-                                                   </children>
-                                                </HBox>
-                                                <HBox spacing="30.0">
-                                                   <children>
-                                                      <VBox>
-                                                         <children>
-                                                            <Label text="%ui.label.address_and_contact">
-                                                               <font>
-                                                                  <Font name="System Bold" size="12.0" />
-                                                               </font>
-                                                            </Label>
-                                                            <GridPane prefHeight="176.0" prefWidth="378.0">
-                                                              <columnConstraints>
-                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="188.0" minWidth="10.0" prefWidth="96.0" />
-                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="290.0" minWidth="10.0" prefWidth="290.0" />
-                                                              </columnConstraints>
-                                                              <rowConstraints>
-                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                              </rowConstraints>
-                                                               <children>
-                                                                  <Label text="%ui.label.street" />
-                                                                  <TextField fx:id="streetTextField" onKeyTyped="#onPersonalDataChange" prefHeight="25.0" prefWidth="206.0" GridPane.columnIndex="1" />
-                                                                  <Label text="%ui.label.post_code_and_location" GridPane.rowIndex="1" />
-                                                                  <HBox alignment="CENTER_LEFT" spacing="5.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
-                                                                     <children>
-                                                                        <TextField fx:id="plzTextField" onKeyTyped="#onPersonalDataChange" prefHeight="25.0" prefWidth="65.0" />
-                                                                        <TextField fx:id="locationTextField" onKeyTyped="#onPersonalDataChange" prefHeight="25.0" prefWidth="223.0" />
-                                                                     </children>
-                                                                  </HBox>
-                                                                  <Label text="%ui.label.country" GridPane.rowIndex="2" />
-                                                                  <TextField fx:id="countryTextField" onKeyTyped="#onPersonalDataChange" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                                  <Label text="%ui.label.email" GridPane.rowIndex="3" />
-                                                                  <TextField fx:id="emailTextField" onKeyTyped="#onPersonalDataChange" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                                  <Label text="%ui.label.telephone" GridPane.rowIndex="4" />
-                                                                  <TextField fx:id="phoneTextField" onKeyTyped="#onPersonalDataChange" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                                               </children>
-                                                            </GridPane>
-                                                         </children>
-                                                      </VBox>
-                                                      <Separator orientation="VERTICAL" prefHeight="200.0" />
-                                                      <VBox prefHeight="146.0" prefWidth="384.0">
-                                                         <children>
-                                                            <Label text="%ui.label.qualified_graduation_information">
-                                                               <font>
-                                                                  <Font name="System Bold" size="12.0" />
-                                                               </font>
-                                                            </Label>
-                                                            <GridPane hgap="5.0" prefHeight="120.0" prefWidth="482.0" vgap="5.0">
-                                                              <columnConstraints>
-                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="585.0" minWidth="10.0" prefWidth="121.0" />
-                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1076.0" minWidth="10.0" prefWidth="295.0" />
-                                                              </columnConstraints>
-                                                              <rowConstraints>
-                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                              </rowConstraints>
-                                                               <children>
-                                                                  <Label text="%ui.label.subject" GridPane.rowIndex="1" />
-                                                                  <TextField fx:id="subjectAreaTextField" onKeyTyped="#onQualificationChanged" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                                  <Label text="%ui.label.grade" GridPane.rowIndex="2" />
-                                                                  <TextField fx:id="gradeTextField" onKeyTyped="#onQualificationChanged" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                                  <Label text="%ui.label.qualified_graduation_university" GridPane.rowIndex="3" />
-                                                                  <HBox spacing="15.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                                                     <children>
-                                                                        <ComboBox fx:id="qualifiedGraduationUniversityComboBox" onAction="#onQualificationChanged" prefWidth="150.0">
-
-                                                      </ComboBox>
-                                                                        <Button mnemonicParsing="false" onAction="#handleOnActionAddUniversityButton" text="%ui.button.add" />
-                                                                     </children>
-                                                                  </HBox>
-                                                                  <Label text="%ui.label.qualified_graduation_degree" />
-                                                                   <ComboBox fx:id="graduationComboBox" onAction="#onQualificationChanged" prefWidth="150.0" GridPane.columnIndex="1" />
-                                                               </children>
-                                                            </GridPane>
-                                                         </children>
                                                       </VBox>
                                                    </children>
                                                 </HBox>
@@ -211,67 +236,83 @@
                                        <children>
                                           <HBox maxWidth="1.7976931348623157E308" prefHeight="362.0" prefWidth="974.0">
                                              <children>
-                                                <VBox maxWidth="1.7976931348623157E308" prefHeight="389.0" prefWidth="510.0" spacing="5.0">
+                                                <VBox maxWidth="1.7976931348623157E308" prefHeight="389.0" prefWidth="510.0" spacing="10.0">
                                                    <children>
                                                       <Label text="%ui.label.target_graduation_information">
                                                          <font>
                                                             <Font name="System Bold" size="12.0" />
                                                          </font>
                                                       </Label>
-                                                      <GridPane prefHeight="372.0" prefWidth="635.0" vgap="5.0" VBox.vgrow="ALWAYS">
-                                                        <columnConstraints>
-                                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
-                                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="472.0" minWidth="10.0" prefWidth="309.0" />
-                                                        </columnConstraints>
-                                                        <rowConstraints>
-                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                        </rowConstraints>
+                                                      <VBox>
                                                          <children>
-                                                            <Label text="%ui.label.subject_of_dissertation" GridPane.rowIndex="1" />
-                                                            <TextField fx:id="nameOfDissertationTextField" onKeyTyped="#onPromotionChanged" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                             <Label text="%ui.label.target_graduation_degree" />
-                                                            <VBox GridPane.columnIndex="1">
-                                                               <children>
-                                                                  <TextField fx:id="targetGraduationDegreeTextField" onKeyTyped="#onPromotionChanged" />
-                                                               </children>
-                                                            </VBox>
-                                                            <Label text="%ui.label.internal_supervisor" GridPane.rowIndex="2" />
-                                                            <TextField fx:id="internalSupervisorTextField" onKeyTyped="#onPromotionChanged" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                            <Label text="%ui.label.internal_faculty" GridPane.rowIndex="3" />
-                                                             <HBox spacing="15.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                            <TextField fx:id="targetGraduationDegreeTextField" onKeyTyped="#onPromotionChanged" />
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox>
+                                                         <children>
+                                                            <Label text="%ui.label.subject_of_dissertation" />
+                                                            <TextField fx:id="nameOfDissertationTextField" onKeyTyped="#onPromotionChanged" />
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox>
+                                                         <children>
+                                                            <Label text="%ui.label.internal_supervisor" />
+                                                            <TextField fx:id="internalSupervisorTextField" onKeyTyped="#onPromotionChanged" />
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox>
+                                                         <children>
+                                                            <Label text="%ui.label.internal_faculty" />
+                                                             <HBox spacing="15.0">
                                                                  <children>
                                                                      <ComboBox fx:id="facultyHFUComboBox" onAction="#onPromotionChanged" prefWidth="150.0" />
                                                                      <Button mnemonicParsing="false" onAction="#handleOnActionEditFacultyButton" text="%ui.button.change" />
                                                                  </children>
                                                              </HBox>
-                                                            <Label text="%ui.label.external_supervisor" GridPane.rowIndex="4" />
-                                                            <Label text="%ui.label.external_faculty" GridPane.rowIndex="6" />
-                                                            <Label text="%ui.label.accepted_for_promotion" GridPane.rowIndex="7" />
-                                                            <Label text="%ui.label.external_university" GridPane.rowIndex="5" />
-                                                            <Label text="%ui.label.procedure_completed" GridPane.rowIndex="8" />
-                                                            <Label text="%ui.label.rating" GridPane.rowIndex="9" />
-                                                            <TextField fx:id="externalSupervisorTextField" onKeyTyped="#onPromotionChanged" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                                            <TextField fx:id="externalFacultyTextField" onKeyTyped="#onPromotionChanged" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                                            <HBox spacing="15.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox>
+                                                         <children>
+                                                            <Label text="%ui.label.external_supervisor" />
+                                                            <TextField fx:id="externalSupervisorTextField" onKeyTyped="#onPromotionChanged" />
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox>
+                                                         <children>
+                                                            <Label text="%ui.label.external_university" />
+                                                            <HBox spacing="15.0">
                                                                <children>
                                                                   <ComboBox fx:id="externalUniversityComboBox" onAction="#onPromotionChanged" prefWidth="150.0" />
                                                                   <Button mnemonicParsing="false" onAction="#handleOnActionAddUniversityButton" text="%ui.button.add" />
                                                                </children>
                                                             </HBox>
-                                                            <DatePicker fx:id="promotionAcceptedDatePicker" onAction="#onPromotionChanged" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                                                            <DatePicker fx:id="procedureCompletedDatePicker" onAction="#onPromotionChanged" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                                                             <ComboBox fx:id="ratingComboBox" onAction="#onPromotionChanged" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                                                          </children>
-                                                      </GridPane>
+                                                      </VBox>
+                                                      <VBox>
+                                                         <children>
+                                                            <Label text="%ui.label.external_faculty" />
+                                                            <TextField fx:id="externalFacultyTextField" onKeyTyped="#onPromotionChanged" />
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox>
+                                                         <children>
+                                                            <Label text="%ui.label.accepted_for_promotion" />
+                                                            <DatePicker fx:id="promotionAcceptedDatePicker" onAction="#onPromotionChanged" />
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox>
+                                                         <children>
+                                                            <Label text="%ui.label.procedure_completed" />
+                                                            <DatePicker fx:id="procedureCompletedDatePicker" onAction="#onPromotionChanged" />
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox>
+                                                         <children>
+                                                            <Label text="%ui.label.rating" />
+                                                             <ComboBox fx:id="ratingComboBox" onAction="#onPromotionChanged" />
+                                                         </children>
+                                                      </VBox>
                                                    </children>
                                                 </VBox>
                                                 <Separator orientation="VERTICAL" prefHeight="367.0" prefWidth="28.0" />
@@ -344,7 +385,7 @@
                                                       <CheckBox fx:id="hfuMemberCheckBox" mnemonicParsing="false" onAction="#handleHfuMemberCheckBox" text="%ui.checkbox.member_of_hfu" />
                                                       <VBox fx:id="hfuMembershipVBox" prefHeight="149.0" prefWidth="523.0" spacing="5.0">
                                                          <children>
-                                                            <GridPane hgap="5.0" prefHeight="63.0" prefWidth="327.0" vgap="5.0">
+                                                            <GridPane hgap="5.0" vgap="5.0">
                                                               <columnConstraints>
                                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="267.0" minWidth="10.0" prefWidth="53.0" />
                                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="499.0" minWidth="30.0" prefWidth="274.0" />
@@ -354,10 +395,10 @@
                                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                               </rowConstraints>
                                                                <children>
-                                                                  <Label prefHeight="25.0" prefWidth="49.0" text="%ui.label.until" />
-                                                                  <DatePicker fx:id="memberUntilDatePicker" onAction="#onPromotionChanged" GridPane.columnIndex="1" />
-                                                                  <DatePicker fx:id="memberSinceDatePicker" onAction="#onPromotionChanged" prefHeight="18.0" prefWidth="174.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                                  <Label prefHeight="25.0" prefWidth="24.0" text="%ui.label.since" GridPane.rowIndex="1" />
+                                                                  <Label text="%ui.label.until" GridPane.rowIndex="1" />
+                                                                  <DatePicker fx:id="memberUntilDatePicker" onAction="#onPromotionChanged" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                                  <DatePicker fx:id="memberSinceDatePicker" onAction="#onPromotionChanged" GridPane.columnIndex="1" />
+                                                                  <Label text="%ui.label.since" />
                                                                </children>
                                                             </GridPane>
                                                             <CheckBox fx:id="prolongMembershipCheckBox" mnemonicParsing="false" onAction="#handleOnActionExtendMembershipCheckBox" text="%ui.checkbox.extended_membership" />
@@ -386,19 +427,15 @@
                                                          </font>
                                                       </Label>
                                                       <CheckBox fx:id="externalMemberCheckBox" mnemonicParsing="false" onAction="#handleOnActionExternalMemberCheckBox" text="%ui.checkbox.external_member" />
-                                                      <GridPane prefHeight="30.0" prefWidth="315.0">
-                                                        <columnConstraints>
-                                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="158.0" minWidth="10.0" prefWidth="106.0" />
-                                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="239.0" minWidth="10.0" prefWidth="220.0" />
-                                                        </columnConstraints>
-                                                        <rowConstraints>
-                                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                        </rowConstraints>
+                                                      <VBox>
                                                          <children>
                                                             <Label text="%ui.label.external_college" />
-                                                            <TextField fx:id="externalCollegeNameTextField" onAction="#onPromotionChanged" prefHeight="25.0" prefWidth="194.0" GridPane.columnIndex="1" />
+                                                            <TextField fx:id="externalCollegeNameTextField" onAction="#onPromotionChanged" prefHeight="25.0" prefWidth="194.0" />
                                                          </children>
-                                                      </GridPane>
+                                                         <padding>
+                                                            <Insets left="20.0" />
+                                                         </padding>
+                                                      </VBox>
                                                    </children>
                                                 </VBox>
                                              </children>
@@ -574,27 +611,26 @@
                                                       <Font name="System Bold" size="12.0" />
                                                    </font>
                                                 </Label>
-                                                <VBox fillWidth="false" prefHeight="122.0" prefWidth="1280.0">
+                                                <VBox fillWidth="false" prefHeight="122.0" prefWidth="1280.0" spacing="10.0">
                                                    <children>
-                                                      <GridPane prefHeight="122.0" prefWidth="434.0">
-                                                        <columnConstraints>
-                                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="635.0" minWidth="10.0" prefWidth="157.0" />
-                                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1171.0" minWidth="10.0" prefWidth="277.0" />
-                                                        </columnConstraints>
-                                                        <rowConstraints>
-                                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                        </rowConstraints>
+                                                      <VBox>
                                                          <children>
                                                             <Label text="%ui.label.scholarship" />
-                                                            <TextField fx:id="scholarshipTextField" onKeyTyped="#onSupportChanged" GridPane.columnIndex="1" />
-                                                            <Label text="%ui.label.awards" GridPane.rowIndex="1" />
-                                                            <TextField fx:id="awardsTextField" onKeyTyped="#onSupportChanged" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                            <Label text="%ui.label.miscellaneous" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-                                                            <TextArea fx:id="miscellaneousTextArea" onKeyTyped="#onSupportChanged" prefHeight="52.0" prefWidth="640.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                            <TextField fx:id="scholarshipTextField" onKeyTyped="#onSupportChanged" />
                                                          </children>
-                                                      </GridPane>
+                                                      </VBox>
+                                                      <VBox>
+                                                         <children>
+                                                            <Label text="%ui.label.awards" />
+                                                            <TextField fx:id="awardsTextField" onKeyTyped="#onSupportChanged" />
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox>
+                                                         <children>
+                                                            <Label text="%ui.label.miscellaneous" />
+                                                            <TextArea fx:id="miscellaneousTextArea" onKeyTyped="#onSupportChanged" prefHeight="52.0" prefWidth="640.0" />
+                                                         </children>
+                                                      </VBox>
                                                    </children>
                                                 </VBox>
                                              </children>
@@ -619,22 +655,18 @@
                                                 <Font name="System Bold" size="12.0" />
                                              </font>
                                           </Label>
-                                          <GridPane>
-                                            <columnConstraints>
-                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="253.0" minWidth="10.0" prefWidth="168.0" />
-                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="351.0" minWidth="10.0" prefWidth="223.0" />
-                                            </columnConstraints>
-                                            <rowConstraints>
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            </rowConstraints>
+                                          <VBox>
                                              <children>
                                                 <Label text="%ui.label.job" />
-                                                <Label text="%ui.label.employer" GridPane.rowIndex="1" />
-                                                <TextField fx:id="jobTitleTextField" onKeyTyped="#onAlumniStateChanged" prefHeight="25.0" prefWidth="273.0" GridPane.columnIndex="1" />
-                                                <TextField fx:id="employerTextField" onKeyTyped="#onAlumniStateChanged" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <TextField fx:id="jobTitleTextField" onKeyTyped="#onAlumniStateChanged" prefHeight="25.0" prefWidth="273.0" />
                                              </children>
-                                          </GridPane>
+                                          </VBox>
+                                          <VBox>
+                                             <children>
+                                                <Label text="%ui.label.employer" />
+                                                <TextField fx:id="employerTextField" onKeyTyped="#onAlumniStateChanged" />
+                                             </children>
+                                          </VBox>
                                           <Label text="%ui.label.agreements">
                                              <font>
                                                 <Font name="System Bold" size="12.0" />
