@@ -281,9 +281,6 @@ public class DoctoralStudentFormController implements Initializable {
         createTitledBorder(cancelInformationPane, bundle.getString("ui.label.cancel_of_promotion"));
         createTitledBorder(membershipPane, bundle.getString("ui.label.membership_college"));
         createTitledBorder(moreInformationPane, bundle.getString("ui.label.more_information_regarding_promotion"));
-
-
-
     }
 
     private void createTitledBorder(Node node, String title) {
