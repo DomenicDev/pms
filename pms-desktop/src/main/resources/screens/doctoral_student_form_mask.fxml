@@ -420,7 +420,7 @@
                                     <VBox spacing="10.0">
                                        <children>
                                            <Button mnemonicParsing="false" onAction="#handleOnActionAddEmploymentEntryButton" text="%ui.button.add_employment" />
-                                          <Button mnemonicParsing="false" text="%ui.button.delete_selected" />
+                                          <Button mnemonicParsing="false" onAction="#handleOnActionDeleteEmployment" text="%ui.button.delete_selected" />
                                        </children>
                                        <VBox.margin>
                                           <Insets bottom="20.0" left="10.0" />
@@ -471,7 +471,7 @@
                                                                </font>
                                                             </Label>
                                                             <Button mnemonicParsing="false" onAction="#handleOnActionAddTravelCostUniversityButton" text="%ui.button.add" />
-                                                            <Button mnemonicParsing="false" text="%ui.button.delete_selected" />
+                                                            <Button mnemonicParsing="false" onAction="#handleOnActionDeleteTravelCostButton" text="%ui.button.delete_selected" />
                                                          </children>
                                                       </HBox>
                                                       <TableView fx:id="travelCostUniversityTableView" prefHeight="200.0" prefWidth="200.0">
@@ -495,7 +495,7 @@
                                                                </font>
                                                             </Label>
                                                             <Button mnemonicParsing="false" onAction="#handleOnActionAddTravelCostConferenceButton" text="%ui.button.add" />
-                                                            <Button mnemonicParsing="false" text="%ui.button.delete_selected" />
+                                                            <Button mnemonicParsing="false" onAction="#handleOnActionDeleteTravelCostConferenceButton" text="%ui.button.delete_selected" />
                                                          </children>
                                                       </HBox>
                                                       <TableView fx:id="travelCostConferenceTableView" prefHeight="200.0" prefWidth="200.0">
@@ -526,7 +526,7 @@
                                                                </font>
                                                             </Label>
                                                             <Button mnemonicParsing="false" onAction="#handleOnActionAddConsultingButton" text="%ui.button.add" />
-                                                            <Button mnemonicParsing="false" text="%ui.button.delete_selected" />
+                                                            <Button mnemonicParsing="false" onAction="#handleOnActionDeleteConsultingButton" text="%ui.button.delete_selected" />
                                                          </children>
                                                       </HBox>
                                                       <TableView fx:id="consultingSupportTableView" prefHeight="200.0" prefWidth="200.0">
@@ -551,7 +551,7 @@
                                                                </font>
                                                             </Label>
                                                             <Button mnemonicParsing="false" onAction="#handleOnActionAddQualificationButton" text="%ui.button.add" />
-                                                            <Button mnemonicParsing="false" text="%ui.button.delete_selected" />
+                                                            <Button mnemonicParsing="false" onAction="#handleOnActionDeleteQualificationsButton" text="%ui.button.delete_selected" />
                                                          </children>
                                                       </HBox>
                                                       <TableView fx:id="qualificationTableView" prefHeight="200.0" prefWidth="200.0">

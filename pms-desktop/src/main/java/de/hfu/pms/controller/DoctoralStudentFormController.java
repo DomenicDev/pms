@@ -300,9 +300,7 @@ public class DoctoralStudentFormController implements Initializable {
         employmentEndTableColumn.setCellValueFactory(new PropertyValueFactory<>("employmentEnd"));
 
         // listener for change flag
-        employmentTableView.getItems().addListener((ListChangeListener<EmploymentEntryDTO>) c -> {
-            onEmploymentChanged();
-        });
+        employmentTableView.getItems().addListener((ListChangeListener<EmploymentEntryDTO>) c -> onEmploymentChanged());
     }
 
     private void initSupportTables(ResourceBundle resources) {
@@ -657,10 +655,35 @@ public class DoctoralStudentFormController implements Initializable {
         return documentDTO;
     }
 
-    // DEPLOYMENT
+    // EMPLOYMENT
     @FXML
     public void handleOnActionAddEmploymentEntryButton() throws IOException {
         GuiLoader.createModalWindow(GuiLoader.EMPLOYMENT, 400, 300, false);
+    }
+
+    @FXML
+    public void handleOnActionDeleteEmployment() {
+        JavaFxUtils.removeSelectedItems(employmentTableView);
+    }
+
+    @FXML
+    public void handleOnActionDeleteTravelCostButton() {
+        JavaFxUtils.removeSelectedItems(travelCostUniversityTableView);
+    }
+
+    @FXML
+    public void handleOnActionDeleteTravelCostConferenceButton() {
+        JavaFxUtils.removeSelectedItems(travelCostConferenceTableView);
+    }
+
+    @FXML
+    public void handleOnActionDeleteConsultingButton() {
+        JavaFxUtils.removeSelectedItems(consultingSupportTableView);
+    }
+
+    @FXML
+    public void handleOnActionDeleteQualificationsButton() {
+        JavaFxUtils.removeSelectedItems(qualificationTableView);
     }
 
     // SUPPORT
@@ -684,6 +707,10 @@ public class DoctoralStudentFormController implements Initializable {
         GuiLoader.createModalWindow(GuiLoader.QUALIFICATION, 450, 200, false);
     }
 
+
+    // --------------------------------- //
+    //          CHECK BOXES              //
+    // --------------------------------- //
     @FXML
     public void handleHfuMemberCheckBox() {
         onPromotionChanged();
