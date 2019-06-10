@@ -37,13 +37,8 @@
                                              <children>
                                                 <HBox spacing="50.0">
                                                    <children>
-                                                      <VBox spacing="10.0">
+                                                      <VBox fx:id="generalInformationNode" spacing="10.0">
                                                          <children>
-                                                            <Label text="%ui.label.general">
-                                                               <font>
-                                                                  <Font name="System Bold" size="12.0" />
-                                                               </font>
-                                                            </Label>
                                                             <VBox>
                                                                <children>
                                                                   <Label text="%ui.label.salutation" />
@@ -106,13 +101,8 @@
                                                       </VBox>
                                                       <VBox spacing="20.0">
                                                          <children>
-                                                            <VBox spacing="10.0">
+                                                            <VBox fx:id="contactInformationPane" spacing="10.0">
                                                                <children>
-                                                                  <Label text="%ui.label.address_and_contact">
-                                                                     <font>
-                                                                        <Font name="System Bold" size="12.0" />
-                                                                     </font>
-                                                                  </Label>
                                                                   <VBox>
                                                                      <children>
                                                                         <Label text="%ui.label.street" />
@@ -150,13 +140,8 @@
                                                                   </VBox>
                                                                </children>
                                                             </VBox>
-                                                            <VBox prefHeight="146.0" prefWidth="384.0">
+                                                            <VBox fx:id="qualifiedGraduationInformationPane" prefHeight="146.0" prefWidth="384.0">
                                                                <children>
-                                                                  <Label text="%ui.label.qualified_graduation_information">
-                                                                     <font>
-                                                                        <Font name="System Bold" size="12.0" />
-                                                                     </font>
-                                                                  </Label>
                                                                   <GridPane hgap="5.0" prefHeight="120.0" prefWidth="482.0" vgap="5.0">
                                                                     <columnConstraints>
                                                                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="585.0" minWidth="10.0" prefWidth="121.0" />
@@ -232,17 +217,12 @@
                            <content>
                               <ScrollPane prefHeight="706.0" prefWidth="1280.0">
                                  <content>
-                                    <VBox fillWidth="false" maxWidth="1.7976931348623157E308" prefHeight="798.0" prefWidth="1045.0" spacing="20.0">
+                                    <VBox fillWidth="false" spacing="20.0">
                                        <children>
-                                          <HBox maxWidth="1.7976931348623157E308" prefHeight="362.0" prefWidth="974.0">
+                                          <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                                              <children>
-                                                <VBox maxWidth="1.7976931348623157E308" prefHeight="389.0" prefWidth="510.0" spacing="10.0">
+                                                <VBox fx:id="targetGraduationInformationPane" maxWidth="1.7976931348623157E308" prefHeight="389.0" prefWidth="510.0" spacing="10.0">
                                                    <children>
-                                                      <Label text="%ui.label.target_graduation_information">
-                                                         <font>
-                                                            <Font name="System Bold" size="12.0" />
-                                                         </font>
-                                                      </Label>
                                                       <VBox>
                                                          <children>
                                                             <Label text="%ui.label.target_graduation_degree" />
@@ -315,126 +295,110 @@
                                                       </VBox>
                                                    </children>
                                                 </VBox>
-                                                <Separator orientation="VERTICAL" prefHeight="367.0" prefWidth="28.0" />
-                                                <VBox prefHeight="389.0" prefWidth="433.0" spacing="5.0">
+                                                <VBox spacing="5.0">
                                                    <children>
-                                                      <Label text="%ui.label.more_information_regarding_promotion">
-                                                         <font>
-                                                            <Font name="System Bold" size="12.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <GridPane>
-                                                        <columnConstraints>
-                                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                        </columnConstraints>
-                                                        <rowConstraints>
-                                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                        </rowConstraints>
+                                                      <VBox fx:id="moreInformationPane">
                                                          <children>
-                                                            <Label text="%ui.label.begin_of_promotion" />
-                                                            <DatePicker fx:id="promotionBeginDatePicker" onAction="#onPromotionChanged" GridPane.columnIndex="1" />
-                                                            <DatePicker fx:id="predictedGraduationDatePicker" onAction="#onPromotionChanged" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                            <DatePicker fx:id="promotionAgreementDatePicker" onAction="#onPromotionChanged" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                            <Label text="%ui.label.prognosticated_promotion_date" GridPane.rowIndex="1" />
-                                                            <Label text="%ui.label.promotion_agreement" GridPane.rowIndex="2" />
-                                                         </children>
-                                                      </GridPane>
-                                                      <Separator prefHeight="37.0" prefWidth="433.0" />
-                                                      <Label text="%ui.label.cancel_of_promotion">
-                                                         <font>
-                                                            <Font name="System Bold" size="12.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <CheckBox fx:id="promotionCanceledCheckBox" mnemonicParsing="false" onAction="#handleOnActionPromotionCanceledCheckBox" text="%ui.checkbox.promotion_canceled" />
-                                                      <VBox fx:id="cancelChildrenBox" spacing="10.0">
-                                                         <children>
-                                                            <VBox>
-                                                               <children>
-                                                                  <Label text="%ui.label.cancel_date" />
-                                                                  <DatePicker fx:id="cancelDateDatePicker" onAction="#onPromotionChanged" />
-                                                               </children>
-                                                            </VBox>
-                                                            <VBox>
-                                                               <children>
-                                                                  <Label text="%ui.label.cancel_reason" />
-                                                                  <TextField fx:id="cancelReasonTextField" onKeyTyped="#onPromotionChanged" />
-                                                               </children>
-                                                            </VBox>
-                                                         </children>
-                                                         <padding>
-                                                            <Insets left="20.0" top="10.0" />
-                                                         </padding>
-                                                      </VBox>
-                                                   </children>
-                                                </VBox>
-                                             </children>
-                                          </HBox>
-                                          <Separator prefHeight="0.0" prefWidth="950.0" />
-                                          <HBox prefHeight="376.0" prefWidth="744.0" VBox.vgrow="ALWAYS">
-                                             <children>
-                                                <VBox prefHeight="200.0" prefWidth="347.0" spacing="10.0">
-                                                   <children>
-                                                      <Label text="%ui.label.membership_hfu">
-                                                         <font>
-                                                            <Font name="System Bold" size="12.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <CheckBox fx:id="hfuMemberCheckBox" mnemonicParsing="false" onAction="#handleHfuMemberCheckBox" text="%ui.checkbox.member_of_hfu" />
-                                                      <VBox fx:id="hfuMembershipVBox" prefHeight="149.0" prefWidth="523.0" spacing="5.0">
-                                                         <children>
-                                                            <GridPane hgap="5.0" vgap="5.0">
+                                                            <GridPane>
                                                               <columnConstraints>
-                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="267.0" minWidth="10.0" prefWidth="53.0" />
-                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="499.0" minWidth="30.0" prefWidth="274.0" />
+                                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                               </columnConstraints>
                                                               <rowConstraints>
                                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                               </rowConstraints>
                                                                <children>
-                                                                  <Label text="%ui.label.until" GridPane.rowIndex="1" />
-                                                                  <DatePicker fx:id="memberUntilDatePicker" onAction="#onPromotionChanged" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                                  <DatePicker fx:id="memberSinceDatePicker" onAction="#onPromotionChanged" GridPane.columnIndex="1" />
-                                                                  <Label text="%ui.label.since" />
+                                                                  <Label text="%ui.label.begin_of_promotion" />
+                                                                  <DatePicker fx:id="promotionBeginDatePicker" onAction="#onPromotionChanged" GridPane.columnIndex="1" />
+                                                                  <DatePicker fx:id="predictedGraduationDatePicker" onAction="#onPromotionChanged" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                                  <DatePicker fx:id="promotionAgreementDatePicker" onAction="#onPromotionChanged" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                                  <Label text="%ui.label.prognosticated_promotion_date" GridPane.rowIndex="1" />
+                                                                  <Label text="%ui.label.promotion_agreement" GridPane.rowIndex="2" />
                                                                </children>
                                                             </GridPane>
-                                                            <CheckBox fx:id="prolongMembershipCheckBox" mnemonicParsing="false" onAction="#handleOnActionExtendMembershipCheckBox" text="%ui.checkbox.extended_membership" />
-                                                            <HBox fx:id="extensionMembershipHBox" alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="503.0" spacing="20.0">
-                                                               <children>
-                                                                  <Label text="%ui.label.until" />
-                                                                  <DatePicker fx:id="prolongTillDatePicker" onAction="#onPromotionChanged" />
-                                                               </children>
-                                                               <VBox.margin>
-                                                                  <Insets left="20.0" />
-                                                               </VBox.margin>
-                                                            </HBox>
                                                          </children>
-                                                         <VBox.margin>
-                                                            <Insets left="20.0" />
-                                                         </VBox.margin>
                                                       </VBox>
-                                                   </children>
-                                                </VBox>
-                                                <Separator orientation="VERTICAL" prefHeight="333.0" prefWidth="44.0" />
-                                                <VBox prefHeight="239.0" prefWidth="168.0" HBox.hgrow="ALWAYS">
-                                                   <children>
-                                                      <Label text="%ui.label.membership_external">
-                                                         <font>
-                                                            <Font name="System Bold" size="12.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <CheckBox fx:id="externalMemberCheckBox" mnemonicParsing="false" onAction="#handleOnActionExternalMemberCheckBox" text="%ui.checkbox.external_member" />
-                                                      <VBox>
+                                                      <VBox fx:id="cancelInformationPane">
                                                          <children>
-                                                            <Label text="%ui.label.external_college" />
-                                                            <TextField fx:id="externalCollegeNameTextField" onAction="#onPromotionChanged" prefHeight="25.0" prefWidth="194.0" />
+                                                            <CheckBox fx:id="promotionCanceledCheckBox" mnemonicParsing="false" onAction="#handleOnActionPromotionCanceledCheckBox" text="%ui.checkbox.promotion_canceled" />
+                                                            <VBox fx:id="cancelChildrenBox" spacing="10.0">
+                                                               <children>
+                                                                  <VBox>
+                                                                     <children>
+                                                                        <Label text="%ui.label.cancel_date" />
+                                                                        <DatePicker fx:id="cancelDateDatePicker" onAction="#onPromotionChanged" />
+                                                                     </children>
+                                                                  </VBox>
+                                                                  <VBox>
+                                                                     <children>
+                                                                        <Label text="%ui.label.cancel_reason" />
+                                                                        <TextField fx:id="cancelReasonTextField" onKeyTyped="#onPromotionChanged" />
+                                                                     </children>
+                                                                  </VBox>
+                                                               </children>
+                                                               <padding>
+                                                                  <Insets left="20.0" top="10.0" />
+                                                               </padding>
+                                                            </VBox>
                                                          </children>
-                                                         <padding>
-                                                            <Insets left="20.0" />
-                                                         </padding>
+                                                      </VBox>
+                                                      <VBox fx:id="membershipPane" spacing="20.0">
+                                                         <children>
+                                                            <VBox fx:id="membershipHfuPane" prefHeight="149.0" prefWidth="361.0" spacing="10.0">
+                                                               <children>
+                                                                  <CheckBox fx:id="hfuMemberCheckBox" mnemonicParsing="false" onAction="#handleHfuMemberCheckBox" text="%ui.checkbox.member_of_hfu" />
+                                                                  <VBox fx:id="hfuMembershipVBox" spacing="5.0">
+                                                                     <children>
+                                                                        <GridPane hgap="5.0" vgap="5.0">
+                                                                          <columnConstraints>
+                                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="267.0" minWidth="10.0" prefWidth="53.0" />
+                                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="499.0" minWidth="30.0" prefWidth="274.0" />
+                                                                          </columnConstraints>
+                                                                          <rowConstraints>
+                                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                          </rowConstraints>
+                                                                           <children>
+                                                                              <Label text="%ui.label.until" GridPane.rowIndex="1" />
+                                                                              <DatePicker fx:id="memberUntilDatePicker" onAction="#onPromotionChanged" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                                              <DatePicker fx:id="memberSinceDatePicker" onAction="#onPromotionChanged" GridPane.columnIndex="1" />
+                                                                              <Label text="%ui.label.since" />
+                                                                           </children>
+                                                                        </GridPane>
+                                                                        <CheckBox fx:id="prolongMembershipCheckBox" mnemonicParsing="false" onAction="#handleOnActionExtendMembershipCheckBox" text="%ui.checkbox.extended_membership" />
+                                                                        <HBox fx:id="extensionMembershipHBox" alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="503.0" spacing="20.0">
+                                                                           <children>
+                                                                              <Label text="%ui.label.until" />
+                                                                              <DatePicker fx:id="prolongTillDatePicker" onAction="#onPromotionChanged" />
+                                                                           </children>
+                                                                           <VBox.margin>
+                                                                              <Insets left="20.0" />
+                                                                           </VBox.margin>
+                                                                        </HBox>
+                                                                     </children>
+                                                                     <VBox.margin>
+                                                                        <Insets left="20.0" />
+                                                                     </VBox.margin>
+                                                                  </VBox>
+                                                               </children>
+                                                            </VBox>
+                                                            <VBox fx:id="membershipExternalPane">
+                                                               <children>
+                                                                  <CheckBox fx:id="externalMemberCheckBox" mnemonicParsing="false" onAction="#handleOnActionExternalMemberCheckBox" text="%ui.checkbox.external_member" />
+                                                                  <VBox>
+                                                                     <children>
+                                                                        <Label text="%ui.label.external_college" />
+                                                                        <TextField fx:id="externalCollegeNameTextField" onAction="#onPromotionChanged" />
+                                                                     </children>
+                                                                     <padding>
+                                                                        <Insets left="20.0" />
+                                                                     </padding>
+                                                                  </VBox>
+                                                               </children>
+                                                            </VBox>
+                                                         </children>
                                                       </VBox>
                                                    </children>
                                                 </VBox>

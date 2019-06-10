@@ -13,16 +13,19 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.controlsfx.control.textfield.TextFields;
+import org.controlsfx.tools.Borders;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -218,6 +221,25 @@ public class DoctoralStudentFormController implements Initializable {
     @FXML
     private ListView<DocumentInformationDTO> documentsListView;
 
+
+    // ---------------------------- //
+    //        SECTIONS              //
+    // ---------------------------- //
+    @FXML
+    private Pane generalInformationNode;
+    @FXML
+    private Pane contactInformationPane;
+    @FXML
+    private Pane qualifiedGraduationInformationPane;
+    @FXML
+    private Pane targetGraduationInformationPane;
+    @FXML
+    private Pane moreInformationPane;
+    @FXML
+    private Pane cancelInformationPane;
+    @FXML
+    private Pane membershipPane;
+
     // ---------------------------- //
     //        CONTROL FLAGS         //
     // ---------------------------- //
@@ -243,10 +265,34 @@ public class DoctoralStudentFormController implements Initializable {
         initSupportTables(resources);
 
         initDocumentsListView();
-
         initComboBoxes();
-
+        initBorders(resources);
         refreshCheckBoxes();
+    }
+
+    private void initBorders(ResourceBundle bundle) {
+        // personal data
+        createTitledBorder(generalInformationNode, bundle.getString("ui.label.general"));
+        createTitledBorder(contactInformationPane, bundle.getString("ui.label.address_and_contact"));
+        createTitledBorder(qualifiedGraduationInformationPane, bundle.getString("ui.label.qualified_graduation_information"));
+
+        // target graduation
+        createTitledBorder(targetGraduationInformationPane, bundle.getString("ui.label.target_graduation_information"));
+        createTitledBorder(cancelInformationPane, bundle.getString("ui.label.cancel_of_promotion"));
+        createTitledBorder(membershipPane, bundle.getString("ui.label.membership_college"));
+        createTitledBorder(moreInformationPane, bundle.getString("ui.label.more_information_regarding_promotion"));
+
+
+
+    }
+
+    private void createTitledBorder(Node node, String title) {
+        Pane parent = (Pane) node.getParent();
+        Node n = Borders.wrap(node)
+                .lineBorder()
+                .title(title)
+                .buildAll();
+        parent.getChildren().add(0, n);
     }
 
     private void initEmploymentTable(ResourceBundle resources) {
@@ -483,13 +529,10 @@ public class DoctoralStudentFormController implements Initializable {
             // write form data to java object
 
 
-
         } else {
 
             // if we are here, we edit an already existing student
             // we must not set the ID !!!
-
-
 
 
         }
@@ -712,22 +755,27 @@ public class DoctoralStudentFormController implements Initializable {
     public void onPersonalDataChange() {
         this.personalDataChanged = true;
     }
+
     @FXML
     public void onQualificationChanged() {
         this.qualificationChanged = true;
     }
+
     @FXML
     public void onPromotionChanged() {
         this.promotionChanged = true;
     }
+
     @FXML
     public void onEmploymentChanged() {
         this.employmentChanged = true;
     }
+
     @FXML
     public void onSupportChanged() {
         this.supportChanged = true;
     }
+
     @FXML
     public void onAlumniStateChanged() {
         this.alumniStateChanged = true;
@@ -907,7 +955,7 @@ public class DoctoralStudentFormController implements Initializable {
         // cancel reason
         targetGraduationDTO.setCancelReason(promotionCanceledCheckBox.isSelected() ? cancelReasonTextField.getText() : null);
         // cancel date
-        targetGraduationDTO.setCancelDate(promotionCanceledCheckBox.isSelected() ? promotionBeginDatePicker.getValue(): null);
+        targetGraduationDTO.setCancelDate(promotionCanceledCheckBox.isSelected() ? promotionBeginDatePicker.getValue() : null);
 
         // process employment relationship
         Set<EmploymentEntryDTO> employmentEntries = new HashSet<>(employmentTableView.getItems());
@@ -941,7 +989,7 @@ public class DoctoralStudentFormController implements Initializable {
     }
 
     @FXML
-    private void handleOnActionBrowseDocuments(ActionEvent actionEvent){
+    private void handleOnActionBrowseDocuments(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Dokumentenauswahl");
         Collection<File> selectedFiles = fileChooser.showOpenMultipleDialog(null);
@@ -962,8 +1010,8 @@ public class DoctoralStudentFormController implements Initializable {
     }
 
     @FXML
-    private void handleOnActionDeleteDocument(ActionEvent actionEvent){
-        if(documentsListView.getSelectionModel().getSelectedItems().size() < 1) {
+    private void handleOnActionDeleteDocument(ActionEvent actionEvent) {
+        if (documentsListView.getSelectionModel().getSelectedItems().size() < 1) {
             eventBus.post(new AlertNotificationEvent(1, "Bitte wählen Sie ein zu entfernendes Dokument aus."));
             return;
         }
@@ -974,7 +1022,7 @@ public class DoctoralStudentFormController implements Initializable {
         alert.setHeaderText("Sie sind dabei folgende Dokumente aus der Liste zu entfernen: ");
 
         String documentNames = "";
-        for(DocumentInformationDTO file : documentsListView.getSelectionModel().getSelectedItems()){
+        for (DocumentInformationDTO file : documentsListView.getSelectionModel().getSelectedItems()) {
             documentNames += file.getFilename() + "\n";
         }
         alert.setContentText(documentNames);
@@ -999,9 +1047,9 @@ public class DoctoralStudentFormController implements Initializable {
     }
 
     @FXML
-    private void handleOnActionDownloadDocuments(ActionEvent actionEvent){
+    private void handleOnActionDownloadDocuments(ActionEvent actionEvent) {
         Collection<DocumentInformationDTO> selectedFiles = documentsListView.getSelectionModel().getSelectedItems();
-        if(selectedFiles.size() < 1) {
+        if (selectedFiles.size() < 1) {
             eventBus.post(new AlertNotificationEvent(1, "Bitte wählen Sie ein zu herunterladendes Dokument aus."));
             return;
         }
@@ -1009,23 +1057,22 @@ public class DoctoralStudentFormController implements Initializable {
         Collection<DocumentInformationDTO> notDownloadable = new HashSet<>();
 
         // ensure that only documents that have already been added to the doctoralStudent are downloaded
-        for(DocumentInformationDTO doc : selectedFiles){
-            if(doctoralStudent.getDocuments().contains(doc)){
+        for (DocumentInformationDTO doc : selectedFiles) {
+            if (doctoralStudent.getDocuments().contains(doc)) {
                 downloadable.add(doc);
-            }
-            else{
+            } else {
                 notDownloadable.add(doc);
             }
         }
 
-        if(notDownloadable.size() > 0){
+        if (notDownloadable.size() > 0) {
             //confirm dialog
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Dokument(e) nicht zugeordnet");
             alert.setHeaderText("Folgende Dokumente sind dem Datensatz noch nicht zugeordnet und werden deshalb beim Download ignoriert:");
 
             String documentNames = "";
-            for(DocumentInformationDTO file : notDownloadable){
+            for (DocumentInformationDTO file : notDownloadable) {
                 documentNames += file.getFilename() + "\n";
             }
             alert.setContentText(documentNames);
@@ -1037,26 +1084,26 @@ public class DoctoralStudentFormController implements Initializable {
             }
         }
         eventBus.post(new RequestDocumentsEvent(downloadable));
-        logger.log(Level.DEBUG, "requested the selected documents(" + downloadable.size() +") from the server...");
+        logger.log(Level.DEBUG, "requested the selected documents(" + downloadable.size() + ") from the server...");
     }
 
-    private void updateFacultyCombobox(){
+    private void updateFacultyCombobox() {
         facultyHFUComboBox.getItems().clear();
         facultyHFUComboBox.getItems().addAll(RepresentationWrapper.getWrappedFaculties(EntityPool.getInstance().getFaculties()));
     }
 
     @Subscribe
-    public void handleAddedFacultyEvent(SuccessfullyAddedFacultyEvent event){
+    public void handleAddedFacultyEvent(SuccessfullyAddedFacultyEvent event) {
         updateFacultyCombobox();
     }
 
     @Subscribe
-    public void handleDeletedFacultyEvent(SuccessfullyDeletedFacultyEvent event){
+    public void handleDeletedFacultyEvent(SuccessfullyDeletedFacultyEvent event) {
         updateFacultyCombobox();
     }
 
     @Subscribe
-    public void handleDeletedFacultyEvent(SuccessfullyUpdatedFacultyEvent event){
+    public void handleDeletedFacultyEvent(SuccessfullyUpdatedFacultyEvent event) {
         updateFacultyCombobox();
     }
 }
