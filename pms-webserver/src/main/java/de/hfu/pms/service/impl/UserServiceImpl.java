@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUserRole(String username, UserRole role) {
+    public User updateRole(String username, UserRole role) {
         for (User user : userDao.findAll()) {
             if (user.getUsername().equals(username)) {
                 user.setRole(role);
@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUserEmail(String username, String email) {
+    public User updateEmail(String username, String email) {
         for(User user : userDao.findAll()){
             if(user.getUsername().equals(username)){
                 user.setEmail(email);

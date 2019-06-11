@@ -1,6 +1,8 @@
 package de.hfu.pms.controller;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import de.hfu.pms.exceptions.UserNotFoundException;
 import de.hfu.pms.exceptions.WrongPasswordException;
 import de.hfu.pms.model.User;
@@ -11,6 +13,7 @@ import de.hfu.pms.shared.dto.UserInfoDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -65,14 +68,36 @@ public class UserController {
     @PostMapping("/updateRole/{username}")
     @ResponseStatus(HttpStatus.OK)
     public UserDTO updateUserRole(@PathVariable String username, @RequestBody UserRole newRole) {
-        User user = service.updateUserRole(username , newRole);
+        User user = service.updateRole(username , newRole);
         return convertToDTO(user);
     }
 
     @PostMapping("/updateEmail/{username}")
     @ResponseStatus(HttpStatus.OK)
     public UserDTO updateUserEmail(@PathVariable String username, @RequestBody String email) {
-        return convertToDTO(service.updateUserEmail(username , email));
+        return convertToDTO(service.updateEmail(username , email));
+    }
+
+    @PatchMapping("/update/{username}")
+    @ResponseStatus(HttpStatus.OK)
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public ResponseEntity<?> patchUser(@PathVariable String username, @RequestBody UserDTO userDTO){
+
+        String password = userDTO.getPassword();
+        String role = userDTO.getRole().name();
+        String email = userDTO.getEmail();
+
+        if(password != null){
+            service.updatePassword(username,password);
+        }
+        if(!role.equals("UNKOWN")){
+            service.updateRole(username,UserRole.valueOf(role));
+        }
+        if(email != null){
+            service.updateEmail(username,email);
+        }
+
+        return ResponseEntity.ok("resource patched");
     }
 
     @GetMapping("/get/{username}")
