@@ -1,8 +1,6 @@
 package de.hfu.pms.controller;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import de.hfu.pms.exceptions.UserNotFoundException;
 import de.hfu.pms.exceptions.WrongPasswordException;
 import de.hfu.pms.model.User;
@@ -80,18 +78,17 @@ public class UserController {
 
     @PatchMapping("/update/{username}")
     @ResponseStatus(HttpStatus.OK)
-    @JsonIgnoreProperties(ignoreUnknown = true)
     public ResponseEntity<?> patchUser(@PathVariable String username, @RequestBody UserDTO userDTO){
 
         String password = userDTO.getPassword();
-        String role = userDTO.getRole().name();
+        UserRole role = userRoleHelper(userDTO.getRole());
         String email = userDTO.getEmail();
 
         if(password != null){
             service.updatePassword(username,password);
         }
-        if(!role.equals("UNKOWN")){
-            service.updateRole(username,UserRole.valueOf(role));
+        if(role != null){
+            service.updateRole(username,role);
         }
         if(email != null){
             service.updateEmail(username,email);
@@ -123,6 +120,15 @@ public class UserController {
     private UserInfoDTO convertToInfoDTO(User user) {
         return modelMapper.map(user, UserInfoDTO.class);
     }
+
+    private UserRole userRoleHelper(de.hfu.pms.shared.enums.UserRole userRole){
+
+        if(userRole == null) {
+            return null;
+        }
+        return UserRole.valueOf(userRole.name());
+    }
+
     //Error Response
 
     @ResponseStatus(value = HttpStatus.CONFLICT, reason = "This username already exists.")
