@@ -5,7 +5,7 @@ After=syslog.target network.target
 [Service]
 Type=simple
 WorkingDirectory=/etc/phdms.d
-ExecStart=/usr/bin/java -cp phfms.jar &
+ExecStart=/usr/bin/java -cp phdms.jar &
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s QUIT $MAINPID
 SuccessExitStatus=143
