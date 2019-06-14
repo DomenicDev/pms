@@ -2,6 +2,7 @@ package de.hfu.pms.utils;
 
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
@@ -14,7 +15,8 @@ import java.util.ResourceBundle;
 public class FormValidator {
 
     private static final String NULL = "null";
-    private static final String EMPTY = "empty";
+    private static final String ERROR_PROMPT_TEXT = "error_prompt_text";
+    private static final String MISSING_DATE = "missing_date";
 
     private static ResourceBundle bundle = GuiLoader.getResourceBundle();
 
@@ -64,10 +66,10 @@ public class FormValidator {
      */
     public boolean textFieldNotEmpty(TextField textField) {
         if (textField.getText() != null && textField.getText().length() > 0) {
-            removeClass(textField, EMPTY);
+            removeClass(textField, ERROR_PROMPT_TEXT);
             return true;
         } else {
-            addClass(textField, EMPTY);
+            addClass(textField, ERROR_PROMPT_TEXT);
             failValidation();
             textField.setPromptText(bundle.getString("ui.validation.empty_textfield_not_allowed"));
             return false;
@@ -98,6 +100,21 @@ public class FormValidator {
             return false;
         }
     }
+
+    public boolean hasSetValue(DatePicker datePicker) {
+        removeClass(datePicker, MISSING_DATE);
+        removeClass(datePicker.getEditor(), ERROR_PROMPT_TEXT);
+        if (datePicker.getValue() != null) {
+            return true;
+        } else {
+            addClass(datePicker, MISSING_DATE);
+            addClass(datePicker.getEditor(), ERROR_PROMPT_TEXT);
+            datePicker.setPromptText(bundle.getString("ui.validation.missing_date"));
+            failValidation();
+            return false;
+        }
+    }
+
     private static void addClass(Node control, String className) {
         control.getStyleClass().add(className);
     }

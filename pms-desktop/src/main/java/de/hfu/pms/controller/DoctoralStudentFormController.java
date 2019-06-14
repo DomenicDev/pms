@@ -359,11 +359,6 @@ public class DoctoralStudentFormController implements Initializable {
         qualifiedGraduationUniversityComboBox.getItems().addAll(RepresentationWrapper.getWrappedUniversities(universities));
     }
 
-    public void resetAllInputFields() {
-        doctoralStudent = null;
-        // todo
-    }
-
     public void fillFormMask(DoctoralStudentDTO doctoralStudent) {
         if (doctoralStudent == null) {
             return;
@@ -450,18 +445,18 @@ public class DoctoralStudentFormController implements Initializable {
         memberUntilDatePicker.setValue(targetGraduationDTO.getMembershipHFUKollegEnd());
         prolongTillDatePicker.setValue(targetGraduationDTO.getExtendedMembershipEnd());
 
-        if (memberSinceDatePicker.getValue() == null || memberUntilDatePicker.getValue() == null) {
+        if (memberSinceDatePicker.getValue() == null && memberUntilDatePicker.getValue() == null) {
             hfuMemberCheckBox.setSelected(false);
         } else {
             hfuMemberCheckBox.setSelected(true);
         }
 
+        prolongMembershipCheckBox.setSelected(prolongTillDatePicker.getValue() != null);
+
 
         // external membership
-        String externalProgram = externalCollegeNameTextField.getText();
-        System.out.println(externalProgram);
-        externalCollegeNameTextField.setText(externalProgram);
-        externalMemberCheckBox.setSelected(externalProgram != null && !externalProgram.isEmpty());
+        externalCollegeNameTextField.setText(targetGraduationDTO.getExternalProgram());
+        externalMemberCheckBox.setSelected(externalCollegeNameTextField.getText() != null);
 
         // cancel
         String cancelReason = targetGraduationDTO.getCancelReason();
@@ -621,13 +616,7 @@ public class DoctoralStudentFormController implements Initializable {
                 eventBus.post(new RequestCreateDoctoralStudentEvent(createDTO));
             }
 
-            // after saving, we can reset our input fields
-            resetAllInputFields();
-
-        } else {
-
         }
-
 
     }
 
@@ -853,15 +842,24 @@ public class DoctoralStudentFormController implements Initializable {
         if (familyStatusComboBox.getValue() == null) {
             personalData.setFamilyStatus(null);
         } else {
-            personalData.setFamilyStatus((familyStatusComboBox.getValue()).getEntity());
+            personalData.setFamilyStatus(familyStatusComboBox.getValue().getEntity());
         }
-        personalData.setLastName((lastNameTextField.getText()));
-        personalData.setForename((foreNameTextField.getText()));
-        personalData.setFormerLastName(formerLastNameTextField.getText());
-        personalData.setTelephone(phoneTextField.getText());
-        personalData.setTitle(titleTextField.getText());
-        personalData.setDateOfBirth((dateOfBirthDatePicker.getValue()));
-        personalData.setEmail((emailTextField.getText()));
+
+        if (validator.textFieldNotEmpty(lastNameTextField)) {
+            personalData.setLastName(lastNameTextField.getText());
+        }
+
+        if (validator.textFieldNotEmpty(foreNameTextField)) {
+            personalData.setForename((foreNameTextField.getText()));
+        }
+
+        if (validator.hasSetValue(dateOfBirthDatePicker)) {
+            personalData.setDateOfBirth(dateOfBirthDatePicker.getValue());
+        }
+
+        if (validator.textFieldNotEmpty(emailTextField)) {
+            personalData.setEmail((emailTextField.getText()));
+        }
 
         if (validator.comboBoxHasSelectedItem(salutationComboBox)) {
             personalData.setSalutation(salutationComboBox.getValue().getEntity());
@@ -875,10 +873,25 @@ public class DoctoralStudentFormController implements Initializable {
             personalData.setNumberOfChildren(childrenCountComboBox.getValue());
         }
 
-        personalAddress.setPlz((plzTextField.getText()));
-        personalAddress.setCountry((countryTextField.getText()));
-        personalAddress.setLocation((locationTextField.getText()));
-        personalAddress.setStreet((streetTextField.getText()));
+        personalData.setFormerLastName(formerLastNameTextField.getText());
+        personalData.setTelephone(phoneTextField.getText());
+        personalData.setTitle(titleTextField.getText());
+
+        if (validator.textFieldNotEmpty(plzTextField)) {
+            personalAddress.setPlz((plzTextField.getText()));
+        }
+
+        if (validator.textFieldNotEmpty(countryTextField)) {
+            personalAddress.setCountry((countryTextField.getText()));
+        }
+
+        if (validator.textFieldNotEmpty(locationTextField)) {
+            personalAddress.setLocation((locationTextField.getText()));
+        }
+
+        if (validator.textFieldNotEmpty(streetTextField)) {
+            personalAddress.setStreet((streetTextField.getText()));
+        }
 
         // check if photo has changed
         if (changedImage) {
@@ -893,8 +906,6 @@ public class DoctoralStudentFormController implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else {
-            // photo did not change so we do not want to pass it again
         }
 
         // process graduation
@@ -902,18 +913,20 @@ public class DoctoralStudentFormController implements Initializable {
             qualifiedGraduation.setGraduation(graduationComboBox.getValue().getEntity());
         }
 
-        if (validator.textFieldNotEmpty(subjectAreaTextField)) {
-            qualifiedGraduation.setSubjectArea(subjectAreaTextField.getText());
-        }
+        qualifiedGraduation.setSubjectArea(subjectAreaTextField.getText());
+
 
         if (validator.isValidGrade(gradeTextField)) {
             qualifiedGraduation.setGrade(gradeTextField.getText());
         }
 
-        // target graduation
-        if (validator.textFieldNotEmpty(targetGraduationDegreeTextField)) {
-            targetGraduationDTO.setTargetGraduationDegree(targetGraduationDegreeTextField.getText());
+        if (validator.comboBoxHasSelectedItem(qualifiedGraduationUniversityComboBox)) {
+            qualifiedGraduation.setGradedUniversity(qualifiedGraduationUniversityComboBox.getValue().getEntity());
         }
+
+        // target graduation
+        targetGraduationDTO.setTargetGraduationDegree(targetGraduationDegreeTextField.getText());
+
 
         if (validator.textFieldNotEmpty(nameOfDissertationTextField)) {
             targetGraduationDTO.setNameOfDissertation(nameOfDissertationTextField.getText());
@@ -946,9 +959,15 @@ public class DoctoralStudentFormController implements Initializable {
         }
 
         // further information
-        targetGraduationDTO.setPromotionAdmissionDate(promotionBeginDatePicker.getValue());
-        targetGraduationDTO.setPrognosticatedPromotionDate(predictedGraduationDatePicker.getValue());
-        targetGraduationDTO.setPromotionAgreement(promotionAgreementDatePicker.getValue());
+        if (validator.hasSetValue(promotionBeginDatePicker)) {
+            targetGraduationDTO.setPromotionAdmissionDate(promotionBeginDatePicker.getValue());
+        }
+        if (validator.hasSetValue(predictedGraduationDatePicker)) {
+            targetGraduationDTO.setPrognosticatedPromotionDate(predictedGraduationDatePicker.getValue());
+        }
+        if (validator.hasSetValue(promotionAgreementDatePicker)) {
+            targetGraduationDTO.setPromotionAgreement(promotionAgreementDatePicker.getValue());
+        }
 
         if (promotionCanceledCheckBox.isSelected()) {
             targetGraduationDTO.setCancelDate(cancelDateDatePicker.getValue());
@@ -964,6 +983,8 @@ public class DoctoralStudentFormController implements Initializable {
 
             if (prolongMembershipCheckBox.isSelected()) {
                 targetGraduationDTO.setExtendedMembershipEnd(prolongTillDatePicker.getValue());
+            } else {
+                targetGraduationDTO.setExtendedMembershipEnd(null);
             }
 
         } else {
@@ -976,10 +997,15 @@ public class DoctoralStudentFormController implements Initializable {
         // external membership
         targetGraduationDTO.setExternalProgram(externalMemberCheckBox.isSelected() ? externalCollegeNameTextField.getText() : null);
 
-        // cancel reason
-        targetGraduationDTO.setCancelReason(promotionCanceledCheckBox.isSelected() ? cancelReasonTextField.getText() : null);
-        // cancel date
-        targetGraduationDTO.setCancelDate(promotionCanceledCheckBox.isSelected() ? promotionBeginDatePicker.getValue() : null);
+        // cancel reason and cancel date
+        if (promotionCanceledCheckBox.isSelected()) {
+            targetGraduationDTO.setCancelReason(cancelReasonTextField.getText());
+            targetGraduationDTO.setCancelDate(cancelDateDatePicker.getValue());
+        } else {
+            targetGraduationDTO.setCancelReason(null);
+            targetGraduationDTO.setCancelDate(null);
+        }
+
 
         // process employment relationship
         Set<EmploymentEntryDTO> employmentEntries = new HashSet<>(employmentTableView.getItems());

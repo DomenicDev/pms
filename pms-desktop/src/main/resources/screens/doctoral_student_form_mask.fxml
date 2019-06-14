@@ -41,7 +41,7 @@
                                                          <children>
                                                             <VBox>
                                                                <children>
-                                                                  <Label text="%ui.label.salutation" />
+                                                                  <Label styleClass="required" text="%ui.label.salutation" />
                                                                    <ComboBox fx:id="salutationComboBox" onAction="#onPersonalDataChange" prefHeight="26.0" prefWidth="147.0" />
                                                                </children>
                                                             </VBox>
@@ -55,13 +55,13 @@
                                                                <children>
                                                                   <VBox>
                                                                      <children>
-                                                                        <Label alignment="CENTER" text="%ui.label.surname" />
+                                                                        <Label alignment="CENTER" styleClass="required" text="%ui.label.surname" />
                                                                         <TextField fx:id="lastNameTextField" onKeyTyped="#onPersonalDataChange" prefHeight="26.0" prefWidth="167.0" />
                                                                      </children>
                                                                   </VBox>
                                                                   <VBox>
                                                                      <children>
-                                                                        <Label text="%ui.label.forename" />
+                                                                        <Label styleClass="required" text="%ui.label.forename" />
                                                                         <TextField fx:id="foreNameTextField" onKeyTyped="#onPersonalDataChange" />
                                                                      </children>
                                                                   </VBox>
@@ -75,13 +75,13 @@
                                                             </VBox>
                                                             <VBox>
                                                                <children>
-                                                                  <Label text="%ui.label.sex" />
+                                                                  <Label styleClass="required" text="%ui.label.sex" />
                                                                    <ComboBox fx:id="genderComboBox" onAction="#onPersonalDataChange" prefHeight="26.0" prefWidth="199.0" />
                                                                </children>
                                                             </VBox>
                                                             <VBox>
                                                                <children>
-                                                                  <Label text="%ui.label.birthday" />
+                                                                  <Label styleClass="required" text="%ui.label.birthday" />
                                                                   <DatePicker fx:id="dateOfBirthDatePicker" onAction="#onPersonalDataChange" />
                                                                </children>
                                                             </VBox>
@@ -105,13 +105,13 @@
                                                                <children>
                                                                   <VBox>
                                                                      <children>
-                                                                        <Label text="%ui.label.street" />
+                                                                        <Label styleClass="required" text="%ui.label.street" />
                                                                         <TextField fx:id="streetTextField" onKeyTyped="#onPersonalDataChange" prefHeight="25.0" prefWidth="206.0" />
                                                                      </children>
                                                                   </VBox>
                                                                   <VBox>
                                                                      <children>
-                                                                        <Label text="%ui.label.post_code_and_location" />
+                                                                        <Label styleClass="required" text="%ui.label.post_code_and_location" />
                                                                         <HBox alignment="CENTER_LEFT" spacing="5.0">
                                                                            <children>
                                                                               <TextField fx:id="plzTextField" onKeyTyped="#onPersonalDataChange" prefHeight="25.0" prefWidth="65.0" />
@@ -122,13 +122,13 @@
                                                                   </VBox>
                                                                   <VBox>
                                                                      <children>
-                                                                        <Label text="%ui.label.country" />
+                                                                        <Label styleClass="required" text="%ui.label.country" />
                                                                         <TextField fx:id="countryTextField" onKeyTyped="#onPersonalDataChange" />
                                                                      </children>
                                                                   </VBox>
                                                                   <VBox>
                                                                      <children>
-                                                                        <Label text="%ui.label.email" />
+                                                                        <Label styleClass="required" text="%ui.label.email" />
                                                                         <TextField fx:id="emailTextField" onKeyTyped="#onPersonalDataChange" />
                                                                      </children>
                                                                   </VBox>
@@ -156,9 +156,9 @@
                                                                      <children>
                                                                         <Label text="%ui.label.subject" GridPane.rowIndex="1" />
                                                                         <TextField fx:id="subjectAreaTextField" onKeyTyped="#onQualificationChanged" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                                        <Label text="%ui.label.grade" GridPane.rowIndex="2" />
+                                                                        <Label styleClass="required" text="%ui.label.grade" GridPane.rowIndex="2" />
                                                                         <TextField fx:id="gradeTextField" onKeyTyped="#onQualificationChanged" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                                        <Label text="%ui.label.qualified_graduation_university" GridPane.rowIndex="3" />
+                                                                        <Label styleClass="required" text="%ui.label.qualified_graduation_university" GridPane.rowIndex="3" />
                                                                         <HBox spacing="15.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                                                            <children>
                                                                               <ComboBox fx:id="qualifiedGraduationUniversityComboBox" onAction="#onQualificationChanged" prefWidth="150.0">
@@ -167,7 +167,7 @@
                                                                               <Button mnemonicParsing="false" onAction="#handleOnActionAddUniversityButton" text="%ui.button.add" />
                                                                            </children>
                                                                         </HBox>
-                                                                        <Label text="%ui.label.qualified_graduation_degree" />
+                                                                        <Label styleClass="required" text="%ui.label.qualified_graduation_degree" />
                                                                          <ComboBox fx:id="graduationComboBox" onAction="#onQualificationChanged" prefWidth="150.0" GridPane.columnIndex="1" />
                                                                      </children>
                                                                   </GridPane>
@@ -231,19 +231,19 @@
                                                       </VBox>
                                                       <VBox>
                                                          <children>
-                                                            <Label text="%ui.label.subject_of_dissertation" />
+                                                            <Label styleClass="required" text="%ui.label.subject_of_dissertation" />
                                                             <TextField fx:id="nameOfDissertationTextField" onKeyTyped="#onPromotionChanged" />
                                                          </children>
                                                       </VBox>
                                                       <VBox>
                                                          <children>
-                                                            <Label text="%ui.label.internal_supervisor" />
+                                                            <Label styleClass="required" text="%ui.label.internal_supervisor" />
                                                             <TextField fx:id="internalSupervisorTextField" onKeyTyped="#onPromotionChanged" />
                                                          </children>
                                                       </VBox>
                                                       <VBox>
                                                          <children>
-                                                            <Label text="%ui.label.internal_faculty" />
+                                                            <Label styleClass="required" text="%ui.label.internal_faculty" />
                                                              <HBox spacing="15.0">
                                                                  <children>
                                                                      <ComboBox fx:id="facultyHFUComboBox" onAction="#onPromotionChanged" prefWidth="150.0" />
@@ -310,12 +310,12 @@
                                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                               </rowConstraints>
                                                                <children>
-                                                                  <Label text="%ui.label.begin_of_promotion" />
-                                                                  <DatePicker fx:id="promotionBeginDatePicker" onAction="#onPromotionChanged" GridPane.columnIndex="1" />
-                                                                  <DatePicker fx:id="predictedGraduationDatePicker" onAction="#onPromotionChanged" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                                  <DatePicker fx:id="promotionAgreementDatePicker" onAction="#onPromotionChanged" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                                  <Label text="%ui.label.prognosticated_promotion_date" GridPane.rowIndex="1" />
-                                                                  <Label text="%ui.label.promotion_agreement" GridPane.rowIndex="2" />
+                                                                  <Label styleClass="required" text="%ui.label.begin_of_promotion" />
+                                                                  <DatePicker fx:id="promotionBeginDatePicker" editable="false" onAction="#onPromotionChanged" GridPane.columnIndex="1" />
+                                                                  <DatePicker fx:id="predictedGraduationDatePicker" editable="false" onAction="#onPromotionChanged" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                                  <DatePicker fx:id="promotionAgreementDatePicker" editable="false" onAction="#onPromotionChanged" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                                  <Label styleClass="required" text="%ui.label.prognosticated_promotion_date" GridPane.rowIndex="1" />
+                                                                  <Label styleClass="required" text="%ui.label.promotion_agreement" GridPane.rowIndex="2" />
                                                                </children>
                                                             </GridPane>
                                                          </children>
@@ -334,7 +334,7 @@
                                                                   <VBox>
                                                                      <children>
                                                                         <Label text="%ui.label.cancel_reason" />
-                                                                        <TextField fx:id="cancelReasonTextField" onKeyTyped="#onPromotionChanged" />
+                                                                        <TextField fx:id="cancelReasonTextField" onAction="#onPromotionChanged" onKeyTyped="#onPromotionChanged" />
                                                                      </children>
                                                                   </VBox>
                                                                </children>

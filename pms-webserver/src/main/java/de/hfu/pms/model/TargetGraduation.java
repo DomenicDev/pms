@@ -51,7 +51,7 @@ public class TargetGraduation {
     private String cancelReason;
 
     @Column
-    private LocalDate membershipHFUKollegStart;
+    private LocalDate membershipHFUKollegBegin;
 
     @Column
     private LocalDate membershipHFUKollegEnd;
@@ -60,7 +60,7 @@ public class TargetGraduation {
     private LocalDate extendedMembershipEndDate;
 
     @Column
-    private String externalProgramm;
+    private String externalProgram;
 
     @Column
     private LocalDate promotionAdmissionDate;
@@ -168,12 +168,12 @@ public class TargetGraduation {
         this.cancelReason = cancelReason;
     }
 
-    public LocalDate getMembershipHFUKollegStart() {
-        return membershipHFUKollegStart;
+    public LocalDate getMembershipHFUKollegBegin() {
+        return membershipHFUKollegBegin;
     }
 
-    public void setMembershipHFUKollegStart(LocalDate membershipHFUKollegStart) {
-        this.membershipHFUKollegStart = membershipHFUKollegStart;
+    public void setMembershipHFUKollegBegin(LocalDate membershipHFUKollegBegin) {
+        this.membershipHFUKollegBegin = membershipHFUKollegBegin;
     }
 
     public LocalDate getMembershipHFUKollegEnd() {
@@ -192,12 +192,12 @@ public class TargetGraduation {
         this.extendedMembershipEndDate = extendedMembershipEndDate;
     }
 
-    public String getExternalProgramm() {
-        return externalProgramm;
+    public String getExternalProgram() {
+        return externalProgram;
     }
 
-    public void setExternalProgramm(String externalProgramm) {
-        this.externalProgramm = externalProgramm;
+    public void setExternalProgram(String externalProgram) {
+        this.externalProgram = externalProgram;
     }
 
     public LocalDate getPromotionAdmissionDate() {
