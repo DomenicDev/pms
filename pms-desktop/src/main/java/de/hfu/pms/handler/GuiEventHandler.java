@@ -114,6 +114,11 @@ public class GuiEventHandler {
     }
 
     @Subscribe
+    public void handleAnonymizeDoctoralStudentEvent(RequestAnonymiziseDoctoralStudentEvent requestAnonymiziseDoctoralStudentEvent){
+        applicationServices.anonymize(requestAnonymiziseDoctoralStudentEvent.getId());
+    }
+
+    @Subscribe
     public void handleAddUniversityEvent(RequestAddUniversityEvent requestSaveEvent){
         UniversityDTO universityDTO = requestSaveEvent.getUniversity();
         UniversityDTO response = applicationServices.addUniversity(universityDTO);

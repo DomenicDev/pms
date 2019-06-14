@@ -22,7 +22,7 @@ public interface ApplicationServices {
 
     void deleteDoctoralStudent(int studentID);
 
-    void pseudonymisate(int studentID);
+    void anonymize(Long studentID);
 
     Collection<PreviewDoctoralStudentDTO> getPreviews();
 

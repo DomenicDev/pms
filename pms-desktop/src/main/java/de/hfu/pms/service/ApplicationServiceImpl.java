@@ -95,7 +95,13 @@ public class ApplicationServiceImpl implements ApplicationServices {
     }
 
     @Override
-    public void pseudonymisate(int studentID) {
+    public void anonymize(Long studentID) {
+        try{
+            String response = restClient.get(HOST_URL + STUDENT_PREFIX + "anonymize/" + studentID);
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
 
     }
 
