@@ -4,19 +4,24 @@ import de.hfu.pms.dao.DoctoralStudentDao;
 import de.hfu.pms.exceptions.DoctoralStudentNotFoundException;
 import de.hfu.pms.model.*;
 import de.hfu.pms.service.DoctoralStudentService;
+import de.hfu.pms.service.DocumentService;
+import de.hfu.pms.shared.enums.Gender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
 public class DoctoralStudentServiceImpl implements DoctoralStudentService {
 
     private final DoctoralStudentDao doctoralStudentDao;
+    private final DocumentService documentService;
 
     @Autowired
-    public DoctoralStudentServiceImpl(DoctoralStudentDao doctoralStudentDao) {
+    public DoctoralStudentServiceImpl(DoctoralStudentDao doctoralStudentDao, DocumentService documentService) {
         this.doctoralStudentDao = doctoralStudentDao;
+        this.documentService = documentService;
     }
 
     @Override
@@ -92,8 +97,54 @@ public class DoctoralStudentServiceImpl implements DoctoralStudentService {
 
     @Override
     public void anonymize(Long id) {
-        // TODO
-        throw new UnsupportedOperationException("method must still be implemented");
+        DoctoralStudent doctoralStudent = doctoralStudentDao.findById(id).orElseThrow(() -> new DoctoralStudentNotFoundException(id));
+        DoctoralStudent anonymizedDoctoralStudent = new DoctoralStudent();
+        anonymizedDoctoralStudent.setAnonymized(true);
+
+
+        //Get all subtables
+        PersonalData personalData = doctoralStudent.getPersonalData();
+        QualifiedGraduation qualifiedGraduation = doctoralStudent.getQualifiedGraduation();
+        TargetGraduation targetGraduation = doctoralStudent.getTargetGraduation();
+        Employment employment = doctoralStudent.getEmployment();
+        Support support = doctoralStudent.getSupport();
+        AlumniState alumniState = doctoralStudent.getAlumniState();
+
+        //Delete PersonalData
+        PersonalData anonymizedPersonalData = new PersonalData();
+        anonymizedPersonalData.setGender(personalData.getGender());
+        LocalDate dateOfBirth = personalData.getDateOfBirth();
+        anonymizedPersonalData.setDateOfBirth(LocalDate.of(dateOfBirth.getYear(),1,1));
+
+        anonymizedDoctoralStudent.setPersonalData(anonymizedPersonalData);
+
+        //QualifiedGraduation
+        anonymizedDoctoralStudent.setQualifiedGraduation(qualifiedGraduation);
+
+        //Delete name of Dissertation
+        targetGraduation.setNameOfDissertation(null);
+        anonymizedDoctoralStudent.setTargetGraduation(targetGraduation);
+
+        //delete employment
+        anonymizedDoctoralStudent.setEmployment(null);
+
+        //delete awards
+        support.setAwards(null);
+        anonymizedDoctoralStudent.setSupport(support);
+
+        //modify AllumniState
+        alumniState.setAgreementNews(false);
+        alumniState.setAgreementEvaluation(false);
+        anonymizedDoctoralStudent.setAlumniState(alumniState);
+
+        //delete Photo
+        doctoralStudent.setPhoto(null);
+
+        //delete all Documents
+        documentService.deleteAll(id);
+
+        doctoralStudentDao.deleteById(id);
+        doctoralStudentDao.save(anonymizedDoctoralStudent);
     }
 
     @Override

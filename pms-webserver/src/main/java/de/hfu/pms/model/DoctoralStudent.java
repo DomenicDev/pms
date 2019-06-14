@@ -39,6 +39,9 @@ public class DoctoralStudent implements Serializable {
     @JoinColumn(name = "fk_student")
     private Set<Document> documents;
 
+    @Column
+    private Boolean anonymized = false;
+
     /**
      * Default constructor.
      */
@@ -144,5 +147,13 @@ public class DoctoralStudent implements Serializable {
 
     public Set<Document> getDocuments() {
         return documents;
+    }
+
+    public Boolean getAnonymized() {
+        return anonymized;
+    }
+
+    public void setAnonymized(Boolean anonymized) {
+        this.anonymized = anonymized;
     }
 }

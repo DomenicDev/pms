@@ -154,6 +154,12 @@ public class DoctoralStudentController {
         doctoralStudentService.remove(id);
     }
 
+    @GetMapping("anonymize/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void anonymize(@PathVariable Long id){
+        doctoralStudentService.anonymize(id);
+    }
+
     // ------------------ //
     //      DOCUMENTS     //
     // ------------------ //
