@@ -7,6 +7,8 @@ import de.hfu.pms.model.Document;
 import de.hfu.pms.service.DocumentService;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 
 @Service
 public class DocumentServiceImpl implements DocumentService {
@@ -36,5 +38,15 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public void deleteDocument(Long documentId) {
         documentDao.deleteById(documentId);
+    }
+
+    @Override
+    public void deleteAll(Long doctoralStudentId) {
+        DoctoralStudent doctoralStudent = doctoralStudentDao.findById(doctoralStudentId).orElseThrow();
+        Set<Document> documents = doctoralStudent.getDocuments();
+        if (documents != null) {
+            documents.clear();
+        }
+        doctoralStudentDao.save(doctoralStudent);
     }
 }

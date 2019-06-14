@@ -9,4 +9,6 @@ public interface DocumentService {
     Document getDocumentById(Long id);
 
     void deleteDocument(Long documentId);
+
+    void deleteAll(Long doctoralStudentId);
 }
