@@ -151,11 +151,7 @@ public class UniversityController implements Initializable {
 
         try {
             UserInfoDTO user = EntityPool.getInstance().getLoggedInUser();
-            if (user.getRole().equals(ADMIN)){
-                universityDeleteButton.setDisable(false);
-            }else{
-                universityDeleteButton.setDisable(true);
-            }
+            universityDeleteButton.setDisable(!user.getRole().equals(ADMIN));
 
         }catch (BusinessException e){
             e.printStackTrace();

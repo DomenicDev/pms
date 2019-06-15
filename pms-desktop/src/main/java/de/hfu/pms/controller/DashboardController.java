@@ -97,11 +97,7 @@ public class DashboardController implements Initializable {
 
         try {
             UserInfoDTO user = EntityPool.getInstance().getLoggedInUser();
-            if (user.getRole().equals(ADMIN)) {
-                adminAreaButton.setDisable(false);
-            } else {
-                adminAreaButton.setDisable(true);
-            }
+            adminAreaButton.setDisable(!user.getRole().equals(ADMIN));
         }catch (BusinessException e){
             e.printStackTrace();
         }
