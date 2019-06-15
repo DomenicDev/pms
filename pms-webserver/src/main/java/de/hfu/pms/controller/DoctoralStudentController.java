@@ -56,6 +56,7 @@ public class DoctoralStudentController {
         EmploymentDTO employmentDTO = patchDTO.getPatchedEmployment();
         SupportDTO supportDTO = patchDTO.getPatchedSupport();
         AlumniStateDTO alumniStateDTO = patchDTO.getPatchedAlumniState();
+        boolean photoChanged = patchDTO.isChangedPhoto();
         byte[] photo = patchDTO.getPhoto();
         Collection<DocumentDTO> documentsToAdd = patchDTO.getDocumentsToAdd();
         Collection<Long> documentsToRemove = patchDTO.getDocumentsToRemove();
@@ -86,8 +87,12 @@ public class DoctoralStudentController {
             AlumniState alumniState = modelMapper.map(alumniStateDTO, AlumniState.class);
             doctoralStudentService.update(id, alumniState);
         }
-        if (photo != null) {
-            doctoralStudentService.updatePhoto(id, photo);
+        if (photoChanged) {
+            if (photo != null) {
+                doctoralStudentService.updatePhoto(id, photo);
+            } else {
+                doctoralStudentService.updatePhoto(id, null);
+            }
         }
         if (documentsToAdd != null && !documentsToAdd.isEmpty()) {
             for (DocumentDTO documentDTO : documentsToAdd) {

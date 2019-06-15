@@ -42,6 +42,8 @@ public class DoctoralStudentFormController implements Initializable {
     private DoctoralStudentDTO doctoralStudent = null;
     private EventBus eventBus = EventBusSystem.getEventBus();
 
+    private final Image vacantPhotoImage = new Image("/images/user-shape.png");
+
     // Personal Data
     @FXML
     private TextField lastNameTextField;
@@ -244,6 +246,7 @@ public class DoctoralStudentFormController implements Initializable {
     //        CONTROL FLAGS         //
     // ---------------------------- //
     private boolean changedImage;
+    private boolean deletedImage;
     private boolean personalDataChanged;
     private boolean qualificationChanged;
     private boolean promotionChanged;
@@ -267,7 +270,14 @@ public class DoctoralStudentFormController implements Initializable {
         initDocumentsListView();
         initComboBoxes();
         initBorders(resources);
+
+        initPhotoView();
+
         refreshCheckBoxes();
+    }
+
+    private void initPhotoView() {
+        photoImageView.setImage(vacantPhotoImage);
     }
 
     private void initBorders(ResourceBundle bundle) {
@@ -545,8 +555,14 @@ public class DoctoralStudentFormController implements Initializable {
 
                 // see what has been changed
                 if (changedImage) {
+                    patchDTO.setChangedPhoto(true);
                     patchDTO.setPhoto(doctoralStudent.getPhoto());
                     logger.log(Level.DEBUG, "profile photo has been changed");
+                }
+                if (deletedImage) {
+                    patchDTO.setChangedPhoto(true);
+                    patchDTO.setPhoto(null);
+                    logger.log(Level.DEBUG, "profile photo has been deleted");
                 }
                 if (personalDataChanged) {
                     patchDTO.setPatchedPersonalData(doctoralStudent.getPersonalData());
@@ -757,8 +773,16 @@ public class DoctoralStudentFormController implements Initializable {
         Image image = new Image(path);
         photoImageView.setImage(image);
 
-        // set control flag
+        // set control flags
         changedImage = true;
+        deletedImage = false;
+    }
+
+    @FXML
+    public void handleOnActionDeletePhotoButton() {
+        photoImageView.setImage(vacantPhotoImage);
+        deletedImage = true;
+        changedImage = false;
     }
 
     //----------------------------------//
@@ -906,6 +930,11 @@ public class DoctoralStudentFormController implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+
+        // set photo to null if deleted
+        if (deletedImage) {
+            doctoralStudent.setPhoto(null);
         }
 
         // process graduation

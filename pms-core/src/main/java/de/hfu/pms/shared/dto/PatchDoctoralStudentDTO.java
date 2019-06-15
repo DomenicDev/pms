@@ -30,6 +30,8 @@ public class PatchDoctoralStudentDTO {
     // ALUMNI STATE
     private AlumniStateDTO patchedAlumniState;
 
+    private boolean changedPhoto;
+
     // profile photo
     private byte[] photo;
 
@@ -55,6 +57,20 @@ public class PatchDoctoralStudentDTO {
 
     public PersonalDataDTO getPatchedPersonalData() {
         return patchedPersonalData;
+    }
+
+    /**
+     * Set the control flag if photo has changed.
+     * If this flag is set and the photo byte array is null,
+     * this implies a delete action.
+     * @param changedPhoto
+     */
+    public void setChangedPhoto(boolean changedPhoto) {
+        this.changedPhoto = changedPhoto;
+    }
+
+    public boolean isChangedPhoto() {
+        return changedPhoto;
     }
 
     public void setPatchedPersonalData(PersonalDataDTO patchedPersonalData) {

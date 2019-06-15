@@ -189,6 +189,7 @@
                                                                </effect>
                                                             </ImageView>
                                                             <Button mnemonicParsing="false" onAction="#handleOnActionChangePhotoButton" text="%ui.button.change_photo" />
+                                                            <Button mnemonicParsing="false" onAction="#handleOnActionDeletePhotoButton" text="%ui.button.delete_photo" />
                                                          </children>
                                                          <padding>
                                                             <Insets left="10.0" />
