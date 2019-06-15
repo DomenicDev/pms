@@ -4,6 +4,7 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.SuccessfullyAddedUniversityEvent;
+import de.hfu.pms.events.SuccessfullyChangedUserInformationEvent;
 import de.hfu.pms.exceptions.BusinessException;
 import de.hfu.pms.service.ApplicationServices;
 import de.hfu.pms.shared.dto.*;
@@ -24,6 +25,8 @@ public final class EntityPool {
     private Collection<PreviewDoctoralStudentDTO> previewStudents = new HashSet<>();
     private Collection<UserDTO> users = new HashSet<>();
     private ApplicationServices applicationServices;
+
+    private UserInfoDTO loggedInUser = null;
 
     private EntityPool() {
         // private constructor
@@ -105,7 +108,21 @@ public final class EntityPool {
     }
 
     public UserInfoDTO getLoggedInUser() throws BusinessException {
-        return applicationServices.getCurrentUser();
+        if (loggedInUser == null) {
+            this.loggedInUser = applicationServices.getCurrentUser();
+        }
+        return loggedInUser;
+    }
+
+    @Subscribe
+    public void handle(SuccessfullyChangedUserInformationEvent event) {
+        if (loggedInUser == null) {
+            return;
+        }
+        String usernameLoggedInUser = loggedInUser.getUsername();
+        if (usernameLoggedInUser.equals(event.getUserInfoDTO().getUsername())) {
+            this.loggedInUser = event.getUserInfoDTO();
+        }
     }
 
     @Subscribe

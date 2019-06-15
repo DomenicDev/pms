@@ -71,7 +71,7 @@ public interface ApplicationServices {
 
     UserDTO changeUserPrivileges(String username, UserRole newUserRole) throws BusinessException;
 
-    UserDTO changeAccountInformation( String forename, String lastname, String email)throws BusinessException;
+    UserInfoDTO changeAccountInformation(String username, String forename, String surname, String email)throws BusinessException;
 
     UserDTO changeUserEmail(String username, String email) throws BusinessException;
 

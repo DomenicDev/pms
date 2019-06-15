@@ -16,59 +16,66 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ChangeAccountInformationController implements Initializable {
+
     private EventBus eventBus = EventBusSystem.getEventBus();
-
-
-    @FXML
-    private Button saveChangesButton;
-
-    @FXML
-    private Button ButtonExitScreen;
 
     @FXML
     private TextField textfieldChangeEmail;
 
     @FXML
-    private TextField textfieldForname;
+    private TextField textfieldForename;
 
     @FXML
     private Label labelChangeUsername;
 
     @FXML
-    private Label lableChangeRole;
+    private Label userRoleLabel;
 
     @FXML
-    private TextField textfieldLastname;
+    private TextField surnameTextField;
 
 
     private UserInfoDTO user;
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        eventBus.register(this);
+    }
+
     @FXML
-    void handleChangeUserInformationbutton(ActionEvent event) {
+    void handleOnActionSaveButton(ActionEvent event) {
         if (user == null) {
             return;
         }
-        boolean validationSuccessful = writeToUserDTO();
-        if (!validationSuccessful) {
+
+        FormValidator userValidator = new FormValidator();
+
+        // we want to make sure that all fields are set
+        userValidator.textFieldNotEmpty(textfieldForename);
+        userValidator.textFieldNotEmpty(surnameTextField);
+        userValidator.textFieldNotEmpty(textfieldChangeEmail);
+
+        if (!userValidator.validationSuccessful()) {
             return;
         }
-        if (validationSuccessful) {
-            eventBus.post(new RequestChangeUserInformationEvent(user));
 
-        }
+        String forename = textfieldForename.getText();
+        String surname = surnameTextField.getText();
+        String email = textfieldChangeEmail.getText();
+
+        eventBus.post(new RequestChangeUserInformationEvent(user.getUsername(), forename, surname, email));
+
         ((Button) event.getSource()).getScene().getWindow().hide();
-
-
     }
 
 
     public void edit(UserInfoDTO user) {
         this.user = user;
-        textfieldChangeEmail.setText((user.getEmail()));
-        textfieldForname.setText(user.getForename());
+        textfieldChangeEmail.setText(user.getEmail());
+        textfieldForename.setText(user.getForename());
         labelChangeUsername.setText(user.getUsername());
-        lableChangeRole.setText(user.getRole().name());
-        textfieldLastname.setText(user.getLastname());
+        userRoleLabel.setText(user.getRole().name());
+        surnameTextField.setText(user.getLastname());
     }
 
     @FXML
@@ -76,32 +83,4 @@ public class ChangeAccountInformationController implements Initializable {
         ((Button) event.getSource()).getScene().getWindow().hide();
     }
 
-    private boolean writeToUserDTO() {
-
-        FormValidator userValidator = new FormValidator();
-
-        String benutzername = labelChangeUsername.getText();
-        String vorname = textfieldForname.getText();
-        String email = textfieldChangeEmail.getText();
-        String nachname = textfieldLastname.getText();
-
-
-        if (userValidator.textFieldNotEmpty((textfieldForname))) {
-            user.setForename(vorname);
-        }
-        if (userValidator.textFieldNotEmpty(textfieldLastname)) {
-            user.setLastname(nachname);
-        }
-        if (userValidator.textFieldNotEmpty((textfieldChangeEmail))) {
-            user.setEmail(email);
-        }
-
-
-        return userValidator.validationSuccessful();
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        eventBus.register(this);
-    }
 }

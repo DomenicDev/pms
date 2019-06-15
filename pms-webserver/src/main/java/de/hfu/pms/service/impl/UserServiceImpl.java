@@ -2,7 +2,6 @@ package de.hfu.pms.service.impl;
 
 import de.hfu.pms.dao.UserDao;
 import de.hfu.pms.exceptions.UserNotFoundException;
-import de.hfu.pms.exceptions.WrongPasswordException;
 import de.hfu.pms.model.User;
 import de.hfu.pms.model.UserRole;
 import de.hfu.pms.service.UserService;
@@ -83,6 +82,20 @@ public class UserServiceImpl implements UserService {
         throw new UserNotFoundException(username);
     }
 
+    @Override
+    public User updateInformation(String username, String forename, String surname, String email) {
+        User user = userDao.findByUsername(username);
+        if (forename != null) {
+            user.setForename(forename);
+        }
+        if (surname != null) {
+            user.setLastname(surname);
+        }
+        if (email != null) {
+            user.setEmail(email);
+        }
+        return userDao.save(user);
+    }
 
     @Override
     public User getUser(String username) {

@@ -6,6 +6,7 @@ import de.hfu.pms.exceptions.WrongPasswordException;
 import de.hfu.pms.model.User;
 import de.hfu.pms.model.UserRole;
 import de.hfu.pms.service.UserService;
+import de.hfu.pms.shared.dto.ChangeUserInformationDTO;
 import de.hfu.pms.shared.dto.UserDTO;
 import de.hfu.pms.shared.dto.UserInfoDTO;
 import org.modelmapper.ModelMapper;
@@ -74,6 +75,20 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public UserDTO updateUserEmail(@PathVariable String username, @RequestBody String email) {
         return convertToDTO(service.updateEmail(username , email));
+    }
+
+    @PatchMapping("/patch/{username}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<?> patchUserInformation(@PathVariable String username, @RequestBody ChangeUserInformationDTO changeDTO, Principal principal) {
+        if (!principal.getName().equals(username)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+        String forename = changeDTO.getForename();
+        String surname = changeDTO.getLastName();
+        String email = changeDTO.getEmail();
+
+        User updatedUser = service.updateInformation(username, forename, surname, email);
+        return ResponseEntity.ok(convertToInfoDTO(updatedUser));
     }
 
     @PatchMapping("/update/{username}")

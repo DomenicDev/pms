@@ -12,6 +12,7 @@ public interface UserService {
     User updatePassword(String username, String newPassword);
     User updateRole(String username, UserRole role);
     User updateEmail(String username, String email);
+    User updateInformation(String username, String forename, String surname, String email);
     User getUser(String username);
     List<User> getUserList();
 

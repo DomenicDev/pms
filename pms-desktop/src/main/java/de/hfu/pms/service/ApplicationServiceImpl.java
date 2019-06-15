@@ -386,9 +386,18 @@ public class ApplicationServiceImpl implements ApplicationServices {
     }
 
     @Override
-    public UserDTO changeAccountInformation(String forename, String lastname, String email) throws BusinessException {
-        return null;
-        //todo impl a event for lastname forename and email also on webserver side
+    public UserInfoDTO changeAccountInformation(String username, String forename, String surname, String email) throws BusinessException {
+        ChangeUserInformationDTO changeDTO = new ChangeUserInformationDTO();
+        changeDTO.setForename(forename);
+        changeDTO.setLastName(surname);
+        changeDTO.setEmail(email);
+
+        try {
+            String response = restClient.patchJson(USER_SERVICES + "patch/"+username, mapper.writeValueAsString(changeDTO));
+            return mapper.readValue(response, UserInfoDTO.class);
+        } catch (IOException e) {
+            throw new BusinessException(e.getMessage());
+        }
     }
 
     @Override

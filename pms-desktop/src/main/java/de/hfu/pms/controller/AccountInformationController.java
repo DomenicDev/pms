@@ -4,6 +4,9 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.SuccessfullyAddedUserEvent;
+import de.hfu.pms.events.SuccessfullyChangedUserInformationEvent;
+import de.hfu.pms.exceptions.BusinessException;
+import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.UserDTO;
 import de.hfu.pms.shared.dto.UserInfoDTO;
 import javafx.event.ActionEvent;
@@ -22,23 +25,29 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AccountInformationController implements Initializable {
+
     private EventBus eventBus = EventBusSystem.getEventBus();
 
     @FXML
-    private Label LabelUsername;
+    private Label usernameLabel;
 
     @FXML
-    private Label labelForname;
+    private Label forenameLabel;
 
     @FXML
-    private Label LableEmail;
+    private Label emailLabel;
 
     @FXML
-    private Label LableRole;
+    private Label userRoleLabel;
 
     private Logger logger = Logger.getLogger(AccountInformationController.class);
 
     private UserInfoDTO user;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        eventBus.register(this);
+    }
 
     @FXML
     void handleChangeUserInformationButton(ActionEvent event) {
@@ -67,32 +76,42 @@ public class AccountInformationController implements Initializable {
         }
     }
 
-    private void initLable() {
-
-        LabelUsername.setText(user.getUsername());
-        labelForname.setText(user.getForename()+" "+ user.getLastname());
-        LableEmail.setText(user.getEmail());
-        LableRole.setText(user.getRole().name());
+    private void initLabel() {
+        usernameLabel.setText(user.getUsername());
+        forenameLabel.setText(user.getForename()+" "+ user.getLastname());
+        emailLabel.setText(user.getEmail());
+        userRoleLabel.setText(user.getRole().name());
     }
 
     public void showUser(UserInfoDTO user) {
         this.user = user;
-        initLable();
+        initLabel();
     }
 
     @Subscribe
     public void handleUserChangeEvent(SuccessfullyAddedUserEvent event) {
         UserDTO user = event.getUser();
-        LabelUsername.setText(user.getUsername());
-        labelForname.setText(user.getForename()+" "+ user.getLastname());
-        LableEmail.setText(user.getEmail());
-        LableRole.setText(user.getRole().toString());
+        usernameLabel.setText(user.getUsername());
+        forenameLabel.setText(user.getForename()+" "+ user.getLastname());
+        emailLabel.setText(user.getEmail());
+        userRoleLabel.setText(user.getRole().toString());
         //todo remove null pointer exception, i think in initLabel the init is wrong but dont know how to do like a labelProperty or so, you need to initialize the label with the keyword new, but i haven't a clue how
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        eventBus.register(this);
+    @Subscribe
+    public void handle(SuccessfullyChangedUserInformationEvent event) throws BusinessException {
+        UserInfoDTO infoDTO = event.getUserInfoDTO();
+        String username = infoDTO.getUsername();
+        if (username != null) {
+            // look up the current logged in user and check
+            // if the own user has been changed
+            UserInfoDTO userInfoDTO = EntityPool.getInstance().getLoggedInUser();
+            if (username.equals(userInfoDTO.getUsername())) {
+                showUser(infoDTO);
+            }
+        }
     }
+
+
 }
 
