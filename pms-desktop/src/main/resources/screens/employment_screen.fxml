@@ -6,9 +6,9 @@
 <?import javafx.scene.text.Font?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="288.0" prefWidth="407.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.EmploymentController">
     <children>
-        <VBox layoutX="139.0" layoutY="58.0" prefHeight="276.0" prefWidth="600.0" styleClass="button-NOT-sidebar" stylesheets="@../styles/style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox layoutX="139.0" layoutY="58.0" prefHeight="276.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Label text="Beschäftigungsverhältnis hinzufügen">
+                <Label text="%ui.button.add_employment">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>
@@ -29,16 +29,16 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <Label text="Ort der Beschäftigung" />
-                        <Label text="Art der Beschäftigung" GridPane.rowIndex="1" />
-                        <Label text="Dienstort / Campus" GridPane.rowIndex="2" />
+                        <Label text="%ui.table_column.employment.location" />
+                        <Label text="%ui.table_column.employment.kind_of_employment" GridPane.rowIndex="1" />
+                        <Label text="%ui.table_column.employment.employment_campus" GridPane.rowIndex="2" />
                         <TextField fx:id="kindOfEmploymentTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <ComboBox fx:id="employmentCampusComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <TextField fx:id="employmentLocationTextField" GridPane.columnIndex="1" />
                   <DatePicker fx:id="employmentBeginDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <DatePicker fx:id="employmentEndDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <Label text="Beginn der Beschäftigung" GridPane.rowIndex="3" />
-                  <Label text="Ende der Beschäftigung" GridPane.rowIndex="4" />
+                  <Label text="%ui.table_column.employment.begin" GridPane.rowIndex="3" />
+                  <Label text="%ui.table_column.employment.end" GridPane.rowIndex="4" />
                     </children>
                     <VBox.margin>
                         <Insets />
@@ -46,8 +46,8 @@
                 </GridPane>
                 <HBox alignment="CENTER" prefHeight="60.0" prefWidth="590.0" spacing="25.0">
                     <children>
-                        <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOnActionSubmitButton" text="Übernehmen" />
-                        <Button cancelButton="true" mnemonicParsing="false" onAction="#handleOnActionCancelButton" styleClass="button-NOT-sidebar" text="Abbrechen" />
+                        <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOnActionSubmitButton" text="%ui.button.submit" />
+                        <Button cancelButton="true" mnemonicParsing="false" onAction="#handleOnActionCancelButton" styleClass="button-NOT-sidebar" text="%ui.button.cancel" />
                     </children>
                 </HBox>
             </children>

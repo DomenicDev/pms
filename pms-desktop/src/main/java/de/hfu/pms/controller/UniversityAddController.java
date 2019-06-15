@@ -8,14 +8,19 @@ import de.hfu.pms.shared.dto.UniversityDTO;
 import de.hfu.pms.utils.FormValidator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class UniversityAddController {
+
+public class UniversityAddController implements Initializable {
 
     private EventBus eventBus = EventBusSystem.getEventBus();
+    private ResourceBundle bundle;
 
     @FXML
     private TextField textFieldNameOfUniverity;
@@ -42,6 +47,12 @@ public class UniversityAddController {
 
     private boolean editMode = false;
 
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        this.bundle = resources;
+    }
+
     public void edit(UniversityDTO university) {
         this.university = university;
 
@@ -56,11 +67,9 @@ public class UniversityAddController {
 
     public void setEditMode(boolean editMode) {
         if (editMode) {
-            ButtonUniversityAdd.setText("Universität Ändern");
-            title.setText("Universität Ändern");
+            title.setText(bundle.getString("ui.label.change_university"));
         } else {
-            ButtonUniversityAdd.setText("Universität Hinzufügen");
-            title.setText("Universität Hinzufügen");
+            title.setText(bundle.getString("ui.label.add_university"));
         }
         this.editMode = editMode;
     }
@@ -125,4 +134,5 @@ public class UniversityAddController {
         ((Button) event.getSource()).getScene().getWindow().hide();
 
     }
+
 }

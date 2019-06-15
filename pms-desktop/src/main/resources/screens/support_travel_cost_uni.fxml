@@ -17,8 +17,8 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <Label text="Datum" />
-                        <Label text="Abgerechneter Betrag" GridPane.rowIndex="1" />
+                        <Label text="%ui.table_column.support.date" />
+                        <Label text="%ui.table_column.support.support_sum" GridPane.rowIndex="1" />
                         <TextField fx:id="sumSupportTextField" prefHeight="25.0" prefWidth="71.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <DatePicker fx:id="datePicker" GridPane.columnIndex="1" />
                     </children>
@@ -28,8 +28,8 @@
                 </GridPane>
                 <HBox alignment="CENTER" prefHeight="60.0" prefWidth="590.0" spacing="25.0">
                     <children>
-                        <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOnActionSubmitButton" styleClass="button-NOT-sidebar" text="Übernehmen" />
-                        <Button cancelButton="true" mnemonicParsing="false" onAction="#handleOnActionCancelButton" styleClass="button-NOT-sidebar" text="Abbrechen" />
+                        <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOnActionSubmitButton" styleClass="button-NOT-sidebar" text="%ui.button.submit" />
+                        <Button cancelButton="true" mnemonicParsing="false" onAction="#handleOnActionCancelButton" styleClass="button-NOT-sidebar" text="%ui.button.cancel" />
                     </children>
                 </HBox>
             </children>

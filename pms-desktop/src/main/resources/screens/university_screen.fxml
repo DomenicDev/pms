@@ -3,7 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<ScrollPane prefHeight="554.0" prefWidth="769.0" style="-fx-background-color: #FAFAFA;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.UniversityController">
+<ScrollPane prefHeight="554.0" prefWidth="769.0" style="-fx-background-color: #FAFAFA;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.UniversityScreenController">
   <content>
     <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="701.0" prefWidth="798.0" stylesheets="@../styles/style.css">
       <children>
@@ -14,19 +14,19 @@
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
               </columnResizePolicy>
               <columns>
-                <TableColumn fx:id="TableColumnName" prefWidth="75.0" text="Name" />
-                <TableColumn fx:id="TableColumnOrt" prefWidth="75.0" text="Ort " />
-                <TableColumn fx:id="TableColumnLand" prefWidth="75.0" text="Land" />
-                <TableColumn fx:id="TableColumnKuerzel" prefWidth="75.0" text="Kürzel" />
-                <TableColumn fx:id="TableColumnContacttoUniversity" prefWidth="75.0" text="Kontakt Vorort" />
+                <TableColumn fx:id="TableColumnName" prefWidth="75.0" text="%ui.label.name" />
+                <TableColumn fx:id="TableColumnOrt" prefWidth="75.0" text="%ui.label.location" />
+                <TableColumn fx:id="TableColumnLand" prefWidth="75.0" text="%ui.label.country" />
+                <TableColumn fx:id="TableColumnKuerzel" prefWidth="75.0" text="%ui.label.contraction" />
+                <TableColumn fx:id="TableColumnContacttoUniversity" prefWidth="75.0" text="%ui.label.university_contact" />
               </columns>
             </TableView>
           </content>
         </ScrollPane>
-        <Button fx:id="universityAddButton" mnemonicParsing="false" onAction="#handleUniversityAddButton" styleClass="button-NOT-sidebar" text="Universität hinzufügen" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="60.0" />
-        <Label text="bereits vorhandene Universitäten" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="110.0" />
-        <Button mnemonicParsing="false" onAction="#handleChangeUniversityButton" styleClass="button-NOT-sidebar" text="Ausgewählte Universität bearbeiten" AnchorPane.leftAnchor="220.0" AnchorPane.topAnchor="60.0" />
-        <Button fx:id="universityDeleteButton" mnemonicParsing="false" onAction="#handleDeleteUniversityButton" styleClass="button-NOT-sidebar" text="Ausgewählte Universität löschen" AnchorPane.leftAnchor="458.0" AnchorPane.topAnchor="60.0" />
+        <Button fx:id="universityAddButton" mnemonicParsing="false" onAction="#handleUniversityAddButton" styleClass="button-NOT-sidebar" text="%ui.button.add" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="60.0" />
+        <Label text="%ui.label.already_created_universities" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="110.0" />
+        <Button mnemonicParsing="false" onAction="#handleChangeUniversityButton" styleClass="button-NOT-sidebar" text="%ui.button.change" AnchorPane.leftAnchor="220.0" AnchorPane.topAnchor="60.0" />
+        <Button fx:id="universityDeleteButton" mnemonicParsing="false" onAction="#handleDeleteUniversityButton" styleClass="button-NOT-sidebar" text="%ui.button.delete" AnchorPane.leftAnchor="458.0" AnchorPane.topAnchor="60.0" />
       </children>
          <padding>
             <Insets bottom="1.0E-11" left="1.0E-11" right="1.0E-13" top="1.0E-7" />

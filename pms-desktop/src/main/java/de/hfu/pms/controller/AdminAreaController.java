@@ -10,6 +10,7 @@ import de.hfu.pms.events.SuccessfullyChangedUserRoleEvent;
 import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.UserDTO;
 import de.hfu.pms.utils.CollectionUtils;
+import de.hfu.pms.utils.GuiLoader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,11 +32,10 @@ import java.util.ResourceBundle;
 
 public class AdminAreaController implements Initializable {
 
-private EventBus eventBus = EventBusSystem.getEventBus();
-private UserDTO user;
-private Logger logger = Logger.getLogger(AdminAreaController.class);
-
-
+    private EventBus eventBus = EventBusSystem.getEventBus();
+    private UserDTO user;
+    private Logger logger = Logger.getLogger(AdminAreaController.class);
+    private ResourceBundle bundle;
 
 
     @FXML
@@ -85,25 +85,15 @@ private Logger logger = Logger.getLogger(AdminAreaController.class);
 
 
     @FXML
-        void handleAddUserAdminEvent(ActionEvent event){
-            try {
-                ResourceBundle bundle = ResourceBundle.getBundle("lang/strings");
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/screens/AddUserAdminArea.fxml"));
-                Parent root = (Parent) fxmlLoader.load();
-                Stage stage = new Stage();
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.setTitle("neuen Benutzer Hinzufügen");
-                stage.setScene(new Scene(root));
-                stage.show();
-
-            } catch (Exception e) {
-                logger.log(Level.ERROR, "Unable to load the Add User - AdminArea Screen " + e);
-            }
-
-
-
+    void handleAddUserAdminEvent(ActionEvent event) {
+        try {
+            GuiLoader.createAndShow(GuiLoader.USER_FORM_MASK_ADMIN_AREA, bundle.getString("ui.label.create_new_user"), true);
+        } catch (Exception e) {
+            logger.log(Level.ERROR, "Unable to load the Add User - AdminArea Screen " + e);
         }
-    private void initAdminTable (ResourceBundle resources){
+    }
+
+    private void initAdminTable(ResourceBundle resources) {
         TableColumnForname.setCellValueFactory(new PropertyValueFactory<>("forename"));
         TableColumnLastname.setCellValueFactory(new PropertyValueFactory<>("lastname"));
 
@@ -111,13 +101,14 @@ private Logger logger = Logger.getLogger(AdminAreaController.class);
 
 
     @Subscribe
-    public void handleAdminAddAccountEvent (SuccessfullyAddedUserEvent event){
-       UserDTO user = event.getUser();
-       tableAdminArea.getItems().add(user);
+    public void handleAdminAddAccountEvent(SuccessfullyAddedUserEvent event) {
+        UserDTO user = event.getUser();
+        tableAdminArea.getItems().add(user);
     }
-   @Subscribe
-    public void handleAdminUpdateEvent(SuccessfullyChangedPasswordEvent event){
-        UserDTO user1 =event.getUser();
+
+    @Subscribe
+    public void handleAdminUpdateEvent(SuccessfullyChangedPasswordEvent event) {
+        UserDTO user1 = event.getUser();
         CollectionUtils.removeFromList(user1, tableAdminArea.getItems(), (original, collectionItem) -> original.getUsername().equals(collectionItem.getUsername()));
 
         tableAdminArea.getItems().add(user1);
@@ -126,7 +117,7 @@ private Logger logger = Logger.getLogger(AdminAreaController.class);
 
 
     @Subscribe
-    public void handleAdminRoleUpdateEvent(SuccessfullyChangedUserRoleEvent event){
+    public void handleAdminRoleUpdateEvent(SuccessfullyChangedUserRoleEvent event) {
         UserDTO user2 = event.getUser();
 
         CollectionUtils.removeFromList(user2, tableAdminArea.getItems(), (original, collectionItem) -> original.getUsername().equals(collectionItem.getUsername()));
@@ -139,6 +130,7 @@ private Logger logger = Logger.getLogger(AdminAreaController.class);
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         eventBus.register(this);
+        this.bundle = resources;
 
         initAdminTable(resources);
         tableAdminArea.getItems().addAll(EntityPool.getInstance().getUsers());

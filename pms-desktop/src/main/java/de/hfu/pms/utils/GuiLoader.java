@@ -26,6 +26,8 @@ public class GuiLoader {
     public static final String UNIVERSITY_FORM_SCREEN = "/screens/university_form_screen.fxml";
     public static final String FACULTY_FORM_SCREEN = "/screens/faculty_form_screen.fxml";
     public static final String ACCOUNT_INFORMATION = "/screens/account_infoscreen.fxml";
+    public static final String EDIT_ACCOUNT_INFORMATION = "/screens/change_accountinformation_screen.fxml";
+    public static final String USER_FORM_MASK_ADMIN_AREA = "/screens/AddUserAdminArea.fxml";
 
     static {
         // load resource bundle file
@@ -51,6 +53,34 @@ public class GuiLoader {
         loader.setController(controller);
         return loader.load();
     }
+
+    /**
+     * This helper method creates and displays the specified fxml in a separate window.
+     * The method will return the defined controller of the file
+     * @param url the file of the fxml file to load
+     * @param title the title to be shown in top bar
+     * @param modal true if the window shall be a modal window, false otherwise
+     * @param <T> the type of the defined controller
+     * @return the controller defined for this screen
+     * @throws IOException if screen could not be loaded
+     */
+    public static <T> T createAndShow(String url, String title, boolean modal) throws IOException {
+        FXMLLoader loader = new FXMLLoader(GuiLoader.class.getResource(url));
+        loader.setResources(bundle);
+        Parent parent = loader.load();
+        Scene scene = new Scene(parent);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle(title);
+
+        if (modal) {
+            stage.initModality(Modality.APPLICATION_MODAL);
+        }
+
+        stage.show();
+        return loader.getController();
+    }
+
 
     /**
      * The returned ResourceBundle contains all the strings used in

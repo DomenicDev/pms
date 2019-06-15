@@ -5,21 +5,21 @@
 <?import javafx.scene.text.Font?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.UniversityAddController">
    <children>
-      <Label fx:id="title" layoutX="54.0" layoutY="29.0" text="Universität Hinzufügen" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="30.0">
+      <Label fx:id="title" layoutX="54.0" layoutY="29.0" text="%ui.label.add_university" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="30.0">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Label>
-      <Label layoutX="54.0" layoutY="73.0" text="Name der Univerität *" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="80.0" />
-      <Label layoutX="54.0" layoutY="115.0" text="Standort *" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="120.0" />
-      <Label layoutX="54.0" layoutY="160.0" text="Land * " AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="160.0" />
-      <Label layoutX="52.0" layoutY="200.0" text="Kürzel" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="200.0" />
-      <Label layoutX="62.0" layoutY="210.0" text="Kontakt Vorort:" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="240.0" />
+      <Label layoutX="54.0" layoutY="73.0" text="%ui.label.name_university" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="80.0" />
+      <Label layoutX="54.0" layoutY="115.0" text="%ui.label.location" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="120.0" />
+      <Label layoutX="54.0" layoutY="160.0" text="%ui.label.country" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="160.0" />
+      <Label layoutX="52.0" layoutY="200.0" text="%ui.label.contraction" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="200.0" />
+      <Label layoutX="62.0" layoutY="210.0" text="%ui.label.university_contact" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="240.0" />
       <TextField fx:id="textFieldNameOfUniverity" layoutX="195.0" layoutY="76.0" AnchorPane.leftAnchor="195.0" AnchorPane.topAnchor="76.0" />
       <TextField fx:id="textFieldLocation" layoutX="195.0" layoutY="116.0" AnchorPane.leftAnchor="195.0" AnchorPane.topAnchor="116.0" />
       <TextField fx:id="textFieldCountry" layoutX="195.0" layoutY="156.0" AnchorPane.leftAnchor="195.0" AnchorPane.topAnchor="156.0" />
       <TextField fx:id="textFieldShortForm" layoutX="195.0" layoutY="196.0" AnchorPane.leftAnchor="195.0" AnchorPane.topAnchor="196.0" />
       <TextField fx:id="textFieldContacttoUniversity" layoutX="205.0" layoutY="206.0" AnchorPane.leftAnchor="195.0" AnchorPane.topAnchor="236.0" />
-      <Button fx:id="ButtonUniversityAdd" layoutX="46.0" layoutY="272.0" mnemonicParsing="false" onAction="#handleAddButton" styleClass="button-NOT-sidebar" text="Universität Hinzufügen" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="290.0" />
-      <Button layoutX="269.0" layoutY="272.0" mnemonicParsing="false" onAction="#handleCancelButton" styleClass="button-NOT-sidebar" text="Abbrechen" AnchorPane.leftAnchor="270.0" AnchorPane.topAnchor="290.0" />
+      <Button fx:id="ButtonUniversityAdd" layoutX="46.0" layoutY="272.0" mnemonicParsing="false" onAction="#handleAddButton" styleClass="button-NOT-sidebar" text="%ui.button.submit" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="290.0" />
+      <Button layoutX="269.0" layoutY="272.0" mnemonicParsing="false" onAction="#handleCancelButton" styleClass="button-NOT-sidebar" text="%ui.button.cancel" AnchorPane.leftAnchor="270.0" AnchorPane.topAnchor="290.0" />
    </children>
 </AnchorPane>

@@ -17,9 +17,9 @@
                   <RowConstraints minHeight="-Infinity" prefHeight="30.0" />
                     </rowConstraints>
                     <children>
-                        <Label text="Qualifizierungsdatum" />
+                        <Label text="%ui.label.qualification_date" />
                   <DatePicker fx:id="qualificationDatePicker" GridPane.columnIndex="1" />
-                  <Label text="Name der Qualifizierung" GridPane.rowIndex="1" />
+                  <Label text="%ui.table_column.support.kind_of_qualification" GridPane.rowIndex="1" />
                   <TextField fx:id="qualificationNameTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                     </children>
                     <VBox.margin>
@@ -28,8 +28,8 @@
                 </GridPane>
                 <HBox alignment="CENTER" spacing="25.0">
                     <children>
-                        <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOnActionSubmitButton" styleClass="button-NOT-sidebar" text="Übernehmen" />
-                        <Button cancelButton="true" mnemonicParsing="false" onAction="#handleOnActionCancelButton" styleClass="button-NOT-sidebar" text="Abbrechen" />
+                        <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOnActionSubmitButton" styleClass="button-NOT-sidebar" text="%ui.button.submit" />
+                        <Button cancelButton="true" mnemonicParsing="false" onAction="#handleOnActionCancelButton" styleClass="button-NOT-sidebar" text="%ui.button.cancel" />
                     </children>
                <VBox.margin>
                   <Insets top="25.0" />

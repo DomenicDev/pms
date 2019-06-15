@@ -19,12 +19,12 @@
                         <RowConstraints minHeight="-Infinity" prefHeight="30.0" />
                     </rowConstraints>
                     <children>
-                        <Label text="Datum" />
-                        <Label text="Abgerechneter Betrag" GridPane.rowIndex="3" />
+                        <Label text="%ui.table_column.support.date" />
+                        <Label text="%ui.table_column.support.support_sum" GridPane.rowIndex="3" />
                         <TextField fx:id="sumSupportTextField" prefHeight="25.0" prefWidth="71.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <DatePicker fx:id="datePicker" GridPane.columnIndex="1" />
-                  <Label text="Titel der Konferenz" GridPane.rowIndex="1" />
-                  <Label text="Ort der Konferenz" GridPane.rowIndex="2" />
+                  <Label text="%ui.table_column.support.title_of_conference" GridPane.rowIndex="1" />
+                  <Label text="%ui.table_column.support.location" GridPane.rowIndex="2" />
                   <TextField fx:id="titleTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <TextField fx:id="locationTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                     </children>
@@ -34,8 +34,8 @@
                 </GridPane>
                 <HBox alignment="CENTER" prefHeight="60.0" prefWidth="590.0" spacing="25.0">
                     <children>
-                        <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOnActionSubmitButton" styleClass="button-NOT-sidebar" text="Übernehmen" />
-                        <Button cancelButton="true" mnemonicParsing="false" onAction="#handleOnActionCancelButton" styleClass="button-NOT-sidebar" text="Abbrechen" />
+                        <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOnActionSubmitButton" styleClass="button-NOT-sidebar" text="%ui.button.submit" />
+                        <Button cancelButton="true" mnemonicParsing="false" onAction="#handleOnActionCancelButton" styleClass="button-NOT-sidebar" text="%ui.button.cancel" />
                     </children>
                 </HBox>
             </children>

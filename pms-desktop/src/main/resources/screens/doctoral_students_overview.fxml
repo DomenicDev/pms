@@ -24,12 +24,12 @@
       </HBox>
       <TableView fx:id="searchResultTableView" prefHeight="200.0" prefWidth="200.0">
         <columns>
-          <TableColumn fx:id="searchResultNameTableColumn" prefWidth="75.0" text="Name" />
-          <TableColumn fx:id="searchResultForeNameTableColumn" prefWidth="75.0" text="Vorname" />
-          <TableColumn fx:id="searchResultFacultyTableColumn" prefWidth="75.0" text="Fakultät" />
-          <TableColumn fx:id="searchResultEmailTableColumn" prefWidth="75.0" text="E-Mail" />
-          <TableColumn fx:id="searchResultPhoneNumberTableColumn" prefWidth="75.0" text="Telefon" />
-          <TableColumn fx:id="searchResultGenderTableColumn" prefWidth="75.0" text="Geschlecht" />
+          <TableColumn fx:id="searchResultNameTableColumn" prefWidth="75.0" text="%ui.label.surname" />
+          <TableColumn fx:id="searchResultForeNameTableColumn" prefWidth="75.0" text="%ui.label.forename" />
+          <TableColumn fx:id="searchResultFacultyTableColumn" prefWidth="75.0" text="%ui.label.faculty" />
+          <TableColumn fx:id="searchResultEmailTableColumn" prefWidth="75.0" text="%ui.label.email" />
+          <TableColumn fx:id="searchResultPhoneNumberTableColumn" prefWidth="75.0" text="%ui.label.telephone" />
+          <TableColumn fx:id="searchResultGenderTableColumn" prefWidth="75.0" text="%ui.label.sex" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

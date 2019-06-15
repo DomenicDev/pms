@@ -14,29 +14,25 @@ import de.hfu.pms.utils.CollectionUtils;
 import de.hfu.pms.utils.GuiLoader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import static de.hfu.pms.shared.enums.UserRole.ADMIN;
 
-public class UniversityController implements Initializable {
+public class UniversityScreenController implements Initializable {
 
     private EventBus eventBus = EventBusSystem.getEventBus();
-
-    private Logger logger = Logger.getLogger(UniversityController.class);
+    private Logger logger = Logger.getLogger(UniversityScreenController.class);
+    private ResourceBundle bundle;
 
     @FXML
     private TableView<UniversityDTO> tableViewUniversity;
@@ -53,7 +49,7 @@ public class UniversityController implements Initializable {
     private TableColumn<UniversityDTO, String> TableColumnKuerzel;
 
     @FXML
-    private TableColumn<UniversityDTO,String> TableColumnContacttoUniversity;
+    private TableColumn<UniversityDTO, String> TableColumnContacttoUniversity;
 
     @FXML
     private Button universityDeleteButton;
@@ -61,89 +57,11 @@ public class UniversityController implements Initializable {
     @FXML
     private Button universityAddButton;
 
-    @FXML
-    void handleUniversityAddButton(ActionEvent event) {
-        try {
-
-            ResourceBundle bundle = ResourceBundle.getBundle("lang/strings");
-
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/screens/university_form_screen.fxml"));
-            Parent root = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setTitle("Universität Hinzufügen");
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setScene(new Scene(root));
-            stage.show();
-
-        } catch (Exception e) {
-            logger.log(Level.ERROR, "Unable to load the University add screen");
-        }
-    }
-
-    @FXML
-    void handleChangeUniversityButton(ActionEvent event) {
-        try {
-
-            UniversityDTO university = tableViewUniversity.getSelectionModel().getSelectedItem();
-            if (university == null) {
-                eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.INFO, "Bitte Uni auswählen"));
-                return;
-            }
-
-            ResourceBundle bundle = GuiLoader.getResourceBundle();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/screens/university_form_screen.fxml"));
-            Parent root = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setTitle("Universität Ändern");
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setScene(new Scene(root));
-            stage.show();
-
-            UniversityAddController controller = fxmlLoader.getController();
-            controller.edit(university);
-
-        } catch (Exception e) {
-            logger.log(Level.ERROR, "Unable to load the University change screen");
-        }
-    }
-
-    @FXML
-    void handleDeleteUniversityButton(ActionEvent event) {
-        UniversityDTO university = tableViewUniversity.getSelectionModel().getSelectedItem();
-        if (university == null) {
-            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.INFO, "Bitte Uni auswählen"));
-            return;
-        }
-        // todo: confirm dialog + check for dependencies & delete if there are none
-        // ...
-    }
-
-    private void initUniversityTable (ResourceBundle resources){
-        TableColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        TableColumnOrt.setCellValueFactory(new PropertyValueFactory<>("location"));
-        TableColumnLand.setCellValueFactory(new PropertyValueFactory<>("country"));
-        TableColumnKuerzel.setCellValueFactory(new PropertyValueFactory<>("abbreviation"));
-        TableColumnContacttoUniversity.setCellValueFactory(new PropertyValueFactory<>("contact"));
-    }
-
-    @Subscribe
-    public void handleUniversityAddEvent(SuccessfullyAddedUniversityEvent event){
-        UniversityDTO university = event.getUniversity();
-        tableViewUniversity.getItems().add(university);
-    }
-
-    @Subscribe
-    public void handleUpdateEvent(SuccessfullyUpdatedUniversityEvent event){
-        UniversityDTO newUniversity = event.getUniversity();
-        CollectionUtils.removeFromList(newUniversity, tableViewUniversity.getItems(), (original, collectionItem) -> original.getId().equals(collectionItem.getId()));
-
-        tableViewUniversity.getItems().add(newUniversity);
-        tableViewUniversity.refresh();
-    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        eventBus.register(this);
+        this.bundle = resources;
+        this.eventBus.register(this);
 
         initUniversityTable(resources);
         tableViewUniversity.getItems().addAll(EntityPool.getInstance().getUniversities());
@@ -153,10 +71,77 @@ public class UniversityController implements Initializable {
             UserInfoDTO user = EntityPool.getInstance().getLoggedInUser();
             universityDeleteButton.setDisable(!user.getRole().equals(ADMIN));
 
-        }catch (BusinessException e){
+        } catch (BusinessException e) {
             e.printStackTrace();
         }
 
 
     }
+
+    @FXML
+    public void handleUniversityAddButton(ActionEvent event) {
+        try {
+            GuiLoader.createAndShow(GuiLoader.UNIVERSITY_FORM_SCREEN, bundle.getString("ui.label.add_university"), true);
+        } catch (IOException e) {
+            logger.log(Level.ERROR, "Unable to load the University add screen" + e);
+        }
+    }
+
+    @FXML
+    public void handleChangeUniversityButton(ActionEvent event) {
+        try {
+
+            UniversityDTO university = tableViewUniversity.getSelectionModel().getSelectedItem();
+            if (university == null) {
+                showAlertSelectFirst();
+                return;
+            }
+
+            UniversityAddController controller = GuiLoader.createAndShow(GuiLoader.UNIVERSITY_FORM_SCREEN, bundle.getString("ui.label.change_university"), true);
+            controller.edit(university);
+
+        } catch (Exception e) {
+            logger.log(Level.ERROR, "Unable to load the University change screen");
+        }
+    }
+
+    @FXML
+    public void handleDeleteUniversityButton(ActionEvent event) {
+        UniversityDTO university = tableViewUniversity.getSelectionModel().getSelectedItem();
+        if (university == null) {
+            showAlertSelectFirst();
+            return;
+        }
+        // todo: confirm dialog + check for dependencies & delete if there are none
+        // ...
+    }
+
+    private void showAlertSelectFirst() {
+        eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.INFO, bundle.getString("ui.alert.select_university")));
+    }
+
+    private void initUniversityTable(ResourceBundle resources) {
+        TableColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        TableColumnOrt.setCellValueFactory(new PropertyValueFactory<>("location"));
+        TableColumnLand.setCellValueFactory(new PropertyValueFactory<>("country"));
+        TableColumnKuerzel.setCellValueFactory(new PropertyValueFactory<>("abbreviation"));
+        TableColumnContacttoUniversity.setCellValueFactory(new PropertyValueFactory<>("contact"));
+    }
+
+    @Subscribe
+    public void handleUniversityAddEvent(SuccessfullyAddedUniversityEvent event) {
+        UniversityDTO university = event.getUniversity();
+        tableViewUniversity.getItems().add(university);
+    }
+
+    @Subscribe
+    public void handleUpdateEvent(SuccessfullyUpdatedUniversityEvent event) {
+        UniversityDTO newUniversity = event.getUniversity();
+        CollectionUtils.removeFromList(newUniversity, tableViewUniversity.getItems(), (original, collectionItem) -> original.getId().equals(collectionItem.getId()));
+
+        tableViewUniversity.getItems().add(newUniversity);
+        tableViewUniversity.refresh();
+    }
+
+
 }
