@@ -6,8 +6,10 @@ import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.AlertNotificationEvent;
 import de.hfu.pms.events.SuccessfullyAddedUniversityEvent;
 import de.hfu.pms.events.SuccessfullyUpdatedUniversityEvent;
+import de.hfu.pms.exceptions.BusinessException;
 import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.UniversityDTO;
+import de.hfu.pms.shared.dto.UserInfoDTO;
 import de.hfu.pms.utils.CollectionUtils;
 import de.hfu.pms.utils.GuiLoader;
 import javafx.event.ActionEvent;
@@ -27,6 +29,8 @@ import org.apache.log4j.Logger;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import static de.hfu.pms.shared.enums.UserRole.ADMIN;
 
 public class UniversityController implements Initializable {
 
@@ -50,6 +54,9 @@ public class UniversityController implements Initializable {
 
     @FXML
     private TableColumn<UniversityDTO,String> TableColumnContacttoUniversity;
+
+    @FXML
+    private Button universityDeleteButton;
 
     @FXML
     private Button universityAddButton;
@@ -141,6 +148,18 @@ public class UniversityController implements Initializable {
         initUniversityTable(resources);
         tableViewUniversity.getItems().addAll(EntityPool.getInstance().getUniversities());
         tableViewUniversity.setEditable(true);
+
+        try {
+            UserInfoDTO user = EntityPool.getInstance().getLoggedInUser();
+            if (user.getRole().equals(ADMIN)){
+                universityDeleteButton.setDisable(false);
+            }else{
+                universityDeleteButton.setDisable(true);
+            }
+
+        }catch (BusinessException e){
+            e.printStackTrace();
+        }
 
 
     }

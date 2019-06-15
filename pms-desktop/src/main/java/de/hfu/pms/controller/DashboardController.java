@@ -6,6 +6,7 @@ import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.ShowDoctoralStudentEvent;
 import de.hfu.pms.exceptions.BusinessException;
 import de.hfu.pms.pool.EntityPool;
+import de.hfu.pms.shared.dto.UserInfoDTO;
 import de.hfu.pms.utils.GuiLoader;
 import de.hfu.pms.utils.JavaFxUtils;
 import javafx.fxml.FXML;
@@ -20,6 +21,8 @@ import org.apache.log4j.Logger;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import static de.hfu.pms.shared.enums.UserRole.ADMIN;
 
 public class DashboardController implements Initializable {
 
@@ -91,6 +94,17 @@ public class DashboardController implements Initializable {
 
         // set home to be showed at first
         switchScreen(startButton, bundle.getString("ui.section.home"), homeParent);
+
+        try {
+            UserInfoDTO user = EntityPool.getInstance().getLoggedInUser();
+            if (user.getRole().equals(ADMIN)) {
+                adminAreaButton.setDisable(false);
+            } else {
+                adminAreaButton.setDisable(true);
+            }
+        }catch (BusinessException e){
+            e.printStackTrace();
+        }
     }
 
     private void switchMainContent(Parent parentToShow) {

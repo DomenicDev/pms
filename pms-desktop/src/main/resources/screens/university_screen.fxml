@@ -26,7 +26,7 @@
         <Button fx:id="universityAddButton" mnemonicParsing="false" onAction="#handleUniversityAddButton" styleClass="button-NOT-sidebar" text="Universität hinzufügen" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="60.0" />
         <Label text="bereits vorhandene Universitäten" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="110.0" />
         <Button mnemonicParsing="false" onAction="#handleChangeUniversityButton" styleClass="button-NOT-sidebar" text="Ausgewählte Universität bearbeiten" AnchorPane.leftAnchor="220.0" AnchorPane.topAnchor="60.0" />
-        <Button mnemonicParsing="false" onAction="#handleDeleteUniversityButton" styleClass="button-NOT-sidebar" text="Ausgewählte Universität löschen" AnchorPane.leftAnchor="458.0" AnchorPane.topAnchor="60.0" />
+        <Button fx:id="universityDeleteButton" mnemonicParsing="false" onAction="#handleDeleteUniversityButton" styleClass="button-NOT-sidebar" text="Ausgewählte Universität löschen" AnchorPane.leftAnchor="458.0" AnchorPane.topAnchor="60.0" />
       </children>
          <padding>
             <Insets bottom="1.0E-11" left="1.0E-11" right="1.0E-13" top="1.0E-7" />
