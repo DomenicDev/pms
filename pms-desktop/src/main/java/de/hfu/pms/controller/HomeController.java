@@ -6,9 +6,10 @@ import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.AlertNotificationEvent;
 import de.hfu.pms.events.RequestAlertedDoctoralStudentEvent;
 import de.hfu.pms.events.ShowAlertedDoctoralStudentsEvent;
+import de.hfu.pms.exceptions.BusinessException;
+import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.FacultyDTO;
 import de.hfu.pms.shared.dto.PreviewDoctoralStudentDTO;
-import de.hfu.pms.shared.enums.Gender;
 import de.hfu.pms.utils.RepresentationWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,11 +22,7 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.awt.event.KeyEvent;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.ResourceBundle;
 
 
@@ -56,10 +53,16 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         eventBus.register(this);
-        String name = "CurrentUsername";
+        try{
+        String forname = EntityPool.getInstance().getLoggedInUser().getForename();
+        String lastname = EntityPool.getInstance().getLoggedInUser().getLastname();
+            welcomeLabel.setText(welcomeLabel.getText() + " " + forname + " " +lastname);
+        }catch (BusinessException e){
+            e.printStackTrace();
+        }
         String DoctoralSummary = "CurrentDoctoralStudents";
 
-        welcomeLabel.setText(welcomeLabel.getText() + name);
+
         doctoralCount.setText(doctoralCount.getText() + DoctoralSummary);
 
 
