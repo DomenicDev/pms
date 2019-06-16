@@ -30,13 +30,15 @@
             <font>
                 <Font size="18.0" />
             </font></Label>
-        <TextField fx:id="searchBox" onKeyTyped="#searchRecord" /> <!--onKeyTyped="#searchRecord" -->
-        <TableView fx:id="personen" prefHeight="122.0" prefWidth="1134.0">
+
+        <!--TextField fx:id="searchBox" onKeyTyped="#searchRecord" /-->
+        <!--TableView fx:id="personen" prefHeight="122.0" prefWidth="1134.0">
             <columns>
                 <TableColumn fx:id="forname" prefWidth="75.0" text="vorname" />
                 <TableColumn fx:id="lastname" prefWidth="75.0" text="nachname" />
             </columns>
-        </TableView>
-        <PieChart fx:id="pieChart" prefHeight="115.0" prefWidth="1134.0" title="Statistik" />
+        </TableView-->
+
+        <PieChart fx:id="pieChart" prefHeight="500" prefWidth="800" title="Statistik" />
     </children>
 </VBox>

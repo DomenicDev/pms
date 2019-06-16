@@ -24,6 +24,7 @@ public final class EntityPool {
     private Collection<FacultyDTO> faculties = new HashSet<>();
     private Collection<PreviewDoctoralStudentDTO> previewStudents = new HashSet<>();
     private Collection<UserDTO> users = new HashSet<>();
+    private Collection<DoctoralStudentDTO> doctoralStudents = new HashSet<>();
     private ApplicationServices applicationServices;
 
     private UserInfoDTO loggedInUser = null;
@@ -75,6 +76,7 @@ public final class EntityPool {
         faculties.addAll(initFaculties);
     }
 
+
     public void addFaculty(FacultyDTO faculty) {
         if (faculty == null) {
             return;
@@ -106,6 +108,8 @@ public final class EntityPool {
     public Collection<UserDTO> getUsers() {
         return users;
     }
+
+    public Collection<DoctoralStudentDTO> getDoctoralStudents() {return doctoralStudents;}
 
     public UserInfoDTO getLoggedInUser() throws BusinessException {
         if (loggedInUser == null) {

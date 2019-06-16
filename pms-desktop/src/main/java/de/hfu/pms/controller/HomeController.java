@@ -60,9 +60,10 @@ public class HomeController implements Initializable {
         }catch (BusinessException e){
             e.printStackTrace();
         }
-        String DoctoralSummary = "CurrentDoctoralStudents";
 
 
+
+        int DoctoralSummary = EntityPool.getInstance().getDoctoralStudents().size();
         doctoralCount.setText(doctoralCount.getText() + DoctoralSummary);
 
 
@@ -94,24 +95,24 @@ public class HomeController implements Initializable {
 
         //Suchfunktion
 
-
+/*
         FacultyDTO faculty = new FacultyDTO((long) 1, "Informatik");
         // PreviewDoctoralStudentDTO student1 = new PreviewDoctoralStudentDTO(500L, "Jahnsen", "Jan", faculty, "jan.jahnsen@mail.com", "017322497814", Gender.Male);
         //PreviewDoctoralStudentDTO student2 = new PreviewDoctoralStudentDTO(501L, "Fröhlich", "Alina", faculty, "ali.fr@mail.com", "015121639248", Gender.Female);
         //PreviewDoctoralStudentDTO student3 = new PreviewDoctoralStudentDTO(500L, "test", "test", faculty, "jan.jahnsen@mail.com", "017322497814", Gender.Male);
-         PreviewDoctoralStudentDTO student4 = new PreviewDoctoralStudentDTO("ilker","coban");
-        PreviewDoctoralStudentDTO student5 = new PreviewDoctoralStudentDTO("test","test");
+        PreviewDoctoralStudentDTO student4 = new PreviewDoctoralStudentDTO("ilker", "coban");
+        PreviewDoctoralStudentDTO student5 = new PreviewDoctoralStudentDTO("test", "test");
         // masterData.add(student1);
         // masterData.add(student2);
         // masterData.add(student3);
-         masterData.add(student4);
-         masterData.add(student5);
+        masterData.add(student4);
+        masterData.add(student5);
 
         personen.setItems(masterData);
         forname.setCellValueFactory(new PropertyValueFactory<>("foreName"));
         lastname.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-
+*/
     }
 
     @Subscribe
@@ -126,6 +127,7 @@ public class HomeController implements Initializable {
         eventBus.post(new AlertNotificationEvent(1, "Ihre Mitgliedschaft endet bald!\r\nSie werden aus der Datenbank geloescht sofern sie innerhalb von XXX keinen Widerspruch einlegen"));
     }
 
+/*
     @FXML
     public void searchRecord() {
         FilteredList<PreviewDoctoralStudentDTO> filteredData = new FilteredList<>(masterData, p -> true);
@@ -151,5 +153,5 @@ public class HomeController implements Initializable {
         });
 
     }
-
+*/
 }
