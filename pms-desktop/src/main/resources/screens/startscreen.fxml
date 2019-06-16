@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox minHeight="200.0" VBox.vgrow="ALWAYS">
+         <children>
+            <Label fx:id="welcomeLabel" text="%ui.label.greeting">
+               <font>
+                  <Font name="System Bold" size="40.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="10.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <Label text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet." wrapText="true">
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <VBox maxHeight="500.0" maxWidth="1.7976931348623157E308" minHeight="200.0">
+         <children>
+            <HBox>
+               <children>
+                  <VBox minHeight="200.0" minWidth="500.0" prefHeight="201.0" prefWidth="500.0">
+                     <children>
+                        <Label text="Beschreibung der Tabelle">
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label text="Beschreibung der Tabelle">
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <Label text="%ui.label.alert_notification_for_doctoral_students">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <ListView fx:id="alertListView" maxHeight="100.0" maxWidth="1.7976931348623157E308" minHeight="50.0" prefHeight="100.0" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox alignment="CENTER" minHeight="200.0" VBox.vgrow="ALWAYS">
+         <children>
+            <HBox alignment="CENTER" spacing="50.0">
+               <children>
+                  <VBox maxHeight="200.0" maxWidth="300.0" minHeight="200.0" minWidth="250.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #84B62D;" HBox.hgrow="ALWAYS">
+                     <children>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <FontIcon iconLiteral="fa-graduation-cap" iconSize="50" layoutX="111.0" layoutY="56.0" text="" wrappingWidth="64.57143020629883" AnchorPane.bottomAnchor="10.142857142857139" AnchorPane.leftAnchor="111.0" AnchorPane.rightAnchor="110.71428407941545" AnchorPane.topAnchor="10.0" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label text="%ui.label.addDoctoralStudent">
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding></Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="100.0" prefWidth="300.0" styleClass="button-sidebar" text="Neuen Doktoranten Hinzufügen" VBox.vgrow="ALWAYS" />
+                           </children></VBox>
+                     </children>
+                  </VBox>
+                  <VBox maxHeight="200.0" maxWidth="300.0" minHeight="200.0" minWidth="250.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #84B62D;" HBox.hgrow="ALWAYS">
+                     <children>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <FontIcon iconLiteral="fa-university" iconSize="50" layoutX="116.0" layoutY="53.0" text="" wrappingWidth="54.99997520446777" AnchorPane.bottomAnchor="10.71428625924247" AnchorPane.leftAnchor="116.0" AnchorPane.rightAnchor="115.2857390812465" AnchorPane.topAnchor="10.14285659790039" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label text="%ui.label.addUniversity">
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding></Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Button mnemonicParsing="false" prefHeight="100.0" prefWidth="300.0" styleClass="button-sidebar" text="Neue Universität Hinzufügen" />
+                           </children></VBox>
+                     </children>
+                  </VBox>
+                  <VBox maxHeight="200.0" maxWidth="300.0" minHeight="200.0" minWidth="250.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #84B62D;" HBox.hgrow="ALWAYS">
+                     <children>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <FontIcon iconLiteral="fa-gear" iconSize="50" layoutX="121.0" layoutY="56.0" text="" wrappingWidth="44.000070571899414" AnchorPane.bottomAnchor="10.142857142857139" AnchorPane.leftAnchor="121.0" AnchorPane.rightAnchor="121.28564371381486" AnchorPane.topAnchor="10.0" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label text="%ui.label.changeAccountInformation">
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding></Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Button mnemonicParsing="false" prefHeight="100.0" prefWidth="300.0" styleClass="button-sidebar" text="Accounteinstellungen Bearbeiten" />
+                           </children></VBox>
+                     </children>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets left="20.0" right="20.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</VBox>
