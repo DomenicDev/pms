@@ -71,7 +71,7 @@ public class DashboardController implements Initializable {
         // all the separated fxml files
         // to later dynamically switch between them
         try {
-            homeParent = GuiLoader.loadFXML("/screens/startscreen.fxml");
+            homeParent = GuiLoader.loadFXML("/screens/home.fxml");
             doctoralStudentsParent = GuiLoader.loadFXML("/screens/doctoral_students_content.fxml");
             universitiesParent = GuiLoader.loadFXML("/screens/university_screen.fxml");
             adminArea = GuiLoader.loadFXML("/screens/admin_Area.fxml");

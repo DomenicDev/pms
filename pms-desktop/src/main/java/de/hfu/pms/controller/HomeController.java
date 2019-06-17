@@ -11,17 +11,24 @@ import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.FacultyDTO;
 import de.hfu.pms.shared.dto.PreviewDoctoralStudentDTO;
 import de.hfu.pms.utils.RepresentationWrapper;
+import javafx.application.HostServices;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import javax.swing.*;
+import java.awt.*;
+import java.net.URI;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -36,7 +43,6 @@ public class HomeController implements Initializable {
     private Label doctoralCount;
     @FXML
     private PieChart pieChart;
-
     @FXML
     private TableView<PreviewDoctoralStudentDTO> personen;
     @FXML
@@ -50,14 +56,16 @@ public class HomeController implements Initializable {
 
     ObservableList<PreviewDoctoralStudentDTO> masterData = FXCollections.observableArrayList();
 
+    Hyperlink hyperlink = new Hyperlink("HFU-Homepage");
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         eventBus.register(this);
-        try{
-        String forname = EntityPool.getInstance().getLoggedInUser().getForename();
-        String lastname = EntityPool.getInstance().getLoggedInUser().getLastname();
-            welcomeLabel.setText(welcomeLabel.getText() + " " + forname + " " +lastname);
-        }catch (BusinessException e){
+        try {
+            String forname = EntityPool.getInstance().getLoggedInUser().getForename();
+            String lastname = EntityPool.getInstance().getLoggedInUser().getLastname();
+            welcomeLabel.setText(welcomeLabel.getText() + " " + forname + " " + lastname);
+        } catch (BusinessException e) {
             e.printStackTrace();
         }
 
@@ -126,6 +134,18 @@ public class HomeController implements Initializable {
     public void handleOnActionAlertTestButton(ActionEvent event) {
         eventBus.post(new AlertNotificationEvent(1, "Ihre Mitgliedschaft endet bald!\r\nSie werden aus der Datenbank geloescht sofern sie innerhalb von XXX keinen Widerspruch einlegen"));
     }
+
+    @FXML
+    public void handleHomepage(){
+        try {
+            Desktop.getDesktop().browse(new URI("https://www.hs-furtwangen.de"));
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+
+    }
+
 
 /*
     @FXML
