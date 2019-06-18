@@ -5,6 +5,8 @@ import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.RequestAlertedDoctoralStudentEvent;
 import de.hfu.pms.events.ShowAlertedDoctoralStudentsEvent;
+import de.hfu.pms.events.SwitchDoctoralStudentScreenEvent;
+import de.hfu.pms.events.SwitchMainScreenEvent;
 import de.hfu.pms.exceptions.BusinessException;
 import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.PreviewDoctoralStudentDTO;
@@ -81,7 +83,8 @@ public class StartscreenControlerApplication implements Initializable {
 
     @FXML
     void handleAddDoctoralStudentButton(ActionEvent event) throws IOException{
-        switchMainContent(GuiLoader.loadFXML(GuiLoader.DOCTORAL_STUDENT_FORM_MASK));
+        eventBus.post(new SwitchMainScreenEvent(DashboardController.MainScreen.DoctoralStudent));
+        eventBus.post(new SwitchDoctoralStudentScreenEvent(DoctoralStudentMainContentController.DoctoralStudentScreen.FORM_MASK));
     }
     @FXML
     void handleAddUniversityButton()throws  IOException {
@@ -90,7 +93,8 @@ public class StartscreenControlerApplication implements Initializable {
     }
     @FXML
     void handleChangeAccoutinformationButton(ActionEvent event)throws IOException {
-        GuiLoader.createModalWindow(GuiLoader.ACCOUNT_INFORMATION,100,300,false);  }
+        eventBus.post(new SwitchMainScreenEvent(DashboardController.MainScreen.AccountInformation));
+    }
 
     ObservableList<PreviewDoctoralStudentDTO> masterData = FXCollections.observableArrayList();
 

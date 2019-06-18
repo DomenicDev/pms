@@ -81,7 +81,7 @@ public class UniversityScreenController implements Initializable {
     @FXML
     public void handleUniversityAddButton(ActionEvent event) {
         try {
-            GuiLoader.createAndShow(GuiLoader.UNIVERSITY_FORM_SCREEN, bundle.getString("ui.label.add_university"), true);
+            GuiLoader.createModalWindow(GuiLoader.UNIVERSITY_FORM_SCREEN, 250, 300, false);
         } catch (IOException e) {
             logger.log(Level.ERROR, "Unable to load the University add screen" + e);
         }
