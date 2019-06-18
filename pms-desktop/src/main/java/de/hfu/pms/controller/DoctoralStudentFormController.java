@@ -259,6 +259,7 @@ public class DoctoralStudentFormController implements Initializable {
     private boolean alumniStateChanged;
 
     private boolean editMode = false;
+    private boolean readOnly = false;
 
     private Map<DocumentInformationDTO, File> addedDocuments = new HashMap<>();
     private Collection<DocumentInformationDTO> deletedDocuments = new ArrayList<>();
@@ -380,6 +381,7 @@ public class DoctoralStudentFormController implements Initializable {
         }
 
         if (doctoralStudent.isAnonymized()) {
+            readOnly = true;
             saveButton.setDisable(true);
         }
 
@@ -517,7 +519,7 @@ public class DoctoralStudentFormController implements Initializable {
 
     @FXML
     public void handleOnActionCancelButton() {
-        if (hasChanges()) {
+        if (!readOnly && hasChanges()) {
             GuiLoader.showYesNoCancelAlert(
                     Alert.AlertType.INFORMATION,
                     bundle.getString("ui.alert.title.unsaved_changed"),
@@ -557,6 +559,9 @@ public class DoctoralStudentFormController implements Initializable {
 
     @FXML
     public void handleOnActionSaveButton() {
+        if (readOnly) {
+            return;
+        }
 
 
         if (doctoralStudent == null) {
