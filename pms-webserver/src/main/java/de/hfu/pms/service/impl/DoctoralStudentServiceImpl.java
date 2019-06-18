@@ -114,6 +114,13 @@ public class DoctoralStudentServiceImpl implements DoctoralStudentService {
         PersonalData anonymizedPersonalData = new PersonalData();
         anonymizedPersonalData.setGender(personalData.getGender());
         LocalDate dateOfBirth = personalData.getDateOfBirth();
+
+        //fill in asterix
+        String fillCharacter = "*";
+        anonymizedPersonalData.setLastName(fillCharacter);
+        anonymizedPersonalData.setForename(fillCharacter);
+        anonymizedPersonalData.setEmail(fillCharacter);
+        anonymizedPersonalData.setTelephone(fillCharacter);
         anonymizedPersonalData.setDateOfBirth(LocalDate.of(dateOfBirth.getYear(),1,1));
 
         anonymizedDoctoralStudent.setPersonalData(anonymizedPersonalData);
