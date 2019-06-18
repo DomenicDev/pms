@@ -1,9 +1,10 @@
 package de.hfu.pms.events;
 
-public class RequestAnonymiziseDoctoralStudentEvent {
+public class SuccessfullyDeletedDoctoralStudentEvent {
+
     private Long id;
 
-    public RequestAnonymiziseDoctoralStudentEvent(Long id) {
+    public SuccessfullyDeletedDoctoralStudentEvent(Long id) {
         this.id = id;
     }
 

@@ -95,14 +95,13 @@ public class ApplicationServiceImpl implements ApplicationServices {
     }
 
     @Override
-    public void anonymize(Long studentID) {
+    public AnonymizeResultDTO anonymize(Long studentID) throws BusinessException {
         try{
             String response = restClient.get(HOST_URL + STUDENT_PREFIX + "anonymize/" + studentID);
-
+            return toObject(response, AnonymizeResultDTO.class);
         }catch (IOException e){
-            e.printStackTrace();
+            throw new BusinessException("could not anonymize");
         }
-
     }
 
     @Override

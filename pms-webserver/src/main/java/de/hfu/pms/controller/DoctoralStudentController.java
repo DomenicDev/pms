@@ -161,8 +161,10 @@ public class DoctoralStudentController {
 
     @GetMapping("anonymize/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void anonymize(@PathVariable Long id){
-        doctoralStudentService.anonymize(id);
+    public AnonymizeResultDTO anonymize(@PathVariable Long id){
+        DoctoralStudent anonymizedStudent = doctoralStudentService.anonymize(id);
+        DoctoralStudentDTO dto = convertToDTO(anonymizedStudent);
+        return new AnonymizeResultDTO(id, dto);
     }
 
     // ------------------ //

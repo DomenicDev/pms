@@ -22,7 +22,7 @@ public interface ApplicationServices {
 
     void deleteDoctoralStudent(int studentID);
 
-    void anonymize(Long studentID);
+    AnonymizeResultDTO anonymize(Long studentID) throws BusinessException;
 
     Collection<PreviewDoctoralStudentDTO> getPreviews();
 

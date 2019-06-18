@@ -89,6 +89,7 @@ public class DoctoralStudentOverviewController implements Initializable {
             }
         });
 
+        /*
         // Data for search
         FacultyDTO informatik = new FacultyDTO((long) 1, "Informatik");
         FacultyDTO digitaleMedien = new FacultyDTO((long) 2, "Digitale Medien");
@@ -107,6 +108,8 @@ public class DoctoralStudentOverviewController implements Initializable {
         searchResultForeNameTableColumn.setCellValueFactory(new PropertyValueFactory<>("foreName"));
         searchResultNameTableColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
+
+         */
     }
 
     @FXML
@@ -137,6 +140,23 @@ public class DoctoralStudentOverviewController implements Initializable {
         } else {
             eventBus.post(new AlertNotificationEvent(1, bundle.getString("ui.alert.select_item_to_edit")));
         }
+    }
+
+    @FXML
+    public void handleOnActionAnonymizeButton() {
+        PreviewDoctoralStudentDTO selected = searchResultTableView.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            // todo: make alert notification
+            return;
+        }
+
+        Long id = selected.getId();
+        if (id == null) {
+            return;
+        }
+
+        eventBus.post(new RequestAnonymizeDoctoralStudentEvent(id));
+
     }
 
     @FXML
@@ -225,6 +245,17 @@ public class DoctoralStudentOverviewController implements Initializable {
         searchResultTableView.getItems().add(preview);
     }
 
+    private void deleteFromTable(Long id) {
+        PreviewDoctoralStudentDTO toDelete = null;
+        for (PreviewDoctoralStudentDTO preview : searchResultTableView.getItems()) {
+            if (preview.getId().equals(id)) {
+                toDelete = preview;
+                break;
+            }
+        }
+        searchResultTableView.getItems().remove(toDelete);
+    }
+
     @Subscribe
     public void handle(SuccessfullyAddedDoctoralStudentEvent event) {
         DoctoralStudentDTO doctoralStudentDTO = event.getDoctoralStudentDTO();
@@ -234,5 +265,10 @@ public class DoctoralStudentOverviewController implements Initializable {
     @Subscribe
     public void handle(SuccessfullyUpdatedDoctoralStudentEvent event) {
         updateTable(event.getUpdatedStudent());
+    }
+
+    @Subscribe
+    public void handle(SuccessfullyDeletedDoctoralStudentEvent event) {
+        deleteFromTable(event.getId());
     }
 }

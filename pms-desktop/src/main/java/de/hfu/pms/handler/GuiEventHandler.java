@@ -114,8 +114,14 @@ public class GuiEventHandler {
     }
 
     @Subscribe
-    public void handleAnonymizeDoctoralStudentEvent(RequestAnonymiziseDoctoralStudentEvent requestAnonymiziseDoctoralStudentEvent){
-        applicationServices.anonymize(requestAnonymiziseDoctoralStudentEvent.getId());
+    public void handleAnonymizeDoctoralStudentEvent(RequestAnonymizeDoctoralStudentEvent requestAnonymizeDoctoralStudentEvent){
+        try {
+            AnonymizeResultDTO result = applicationServices.anonymize(requestAnonymizeDoctoralStudentEvent.getId());
+            eventBus.post(new SuccessfullyDeletedDoctoralStudentEvent(result.getDeletedId()));
+            eventBus.post(new SuccessfullyAddedDoctoralStudentEvent(result.getNewDoctoralStudent()));
+        } catch (BusinessException e) {
+            e.printStackTrace();
+        }
     }
 
     @Subscribe

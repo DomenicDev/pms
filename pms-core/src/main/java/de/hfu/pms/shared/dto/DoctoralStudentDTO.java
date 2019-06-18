@@ -32,6 +32,9 @@ public class DoctoralStudentDTO {
     // DOCUMENTS (META DATA ONLY)
     private Set<DocumentInformationDTO> documents;
 
+    // anonymize
+    private boolean anonymized = false;
+
     public DoctoralStudentDTO() {
         this.personalData = new PersonalDataDTO();
         this.qualifiedGraduation = new QualifiedGraduationDTO();
@@ -114,6 +117,14 @@ public class DoctoralStudentDTO {
 
     public Set<DocumentInformationDTO> getDocuments() {
         return documents;
+    }
+
+    public void setAnonymized(boolean anonymized) {
+        this.anonymized = anonymized;
+    }
+
+    public boolean isAnonymized() {
+        return anonymized;
     }
 
     @Override

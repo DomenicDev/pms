@@ -45,6 +45,9 @@ public class DoctoralStudentFormController implements Initializable {
 
     private final Image vacantPhotoImage = new Image("/images/user-shape.png");
 
+    @FXML
+    private Button saveButton;
+
     // Personal Data
     @FXML
     private TextField lastNameTextField;
@@ -374,6 +377,10 @@ public class DoctoralStudentFormController implements Initializable {
     public void fillFormMask(DoctoralStudentDTO doctoralStudent) {
         if (doctoralStudent == null) {
             return;
+        }
+
+        if (doctoralStudent.isAnonymized()) {
+            saveButton.setDisable(true);
         }
 
         this.doctoralStudent = doctoralStudent;

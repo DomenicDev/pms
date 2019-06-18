@@ -11,7 +11,7 @@
          <items>
             <Button mnemonicParsing="false" onAction="#handleOnActionAddButton" text="Hinzufügen" />
             <Button mnemonicParsing="false" onAction="#handleOnActionEditButton" styleClass="button-NOT-sidebar" text="Bearbeiten" />
-            <Button mnemonicParsing="false" text="Anonymisieren" />
+            <Button mnemonicParsing="false" onAction="#handleOnActionAnonymizeButton" text="Anonymisieren" />
             <Button mnemonicParsing="false" onAction="#handleOnActionDeleteButton" styleClass="button-NOT-sidebar" text="Löschen" />
          </items>
       </ToolBar>

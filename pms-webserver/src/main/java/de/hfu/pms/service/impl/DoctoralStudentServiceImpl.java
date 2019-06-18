@@ -5,7 +5,6 @@ import de.hfu.pms.exceptions.DoctoralStudentNotFoundException;
 import de.hfu.pms.model.*;
 import de.hfu.pms.service.DoctoralStudentService;
 import de.hfu.pms.service.DocumentService;
-import de.hfu.pms.shared.enums.Gender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -96,7 +95,7 @@ public class DoctoralStudentServiceImpl implements DoctoralStudentService {
     }
 
     @Override
-    public void anonymize(Long id) {
+    public DoctoralStudent anonymize(Long id) {
         DoctoralStudent doctoralStudent = doctoralStudentDao.findById(id).orElseThrow(() -> new DoctoralStudentNotFoundException(id));
         DoctoralStudent anonymizedDoctoralStudent = new DoctoralStudent();
         anonymizedDoctoralStudent.setAnonymized(true);
@@ -151,7 +150,7 @@ public class DoctoralStudentServiceImpl implements DoctoralStudentService {
         documentService.deleteAll(id);
 
         doctoralStudentDao.deleteById(id);
-        doctoralStudentDao.save(anonymizedDoctoralStudent);
+        return doctoralStudentDao.save(anonymizedDoctoralStudent);
     }
 
     @Override

@@ -23,7 +23,7 @@ public interface DoctoralStudentService {
 
     void remove(Long id);
 
-    void anonymize(Long id);
+    DoctoralStudent anonymize(Long id);
 
     List<DoctoralStudent> getAll();
 
