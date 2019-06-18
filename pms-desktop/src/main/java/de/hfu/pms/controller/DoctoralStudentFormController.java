@@ -510,18 +510,34 @@ public class DoctoralStudentFormController implements Initializable {
 
     @FXML
     public void handleOnActionCancelButton() {
-        GuiLoader.showYesNoCancelAlert(
-                Alert.AlertType.INFORMATION,
-                bundle.getString("ui.alert.title.unsaved_changed"),
-                bundle.getString("ui.alert.content.unsaved_changes_really_cancel"),
-                this::handleOnActionSaveButton,
-                this::cancel,
-                null
-        );
-
+        if (hasChanges()) {
+            GuiLoader.showYesNoCancelAlert(
+                    Alert.AlertType.INFORMATION,
+                    bundle.getString("ui.alert.title.unsaved_changed"),
+                    bundle.getString("ui.alert.content.unsaved_changes_really_cancel"),
+                    this::handleOnActionSaveButton,
+                    this::cancel,
+                    null
+            );
+        } else {
+            cancel();
+        }
     }
 
-
+    /**
+     * Returns true if there are any changes, false otherwise
+     * @return true if there any changes in the form mask, false otherwise
+     */
+    private boolean hasChanges() {
+        return changedImage
+                || deletedImage
+                || personalDataChanged
+                || qualificationChanged
+                || promotionChanged
+                || employmentChanged
+                || supportChanged
+                || alumniStateChanged;
+    }
 
     private void postExitScreenEvent() {
         eventBus.post(new SwitchDoctoralStudentScreenEvent(DoctoralStudentMainContentController.DoctoralStudentScreen.OVERVIEW));
