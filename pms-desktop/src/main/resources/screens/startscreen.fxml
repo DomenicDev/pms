@@ -5,11 +5,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" spacing="10.0" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.StartscreenControlerApplication">
    <children>
-      <VBox minHeight="200.0" VBox.vgrow="ALWAYS">
+      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="200.0">
          <children>
-            <Label fx:id="welcomeLabel" text="%ui.label.greeting">
+            <Label fx:id="welcomeLabel" alignment="TOP_LEFT" text="%ui.label.greeting">
                <font>
                   <Font name="System Bold" size="40.0" />
                </font>
@@ -17,12 +17,9 @@
                   <Insets left="10.0" top="10.0" />
                </VBox.margin>
             </Label>
-            <Label text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet." wrapText="true">
-               <padding>
-                  <Insets top="10.0" />
-               </padding>
+            <Label fx:id="DescriptionApplication" text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet." wrapText="true">
                <VBox.margin>
-                  <Insets left="10.0" />
+                  <Insets left="10.0" right="10.0" />
                </VBox.margin>
                <font>
                   <Font size="16.0" />
@@ -30,13 +27,32 @@
             </Label>
          </children>
       </VBox>
-      <VBox maxHeight="500.0" maxWidth="1.7976931348623157E308" minHeight="200.0">
+      <VBox maxWidth="1.7976931348623157E308" minHeight="175.0" prefHeight="175.0">
          <children>
-            <HBox>
+            <HBox spacing="10.0">
                <children>
-                  <VBox minHeight="200.0" minWidth="500.0" prefHeight="201.0" prefWidth="500.0">
+                  <VBox>
                      <children>
-                        <Label text="Beschreibung der Tabelle">
+                        <Hyperlink minWidth="100.0" onAction="#handleHomepage" text="HFU-Homepage">
+                           <VBox.margin>
+                              <Insets left="10.0" />
+                           </VBox.margin>
+                        </Hyperlink>
+                        <Hyperlink onAction="#handleFelixHFUEvent" text="HFU-Felix">
+                           <VBox.margin>
+                              <Insets left="10.0" top="10.0" />
+                           </VBox.margin>
+                        </Hyperlink>
+                        <Hyperlink onAction="#handleHFUWebmailEvent" text="HFU-Webmail">
+                           <VBox.margin>
+                              <Insets left="10.0" top="10.0" />
+                           </VBox.margin>
+                        </Hyperlink>
+                     </children>
+                  </VBox>
+                  <VBox minHeight="200.0" minWidth="300.0" prefHeight="200.0" prefWidth="500.0">
+                     <children>
+                        <Label fx:id="headingTabelDescription" text="Beschreibung der Tabelle">
                            <padding>
                               <Insets left="10.0" right="10.0" />
                            </padding>
@@ -44,7 +60,7 @@
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Label>
-                        <Label text="Beschreibung der Tabelle">
+                        <Label fx:id="DescriptionTable" text="Beschreibung der Tabelle">
                            <padding>
                               <Insets left="10.0" right="10.0" />
                            </padding>
@@ -61,7 +77,10 @@
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Label>
-                        <ListView fx:id="alertListView" maxHeight="100.0" maxWidth="1.7976931348623157E308" minHeight="50.0" prefHeight="100.0" />
+                        <ListView fx:id="alertListView" maxHeight="100.0" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="500.0" prefHeight="100.0" prefWidth="500.0">
+                           <VBox.margin>
+                              <Insets right="10.0" />
+                           </VBox.margin></ListView>
                      </children>
                   </VBox>
                </children>
@@ -85,7 +104,7 @@
                         </VBox>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <Label text="%ui.label.addDoctoralStudent">
+                              <Label fx:id="sddDoctoralStudentLabelStartscreen" text="%ui.label.addDoctoralStudentStartscreen" wrapText="true">
                                  <padding>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                  </padding></Label>
@@ -93,9 +112,12 @@
                         </VBox>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="100.0" prefWidth="300.0" styleClass="button-sidebar" text="Neuen Doktoranten Hinzufügen" VBox.vgrow="ALWAYS" />
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleAddDoctoralStudentButton" prefHeight="100.0" prefWidth="300.0" styleClass="button-sidebar" text="Neuen Doktoranten Hinzufügen" VBox.vgrow="ALWAYS" />
                            </children></VBox>
                      </children>
+                     <HBox.margin>
+                        <Insets bottom="10.0" />
+                     </HBox.margin>
                   </VBox>
                   <VBox maxHeight="200.0" maxWidth="300.0" minHeight="200.0" minWidth="250.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #84B62D;" HBox.hgrow="ALWAYS">
                      <children>
@@ -110,7 +132,7 @@
                         </VBox>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <Label text="%ui.label.addUniversity">
+                              <Label fx:id="addUniversityLabelStartscreen" text="%ui.label.addUniversityStartscreen" wrapText="true">
                                  <padding>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                  </padding></Label>
@@ -118,9 +140,12 @@
                         </VBox>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <Button mnemonicParsing="false" prefHeight="100.0" prefWidth="300.0" styleClass="button-sidebar" text="Neue Universität Hinzufügen" />
+                              <Button mnemonicParsing="false" onAction="#handleAddUniversityButton" prefHeight="100.0" prefWidth="300.0" styleClass="button-sidebar" text="Neue Universität Hinzufügen" />
                            </children></VBox>
                      </children>
+                     <HBox.margin>
+                        <Insets bottom="10.0" />
+                     </HBox.margin>
                   </VBox>
                   <VBox maxHeight="200.0" maxWidth="300.0" minHeight="200.0" minWidth="250.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #84B62D;" HBox.hgrow="ALWAYS">
                      <children>
@@ -132,10 +157,13 @@
                                  </children>
                               </AnchorPane>
                            </children>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
                         </VBox>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <Label text="%ui.label.changeAccountInformation">
+                              <Label fx:id="changeAccountinfomrationLabelStartscreen" text="%ui.label.changeAccountInformationStartscreen" wrapText="true">
                                  <padding>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                  </padding></Label>
@@ -143,9 +171,12 @@
                         </VBox>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <Button mnemonicParsing="false" prefHeight="100.0" prefWidth="300.0" styleClass="button-sidebar" text="Accounteinstellungen Bearbeiten" />
+                              <Button mnemonicParsing="false" onAction="#handleChangeAccoutinformationButton" prefHeight="100.0" prefWidth="300.0" styleClass="button-sidebar" text="Accounteinstellungen Bearbeiten" />
                            </children></VBox>
                      </children>
+                     <HBox.margin>
+                        <Insets bottom="10.0" />
+                     </HBox.margin>
                   </VBox>
                </children>
                <padding>
