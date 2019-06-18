@@ -40,6 +40,7 @@ public class DoctoralStudentOverviewController implements Initializable {
     private ObjectProperty<TableRow<PreviewDoctoralStudentDTO>> selectedTableRow = new SimpleObjectProperty<>();
 
     private EntityPool entityPool = EntityPool.getInstance();
+    private ResourceBundle bundle;
 
     @FXML
     private TextField searchTextField;
@@ -62,6 +63,7 @@ public class DoctoralStudentOverviewController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         eventBus.register(this);
+        this.bundle = resources;
 
         // setup table columns
         initPreviewTables();
@@ -98,7 +100,7 @@ public class DoctoralStudentOverviewController implements Initializable {
             // server request: delete(Collection<Int>) (Id's of the DB-Entries to be deleted)
         }
         else{
-            eventBus.post(new AlertNotificationEvent(1, "Bitte wählen Sie den zu löschenden Eintrag aus."));
+            eventBus.post(new AlertNotificationEvent(1, bundle.getString("ui.alert.select_item_to_delete")));
         }
     }
 
@@ -111,10 +113,10 @@ public class DoctoralStudentOverviewController implements Initializable {
             eventBus.post(new OnClickEditDoctoralStudentEvent(id));
         }
         else if(selectedCount > 1){
-            eventBus.post(new AlertNotificationEvent(1, "Es kann immer nur ein Eintrag editiert werden."));
+            eventBus.post(new AlertNotificationEvent(1, bundle.getString("ui.alert.only_one_item_can_be_edited")));
         }
         else {
-            eventBus.post(new AlertNotificationEvent(1, "Bitte wählen Sie den zu editierenden Eintrag aus."));
+            eventBus.post(new AlertNotificationEvent(1, bundle.getString("ui.alert.select_item_to_edit")));
         }
     }
 
