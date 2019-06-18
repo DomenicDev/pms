@@ -31,22 +31,31 @@
          <children>
             <HBox spacing="10.0">
                <children>
-                  <VBox>
+                  <VBox minWidth="130.0">
                      <children>
                         <Hyperlink minWidth="100.0" onAction="#handleHomepage" text="HFU-Homepage">
                            <VBox.margin>
                               <Insets left="10.0" />
                            </VBox.margin>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
                         </Hyperlink>
                         <Hyperlink onAction="#handleFelixHFUEvent" text="HFU-Felix">
                            <VBox.margin>
                               <Insets left="10.0" top="10.0" />
                            </VBox.margin>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
                         </Hyperlink>
                         <Hyperlink onAction="#handleHFUWebmailEvent" text="HFU-Webmail">
                            <VBox.margin>
                               <Insets left="10.0" top="10.0" />
                            </VBox.margin>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
                         </Hyperlink>
                      </children>
                   </VBox>
@@ -104,15 +113,24 @@
                         </VBox>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <Label fx:id="sddDoctoralStudentLabelStartscreen" text="%ui.label.addDoctoralStudentStartscreen" wrapText="true">
+                              <Label fx:id="sddDoctoralStudentLabelStartscreen" alignment="CENTER" text="%ui.label.addDoctoralStudentStartscreen" wrapText="true">
                                  <padding>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                 </padding></Label>
+                                 </padding>
+                                 <VBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></Label>
                            </children>
                         </VBox>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleAddDoctoralStudentButton" prefHeight="100.0" prefWidth="300.0" styleClass="button-sidebar" text="Neuen Doktoranten Hinzufügen" VBox.vgrow="ALWAYS" />
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleAddDoctoralStudentButton" prefHeight="100.0" prefWidth="300.0" styleClass="button-sidebar" text="Neuen Doktoranten Hinzufügen" VBox.vgrow="ALWAYS">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></Button>
                            </children></VBox>
                      </children>
                      <HBox.margin>
@@ -135,12 +153,21 @@
                               <Label fx:id="addUniversityLabelStartscreen" text="%ui.label.addUniversityStartscreen" wrapText="true">
                                  <padding>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                 </padding></Label>
+                                 </padding>
+                                 <VBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></Label>
                            </children>
                         </VBox>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#handleAddUniversityButton" prefHeight="100.0" prefWidth="300.0" styleClass="button-sidebar" text="Neue Universität Hinzufügen" />
+                              <Button mnemonicParsing="false" onAction="#handleAddUniversityButton" prefHeight="100.0" prefWidth="300.0" styleClass="button-sidebar" text="Neue Universität Hinzufügen">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></Button>
                            </children></VBox>
                      </children>
                      <HBox.margin>
@@ -166,12 +193,21 @@
                               <Label fx:id="changeAccountinfomrationLabelStartscreen" text="%ui.label.changeAccountInformationStartscreen" wrapText="true">
                                  <padding>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                 </padding></Label>
+                                 </padding>
+                                 <VBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></Label>
                            </children>
                         </VBox>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#handleChangeAccoutinformationButton" prefHeight="100.0" prefWidth="300.0" styleClass="button-sidebar" text="Accounteinstellungen Bearbeiten" />
+                              <Button mnemonicParsing="false" onAction="#handleChangeAccoutinformationButton" prefHeight="100.0" prefWidth="300.0" styleClass="button-sidebar" text="Accounteinstellungen Bearbeiten">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></Button>
                            </children></VBox>
                      </children>
                      <HBox.margin>
