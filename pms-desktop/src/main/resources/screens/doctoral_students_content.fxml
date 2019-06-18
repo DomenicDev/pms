@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<?import org.kordamp.ikonli.javafx.FontIcon?>
 <VBox stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.DoctoralStudentMainContentController">
    <children>
+       <!--
       <ToolBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #FAFAFA;" styleClass="tool-bar-Doctoral-students">
         <items>
           <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#handleOnActionOverviewButton" styleClass="button-NOT-sidebar" text="Übersicht">
@@ -18,6 +17,7 @@
             <Button mnemonicParsing="false" styleClass="button-NOT-sidebar" text="Löschen" />
         </items>
       </ToolBar>
+      -->
       <AnchorPane fx:id="doctoralStudentContentPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="503.0" prefWidth="749.0" VBox.vgrow="ALWAYS" />
    </children>
 </VBox>
