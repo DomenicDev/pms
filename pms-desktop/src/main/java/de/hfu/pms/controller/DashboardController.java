@@ -4,6 +4,7 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.ShowDoctoralStudentEvent;
+import de.hfu.pms.events.SwitchMainScreenEvent;
 import de.hfu.pms.exceptions.BusinessException;
 import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.UserInfoDTO;
@@ -61,6 +62,17 @@ public class DashboardController implements Initializable {
 
     // we store a reference to the last focused button of the dashboard
     private Button lastFocusedButton;
+
+    /**
+     * This enum contains all screens this controller can show.
+     */
+    public enum MainScreen {
+        Home,
+        DoctoralStudent,
+        University,
+        AccountInformation,
+        AdminArea
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -147,26 +159,40 @@ public class DashboardController implements Initializable {
 
     @FXML
     public void handleOnActionStartButton() {
-        switchScreen(startButton, bundle.getString("ui.section.home"), homeParent);
+        show(MainScreen.Home);
     }
 
     @FXML
     public void handleOnActionDoctoralStudentsButton() {
-        switchScreen(doctoralStudentsButton, bundle.getString("ui.section.doctoral_students"), doctoralStudentsParent);
+        show(MainScreen.DoctoralStudent);
     }
 
     @FXML
     public void handleUniversityButton() {
-        switchScreen(universityButton, bundle.getString("ui.section.universities"), universitiesParent);
+        show(MainScreen.University);
     }
 
     @FXML
     public void handleAccountInformationButton() {
-        switchScreen(accountSettingsButton, bundle.getString("ui.section.account_settings"), accountInformationParent);
+        show(MainScreen.AccountInformation);
     }
     @FXML
     public void handleAdminArea() {
-        switchScreen(adminAreaButton, bundle.getString("ui.section.admin_area"), adminArea);
+        show(MainScreen.AdminArea);
+    }
+
+    private void show(MainScreen screen) {
+        if (screen == MainScreen.Home) {
+            switchScreen(startButton, bundle.getString("ui.section.home"), homeParent);
+        } else if (screen == MainScreen.DoctoralStudent) {
+            switchScreen(doctoralStudentsButton, bundle.getString("ui.section.doctoral_students"), doctoralStudentsParent);
+        } else if (screen == MainScreen.University) {
+            switchScreen(universityButton, bundle.getString("ui.section.universities"), universitiesParent);
+        } else if (screen == MainScreen.AccountInformation) {
+            switchScreen(accountSettingsButton, bundle.getString("ui.section.account_settings"), accountInformationParent);
+        } else if (screen == MainScreen.AdminArea) {
+            switchScreen(adminAreaButton, bundle.getString("ui.section.admin_area"), adminArea);
+        }
     }
 
     @Subscribe
@@ -176,6 +202,11 @@ public class DashboardController implements Initializable {
         // This is important if the call of this event comes
         // from another screen than this one
         switchMainContent(doctoralStudentsParent);
+    }
+
+    @Subscribe
+    public void handle(SwitchMainScreenEvent event) {
+        show(event.getScreen());
     }
 
 }

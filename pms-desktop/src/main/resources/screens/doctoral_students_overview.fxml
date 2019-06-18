@@ -7,6 +7,14 @@
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="20.0" style="-fx-background-color: #FAFAFA;" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.DoctoralStudentOverviewController">
    <children>
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
+         <items>
+            <Button mnemonicParsing="false" onAction="#handleOnActionAddButton" text="Hinzufügen" />
+            <Button mnemonicParsing="false" onAction="#handleOnActionEditButton" styleClass="button-NOT-sidebar" text="Bearbeiten" />
+            <Button mnemonicParsing="false" text="Anonymisieren" />
+            <Button mnemonicParsing="false" onAction="#handleOnActionDeleteButton" styleClass="button-NOT-sidebar" text="Löschen" />
+         </items>
+      </ToolBar>
       <HBox prefHeight="62.0" prefWidth="600.0" spacing="15.0">
          <children>
             <FontIcon iconLiteral="fa-search" iconSize="20" />
@@ -15,8 +23,6 @@
                   <Insets right="15.0" />
                </HBox.margin></TextField>
             <Button mnemonicParsing="false" onAction="#handleOnActionSearchButton" styleClass="button-NOT-sidebar" text="Suchen" />
-            <Button mnemonicParsing="false" onAction="#handleOnActionEditButton" styleClass="button-NOT-sidebar" text="Bearbeiten" />
-            <Button mnemonicParsing="false" onAction="#handleOnActionDeleteButton" styleClass="button-NOT-sidebar" text="Löschen" />
          </children>
          <padding>
             <Insets left="10.0" top="20.0" />

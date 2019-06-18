@@ -3,10 +3,7 @@ package de.hfu.pms.controller;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
-import de.hfu.pms.events.AlertNotificationEvent;
-import de.hfu.pms.events.OnClickEditDoctoralStudentEvent;
-import de.hfu.pms.events.SuccessfullyAddedDoctoralStudentEvent;
-import de.hfu.pms.events.SuccessfullyUpdatedDoctoralStudentEvent;
+import de.hfu.pms.events.*;
 import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.DoctoralStudentDTO;
 import de.hfu.pms.shared.dto.FacultyDTO;
@@ -86,6 +83,11 @@ public class DoctoralStudentOverviewController implements Initializable {
             }
         });
 
+    }
+
+    @FXML
+    public void handleOnActionAddButton() {
+        eventBus.post(new OnClickAddNewDoctoralStudentEvent());
     }
 
     @FXML

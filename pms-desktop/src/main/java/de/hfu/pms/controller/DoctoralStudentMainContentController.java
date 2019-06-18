@@ -3,7 +3,10 @@ package de.hfu.pms.controller;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
+import de.hfu.pms.events.AlertNotificationEvent;
+import de.hfu.pms.events.OnClickAddNewDoctoralStudentEvent;
 import de.hfu.pms.events.ShowDoctoralStudentEvent;
+import de.hfu.pms.events.SwitchDoctoralStudentScreenEvent;
 import de.hfu.pms.shared.dto.DoctoralStudentDTO;
 import de.hfu.pms.utils.GuiLoader;
 import de.hfu.pms.utils.JavaFxUtils;
@@ -37,6 +40,13 @@ public class DoctoralStudentMainContentController implements Initializable {
     private EventBus eventBus = EventBusSystem.getEventBus();
 
     private ResourceBundle resourceBundle;
+
+    public enum DoctoralStudentScreen {
+
+        OVERVIEW,
+        FORM_MASK
+
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -103,6 +113,25 @@ public class DoctoralStudentMainContentController implements Initializable {
     public void handleEditRequest(ShowDoctoralStudentEvent event) throws IOException {
         DoctoralStudentDTO studentToShow = event.getDoctoralStudentDTO();
         editDoctoralStudent(studentToShow);
+    }
+
+    @Subscribe
+    public void handle(OnClickAddNewDoctoralStudentEvent event) {
+        try {
+            switchMainContent(GuiLoader.loadFXML(GuiLoader.DOCTORAL_STUDENT_FORM_MASK));
+        } catch (IOException e) {
+            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.ERROR, resourceBundle.getString("ui.alert.screen_could_not_be_opened")));
+        }
+    }
+
+    @Subscribe
+    public void handle(SwitchDoctoralStudentScreenEvent event) {
+        DoctoralStudentScreen screen = event.getScreen();
+        if (screen == DoctoralStudentScreen.OVERVIEW) {
+            switchMainContent(overview);
+        } else if (screen == DoctoralStudentScreen.FORM_MASK) {
+            switchMainContent(formMask);
+        }
     }
 
 }

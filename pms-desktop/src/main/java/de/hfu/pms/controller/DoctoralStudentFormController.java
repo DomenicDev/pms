@@ -41,6 +41,7 @@ public class DoctoralStudentFormController implements Initializable {
     private Logger logger = Logger.getLogger(DoctoralStudentFormController.class);
     private DoctoralStudentDTO doctoralStudent = null;
     private EventBus eventBus = EventBusSystem.getEventBus();
+    private ResourceBundle bundle;
 
     private final Image vacantPhotoImage = new Image("/images/user-shape.png");
 
@@ -262,6 +263,7 @@ public class DoctoralStudentFormController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         eventBus.register(this);
+        this.bundle = resources;
 
         // setup table columns
         initEmploymentTable(resources);
@@ -508,11 +510,26 @@ public class DoctoralStudentFormController implements Initializable {
 
     @FXML
     public void handleOnActionCancelButton() {
-        cancel();
+        GuiLoader.showYesNoCancelAlert(
+                Alert.AlertType.INFORMATION,
+                bundle.getString("ui.alert.title.unsaved_changed"),
+                bundle.getString("ui.alert.content.unsaved_changes_really_cancel"),
+                this::handleOnActionSaveButton,
+                this::cancel,
+                null
+        );
+
     }
 
+
+
+    private void postExitScreenEvent() {
+        eventBus.post(new SwitchDoctoralStudentScreenEvent(DoctoralStudentMainContentController.DoctoralStudentScreen.OVERVIEW));
+    }
+
+
     private void cancel() {
-        // todo
+        postExitScreenEvent();
     }
 
     @FXML
@@ -630,6 +647,8 @@ public class DoctoralStudentFormController implements Initializable {
                 // post a new save event to notify subscribers about the save action
                 // they should take care about the actual saving process
                 eventBus.post(new RequestCreateDoctoralStudentEvent(createDTO));
+
+                postExitScreenEvent();
             }
 
         }

@@ -3,6 +3,9 @@ package de.hfu.pms.utils;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -37,6 +40,7 @@ public class GuiLoader {
     /**
      * Loads the fxml file from the specified url.
      * The returned parent already includes the globally defined ResourceBundle.
+     *
      * @param url the url to load the fxml file from
      * @return the loaded parent
      * @throws IOException if file with specified url does not exist or if file could not be loaded completely
@@ -57,10 +61,11 @@ public class GuiLoader {
     /**
      * This helper method creates and displays the specified fxml in a separate window.
      * The method will return the defined controller of the file
-     * @param url the file of the fxml file to load
+     *
+     * @param url   the file of the fxml file to load
      * @param title the title to be shown in top bar
      * @param modal true if the window shall be a modal window, false otherwise
-     * @param <T> the type of the defined controller
+     * @param <T>   the type of the defined controller
      * @return the controller defined for this screen
      * @throws IOException if screen could not be loaded
      */
@@ -85,6 +90,7 @@ public class GuiLoader {
     /**
      * The returned ResourceBundle contains all the strings used in
      * the graphical user interface.
+     *
      * @return the application wide used resource bundle.
      */
     public static ResourceBundle getResourceBundle() {
@@ -93,9 +99,10 @@ public class GuiLoader {
 
     /**
      * Helper method to create a modal window, especially for small windows, e.g. edit or creation screens.
-     * @param url the url of the screen to load
-     * @param width the width of the window
-     * @param height the height of the window
+     *
+     * @param url       the url of the screen to load
+     * @param width     the width of the window
+     * @param height    the height of the window
      * @param resizable true if window shall be resizable, false otherwise
      * @return the newly created stage
      * @throws IOException if screen could not be loaded
@@ -113,4 +120,48 @@ public class GuiLoader {
         return stage;
     }
 
+    /**
+     * Creates and shows an alert dialog with a yes-button, a no-button, and a cancel button.
+     * If not null, the specific callback method are called when clicked on the appropriate button.
+     *
+     * @param title    the title of the alert to be shown in the top bar
+     * @param content  the content text of the alert dialog
+     * @param onYes    callback for yes-button
+     * @param onNo     callback for no-button
+     * @param onCancel callback for cancel-button
+     */
+    public static void showYesNoCancelAlert(Alert.AlertType alertType, String title, String content, ButtonServiceRoutine onYes, ButtonServiceRoutine onNo, ButtonServiceRoutine onCancel) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        ButtonType okButton = new ButtonType(bundle.getString("ui.label.yes"), ButtonBar.ButtonData.YES);
+        ButtonType noButton = new ButtonType(bundle.getString("ui.label.no"), ButtonBar.ButtonData.NO);
+        ButtonType cancelButton = new ButtonType(bundle.getString("ui.label.cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(okButton, noButton, cancelButton);
+        alert.showAndWait().ifPresent(type -> {
+                    if (type.getButtonData() == ButtonBar.ButtonData.YES) {
+                        // the user want to cancel
+                        if (onYes != null) {
+                            onYes.callback();
+                        }
+                    }
+                    if (type.getButtonData() == ButtonBar.ButtonData.NO) {
+                        if (onNo != null) {
+                            onNo.callback();
+                        }
+                    }
+                    if (type.getButtonData() == ButtonBar.ButtonData.CANCEL_CLOSE) {
+                        if (onCancel != null) {
+                            onCancel.callback();
+                        }
+                    }
+                }
+        );
+    }
+
+    public interface ButtonServiceRoutine {
+
+        void callback();
+
+    }
 }
