@@ -2,7 +2,6 @@ package de.hfu.pms;
 
 import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.handler.GuiEventHandler;
-import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.service.ApplicationServiceImpl;
 import de.hfu.pms.service.ApplicationServices;
 import de.hfu.pms.utils.GuiLoader;
@@ -16,17 +15,31 @@ public class NewGuiTest extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        ApplicationServices applicationServices = new ApplicationServiceImpl();
-        applicationServices.login("admin", "1234");
-        GuiEventHandler eventHandler = new GuiEventHandler(primaryStage, applicationServices, EventBusSystem.getEventBus());
-        applicationServices.initEntityPool();
-        EntityPool.getInstance().setApplicationServices(applicationServices);
 
+
+        ApplicationServices applicationServices = new ApplicationServiceImpl();
+
+        GuiEventHandler eventHandler = new GuiEventHandler(primaryStage, applicationServices, EventBusSystem.getEventBus());
+   //     applicationServices.initEntityPool();
+   //     EntityPool.getInstance().setApplicationServices(applicationServices);
+
+        Parent login = GuiLoader.loadFXML("/screens/login.fxml");
+        Scene loginScene = new Scene(login);
+        primaryStage.setScene(loginScene);
+        primaryStage.show();
+
+       // applicationServices.login("admin", "1234");
+
+
+        /*
         Parent root = GuiLoader.loadFXML("/screens/dashboard_final.fxml");
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("/styles/style.css").toExternalForm());
         primaryStage.setScene(scene);
+        //primaryStage.setMaximized(true);
         primaryStage.show();
+
+         */
     }
 
     public static void main(String[] args) {

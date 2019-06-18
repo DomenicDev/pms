@@ -151,22 +151,17 @@ public class ApplicationServiceImpl implements ApplicationServices {
         // first update the login credentials with the specified ones
         restClient.setLoginCredentials(username, password);
 
-        /*
+
         try {
             // to verify that the credentials is valid we call an secured site
             // if the credentials are correct we will return a response with status code 200 (--> OK)
+            restClient.get(HOST_URL + "/");
 
-
-            HttpResponse response = restClient.get(HOST_URL + "/");
-            if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-                // login failed
-                throw new LoginFailedException();
-            }
             logger.log(Level.INFO, "Client successfully logged in.");
         } catch (IOException e) {
             throw new LoginFailedException(e);
         }
-        */
+
     }
 
     @Override

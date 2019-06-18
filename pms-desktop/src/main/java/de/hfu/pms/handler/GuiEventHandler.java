@@ -8,7 +8,7 @@ import de.hfu.pms.exceptions.LoginFailedException;
 import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.service.ApplicationServices;
 import de.hfu.pms.shared.dto.*;
-import javafx.fxml.FXMLLoader;
+import de.hfu.pms.utils.GuiLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -55,19 +55,22 @@ public class GuiEventHandler {
 
         try {
             // try to login with specified username and password
-            //applicationServices.login(username, password);
+            applicationServices.login(username, password);
 
             // login was successful, so we can close the login screen and open the dashboard
             primaryStage.close();
 
-            // todo: replace the following event with event
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/screens/dashboard_final.fxml"));
+            // prepare entities
+            applicationServices.initEntityPool();
+            EntityPool.getInstance().setApplicationServices(applicationServices);
+
             try {
                 Stage newStage = new Stage(StageStyle.DECORATED);
-
-                Parent dashboard = loader.load();
+                Parent dashboard = GuiLoader.loadFXML("/screens/dashboard_final.fxml");
                 Scene scene = new Scene(dashboard);
+                scene.getStylesheets().add(getClass().getResource("/styles/style.css").toExternalForm());
                 newStage.setScene(scene);
+                newStage.setMaximized(true);
                 newStage.show();
             } catch (IOException e) {
                 e.printStackTrace();
