@@ -163,7 +163,7 @@ public class DoctoralStudentOverviewController implements Initializable {
                 if (pers.getEmail().toLowerCase().indexOf(input) != -1) {
                     return true;
                 }
-                if (pers.getGender().toString().toLowerCase().contains(input)) {
+                if (pers.getGender().toString().toLowerCase().matches(input)) {
                     return true;
                 }
                 if (pers.getPhoneNumber().toLowerCase().indexOf(input) != -1) {
