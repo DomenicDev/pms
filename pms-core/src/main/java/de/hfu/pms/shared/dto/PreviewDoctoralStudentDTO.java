@@ -15,9 +15,13 @@ public class PreviewDoctoralStudentDTO {
     public PreviewDoctoralStudentDTO() {
     }
 
-    public PreviewDoctoralStudentDTO(String forname, String lastname){
+    public PreviewDoctoralStudentDTO(String forname, String lastname,FacultyDTO faculty, String email, String phoneNumber, Gender gender){
         this.foreName = forname;
         this.name = lastname;
+        this.faculty = faculty;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.gender = gender;
     }
 
     public PreviewDoctoralStudentDTO(Long id, String name, String foreName, FacultyDTO faculty, String email, String phoneNumber, Gender gender) {

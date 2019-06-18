@@ -90,13 +90,18 @@ public class DoctoralStudentOverviewController implements Initializable {
         });
 
         // Data for search
-        FacultyDTO faculty = new FacultyDTO((long) 1, "Informatik");
+        FacultyDTO informatik = new FacultyDTO((long) 1, "Informatik");
+        FacultyDTO digitaleMedien = new FacultyDTO((long) 2, "Digitale Medien");
 
-        PreviewDoctoralStudentDTO student4 = new PreviewDoctoralStudentDTO("ilker", "coban");
-        PreviewDoctoralStudentDTO student5 = new PreviewDoctoralStudentDTO("test", "test");
+        Gender male = Gender.Male;
+        Gender female = Gender.Female;
 
-        masterData.add(student4);
-        masterData.add(student5);
+
+        PreviewDoctoralStudentDTO student1 = new PreviewDoctoralStudentDTO("Julian", "Brandt", informatik, "JulianBrandt@gmx.de", "123456789", male);
+        PreviewDoctoralStudentDTO student2 = new PreviewDoctoralStudentDTO("Gulia", "Gwinn", digitaleMedien, "GuliaGwinn@outlook.de", "987654321", female);
+
+        masterData.add(student1);
+        masterData.add(student2);
 
         searchResultTableView.setItems(masterData);
         searchResultForeNameTableColumn.setCellValueFactory(new PropertyValueFactory<>("foreName"));
@@ -111,12 +116,11 @@ public class DoctoralStudentOverviewController implements Initializable {
 
     @FXML
     public void handleOnActionDeleteButton(ActionEvent event) {
-        if(searchResultTableView.getSelectionModel().getSelectedItem() != null){
+        if (searchResultTableView.getSelectionModel().getSelectedItem() != null) {
             // todo
             // ConfirmDialog (yes/no)
             // server request: delete(Collection<Int>) (Id's of the DB-Entries to be deleted)
-        }
-        else{
+        } else {
             eventBus.post(new AlertNotificationEvent(1, bundle.getString("ui.alert.select_item_to_delete")));
         }
     }
@@ -124,15 +128,13 @@ public class DoctoralStudentOverviewController implements Initializable {
     @FXML
     public void handleOnActionEditButton(ActionEvent event) {
         int selectedCount = searchResultTableView.getSelectionModel().getSelectedItems().size();
-        if(selectedCount == 1){
+        if (selectedCount == 1) {
             PreviewDoctoralStudentDTO selectedItem = searchResultTableView.getSelectionModel().getSelectedItem();
             Long id = selectedItem.getId();
             eventBus.post(new OnClickEditDoctoralStudentEvent(id));
-        }
-        else if(selectedCount > 1){
+        } else if (selectedCount > 1) {
             eventBus.post(new AlertNotificationEvent(1, bundle.getString("ui.alert.only_one_item_can_be_edited")));
-        }
-        else {
+        } else {
             eventBus.post(new AlertNotificationEvent(1, bundle.getString("ui.alert.select_item_to_edit")));
         }
     }
@@ -155,6 +157,19 @@ public class DoctoralStudentOverviewController implements Initializable {
                 if (pers.getName().toLowerCase().indexOf(input) != -1) {
                     return true;
                 }
+                if (pers.getFaculty().toString().toLowerCase().contains(input)) {
+                    return true;
+                }
+                if (pers.getEmail().toLowerCase().indexOf(input) != -1) {
+                    return true;
+                }
+                if (pers.getGender().toString().toLowerCase().contains(input)) {
+                    return true;
+                }
+                if (pers.getPhoneNumber().toLowerCase().indexOf(input) != -1) {
+                    return true;
+                }
+
                 return false;
             });
 
@@ -162,8 +177,6 @@ public class DoctoralStudentOverviewController implements Initializable {
             sortedList.comparatorProperty().bind(searchResultTableView.comparatorProperty());
             searchResultTableView.setItems(sortedList);
         });
-
-
 
 
     }
