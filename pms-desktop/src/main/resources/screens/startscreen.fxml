@@ -19,7 +19,7 @@
             </Label>
             <Label fx:id="DescriptionApplication" text="%ui.label.BeschreibungApllikation" wrapText="true">
                <VBox.margin>
-                  <Insets left="10.0" right="10.0" />
+                  <Insets left="10.0" right="10.0" top="10.0" />
                </VBox.margin>
                <font>
                   <Font size="16.0" />
@@ -69,13 +69,16 @@
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="DescriptionTable" text="%ui.label.Tabellebeschreibung">
+                        <Label fx:id="DescriptionTable" text="%ui.label.Tabellebeschreibung" wrapText="true">
                            <padding>
                               <Insets left="10.0" right="10.0" />
                            </padding>
                            <font>
                               <Font size="14.0" />
                            </font>
+                           <VBox.margin>
+                              <Insets right="10.0" top="10.0" />
+                           </VBox.margin>
                         </Label>
                      </children>
                   </VBox>
