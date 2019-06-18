@@ -13,6 +13,10 @@ import de.hfu.pms.shared.utils.Converter;
 import de.hfu.pms.utils.CollectionUtils;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -25,9 +29,7 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import java.net.URL;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.ResourceBundle;
 
 
@@ -59,6 +61,8 @@ public class DoctoralStudentOverviewController implements Initializable {
     @FXML
     private TableColumn<PreviewDoctoralStudentDTO, Gender> searchResultGenderTableColumn;
 
+    ObservableList<PreviewDoctoralStudentDTO> masterData = FXCollections.observableArrayList();
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -84,6 +88,19 @@ public class DoctoralStudentOverviewController implements Initializable {
                 }
             }
         });
+
+        // Data for search
+        FacultyDTO faculty = new FacultyDTO((long) 1, "Informatik");
+
+        PreviewDoctoralStudentDTO student4 = new PreviewDoctoralStudentDTO("ilker", "coban");
+        PreviewDoctoralStudentDTO student5 = new PreviewDoctoralStudentDTO("test", "test");
+
+        masterData.add(student4);
+        masterData.add(student5);
+
+        searchResultTableView.setItems(masterData);
+        searchResultForeNameTableColumn.setCellValueFactory(new PropertyValueFactory<>("foreName"));
+        searchResultNameTableColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
     }
 
@@ -121,20 +138,34 @@ public class DoctoralStudentOverviewController implements Initializable {
     }
 
     @FXML
-    public void handleOnActionSearchButton(ActionEvent event) {
-        // todo
-        // request a Search
-        // print result
+    public void handleOnActionSearch() {
+        //Suchfunktion
 
-        String searchterm = searchTextField.getText();
+        FilteredList<PreviewDoctoralStudentDTO> filteredData = new FilteredList<>(masterData, p -> true);
 
-        FacultyDTO faculty = new FacultyDTO((long)1, "Informatik");
-        PreviewDoctoralStudentDTO student1 = new PreviewDoctoralStudentDTO(500L, "Jahnsen", "Jan", faculty, "jan.jahnsen@mail.com", "017322497814", Gender.Male);
-        PreviewDoctoralStudentDTO student2 = new PreviewDoctoralStudentDTO(501L, "Fröhlich", "Alina", faculty, "ali.fr@mail.com", "015121639248", Gender.Female);
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(pers -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String input = newValue.toLowerCase();
+                if (pers.getForeName().toLowerCase().indexOf(input) != -1) {
+                    return true;
+                }
+                if (pers.getName().toLowerCase().indexOf(input) != -1) {
+                    return true;
+                }
+                return false;
+            });
 
-        Collection<PreviewDoctoralStudentDTO> students = new HashSet<>(Arrays.asList(student1, student2));
+            SortedList<PreviewDoctoralStudentDTO> sortedList = new SortedList<>(filteredData);
+            sortedList.comparatorProperty().bind(searchResultTableView.comparatorProperty());
+            searchResultTableView.setItems(sortedList);
+        });
 
-        searchResultTableView.getItems().addAll(students);
+
+
+
     }
 
     private void initPreviewTables() {

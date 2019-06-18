@@ -70,7 +70,6 @@ public class HomeController implements Initializable {
         }
 
 
-
         int DoctoralSummary = EntityPool.getInstance().getDoctoralStudents().size();
         doctoralCount.setText(doctoralCount.getText() + DoctoralSummary);
 
@@ -136,10 +135,10 @@ public class HomeController implements Initializable {
     }
 
     @FXML
-    public void handleHomepage(){
+    public void handleHomepage() {
         try {
             Desktop.getDesktop().browse(new URI("https://www.hs-furtwangen.de"));
-        } catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
