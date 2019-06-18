@@ -17,7 +17,7 @@
                   <Insets left="10.0" top="10.0" />
                </VBox.margin>
             </Label>
-            <Label fx:id="DescriptionApplication" text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet." wrapText="true">
+            <Label fx:id="DescriptionApplication" text="%ui.label.BeschreibungApllikation" wrapText="true">
                <VBox.margin>
                   <Insets left="10.0" right="10.0" />
                </VBox.margin>
@@ -52,7 +52,7 @@
                   </VBox>
                   <VBox minHeight="200.0" minWidth="300.0" prefHeight="200.0" prefWidth="500.0">
                      <children>
-                        <Label fx:id="headingTabelDescription" text="Beschreibung der Tabelle">
+                        <Label fx:id="headingTabelDescription" text="%ui.label.TabelleUeberschrift">
                            <padding>
                               <Insets left="10.0" right="10.0" />
                            </padding>
@@ -60,7 +60,7 @@
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="DescriptionTable" text="Beschreibung der Tabelle">
+                        <Label fx:id="DescriptionTable" text="%ui.label.Tabellebeschreibung">
                            <padding>
                               <Insets left="10.0" right="10.0" />
                            </padding>

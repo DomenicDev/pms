@@ -90,7 +90,7 @@ public class StartscreenControlerApplication implements Initializable {
     }
     @FXML
     void handleChangeAccoutinformationButton(ActionEvent event)throws IOException {
-        GuiLoader.createModalWindow(GuiLoader.ACCOUNT_INFORMATION,250,300,false);  }
+        GuiLoader.createModalWindow(GuiLoader.ACCOUNT_INFORMATION,100,300,false);  }
 
     ObservableList<PreviewDoctoralStudentDTO> masterData = FXCollections.observableArrayList();
 
