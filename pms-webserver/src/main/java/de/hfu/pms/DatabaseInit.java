@@ -45,9 +45,10 @@ public class DatabaseInit implements CommandLineRunner {
 
         // add test university
         University university = new University();
-        university.setName("HFU");
+        university.setName("Hochschule Furtwangen University");
         university.setLocation("Furtwangen");
         university.setCountry("Deutschland");
+        university.setAbbreviation("HFU");
         university = universityDao.save(university);
 
         // add a test faculty
