@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.apache.log4j.PropertyConfigurator;
 
 public class NewGuiTest extends Application {
@@ -25,7 +26,10 @@ public class NewGuiTest extends Application {
 
         Parent login = GuiLoader.loadFXML("/screens/login.fxml");
         Scene loginScene = new Scene(login);
+        loginScene.getStylesheets().add(getClass().getResource("/styles/style.css").toExternalForm());
         primaryStage.setScene(loginScene);
+        primaryStage.setResizable(false);
+        primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.show();
 
        // applicationServices.login("admin", "1234");

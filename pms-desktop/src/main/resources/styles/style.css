@@ -103,3 +103,26 @@
 .selected {
     -fx-background-color: #008D58 !important;
 }
+
+.background-green {
+    -fx-background-color: linear-gradient(to bottom left, rgb(132, 182, 45), rgb(107, 150, 36)) !important;
+}
+
+.background-white {
+    -fx-background-color: white;
+}
+
+.color-white {
+    -fx-text-fill: white;
+}
+
+.button-login {
+    -fx-background-color: #008D58 !important;
+    -fx-text-fill: white;
+}
+
+.button-login:pressed
+{
+    -fx-background-color: #92C8FF;
+
+}
