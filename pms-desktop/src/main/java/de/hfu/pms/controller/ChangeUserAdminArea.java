@@ -73,7 +73,7 @@ public class ChangeUserAdminArea  implements Initializable {
             Parent root = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Email von " + user.getUsername()+ " ändern" );
+            stage.setTitle("Email von " + user.getUsername()+" "+bundle.getString("ui.label.change"));
             stage.setScene(new Scene(root));
             stage.show();
 
@@ -96,7 +96,7 @@ public class ChangeUserAdminArea  implements Initializable {
             Parent root = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Passwort von " +user.getUsername()+ " ändern" );
+            stage.setTitle("Passwort von " +user.getUsername()+" "+ bundle.getString("ui.label.change"));
             stage.setScene(new Scene(root));
             stage.show();
 
@@ -120,7 +120,7 @@ public class ChangeUserAdminArea  implements Initializable {
             Parent root = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Rolle von " +user.getUsername()+ " ändern");
+            stage.setTitle("Rolle von " +user.getUsername()+" "+bundle.getString("ui.label.change"));
             stage.setScene(new Scene(root));
             stage.show();
 

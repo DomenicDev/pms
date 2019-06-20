@@ -9,8 +9,8 @@
             <children>
                 <GridPane>
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="290.0" minWidth="-Infinity" prefWidth="141.0" />
-                        <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="462.0" minWidth="10.0" prefWidth="449.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="290.0" minWidth="-Infinity" prefWidth="177.71435546875" />
+                        <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="462.0" minWidth="10.0" prefWidth="218.57135881696428" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints minHeight="-Infinity" prefHeight="30.0" />
@@ -21,12 +21,12 @@
                     <children>
                         <Label text="%ui.table_column.support.date" />
                         <Label text="%ui.table_column.support.support_sum" GridPane.rowIndex="3" />
-                        <TextField fx:id="sumSupportTextField" prefHeight="25.0" prefWidth="71.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <DatePicker fx:id="datePicker" GridPane.columnIndex="1" />
                   <Label text="%ui.table_column.support.title_of_conference" GridPane.rowIndex="1" />
                   <Label text="%ui.table_column.support.location" GridPane.rowIndex="2" />
                   <TextField fx:id="titleTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <TextField fx:id="locationTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="sumSupportTextField" prefHeight="25.0" prefWidth="71.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                     </children>
                     <VBox.margin>
                         <Insets />

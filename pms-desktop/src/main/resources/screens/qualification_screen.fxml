@@ -9,18 +9,19 @@
             <children>
                 <GridPane>
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="290.0" minWidth="-Infinity" prefWidth="204.0" />
-                        <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="462.0" minWidth="10.0" prefWidth="345.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="290.0" minWidth="-Infinity" prefWidth="236.0" />
+                        <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="462.0" minWidth="10.0" prefWidth="313.1428571428571" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints minHeight="-Infinity" prefHeight="30.0" />
+                  <RowConstraints minHeight="-Infinity" prefHeight="30.0" />
                   <RowConstraints minHeight="-Infinity" prefHeight="30.0" />
                     </rowConstraints>
                     <children>
                         <Label text="%ui.label.qualification_date" />
                   <DatePicker fx:id="qualificationDatePicker" GridPane.columnIndex="1" />
-                  <Label text="%ui.table_column.support.kind_of_qualification" GridPane.rowIndex="1" />
-                  <TextField fx:id="qualificationNameTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label text="%ui.table_column.support.kind_of_qualification" GridPane.rowIndex="2" />
+                  <TextField fx:id="qualificationNameTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                     </children>
                     <VBox.margin>
                         <Insets />
