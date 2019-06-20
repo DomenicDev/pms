@@ -172,6 +172,9 @@ public class DoctoralStudentOverviewController implements Initializable {
         Collection<PreviewDoctoralStudentDTO> actives = new HashSet<>();
         for (PreviewDoctoralStudentDTO preview : masterData) {
             if (preview.isActive() == active) {
+                if (!active && preview.isAnonymized()) {
+                    continue;
+                }
                 actives.add(preview);
             }
         }
