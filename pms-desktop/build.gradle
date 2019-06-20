@@ -27,6 +27,7 @@ dependencies {
 
     compile 'org.kordamp.ikonli:ikonli-javafx:11.3.4'
     compile 'org.kordamp.ikonli:ikonli-fontawesome-pack:11.3.4'
+    compile 'org.kordamp.ikonli:ikonli-dashicons-pack:11.3.4'
 
     // https://mvnrepository.com/artifact/commons-io/commons-io
     compile group: 'commons-io', name: 'commons-io', version: '2.5'
