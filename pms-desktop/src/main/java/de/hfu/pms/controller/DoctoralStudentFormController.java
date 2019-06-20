@@ -458,6 +458,7 @@ public class DoctoralStudentFormController implements Initializable {
         promotionAgreementDatePicker.setValue(targetGraduationDTO.getPromotionAgreement());
 
         // cancel
+        promotionCanceledCheckBox.setSelected(targetGraduationDTO.isPromotionCanceled());
         if (targetGraduationDTO.getCancelDate() != null || (targetGraduationDTO.getCancelReason() != null && !targetGraduationDTO.getCancelReason().isEmpty())) {
             promotionCanceledCheckBox.setSelected(true);
             cancelReasonTextField.setText(targetGraduationDTO.getCancelReason());
@@ -473,7 +474,7 @@ public class DoctoralStudentFormController implements Initializable {
         memberSinceDatePicker.setValue(targetGraduationDTO.getMembershipHFUKollegBegin());
         memberUntilDatePicker.setValue(targetGraduationDTO.getMembershipHFUKollegEnd());
         prolongTillDatePicker.setValue(targetGraduationDTO.getExtendedMembershipEnd());
-        prolongMembershipCheckBox.setSelected(prolongTillDatePicker.getValue() != null);
+        prolongMembershipCheckBox.setSelected(targetGraduationDTO.isMembershipExtended());
 
         // external membership
         externalMemberCheckBox.setSelected(targetGraduationDTO.isMemberOfExternalKolleg());
@@ -484,7 +485,7 @@ public class DoctoralStudentFormController implements Initializable {
         LocalDate cancelDate = targetGraduationDTO.getCancelDate();
         cancelReasonTextField.setText(cancelReason);
         cancelDateDatePicker.setValue(cancelDate);
-        promotionCanceledCheckBox.setSelected((cancelReason != null && !cancelReason.isEmpty()) || cancelDate != null);
+        promotionCanceledCheckBox.setSelected(targetGraduationDTO.isPromotionCanceled());
 
         // employments
         Set<EmploymentEntryDTO> employmentEntries = employment.getEmploymentEntries();
@@ -1091,9 +1092,11 @@ public class DoctoralStudentFormController implements Initializable {
         }
 
         // external membership
+        targetGraduationDTO.setMemberOfExternalKolleg(externalMemberCheckBox.isSelected());
         targetGraduationDTO.setExternalProgram(externalMemberCheckBox.isSelected() ? externalCollegeNameTextField.getText() : null);
 
         // cancel reason and cancel date
+        targetGraduationDTO.setPromotionCanceled(promotionCanceledCheckBox.isSelected());
         if (promotionCanceledCheckBox.isSelected()) {
             targetGraduationDTO.setCancelReason(cancelReasonTextField.getText());
             targetGraduationDTO.setCancelDate(cancelDateDatePicker.getValue());
