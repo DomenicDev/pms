@@ -312,9 +312,9 @@
                                                               </rowConstraints>
                                                                <children>
                                                                   <Label styleClass="required" text="%ui.label.begin_of_promotion" />
-                                                                  <DatePicker fx:id="promotionBeginDatePicker" editable="false" onAction="#onPromotionChanged" GridPane.columnIndex="1" />
-                                                                  <DatePicker fx:id="predictedGraduationDatePicker" editable="false" onAction="#onPromotionChanged" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                                  <DatePicker fx:id="promotionAgreementDatePicker" editable="false" onAction="#onPromotionChanged" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                                  <DatePicker fx:id="promotionBeginDatePicker"  onAction="#onPromotionChanged" GridPane.columnIndex="1" />
+                                                                  <DatePicker fx:id="predictedGraduationDatePicker"  onAction="#onPromotionChanged" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                                  <DatePicker fx:id="promotionAgreementDatePicker"  onAction="#onPromotionChanged" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                                   <Label styleClass="required" text="%ui.label.prognosticated_promotion_date" GridPane.rowIndex="1" />
                                                                   <Label styleClass="required" text="%ui.label.promotion_agreement" GridPane.rowIndex="2" />
                                                                </children>
