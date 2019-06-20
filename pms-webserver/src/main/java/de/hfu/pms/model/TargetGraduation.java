@@ -51,13 +51,22 @@ public class TargetGraduation {
     private String cancelReason;
 
     @Column
+    private Boolean memberOfHFUKolleg;
+
+    @Column
     private LocalDate membershipHFUKollegBegin;
 
     @Column
     private LocalDate membershipHFUKollegEnd;
 
     @Column
+    private Boolean membershipExtended;
+
+    @Column
     private LocalDate extendedMembershipEndDate;
+
+    @Column
+    private Boolean memberOfExternalKolleg;
 
     @Column
     private String externalProgram;
@@ -222,5 +231,29 @@ public class TargetGraduation {
 
     public void setPromotionAgreement(LocalDate promotionAgreement) {
         this.promotionAgreement = promotionAgreement;
+    }
+
+    public Boolean getMemberOfHFUKolleg() {
+        return memberOfHFUKolleg;
+    }
+
+    public void setMemberOfHFUKolleg(Boolean memberOfHFUKolleg) {
+        this.memberOfHFUKolleg = memberOfHFUKolleg;
+    }
+
+    public Boolean getMemberOfExternalKolleg() {
+        return memberOfExternalKolleg;
+    }
+
+    public void setMemberOfExternalKolleg(Boolean memberOfExternalKolleg) {
+        this.memberOfExternalKolleg = memberOfExternalKolleg;
+    }
+
+    public Boolean getMembershipExtended() {
+        return membershipExtended;
+    }
+
+    public void setMembershipExtended(Boolean membershipExtended) {
+        this.membershipExtended = membershipExtended;
     }
 }

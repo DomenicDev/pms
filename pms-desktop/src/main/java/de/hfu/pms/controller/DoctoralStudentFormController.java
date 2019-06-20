@@ -462,22 +462,15 @@ public class DoctoralStudentFormController implements Initializable {
         }
 
         // hfu membership
+        hfuMemberCheckBox.setSelected(targetGraduationDTO.isMemberOfHFUKolleg());
         memberSinceDatePicker.setValue(targetGraduationDTO.getMembershipHFUKollegBegin());
         memberUntilDatePicker.setValue(targetGraduationDTO.getMembershipHFUKollegEnd());
         prolongTillDatePicker.setValue(targetGraduationDTO.getExtendedMembershipEnd());
-
-        if (memberSinceDatePicker.getValue() == null && memberUntilDatePicker.getValue() == null) {
-            hfuMemberCheckBox.setSelected(false);
-        } else {
-            hfuMemberCheckBox.setSelected(true);
-        }
-
         prolongMembershipCheckBox.setSelected(prolongTillDatePicker.getValue() != null);
 
-
         // external membership
+        externalMemberCheckBox.setSelected(targetGraduationDTO.isMemberOfExternalKolleg());
         externalCollegeNameTextField.setText(targetGraduationDTO.getExternalProgram());
-        externalMemberCheckBox.setSelected(externalCollegeNameTextField.getText() != null);
 
         // cancel
         String cancelReason = targetGraduationDTO.getCancelReason();
@@ -1054,19 +1047,24 @@ public class DoctoralStudentFormController implements Initializable {
 
         // hfu membership
         if (hfuMemberCheckBox.isSelected()) {
+            targetGraduationDTO.setMemberOfHFUKolleg(true);
             targetGraduationDTO.setMembershipHFUKollegBegin(memberSinceDatePicker.getValue());
             targetGraduationDTO.setMembershipHFUKollegEnd(memberUntilDatePicker.getValue());
 
             if (prolongMembershipCheckBox.isSelected()) {
+                targetGraduationDTO.setMembershipExtended(true);
                 targetGraduationDTO.setExtendedMembershipEnd(prolongTillDatePicker.getValue());
             } else {
+                targetGraduationDTO.setMembershipExtended(false);
                 targetGraduationDTO.setExtendedMembershipEnd(null);
             }
 
         } else {
             // check box is disabled, so we make sure all subfields are equal to null
+            targetGraduationDTO.setMemberOfHFUKolleg(false); // checkbox
             targetGraduationDTO.setMembershipHFUKollegBegin(null);
             targetGraduationDTO.setMembershipHFUKollegEnd(null);
+            targetGraduationDTO.setMembershipExtended(false); // checkbox
             targetGraduationDTO.setExtendedMembershipEnd(null);
         }
 

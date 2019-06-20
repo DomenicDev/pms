@@ -18,9 +18,12 @@ public class TargetGraduationDTO {
     private Rating rating;
     private LocalDate cancelDate;
     private String cancelReason;
+    private boolean memberOfHFUKolleg;
     private LocalDate membershipHFUKollegBegin;
     private LocalDate membershipHFUKollegEnd;
+    private boolean membershipExtended;
     private LocalDate extendedMembershipEnd;
+    private boolean memberOfExternalKolleg;
     private String externalProgram;
     private LocalDate promotionAdmissionDate;
     private LocalDate prognosticatedPromotionDate;
@@ -177,6 +180,30 @@ public class TargetGraduationDTO {
 
     public void setPromotionAgreement(LocalDate promotionAgreement) {
         this.promotionAgreement = promotionAgreement;
+    }
+
+    public boolean isMemberOfHFUKolleg() {
+        return memberOfHFUKolleg;
+    }
+
+    public void setMemberOfHFUKolleg(boolean memberOfHFUKolleg) {
+        this.memberOfHFUKolleg = memberOfHFUKolleg;
+    }
+
+    public boolean isMemberOfExternalKolleg() {
+        return memberOfExternalKolleg;
+    }
+
+    public void setMemberOfExternalKolleg(boolean memberOfExternalKolleg) {
+        this.memberOfExternalKolleg = memberOfExternalKolleg;
+    }
+
+    public boolean isMembershipExtended() {
+        return membershipExtended;
+    }
+
+    public void setMembershipExtended(boolean membershipExtended) {
+        this.membershipExtended = membershipExtended;
     }
 
     @Override
