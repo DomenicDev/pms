@@ -16,12 +16,12 @@
             </Button>
             <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#handleOnActionEditButton" styleClass="button-NOT-sidebar" text="Bearbeiten">
              <graphic>
-                 <FontIcon iconColor="#0e02e8" iconLiteral="fa-edit" iconSize="25" />
+                 <FontIcon iconColor="#1663b5" iconLiteral="fa-edit" iconSize="25" />
              </graphic>
             </Button>
             <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#handleOnActionAnonymizeButton" text="Anonymisieren">
                 <graphic>
-                    <FontIcon iconLiteral="dashicons-lock" iconSize="25" />
+                    <FontIcon iconColor="#907005" iconLiteral="dashicons-lock" iconSize="25" />
                 </graphic>
             </Button>
             <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#handleOnActionDeleteButton" styleClass="button-NOT-sidebar" text="Löschen">
