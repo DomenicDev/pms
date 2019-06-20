@@ -276,10 +276,17 @@ public class DoctoralStudentFormController implements Initializable {
         initDocumentsListView();
         initComboBoxes();
         initBorders(resources);
-
+        initDatePicker();
         initPhotoView();
 
         refreshCheckBoxes();
+    }
+
+    private void initDatePicker() {
+        dateOfBirthDatePicker.getEditor().setOnKeyTyped(event -> onPersonalDataChange());
+        promotionBeginDatePicker.getEditor().setOnKeyTyped(event -> onPersonalDataChange());
+        predictedGraduationDatePicker.getEditor().setOnKeyTyped(event -> onPersonalDataChange());
+        promotionAgreementDatePicker.getEditor().setOnKeyTyped(event -> onPersonalDataChange());
     }
 
     private void initPhotoView() {
@@ -528,6 +535,7 @@ public class DoctoralStudentFormController implements Initializable {
 
     /**
      * Returns true if there are any changes, false otherwise
+     *
      * @return true if there any changes in the form mask, false otherwise
      */
     private boolean hasChanges() {
@@ -540,7 +548,7 @@ public class DoctoralStudentFormController implements Initializable {
                 || supportChanged
                 || alumniStateChanged;
     }
-    
+
     private void resetChangeControlFlags() {
         changedImage
                 = deletedImage
@@ -1150,7 +1158,7 @@ public class DoctoralStudentFormController implements Initializable {
     @FXML
     private void handleOnActionDeleteDocument(ActionEvent actionEvent) {
         if (documentsListView.getSelectionModel().getSelectedItems().size() < 1) {
-            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.INFO,bundle.getString("ui.alert.deleteDocument_selected")));
+            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.INFO, bundle.getString("ui.alert.deleteDocument_selected")));
             return;
         }
 
@@ -1188,7 +1196,7 @@ public class DoctoralStudentFormController implements Initializable {
     private void handleOnActionDownloadDocuments(ActionEvent actionEvent) {
         Collection<DocumentInformationDTO> selectedFiles = documentsListView.getSelectionModel().getSelectedItems();
         if (selectedFiles.size() < 1) {
-            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.INFO,bundle.getString("ui.alert.download_selected")));
+            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.INFO, bundle.getString("ui.alert.download_selected")));
             return;
         }
         Collection<DocumentInformationDTO> downloadable = new HashSet<>();

@@ -6,6 +6,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+import java.time.format.DateTimeParseException;
 import java.util.ResourceBundle;
 
 /**
@@ -33,6 +34,7 @@ public class FormValidator {
     /**
      * Use this method at the end of all validations
      * to check if there were any validations that failed.
+     *
      * @return true if all validation calls were successful, false otherwise
      */
     public boolean validationSuccessful() {
@@ -42,6 +44,7 @@ public class FormValidator {
     /**
      * Checks whether the specified ComboBox actually has an
      * item selected.
+     *
      * @param comboBox the ComboBox to check
      * @return true if an item of the ComboBox has been selected by the user
      */
@@ -62,6 +65,7 @@ public class FormValidator {
 
     /**
      * Validates whether the specified TextField neither null nor empty.
+     *
      * @param textField the TextField to validate
      * @return true if the TextField is not empty, false otherwise.
      */
@@ -80,6 +84,7 @@ public class FormValidator {
 
     /**
      * Validates whether the specified input is a valid grade notation.
+     *
      * @param textField the TextField to check
      * @return true if the text matches the grade notation syntax
      */
@@ -98,28 +103,37 @@ public class FormValidator {
         return false;
     }
 
-    public boolean passwordFieldsAreSimilar (PasswordField passwordField,PasswordField passwordFieldRewrite){
+    public boolean passwordFieldsAreSimilar(PasswordField passwordField, PasswordField passwordFieldRewrite) {
         if (passwordField.getText().equals(passwordFieldRewrite.getText())) {
             return true;
-        }
-        else{
+        } else {
             failValidation();
             return false;
         }
     }
 
     public boolean hasSetValue(DatePicker datePicker) {
-        removeClass(datePicker, MISSING_DATE);
+        removeClass(datePicker, ERROR_BORDER);
         removeClass(datePicker.getEditor(), ERROR_PROMPT_TEXT);
-        if (datePicker.getValue() != null) {
-            return true;
-        } else {
-            addClass(datePicker, MISSING_DATE);
+
+        if (datePicker.getEditor().getText().trim().isEmpty()) {
+            addClass(datePicker, ERROR_BORDER);
             addClass(datePicker.getEditor(), ERROR_PROMPT_TEXT);
             datePicker.setPromptText(bundle.getString("ui.validation.missing_date"));
             failValidation();
             return false;
         }
+
+        try {
+            datePicker.setValue(datePicker.getConverter().fromString(datePicker.getEditor().getText()));
+            return true;
+        } catch (DateTimeParseException e) {
+            e.printStackTrace();
+            addClass(datePicker, ERROR_BORDER);
+            failValidation();
+            return false;
+        }
+
     }
 
     private static void addClass(Node control, String className) {
