@@ -17,6 +17,7 @@ public class FormValidator {
     private static final String NULL = "null";
     private static final String ERROR_PROMPT_TEXT = "error_prompt_text";
     private static final String MISSING_DATE = "missing_date";
+    private static final String ERROR_BORDER = "error_border";
 
     private static ResourceBundle bundle = GuiLoader.getResourceBundle();
 
@@ -65,8 +66,9 @@ public class FormValidator {
      * @return true if the TextField is not empty, false otherwise.
      */
     public boolean textFieldNotEmpty(TextField textField) {
-        if (textField.getText() != null && textField.getText().length() > 0) {
+        if (textField.getText() != null && textField.getText().trim().length() > 0) {
             removeClass(textField, ERROR_PROMPT_TEXT);
+            textField.setPromptText("");
             return true;
         } else {
             addClass(textField, ERROR_PROMPT_TEXT);
@@ -82,13 +84,18 @@ public class FormValidator {
      * @return true if the text matches the grade notation syntax
      */
     public boolean isValidGrade(TextField textField) {
-        String grade = textField.getText();
-        if (grade.matches("^\\d[,.]\\d{1,2}$")) {
-            return true;
-        } else {
-            failValidation();
-            return false;
+        if (textFieldNotEmpty(textField)) {
+            removeClass(textField, ERROR_BORDER);
+            String grade = textField.getText();
+            if (grade.matches("^\\d[,.]\\d{1,2}$")) {
+                return true;
+            } else {
+                addClass(textField, ERROR_BORDER);
+                failValidation();
+                return false;
+            }
         }
+        return false;
     }
 
     public boolean passwordFieldsAreSimilar (PasswordField passwordField,PasswordField passwordFieldRewrite){
