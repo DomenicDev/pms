@@ -428,6 +428,7 @@ public class DoctoralStudentFormController implements Initializable {
         salutationComboBox.getSelectionModel().select(RepresentationWrapper.find(personalData.getSalutation(), salutationComboBox.getItems()));
         genderComboBox.getSelectionModel().select(RepresentationWrapper.find(personalData.getGender(), genderComboBox.getItems()));
         childrenCountComboBox.getSelectionModel().select(personalData.getNumberOfChildren());
+        familyStatusComboBox.getSelectionModel().select(RepresentationWrapper.find(personalData.getFamilyStatus(), familyStatusComboBox.getItems()));
 
         // address
         plzTextField.setText(personalAddress.getPlz());
@@ -506,7 +507,7 @@ public class DoctoralStudentFormController implements Initializable {
         jobTitleTextField.setText(alumniState.getJobTitle());
         employerTextField.setText(alumniState.getEmployer());
         agreementNewsCheckBox.setSelected(alumniState.isAgreementNews());
-        alumniState.setAgreementEvaluation(alumniState.isAgreementEvaluation());
+        agreementEvaluationCheckBox.setSelected(alumniState.isAgreementEvaluation());
 
         // documents
         if (doctoralStudent.getDocuments() != null) {
