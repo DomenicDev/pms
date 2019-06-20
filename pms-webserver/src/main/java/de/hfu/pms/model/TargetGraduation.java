@@ -45,7 +45,7 @@ public class TargetGraduation {
     private Rating rating;
 
     @Column
-    private Boolean promotionCanceled;
+    private boolean promotionCanceled;
 
     @Column
     private LocalDate cancelDate;
@@ -54,7 +54,7 @@ public class TargetGraduation {
     private String cancelReason;
 
     @Column
-    private Boolean memberOfHFUKolleg;
+    private boolean memberOfHFUKolleg;
 
     @Column
     private LocalDate membershipHFUKollegBegin;
@@ -63,13 +63,13 @@ public class TargetGraduation {
     private LocalDate membershipHFUKollegEnd;
 
     @Column
-    private Boolean membershipExtended;
+    private boolean membershipExtended;
 
     @Column
     private LocalDate extendedMembershipEndDate;
 
     @Column
-    private Boolean memberOfExternalKolleg;
+    private boolean memberOfExternalKolleg;
 
     @Column
     private String externalProgram;

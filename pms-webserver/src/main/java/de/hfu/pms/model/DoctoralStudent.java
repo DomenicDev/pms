@@ -40,7 +40,7 @@ public class DoctoralStudent implements Serializable {
     private Set<Document> documents;
 
     @Column
-    private Boolean anonymized = false;
+    private boolean anonymized;
 
     /**
      * Default constructor.
@@ -53,6 +53,7 @@ public class DoctoralStudent implements Serializable {
         this.support = new Support();
         this.alumniState = new AlumniState();
         this.documents = new HashSet<>();
+        this.anonymized = false;
     }
 
     /**
@@ -72,6 +73,7 @@ public class DoctoralStudent implements Serializable {
         this.support = support;
         this.alumniState = alumniState;
         this.documents = documents;
+        this.anonymized = false;
     }
 
     // GETTER AND SETTER
