@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
-<VBox spacing="10.0" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.StartscreenControlerApplication">
+<VBox spacing="30.0" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.StartscreenControlerApplication">
    <children>
-      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="300.0">
+      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
          <children>
             <Label fx:id="welcomeLabel" alignment="TOP_LEFT" text="%ui.label.greeting">
                <font>
@@ -19,43 +20,12 @@
             </Label>
             <Label fx:id="DescriptionApplication" text="%ui.label.BeschreibungApllikation" wrapText="true">
                <VBox.margin>
-                  <Insets left="30.0" right="10.0" top="30.0" />
+                  <Insets left="30.0" right="30.0" top="30.0" />
                </VBox.margin>
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <VBox minWidth="130.0">
-               <children>
-                  <Hyperlink onAction="#handleHomepage" text="HFU-Homepage">
-                     <VBox.margin>
-                        <Insets left="10.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Hyperlink>
-                  <Hyperlink onAction="#handleFelixHFUEvent" text="HFU-Felix">
-                     <VBox.margin>
-                        <Insets left="10.0" top="10.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Hyperlink>
-                  <Hyperlink onAction="#handleHFUWebmailEvent" text="HFU-Webmail">
-                     <VBox.margin>
-                        <Insets left="10.0" top="10.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Hyperlink>
-               </children>
-               <VBox.margin>
-                  <Insets left="30.0" top="40.0" />
-               </VBox.margin>
-            </VBox>
          </children>
       </VBox>
       <VBox maxWidth="1.7976931348623157E308" prefHeight="175.0">
@@ -65,20 +35,14 @@
                   <VBox>
                      <children>
                         <Label fx:id="headingTabelDescription" text="%ui.label.TabelleUeberschrift">
-                           <padding>
-                              <Insets left="10.0" right="10.0" />
-                           </padding>
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                            <VBox.margin>
-                              <Insets left="20.0" />
+                              <Insets left="20.0" right="10.0" />
                            </VBox.margin>
                         </Label>
                         <Label fx:id="DescriptionTable" text="%ui.label.Tabellebeschreibung" wrapText="true">
-                           <padding>
-                              <Insets left="10.0" right="10.0" />
-                           </padding>
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -101,7 +65,8 @@
                         <ListView fx:id="alertListView" maxHeight="100.0">
                            <VBox.margin>
                               <Insets right="10.0" />
-                           </VBox.margin></ListView>
+                           </VBox.margin>
+                        </ListView>
                      </children>
                      <HBox.margin>
                         <Insets right="30.0" />
@@ -140,7 +105,8 @@
                                  </VBox.margin>
                                  <font>
                                     <Font size="14.0" />
-                                 </font></Label>
+                                 </font>
+                              </Label>
                            </children>
                         </VBox>
                         <VBox prefHeight="200.0" prefWidth="100.0">
@@ -148,8 +114,10 @@
                               <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleAddDoctoralStudentButton" prefHeight="100.0" prefWidth="300.0" styleClass="button-sidebar" text="Neuen Doktoranten Hinzufügen" VBox.vgrow="ALWAYS">
                                  <font>
                                     <Font size="14.0" />
-                                 </font></Button>
-                           </children></VBox>
+                                 </font>
+                              </Button>
+                           </children>
+                        </VBox>
                      </children>
                      <HBox.margin>
                         <Insets bottom="10.0" />
@@ -177,7 +145,8 @@
                                  </VBox.margin>
                                  <font>
                                     <Font size="14.0" />
-                                 </font></Label>
+                                 </font>
+                              </Label>
                            </children>
                         </VBox>
                         <VBox prefHeight="200.0" prefWidth="100.0">
@@ -185,8 +154,10 @@
                               <Button mnemonicParsing="false" onAction="#handleAddUniversityButton" prefHeight="100.0" prefWidth="300.0" styleClass="button-sidebar" text="Neue Universität Hinzufügen">
                                  <font>
                                     <Font size="14.0" />
-                                 </font></Button>
-                           </children></VBox>
+                                 </font>
+                              </Button>
+                           </children>
+                        </VBox>
                      </children>
                      <HBox.margin>
                         <Insets bottom="10.0" />
@@ -217,7 +188,8 @@
                                  </VBox.margin>
                                  <font>
                                     <Font size="14.0" />
-                                 </font></Label>
+                                 </font>
+                              </Label>
                            </children>
                         </VBox>
                         <VBox prefHeight="200.0" prefWidth="100.0">
@@ -225,8 +197,10 @@
                               <Button mnemonicParsing="false" onAction="#handleChangeAccoutinformationButton" prefHeight="100.0" prefWidth="300.0" styleClass="button-sidebar" text="Accounteinstellungen Bearbeiten">
                                  <font>
                                     <Font size="14.0" />
-                                 </font></Button>
-                           </children></VBox>
+                                 </font>
+                              </Button>
+                           </children>
+                        </VBox>
                      </children>
                      <HBox.margin>
                         <Insets bottom="10.0" />
