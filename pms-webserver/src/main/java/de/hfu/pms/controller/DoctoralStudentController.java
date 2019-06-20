@@ -134,23 +134,23 @@ public class DoctoralStudentController {
         Collection<DoctoralStudent> exceededStudents = new HashSet<>();
         LocalDate now = LocalDate.now();
 
-        // ToDo: THIS LOGIC IS TOTALLY WRONG !!! WE NEED TO IMPLEMENT THE CORRECT ONE LATER !!!
-
         for (DoctoralStudent student : all) {
             TargetGraduation targetGraduation = student.getTargetGraduation();
             if (targetGraduation == null) continue;
-            LocalDate beginDate = targetGraduation.getPromotionAdmissionDate(); // begin of promotion
-            if (beginDate == null) continue;
 
-            // todo: we need to check some pre conditions still...
-            // e.g. checking for canceled promotion, already finished promotion etc.
+            // check if student has already finished its promotion
+            // also make sure that student has neither canceled its promotion nor has been anonymized
+            if (targetGraduation.getPromotionCanceled() || student.getAnonymized() || targetGraduation.getProcedureCompleted() != null) continue;
 
-            // we compute the date the alert should start
-            LocalDate exceedingDate = beginDate.plusYears(4).minusMonths(4);
+            LocalDate endDate = targetGraduation.getPrognosticatedPromotionDate(); // end of promotion
+            if (endDate == null) continue;
+
+            // we want to alert 2 months before the prognosticated end date
+            LocalDate alertDate = endDate.minusMonths(2);
 
             // if we already reached that exceeding date we know
             // that this student needs to be alerted
-            if (now.isAfter(exceedingDate)) {
+            if (now.isAfter(alertDate)) {
                 exceededStudents.add(student);
             }
 
