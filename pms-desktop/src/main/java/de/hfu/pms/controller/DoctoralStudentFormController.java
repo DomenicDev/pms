@@ -1129,7 +1129,7 @@ public class DoctoralStudentFormController implements Initializable {
     @FXML
     private void handleOnActionBrowseDocuments(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Dokumentenauswahl");
+        fileChooser.setTitle(bundle.getString("ui.label.selection_of_documents"));
         Collection<File> selectedFiles = fileChooser.showOpenMultipleDialog(null);
 
         if (selectedFiles == null) {
@@ -1150,14 +1150,14 @@ public class DoctoralStudentFormController implements Initializable {
     @FXML
     private void handleOnActionDeleteDocument(ActionEvent actionEvent) {
         if (documentsListView.getSelectionModel().getSelectedItems().size() < 1) {
-            eventBus.post(new AlertNotificationEvent(1, "Bitte wählen Sie ein zu entfernendes Dokument aus."));
+            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.INFO,bundle.getString("ui.alert.deleteDocument_selected")));
             return;
         }
 
         //confirm dialog
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Dokumente Entfernen");
-        alert.setHeaderText("Sie sind dabei folgende Dokumente aus der Liste zu entfernen: ");
+        alert.setTitle(bundle.getString("ui.alert.title.deleteDocuments"));
+        alert.setHeaderText(bundle.getString("ui.alert.header.deleteDocuments"));
 
         String documentNames = "";
         for (DocumentInformationDTO file : documentsListView.getSelectionModel().getSelectedItems()) {
@@ -1188,7 +1188,7 @@ public class DoctoralStudentFormController implements Initializable {
     private void handleOnActionDownloadDocuments(ActionEvent actionEvent) {
         Collection<DocumentInformationDTO> selectedFiles = documentsListView.getSelectionModel().getSelectedItems();
         if (selectedFiles.size() < 1) {
-            eventBus.post(new AlertNotificationEvent(1, "Bitte wählen Sie ein zu herunterladendes Dokument aus."));
+            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.INFO,bundle.getString("ui.alert.download_selected")));
             return;
         }
         Collection<DocumentInformationDTO> downloadable = new HashSet<>();
@@ -1206,9 +1206,8 @@ public class DoctoralStudentFormController implements Initializable {
         if (notDownloadable.size() > 0) {
             //confirm dialog
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Dokument(e) nicht zugeordnet");
-            alert.setHeaderText("Folgende Dokumente sind dem Datensatz noch nicht zugeordnet und werden deshalb beim Download ignoriert:");
-
+            alert.setTitle(bundle.getString("ui.alert.documents_not_associated"));
+            alert.setHeaderText(bundle.getString("ui.alert.documents_download_selection"));
             String documentNames = "";
             for (DocumentInformationDTO file : notDownloadable) {
                 documentNames += file.getFilename() + "\n";
