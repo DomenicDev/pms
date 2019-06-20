@@ -15,8 +15,6 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -30,6 +28,7 @@ import org.apache.log4j.Logger;
 
 import java.net.URL;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.ResourceBundle;
 
 
@@ -61,7 +60,21 @@ public class DoctoralStudentOverviewController implements Initializable {
     @FXML
     private TableColumn<PreviewDoctoralStudentDTO, Gender> searchResultGenderTableColumn;
 
-    ObservableList<PreviewDoctoralStudentDTO> masterData = FXCollections.observableArrayList();
+    /* ************ */
+    /* Check Boxes  */
+    /* ************ */
+    @FXML
+    private CheckBox activeCheckBox;
+    @FXML
+    private CheckBox inactiveCheckBox;
+    @FXML
+    private CheckBox anonymizedCheckBox;
+    @FXML
+    private CheckBox memberCheckBox;
+
+    private ObservableList<PreviewDoctoralStudentDTO> masterData = FXCollections.observableArrayList();
+    private Collection<PreviewDoctoralStudentDTO> filteredMasterData = new HashSet<>(); // filtered by check boxes
+    private Collection<PreviewDoctoralStudentDTO> searchResult = new HashSet<>();
 
 
     @Override
@@ -74,7 +87,8 @@ public class DoctoralStudentOverviewController implements Initializable {
 
         // init with previews
         Collection<PreviewDoctoralStudentDTO> previews = EntityPool.getInstance().getPreviewStudents();
-        searchResultTableView.getItems().addAll(previews);
+        masterData.addAll(previews);
+        searchResultTableView.getItems().addAll(masterData);
 
         // open edit window on double mouse click
         searchResultTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -110,6 +124,78 @@ public class DoctoralStudentOverviewController implements Initializable {
 
 
          */
+        initCheckBoxes();
+    }
+
+    private void initCheckBoxes() {
+        activeCheckBox.setSelected(true);
+
+        onCheckBoxSelectionChanged();
+    }
+
+    @FXML
+    private void onCheckBoxSelectionChanged() {
+
+        Collection<PreviewDoctoralStudentDTO> filteredPreviews = new HashSet<>();
+        if (activeCheckBox.isSelected()) {
+            filteredPreviews.addAll(getForActivity(true));
+        }
+        if (inactiveCheckBox.isSelected()) {
+            filteredPreviews.addAll(getForActivity(false));
+        }
+        if (memberCheckBox.isSelected()) {
+            if (activeCheckBox.isSelected() || inactiveCheckBox.isSelected()) {
+                Collection<PreviewDoctoralStudentDTO> newFiltered = getMembers(filteredPreviews);
+                filteredPreviews.clear();
+                filteredPreviews.addAll(newFiltered);
+            } else {
+                Collection<PreviewDoctoralStudentDTO> newFiltered = getMembers(masterData);
+                filteredPreviews.clear();
+                filteredPreviews.addAll(newFiltered);
+            }
+        }
+        if (anonymizedCheckBox.isSelected()) {
+            filteredPreviews.addAll(getAnonymizedPreviews());
+        }
+        searchResultTableView.getItems().clear();
+        searchResultTableView.getItems().addAll(filteredPreviews);
+
+        this.filteredMasterData.clear();
+        this.filteredMasterData = filteredPreviews;
+
+        if (!searchTextField.getText().trim().isEmpty()) {
+            filterForSearchResult();
+        }
+    }
+
+    private Collection<PreviewDoctoralStudentDTO> getForActivity(boolean active) {
+        Collection<PreviewDoctoralStudentDTO> actives = new HashSet<>();
+        for (PreviewDoctoralStudentDTO preview : masterData) {
+            if (preview.isActive() == active) {
+                actives.add(preview);
+            }
+        }
+        return actives;
+    }
+
+    private Collection<PreviewDoctoralStudentDTO> getMembers(Collection<PreviewDoctoralStudentDTO> listToFilter) {
+        Collection<PreviewDoctoralStudentDTO> actives = new HashSet<>();
+        for (PreviewDoctoralStudentDTO preview : listToFilter) {
+            if (preview.isMemberHFUCollege()) {
+                actives.add(preview);
+            }
+        }
+        return actives;
+    }
+
+    private Collection<PreviewDoctoralStudentDTO> getAnonymizedPreviews() {
+        Collection<PreviewDoctoralStudentDTO> actives = new HashSet<>();
+        for (PreviewDoctoralStudentDTO preview : masterData) {
+            if (preview.isAnonymized()) {
+                actives.add(preview);
+            }
+        }
+        return actives;
     }
 
     @FXML
@@ -161,44 +247,13 @@ public class DoctoralStudentOverviewController implements Initializable {
 
     @FXML
     public void handleOnActionSearch() {
-        //Suchfunktion
+        String searchText = searchTextField.getText();
+        if (searchText != null && !searchText.trim().isEmpty()) {
+            eventBus.post(new RequestSearchDoctoralStudentEvent(searchText));
+        } else {
+            // empty search box... so load all previews
 
-        FilteredList<PreviewDoctoralStudentDTO> filteredData = new FilteredList<>(masterData, p -> true);
-
-        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(pers -> {
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
-                String input = newValue.toLowerCase();
-                if (pers.getForeName().toLowerCase().indexOf(input) != -1) {
-                    return true;
-                }
-                if (pers.getName().toLowerCase().indexOf(input) != -1) {
-                    return true;
-                }
-                if (pers.getFaculty().toString().toLowerCase().contains(input)) {
-                    return true;
-                }
-                if (pers.getEmail().toLowerCase().indexOf(input) != -1) {
-                    return true;
-                }
-                if (pers.getGender().toString().toLowerCase().matches(input)) {
-                    return true;
-                }
-                if (pers.getPhoneNumber().toLowerCase().indexOf(input) != -1) {
-                    return true;
-                }
-
-                return false;
-            });
-
-            SortedList<PreviewDoctoralStudentDTO> sortedList = new SortedList<>(filteredData);
-            sortedList.comparatorProperty().bind(searchResultTableView.comparatorProperty());
-            searchResultTableView.setItems(sortedList);
-        });
-
-
+        }
     }
 
     private void initPreviewTables() {
@@ -210,7 +265,7 @@ public class DoctoralStudentOverviewController implements Initializable {
         searchResultPhoneNumberTableColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
         searchResultGenderTableColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
 
-        searchResultTableView.setRowFactory(new Callback<TableView<PreviewDoctoralStudentDTO>, TableRow<PreviewDoctoralStudentDTO>>() {
+        searchResultTableView.setRowFactory(new Callback<>() {
             @Override
             public TableRow<PreviewDoctoralStudentDTO> call(TableView<PreviewDoctoralStudentDTO> tableView2) {
                 final TableRow<PreviewDoctoralStudentDTO> row = new TableRow<>();
@@ -229,6 +284,10 @@ public class DoctoralStudentOverviewController implements Initializable {
         });
     }
 
+   private void refreshTable() {
+        onCheckBoxSelectionChanged();
+   }
+
     private void addToTable(DoctoralStudentDTO doctoralStudentDTO) {
         if (doctoralStudentDTO == null) {
             logger.log(Level.DEBUG, "null values cannot be added to the preview table");
@@ -236,24 +295,19 @@ public class DoctoralStudentOverviewController implements Initializable {
         }
 
         PreviewDoctoralStudentDTO preview = Converter.convert(doctoralStudentDTO);
-        this.searchResultTableView.getItems().add(preview);
+        this.masterData.add(preview);
+        refreshTable();
     }
 
-    private void updateTable(DoctoralStudentDTO updatedDoctoralStudent) {
-        PreviewDoctoralStudentDTO preview = Converter.convert(updatedDoctoralStudent);
-        CollectionUtils.removeFromList(preview, searchResultTableView.getItems(), (original, collectionItem) -> original.getId().equals(collectionItem.getId()));
-        searchResultTableView.getItems().add(preview);
+    private void updateTable(PreviewDoctoralStudentDTO preview) {
+        CollectionUtils.removeFromList(preview, masterData, (original, collectionItem) -> original.getId().equals(collectionItem.getId()));
+        masterData.add(preview);
+        refreshTable();
     }
 
     private void deleteFromTable(Long id) {
-        PreviewDoctoralStudentDTO toDelete = null;
-        for (PreviewDoctoralStudentDTO preview : searchResultTableView.getItems()) {
-            if (preview.getId().equals(id)) {
-                toDelete = preview;
-                break;
-            }
-        }
-        searchResultTableView.getItems().remove(toDelete);
+        CollectionUtils.removeFromList(masterData, collectionItem -> id.equals(collectionItem.getId()));
+        refreshTable();
     }
 
     @Subscribe
@@ -270,5 +324,28 @@ public class DoctoralStudentOverviewController implements Initializable {
     @Subscribe
     public void handle(SuccessfullyDeletedDoctoralStudentEvent event) {
         deleteFromTable(event.getId());
+    }
+
+    @Subscribe
+    public void handle(ResponseSearchRequestEvent event) {
+        this.searchResult = event.getPreviews();
+        filterForSearchResult();
+    }
+
+    /**
+     * This method will make only the items visible that
+     * match the search text.
+     */
+    private void filterForSearchResult() {
+        // look up the (already) filtered master data for matching items
+        Collection<PreviewDoctoralStudentDTO> newFilter = new HashSet<>();
+        for (PreviewDoctoralStudentDTO shownPreview : filteredMasterData) {
+            if (searchResult.contains(shownPreview)) {
+                newFilter.add(shownPreview);
+            }
+        }
+
+        searchResultTableView.getItems().clear();
+        searchResultTableView.getItems().addAll(newFilter);
     }
 }

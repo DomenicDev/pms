@@ -115,6 +115,13 @@ public class DoctoralStudentController {
         return convertToPreview(doctoralStudents);
     }
 
+    @GetMapping("/preview/{id}")
+    public PreviewDoctoralStudentDTO getPreview(@PathVariable Long id) {
+        DoctoralStudent entity = doctoralStudentService.findById(id);
+        DoctoralStudentDTO dto = convertToDTO(entity);
+        return Converter.convert(dto);
+    }
+
     @GetMapping("/get/{id}")
     public DoctoralStudentDTO getDoctoralStudent(@PathVariable Long id) {
         DoctoralStudent student = doctoralStudentService.findById(id);
@@ -151,6 +158,16 @@ public class DoctoralStudentController {
 
         // return preview dto objects for exceeding students
         return convertToPreview(exceededStudents);
+    }
+
+    @GetMapping("/search/{keyword}")
+    public Collection<PreviewDoctoralStudentDTO> searchResult(@PathVariable String keyword) {
+        if (keyword == null) {
+            return null;
+        }
+
+        Collection<DoctoralStudent> searchResult = doctoralStudentService.search(keyword);
+        return convertToPreview(searchResult);
     }
 
     @PostMapping("/delete/{id}")

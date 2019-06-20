@@ -45,6 +45,9 @@ public class TargetGraduation {
     private Rating rating;
 
     @Column
+    private Boolean promotionCanceled;
+
+    @Column
     private LocalDate cancelDate;
 
     @Column
@@ -255,5 +258,13 @@ public class TargetGraduation {
 
     public void setMembershipExtended(Boolean membershipExtended) {
         this.membershipExtended = membershipExtended;
+    }
+
+    public Boolean getPromotionCanceled() {
+        return promotionCanceled;
+    }
+
+    public void setPromotionCanceled(Boolean promotionCanceled) {
+        this.promotionCanceled = promotionCanceled;
     }
 }

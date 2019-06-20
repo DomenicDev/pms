@@ -13,7 +13,6 @@ import de.hfu.pms.exceptions.LoginFailedException;
 import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.*;
 import de.hfu.pms.shared.enums.UserRole;
-import javafx.collections.transformation.SortedList;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -96,11 +95,20 @@ public class ApplicationServiceImpl implements ApplicationServices {
 
     @Override
     public AnonymizeResultDTO anonymize(Long studentID) throws BusinessException {
-        try{
+        try {
             String response = restClient.get(HOST_URL + STUDENT_PREFIX + "anonymize/" + studentID);
             return toObject(response, AnonymizeResultDTO.class);
-        }catch (IOException e){
+        } catch (IOException e) {
             throw new BusinessException("could not anonymize");
+        }
+    }
+
+    @Override
+    public PreviewDoctoralStudentDTO getPreview(Long id) throws BusinessException {
+        try {
+            return toObject(restClient.get(STUDENT_SERVICES + "preview/" + id), PreviewDoctoralStudentDTO.class);
+        } catch (IOException e) {
+            throw new BusinessException(e.getMessage());
         }
     }
 
@@ -129,8 +137,13 @@ public class ApplicationServiceImpl implements ApplicationServices {
     }
 
     @Override
-    public SortedList<DoctoralStudentDTO> searchDoctoralStudents(String keyword) {
-        return null;
+    public Collection<PreviewDoctoralStudentDTO> searchDoctoralStudents(String keyword) throws BusinessException {
+        try {
+            String response = restClient.get(STUDENT_SERVICES + "search/" + keyword);
+            return mapper.readValue(response, new TypeReference<List<PreviewDoctoralStudentDTO>>() {});
+        } catch (IOException e) {
+            throw new BusinessException(e.getMessage());
+        }
     }
 
     @Override
@@ -387,7 +400,7 @@ public class ApplicationServiceImpl implements ApplicationServices {
         changeDTO.setEmail(email);
 
         try {
-            String response = restClient.patchJson(USER_SERVICES + "patch/"+username, mapper.writeValueAsString(changeDTO));
+            String response = restClient.patchJson(USER_SERVICES + "patch/" + username, mapper.writeValueAsString(changeDTO));
             return mapper.readValue(response, UserInfoDTO.class);
         } catch (IOException e) {
             throw new BusinessException(e.getMessage());

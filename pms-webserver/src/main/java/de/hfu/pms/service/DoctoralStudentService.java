@@ -2,6 +2,7 @@ package de.hfu.pms.service;
 
 import de.hfu.pms.model.*;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface DoctoralStudentService {
@@ -21,13 +22,12 @@ public interface DoctoralStudentService {
 
     DoctoralStudent findById(Long id);
 
+    Collection<DoctoralStudent> search(String searchText);
+
     void remove(Long id);
 
     DoctoralStudent anonymize(Long id);
 
     List<DoctoralStudent> getAll();
-
-    List<DoctoralStudent> search();
-
 
 }

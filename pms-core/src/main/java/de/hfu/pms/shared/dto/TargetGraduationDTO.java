@@ -16,6 +16,7 @@ public class TargetGraduationDTO {
     private LocalDate promotionAccepted;
     private LocalDate procedureCompleted;
     private Rating rating;
+    private boolean promotionCanceled;
     private LocalDate cancelDate;
     private String cancelReason;
     private boolean memberOfHFUKolleg;
@@ -108,6 +109,14 @@ public class TargetGraduationDTO {
 
     public void setRating(Rating rating) {
         this.rating = rating;
+    }
+
+    public boolean isPromotionCanceled() {
+        return promotionCanceled;
+    }
+
+    public void setPromotionCanceled(boolean promotionCanceled) {
+        this.promotionCanceled = promotionCanceled;
     }
 
     public LocalDate getCancelDate() {

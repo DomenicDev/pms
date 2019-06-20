@@ -90,6 +90,8 @@ public class DatabaseInit implements CommandLineRunner {
         student.getTargetGraduation().setNameOfDissertation("Thema der Dissertation");
         student.getTargetGraduation().setTargetDegree(DoctoralGraduation.Dr_sc_nat.name());
         student.getTargetGraduation().setPromotionAdmissionDate(LocalDate.of(2014, 4, 22));
+        student.getTargetGraduation().setPrognosticatedPromotionDate(LocalDate.of(2019, 12, 5));
+        student.getTargetGraduation().setPromotionAgreement(LocalDate.of(2017, 12, 5));
 
         // save test doctoral student
         doctoralStudentDao.save(student);

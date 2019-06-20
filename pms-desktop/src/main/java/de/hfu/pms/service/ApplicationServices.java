@@ -4,7 +4,6 @@ import de.hfu.pms.exceptions.BusinessException;
 import de.hfu.pms.exceptions.LoginFailedException;
 import de.hfu.pms.shared.dto.*;
 import de.hfu.pms.shared.enums.UserRole;
-import javafx.collections.transformation.SortedList;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -24,11 +23,13 @@ public interface ApplicationServices {
 
     AnonymizeResultDTO anonymize(Long studentID) throws BusinessException;
 
+    PreviewDoctoralStudentDTO getPreview(Long id) throws BusinessException;
+
     Collection<PreviewDoctoralStudentDTO> getPreviews();
 
     DoctoralStudentDTO getDoctoralStudent(Long studentID) throws IOException;
 
-    SortedList<DoctoralStudentDTO> searchDoctoralStudents(String keyword);
+    Collection<PreviewDoctoralStudentDTO> searchDoctoralStudents(String keyword) throws BusinessException;
 
     Collection<PreviewDoctoralStudentDTO> getAlertedDoctoralStudents() throws IOException;
 

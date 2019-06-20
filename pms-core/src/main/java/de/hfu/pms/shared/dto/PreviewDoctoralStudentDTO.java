@@ -2,6 +2,8 @@ package de.hfu.pms.shared.dto;
 
 import de.hfu.pms.shared.enums.Gender;
 
+import java.util.Objects;
+
 public class PreviewDoctoralStudentDTO {
 
     private Long id;
@@ -11,6 +13,9 @@ public class PreviewDoctoralStudentDTO {
     private String email;
     private String phoneNumber;
     private Gender gender;
+    private boolean active;
+    private boolean anonymized;
+    private boolean memberHFUCollege;
 
     public PreviewDoctoralStudentDTO() {
     }
@@ -84,6 +89,52 @@ public class PreviewDoctoralStudentDTO {
 
     public void setGender(Gender gender) {
         this.gender = gender;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public boolean isAnonymized() {
+        return anonymized;
+    }
+
+    public void setAnonymized(boolean anonymized) {
+        this.anonymized = anonymized;
+    }
+
+    public boolean isMemberHFUCollege() {
+        return memberHFUCollege;
+    }
+
+    public void setMemberHFUCollege(boolean memberHFUCollege) {
+        this.memberHFUCollege = memberHFUCollege;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PreviewDoctoralStudentDTO that = (PreviewDoctoralStudentDTO) o;
+        return active == that.active &&
+                anonymized == that.anonymized &&
+                memberHFUCollege == that.memberHFUCollege &&
+                Objects.equals(id, that.id) &&
+                Objects.equals(foreName, that.foreName) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(faculty, that.faculty) &&
+                Objects.equals(email, that.email) &&
+                Objects.equals(phoneNumber, that.phoneNumber) &&
+                gender == that.gender;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, foreName, name, faculty, email, phoneNumber, gender, active, anonymized, memberHFUCollege);
     }
 
     @Override

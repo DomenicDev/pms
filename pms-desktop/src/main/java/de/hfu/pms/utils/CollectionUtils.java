@@ -25,6 +25,21 @@ public class CollectionUtils {
     }
 
     /**
+     * Simplified callback for simple query callbacks
+     * @param <T> the type of the collection items
+     */
+    public interface SimpleCallback<T> {
+
+        /**
+         * Used to decide whether a special action shall be executed,
+         * e.g. by checking the items data.
+         * @param collectionItem the collection item to be checked
+         * @return true if action shall be executed on this item, false otherwise
+         */
+        boolean check(T collectionItem);
+    }
+
+    /**
      * Use this method to remove all items which do not pass the specified callback.
      * E.g. This can be useful when all items with a certain attribute value shall be removed (works as filter).
      * @param item the item that can be used within the callback
@@ -36,6 +51,16 @@ public class CollectionUtils {
         Collection<T> itemsToRemove = new LinkedList<>();
         for (T t : collection) {
             if (callback.check(item, t)) {
+                itemsToRemove.add(t);
+            }
+        }
+        collection.removeAll(itemsToRemove);
+    }
+
+    public static <T> void removeFromList(Collection<T> collection, SimpleCallback<T> callback) {
+        Collection<T> itemsToRemove = new LinkedList<>();
+        for (T t : collection) {
+            if (callback.check(t)) {
                 itemsToRemove.add(t);
             }
         }

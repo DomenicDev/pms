@@ -252,8 +252,26 @@ public class GuiEventHandler {
             applicationServices.patchDoctoralStudent(event.getPatchDoctoralStudentDTO());
             // successfully patched
             eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.INFO, "Successfully patched"));
+
+            PreviewDoctoralStudentDTO preview = applicationServices.getPreview(event.getPatchDoctoralStudentDTO().getId());
+            eventBus.post(new SuccessfullyUpdatedDoctoralStudentEvent(preview));
         } catch (BusinessException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Subscribe
+    public void handle(RequestSearchDoctoralStudentEvent event) {
+        String searchText = event.getSearchText();
+        if (searchText != null) {
+            try {
+                Collection<PreviewDoctoralStudentDTO> previews = applicationServices.searchDoctoralStudents(searchText);
+                if (previews != null) {
+                    eventBus.post(new ResponseSearchRequestEvent(previews));
+                }
+            } catch (BusinessException e) {
+                e.printStackTrace();
+            }
         }
     }
 
