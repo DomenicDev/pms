@@ -2,6 +2,7 @@ package de.hfu.pms.controller;
 
 import de.hfu.pms.shared.dto.EmploymentEntryDTO;
 import de.hfu.pms.shared.enums.Campus;
+import de.hfu.pms.utils.FormValidator;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -37,12 +38,24 @@ public class EmploymentController extends AbstractPropertyFormController<Employm
     @Override
     public void writeProperty() throws IllegalArgumentException {
         // extract values from gui elements
+
+        FormValidator validator = new FormValidator();
+        validator.textFieldNotEmpty(employmentLocationTextField);
+        validator.textFieldNotEmpty(kindOfEmploymentTextField);
+        validator.comboBoxHasSelectedItem(employmentCampusComboBox);
+        validator.hasSetValue(employmentBeginDatePicker);
+        validator.hasSetValue(employmentEndDatePicker);
+
+        // we want to make sure all fields are set
+        if (!validator.validationSuccessful()) {
+            throw new IllegalArgumentException("validation was not successful");
+        }
+
         String location = this.employmentLocationTextField.getText();
         String kindOfEmployment = this.kindOfEmploymentTextField.getText();
         Campus campus = this.employmentCampusComboBox.getValue();
         LocalDate begin = employmentBeginDatePicker.getValue();
         LocalDate end = employmentEndDatePicker.getValue();
-        // ToDo: check for null values or empty strings
 
         // create dto object and fill with data
         property = new EmploymentEntryDTO();

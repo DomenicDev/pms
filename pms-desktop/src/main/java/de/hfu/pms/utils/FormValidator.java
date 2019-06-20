@@ -136,6 +136,36 @@ public class FormValidator {
 
     }
 
+    public boolean correctSum(TextField textField) {
+        if (textFieldNotEmpty(textField)) {
+            String text = textField.getText();
+            removeClass(textField, ERROR_BORDER);
+            if (text.matches("^((0|[1-9]\\d*)|[1-9]{1,3}(\\.\\d{3})*)(,\\d{2})?$")) {
+                return true;
+            } else {
+                addClass(textField, ERROR_BORDER);
+                failValidation();
+                return false;
+            }
+        }
+        return false;
+    }
+
+    public boolean correctInt(TextField textField) {
+        if (textFieldNotEmpty(textField)) {
+            removeClass(textField, ERROR_BORDER);
+            try {
+                Integer.parseInt(textField.getText());
+                return true;
+            } catch (NumberFormatException e) {
+                failValidation();
+                addClass(textField, ERROR_BORDER);
+                return false;
+            }
+        }
+        return false;
+    }
+
     private static void addClass(Node control, String className) {
         control.getStyleClass().add(className);
     }

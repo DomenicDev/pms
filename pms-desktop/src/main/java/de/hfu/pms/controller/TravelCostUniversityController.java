@@ -1,15 +1,13 @@
 package de.hfu.pms.controller;
 
 import de.hfu.pms.shared.dto.TravelCostUniversityDTO;
+import de.hfu.pms.utils.FormValidator;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
 import java.math.BigDecimal;
-import java.text.NumberFormat;
-import java.text.ParseException;
 import java.time.LocalDate;
-import java.util.Locale;
 
 public class TravelCostUniversityController extends AbstractPropertyFormController<TravelCostUniversityDTO> {
 
@@ -21,32 +19,28 @@ public class TravelCostUniversityController extends AbstractPropertyFormControll
 
     @Override
     public void writeProperty() throws IllegalArgumentException {
-        if (property == null) {
-            property = new TravelCostUniversityDTO();
-        }
-        LocalDate date = datePicker.getValue();
-        String sum = sumSupportTextField.getText();
-        if (!sum.matches("^\\d+,\\d{2}$")) {
-            throw new IllegalArgumentException();
-        }
-        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
-        BigDecimal decimal = null;
-        try {
-            decimal = new BigDecimal(numberFormat.parse(sum).toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
+        // form validation
+        FormValidator validator = new FormValidator();
+        validator.hasSetValue(datePicker);
+        validator.correctSum(sumSupportTextField);
+
+        if (!validator.validationSuccessful()) {
+            throw new IllegalArgumentException("validation not successful");
         }
 
+        // extract values
+        LocalDate date = datePicker.getValue();
+        BigDecimal sum = new BigDecimal(sumSupportTextField.getText());
+
+        // set values
+        property = new TravelCostUniversityDTO();
         property.setDate(date);
-        property.setSum(decimal);
+        property.setSum(sum);
     }
 
     @Override
     public void readProperty(TravelCostUniversityDTO property) {
-        this.property = property;
-
-        this.datePicker.setValue(property.getDate());
-        this.sumSupportTextField.setText(property.getSum().toPlainString());
+        throw new UnsupportedOperationException();
     }
 
 }
