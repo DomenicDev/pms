@@ -540,6 +540,17 @@ public class DoctoralStudentFormController implements Initializable {
                 || supportChanged
                 || alumniStateChanged;
     }
+    
+    private void resetChangeControlFlags() {
+        changedImage
+                = deletedImage
+                = personalDataChanged
+                = qualificationChanged
+                = promotionChanged
+                = employmentChanged
+                = supportChanged
+                = alumniStateChanged = false;
+    }
 
     private void postExitScreenEvent() {
         eventBus.post(new SwitchDoctoralStudentScreenEvent(DoctoralStudentMainContentController.DoctoralStudentScreen.OVERVIEW));
@@ -647,6 +658,9 @@ public class DoctoralStudentFormController implements Initializable {
                 // post patch event
                 RequestPatchDoctoralStudentEvent updateEvent = new RequestPatchDoctoralStudentEvent(patchDTO);
                 eventBus.post(updateEvent);
+
+                // reset control flags
+                resetChangeControlFlags();
             } else {
 
 
