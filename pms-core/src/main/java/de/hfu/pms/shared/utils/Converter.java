@@ -26,7 +26,9 @@ public class Converter {
 
             // active
             if (targetGraduationDTO.getPrognosticatedPromotionDate() != null) {
-                if (!targetGraduationDTO.isPromotionCanceled() && LocalDate.now().isBefore(targetGraduationDTO.getPrognosticatedPromotionDate())) {
+                if (!doctoralStudent.isAnonymized()
+                        && !targetGraduationDTO.isPromotionCanceled()
+                        && LocalDate.now().isBefore(targetGraduationDTO.getPrognosticatedPromotionDate())) {
                     preview.setActive(true);
                 }
             } else {
