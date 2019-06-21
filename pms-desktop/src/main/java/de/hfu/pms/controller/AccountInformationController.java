@@ -3,11 +3,9 @@ package de.hfu.pms.controller;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
-import de.hfu.pms.events.SuccessfullyAddedUserEvent;
 import de.hfu.pms.events.SuccessfullyChangedUserInformationEvent;
 import de.hfu.pms.exceptions.BusinessException;
 import de.hfu.pms.pool.EntityPool;
-import de.hfu.pms.shared.dto.UserDTO;
 import de.hfu.pms.shared.dto.UserInfoDTO;
 import de.hfu.pms.utils.GuiLoader;
 import javafx.event.ActionEvent;
@@ -70,16 +68,6 @@ public class AccountInformationController implements Initializable {
     public void showUser(UserInfoDTO user) {
         this.user = user;
         initLabel();
-    }
-
-    @Subscribe
-    public void handleUserChangeEvent(SuccessfullyAddedUserEvent event) {
-        UserDTO user = event.getUser();
-        usernameLabel.setText(user.getUsername());
-        forenameLabel.setText(user.getForename()+" "+ user.getLastname());
-        emailLabel.setText(user.getEmail());
-        userRoleLabel.setText(user.getRole().toString());
-        //todo remove null pointer exception, i think in initLabel the init is wrong but dont know how to do like a labelProperty or so, you need to initialize the label with the keyword new, but i haven't a clue how
     }
 
     @Subscribe
