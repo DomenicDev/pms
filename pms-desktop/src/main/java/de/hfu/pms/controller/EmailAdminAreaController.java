@@ -26,22 +26,19 @@ public class EmailAdminAreaController implements Initializable {
     private Label lableUsername;
 
     @FXML
-    private Label labelAlert;
-
-    @FXML
     private TextField textFieldChangeEmail;
 
     @FXML
     void handleChangeEmailEvent(ActionEvent event) {
-                if(user == null){
-            user =new UserDTO();}
+        if (user == null) {
+            throw new IllegalStateException("the user needs to be set before saving");
+        }
 
+        // check for valid input
         boolean validationSuccessful = writeToUserDTO();
 
-        if (!validationSuccessful){
-            return;
-        }else{
-            eventBus.post(new RequestChangeEmailEvent(user));
+        if (validationSuccessful){
+            eventBus.post(new RequestChangeEmailEvent(user.getUsername(), textFieldChangeEmail.getText()));
             ((Button)event.getSource()).getScene().getWindow().hide();
         }
     }
@@ -55,9 +52,7 @@ public class EmailAdminAreaController implements Initializable {
         if (userValidator.textFieldNotEmpty((textFieldChangeEmail))) {
             user.setEmail(email);
         }
-        if(!userValidator.textFieldNotEmpty(textFieldChangeEmail)){
-            labelAlert.setVisible(true);
-        }
+
         return userValidator.validationSuccessful();
     }
 
@@ -77,10 +72,6 @@ public class EmailAdminAreaController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         eventBus.register(this);
-
-        labelAlert.setVisible(false);
-
-
     }
 }
 

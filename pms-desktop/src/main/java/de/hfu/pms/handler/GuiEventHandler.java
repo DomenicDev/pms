@@ -212,14 +212,11 @@ public class GuiEventHandler {
     @Subscribe
     public void handleEmailChange(RequestChangeEmailEvent requestChangeEmailEvent) {
         try {
-
-
-            UserDTO userDTO = requestChangeEmailEvent.getUser();
+            String username = requestChangeEmailEvent.getUsername();
             String newEmail = requestChangeEmailEvent.getNewEmail();
-            UserDTO response = null;
-            response = applicationServices.changeUserEmail(userDTO.getUsername(), newEmail);
+            UserDTO response = applicationServices.changeUserEmail(username, newEmail);
             eventBus.post(new SuccessfullyChangedEmailEvent(response));
-        }catch (BusinessException e){
+        } catch (BusinessException e){
             e.printStackTrace();
             eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.ERROR,"Konnte Email nicht ändern"));
         }

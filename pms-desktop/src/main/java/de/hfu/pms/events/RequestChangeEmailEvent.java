@@ -1,19 +1,18 @@
 package de.hfu.pms.events;
 
-import de.hfu.pms.shared.dto.UserDTO;
 
 public class RequestChangeEmailEvent {
 
-    private final UserDTO userDTO;
-    String newEmail;
+    private final String username;
+    private final String newEmail;
 
-    public RequestChangeEmailEvent(UserDTO userDTO) {
-        this.userDTO = userDTO;
-        this.newEmail =newEmail;
+    public RequestChangeEmailEvent(String username, String newEmail) {
+        this.username = username;
+        this.newEmail = newEmail;
     }
 
-    public UserDTO getUser() {
-        return userDTO;
+    public String getUsername() {
+        return username;
     }
     public String getNewEmail(){
         return newEmail;
