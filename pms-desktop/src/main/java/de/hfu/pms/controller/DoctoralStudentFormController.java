@@ -693,9 +693,10 @@ public class DoctoralStudentFormController implements Initializable {
                 // they should take care about the actual saving process
                 eventBus.post(new RequestCreateDoctoralStudentEvent(createDTO));
 
-                postExitScreenEvent();
+
             }
 
+            postExitScreenEvent();
         }
 
     }
