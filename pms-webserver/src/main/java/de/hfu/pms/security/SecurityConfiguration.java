@@ -34,7 +34,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/student/**").hasAnyRole(UserRole.USER.name(),UserRole.ADMIN.name())
+                .antMatchers("/student/**[^anonymize]**[^remove]**").hasAnyRole(UserRole.USER.name(),UserRole.ADMIN.name())
+                .antMatchers("/student/anonymize/**").hasAnyRole(UserRole.ADMIN.name())
+                .antMatchers("/student/remove/**").hasAnyRole(UserRole.ADMIN.name())
                 .antMatchers("/user").hasAnyRole(UserRole.ADMIN.name(),UserRole.USER.name())
                 .antMatchers("/user/update/**").hasAnyRole(UserRole.ADMIN.name(),UserRole.USER.name())
                 .antMatchers("/user/user").hasAnyRole(UserRole.ADMIN.name(), UserRole.USER.name())
