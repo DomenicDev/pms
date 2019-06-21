@@ -91,6 +91,13 @@ public class RestClient {
         return execute(patch);
     }
 
+    public String delete(String url) throws IOException {
+        checkForNull(url);
+
+        HttpDelete delete = new HttpDelete(url);
+        return execute(delete);
+    }
+
     /**
      * Executes a Get-Request to the specified url and will return the resulting body.
      * @param url the url of the get request

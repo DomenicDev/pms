@@ -266,6 +266,20 @@ public class GuiEventHandler {
     }
 
     @Subscribe
+    public void handle(RequestDeleteDoctoralStudentEvent event) {
+        Long id = event.getId();
+        if (id == null) {
+            return;
+        }
+        try {
+            applicationServices.deleteDoctoralStudent(id);
+            eventBus.post(new SuccessfullyDeletedDoctoralStudentEvent(id));
+        } catch (BusinessException e) {
+            show(e);
+        }
+    }
+
+    @Subscribe
     public void handle(RequestSearchDoctoralStudentEvent event) {
         String searchText = event.getSearchText();
         if (searchText != null) {
@@ -358,5 +372,9 @@ public class GuiEventHandler {
         } catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    private void show(BusinessException exception) {
+        eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.ERROR, exception.getLocalizedMessage()));
     }
 }

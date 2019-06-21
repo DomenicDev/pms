@@ -19,7 +19,7 @@ public interface ApplicationServices {
 
     void patchDoctoralStudent(PatchDoctoralStudentDTO patchDoctoralStudentDTO) throws BusinessException;
 
-    void deleteDoctoralStudent(int studentID);
+    void deleteDoctoralStudent(Long studentID) throws BusinessException;
 
     AnonymizeResultDTO anonymize(Long studentID) throws BusinessException;
 

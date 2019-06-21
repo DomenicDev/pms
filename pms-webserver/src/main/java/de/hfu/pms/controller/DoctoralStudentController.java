@@ -170,7 +170,7 @@ public class DoctoralStudentController {
         return convertToPreview(searchResult);
     }
 
-    @PostMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteDoctoralStudent(@PathVariable Long id) {
         doctoralStudentService.remove(id);

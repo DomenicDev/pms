@@ -89,8 +89,12 @@ public class ApplicationServiceImpl implements ApplicationServices {
     }
 
     @Override
-    public void deleteDoctoralStudent(int studentID) {
-
+    public void deleteDoctoralStudent(Long studentID) throws BusinessException {
+        try {
+            restClient.delete(STUDENT_SERVICES + "delete/" + studentID);
+        } catch (IOException e) {
+            throw new BusinessException(e.getLocalizedMessage());
+        }
     }
 
     @Override

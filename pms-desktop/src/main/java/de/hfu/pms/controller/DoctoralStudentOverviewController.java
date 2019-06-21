@@ -208,11 +208,23 @@ public class DoctoralStudentOverviewController implements Initializable {
     }
 
     @FXML
-    public void handleOnActionDeleteButton(ActionEvent event) {
+    public void handleOnActionDeleteButton() {
         if (searchResultTableView.getSelectionModel().getSelectedItem() != null) {
-            // todo
-            // ConfirmDialog (yes/no)
-            // server request: delete(Collection<Int>) (Id's of the DB-Entries to be deleted)
+
+            Long id = searchResultTableView.getSelectionModel().getSelectedItem().getId();
+            if (id == null) {
+                eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.ERROR, bundle.getString("ui.alert.canceled_process.id_is_not_set")));
+                return;
+            }
+
+            GuiLoader.showYesAndNoAlert(Alert.AlertType.WARNING,
+                    bundle.getString("ui.alert.title.delete"),
+                    bundle.getString("ui.alert.content.delete"),
+                    bundle.getString("ui.alert.label.yes_delete"),
+                    bundle.getString("ui.alert.label.no_delete"),
+                    () -> eventBus.post(new RequestDeleteDoctoralStudentEvent(id)),
+                    null
+            );
         } else {
             eventBus.post(new AlertNotificationEvent(1, bundle.getString("ui.alert.select_item_to_delete")));
         }
