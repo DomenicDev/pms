@@ -9,22 +9,22 @@
    <children>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
          <items>
-            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#handleOnActionAddButton" text="Hinzufügen">
+            <Button fx:id="addButton" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleOnActionAddButton" text="Hinzufügen">
                <graphic>
                   <FontIcon iconColor="#00ae11" iconLiteral="fa-plus" iconSize="25" />
                </graphic>
             </Button>
-            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#handleOnActionEditButton" styleClass="button-NOT-sidebar" text="Bearbeiten">
+            <Button fx:id="editButton" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleOnActionEditButton" styleClass="button-NOT-sidebar" text="Bearbeiten">
              <graphic>
                  <FontIcon iconColor="#1663b5" iconLiteral="fa-edit" iconSize="25" />
              </graphic>
             </Button>
-            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#handleOnActionAnonymizeButton" text="Anonymisieren">
+            <Button fx:id="anonymizeButton" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleOnActionAnonymizeButton" text="Anonymisieren">
                 <graphic>
                     <FontIcon iconColor="#907005" iconLiteral="dashicons-lock" iconSize="25" />
                 </graphic>
             </Button>
-            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#handleOnActionDeleteButton" styleClass="button-NOT-sidebar" text="Löschen">
+            <Button fx:id="deleteButton" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleOnActionDeleteButton" styleClass="button-NOT-sidebar" text="Löschen">
                <graphic>
                   <FontIcon iconColor="RED" iconLiteral="fa-remove" iconSize="25" />
                </graphic></Button>

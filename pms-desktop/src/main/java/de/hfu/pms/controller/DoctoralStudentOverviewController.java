@@ -4,11 +4,14 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.*;
+import de.hfu.pms.exceptions.BusinessException;
 import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.DoctoralStudentDTO;
 import de.hfu.pms.shared.dto.FacultyDTO;
 import de.hfu.pms.shared.dto.PreviewDoctoralStudentDTO;
+import de.hfu.pms.shared.dto.UserInfoDTO;
 import de.hfu.pms.shared.enums.Gender;
+import de.hfu.pms.shared.enums.UserRole;
 import de.hfu.pms.shared.utils.Converter;
 import de.hfu.pms.utils.CollectionUtils;
 import de.hfu.pms.utils.GuiLoader;
@@ -37,11 +40,9 @@ public class DoctoralStudentOverviewController implements Initializable {
 
     private Logger logger = Logger.getLogger(DoctoralStudentOverviewController.class.getName());
 
-    //private Logger logger = Logger.getLogger(DoctoralStudentOverviewController.class);
     private EventBus eventBus = EventBusSystem.getEventBus();
     private ObjectProperty<TableRow<PreviewDoctoralStudentDTO>> selectedTableRow = new SimpleObjectProperty<>();
 
-    private EntityPool entityPool = EntityPool.getInstance();
     private ResourceBundle bundle;
 
     @FXML
@@ -72,6 +73,18 @@ public class DoctoralStudentOverviewController implements Initializable {
     private CheckBox anonymizedCheckBox;
     @FXML
     private CheckBox memberCheckBox;
+
+    /* ************ */
+    /* Buttons      */
+    /* ************ */
+    @FXML
+    private Button addButton;
+    @FXML
+    private Button editButton;
+    @FXML
+    private Button anonymizeButton;
+    @FXML
+    private Button deleteButton;
 
     private ObservableList<PreviewDoctoralStudentDTO> masterData = FXCollections.observableArrayList();
     private Collection<PreviewDoctoralStudentDTO> filteredMasterData = new HashSet<>(); // filtered by check boxes
@@ -104,28 +117,22 @@ public class DoctoralStudentOverviewController implements Initializable {
             }
         });
 
-        /*
-        // Data for search
-        FacultyDTO informatik = new FacultyDTO((long) 1, "Informatik");
-        FacultyDTO digitaleMedien = new FacultyDTO((long) 2, "Digitale Medien");
-
-        Gender male = Gender.Male;
-        Gender female = Gender.Female;
-
-
-        PreviewDoctoralStudentDTO student1 = new PreviewDoctoralStudentDTO("Julian", "Brandt", informatik, "JulianBrandt@gmx.de", "123456789", male);
-        PreviewDoctoralStudentDTO student2 = new PreviewDoctoralStudentDTO("Gulia", "Gwinn", digitaleMedien, "GuliaGwinn@outlook.de", "987654321", female);
-
-        masterData.add(student1);
-        masterData.add(student2);
-
-        searchResultTableView.setItems(masterData);
-        searchResultForeNameTableColumn.setCellValueFactory(new PropertyValueFactory<>("foreName"));
-        searchResultNameTableColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-
-
-         */
         initCheckBoxes();
+
+        setDeleteButtonsDisabledForNonAdmins();
+    }
+
+    private void setDeleteButtonsDisabledForNonAdmins() {
+        try {
+            UserInfoDTO user = EntityPool.getInstance().getLoggedInUser();
+            UserRole role = user.getRole();
+            if (!role.equals(UserRole.ADMIN)) {
+                deleteButton.setDisable(true);
+                anonymizeButton.setDisable(true);
+            }
+        } catch (BusinessException e) {
+            e.printStackTrace();
+        }
     }
 
     private void initCheckBoxes() {
