@@ -159,6 +159,46 @@ public class GuiLoader {
         );
     }
 
+    /**
+     * Creates a simple confirmation dialog with two buttons where the specified routine is executed
+     * depending on the button that has been clicked
+     *
+     * @param alertType  the type of dialog
+     * @param title      the title shown in the top
+     * @param content    the message shown in the message box of the alert dialog
+     * @param yesLabel   the label of the yes-button
+     * @param noLabel    the label of the no-button
+     * @param yesRoutine the routine that shall be executed when clicked on the yes-button
+     * @param noRoutine  the routine that shall be executed when clicked on the no-button
+     */
+    public static void showYesAndNoAlert(Alert.AlertType alertType,
+                                         String title,
+                                         String content,
+                                         String yesLabel,
+                                         String noLabel,
+                                         ButtonServiceRoutine yesRoutine,
+                                         ButtonServiceRoutine noRoutine) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        ButtonType okButton = new ButtonType(yesLabel, ButtonBar.ButtonData.YES);
+        ButtonType noButton = new ButtonType(noLabel, ButtonBar.ButtonData.NO);
+        alert.getButtonTypes().setAll(okButton, noButton);
+        alert.showAndWait().ifPresent(type -> {
+                    if (type.getButtonData() == ButtonBar.ButtonData.YES) {
+                        if (yesRoutine != null) {
+                            yesRoutine.callback();
+                        }
+                    }
+                    if (type.getButtonData() == ButtonBar.ButtonData.NO) {
+                        if (noRoutine != null) {
+                            noRoutine.callback();
+                        }
+                    }
+                }
+        );
+    }
+
     public interface ButtonServiceRoutine {
 
         void callback();

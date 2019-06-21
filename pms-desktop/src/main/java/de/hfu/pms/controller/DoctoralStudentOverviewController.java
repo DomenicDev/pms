@@ -11,6 +11,7 @@ import de.hfu.pms.shared.dto.PreviewDoctoralStudentDTO;
 import de.hfu.pms.shared.enums.Gender;
 import de.hfu.pms.shared.utils.Converter;
 import de.hfu.pms.utils.CollectionUtils;
+import de.hfu.pms.utils.GuiLoader;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -235,7 +236,7 @@ public class DoctoralStudentOverviewController implements Initializable {
     public void handleOnActionAnonymizeButton() {
         PreviewDoctoralStudentDTO selected = searchResultTableView.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            // todo: make alert notification
+            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.INFO, bundle.getString("ui.alert.select_item_to_edit")));
             return;
         }
 
@@ -244,8 +245,14 @@ public class DoctoralStudentOverviewController implements Initializable {
             return;
         }
 
-        eventBus.post(new RequestAnonymizeDoctoralStudentEvent(id));
-
+        // ask user if he really wants to anonymize this entity
+        GuiLoader.showYesAndNoAlert(Alert.AlertType.WARNING,
+                bundle.getString("ui.alert.title.confirm_anonymize"),
+                bundle.getString("ui.alert.content.anonymize"),
+                bundle.getString("ui.alert.label.yes_anonymize"),
+                bundle.getString("ui.alert.label.no_anonymize"),
+                () -> eventBus.post(new RequestAnonymizeDoctoralStudentEvent(id)),
+                null);
     }
 
     @FXML

@@ -27,6 +27,7 @@ import java.io.OutputStream;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.ResourceBundle;
 
 public class GuiEventHandler {
 
@@ -37,12 +38,15 @@ public class GuiEventHandler {
     private Stage primaryStage;
 
     private HashMap<String, Node> scenes = new HashMap<>();
+    private ResourceBundle bundle;
 
     public GuiEventHandler(Stage primaryStage, ApplicationServices applicationServices, EventBus eventBus) {
         this.primaryStage = primaryStage;
 
         this.eventBus = eventBus;
         this.eventBus.register(this);
+
+        this.bundle = GuiLoader.getResourceBundle();
 
         this.applicationServices = applicationServices;
     }
@@ -251,9 +255,10 @@ public class GuiEventHandler {
         try {
             applicationServices.patchDoctoralStudent(event.getPatchDoctoralStudentDTO());
             // successfully patched
-            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.INFO, "Successfully patched"));
+            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.INFO, bundle.getString("ui.alert.successfully_patched_entry")));
 
             PreviewDoctoralStudentDTO preview = applicationServices.getPreview(event.getPatchDoctoralStudentDTO().getId());
+            eventBus.post(new SuccessfullyUpdatedDoctoralStudentEvent(preview));
             eventBus.post(new SuccessfullyUpdatedDoctoralStudentEvent(preview));
         } catch (BusinessException e) {
             e.printStackTrace();
@@ -346,8 +351,11 @@ public class GuiEventHandler {
                 os.write(doc.getData());
                 os.close();
             }
-        }
-        catch(Exception e){
+
+            // show success notification
+            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.INFO, bundle.getString("ui.alert.successfully_saved_documents")));
+
+        } catch(Exception e){
             e.printStackTrace();
         }
     }
