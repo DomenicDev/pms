@@ -2,18 +2,21 @@ package de.hfu.pms.controller;
 
 import com.google.common.eventbus.EventBus;
 import de.hfu.pms.eventbus.EventBusSystem;
-import de.hfu.pms.events.AlertNotificationEvent;
 import de.hfu.pms.events.CreateDocStudentPropertyEvent;
 import de.hfu.pms.exceptions.SubmitException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public abstract class AbstractPropertyFormController<T> implements Initializable {
+
+    private Logger logger = Logger.getLogger(AbstractPropertyFormController.class);
 
     /**
      * We use the EventBus to notify about the creation.
@@ -23,7 +26,7 @@ public abstract class AbstractPropertyFormController<T> implements Initializable
     /**
      * The entity which is being created or edited in this context.
      */
-    protected T property;
+    T property;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -36,7 +39,7 @@ public abstract class AbstractPropertyFormController<T> implements Initializable
             submit();
             ((Button)event.getSource()).getScene().getWindow().hide();
         } catch (SubmitException e) {
-            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.ERROR, "check your input fields"));
+            logger.log(Level.DEBUG, "Could not submit. Error message: " + e);
         }
     }
 
@@ -67,7 +70,7 @@ public abstract class AbstractPropertyFormController<T> implements Initializable
      * post an {@link CreateDocStudentPropertyEvent} with the set property.
      * @throws SubmitException if submit was not possible, e.g. due to missing input fields
      */
-    public void submit() throws SubmitException {
+    private void submit() throws SubmitException {
         try {
             writeProperty();
             eventBus.post(new CreateDocStudentPropertyEvent<>(property));

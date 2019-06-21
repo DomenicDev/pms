@@ -2,6 +2,7 @@ package de.hfu.pms.controller;
 
 import de.hfu.pms.shared.dto.TravelCostUniversityDTO;
 import de.hfu.pms.utils.FormValidator;
+import de.hfu.pms.utils.NumberUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -30,7 +31,7 @@ public class TravelCostUniversityController extends AbstractPropertyFormControll
 
         // extract values
         LocalDate date = datePicker.getValue();
-        BigDecimal sum = new BigDecimal(sumSupportTextField.getText());
+        BigDecimal sum = NumberUtils.parseToBigDecimal(sumSupportTextField.getText());
 
         // set values
         property = new TravelCostUniversityDTO();

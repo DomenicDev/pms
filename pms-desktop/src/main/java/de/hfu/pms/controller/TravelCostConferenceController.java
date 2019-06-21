@@ -2,6 +2,7 @@ package de.hfu.pms.controller;
 
 import de.hfu.pms.shared.dto.TravelCostConferenceDTO;
 import de.hfu.pms.utils.FormValidator;
+import de.hfu.pms.utils.NumberUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -40,7 +41,7 @@ public class TravelCostConferenceController extends AbstractPropertyFormControll
         LocalDate date = datePicker.getValue();
         String title = titleTextField.getText();
         String location = locationTextField.getText();
-        BigDecimal sum = new BigDecimal(sumSupportTextField.getText());
+        BigDecimal sum = NumberUtils.parseToBigDecimal(sumSupportTextField.getText());
 
         // set values
         property = new TravelCostConferenceDTO();
