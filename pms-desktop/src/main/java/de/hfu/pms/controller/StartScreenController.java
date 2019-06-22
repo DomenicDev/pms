@@ -9,17 +9,18 @@ import de.hfu.pms.events.SwitchDoctoralStudentScreenEvent;
 import de.hfu.pms.events.SwitchMainScreenEvent;
 import de.hfu.pms.exceptions.BusinessException;
 import de.hfu.pms.pool.EntityPool;
+import de.hfu.pms.shared.dto.FacultyDTO;
 import de.hfu.pms.shared.dto.PreviewDoctoralStudentDTO;
 import de.hfu.pms.shared.dto.UserInfoDTO;
 import de.hfu.pms.utils.GuiLoader;
-import de.hfu.pms.utils.JavaFxUtils;
 import de.hfu.pms.utils.RepresentationWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
+import javafx.geometry.Side;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -29,17 +30,24 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 
-public class StartscreenControlerApplication implements Initializable {
+public class StartScreenController implements Initializable {
 
     private EventBus eventBus = EventBusSystem.getEventBus();
     private Logger logger = Logger.getLogger(UniversityScreenController.class);
     private ResourceBundle bundle;
     private UserInfoDTO user;
+
     @FXML
     private Label welcomeLabel;
+
+    @FXML
+    private PieChart facultyPieChart;
 
     @FXML
     public void handleFelixHFUEvent() {
@@ -77,10 +85,6 @@ public class StartscreenControlerApplication implements Initializable {
     @FXML
     private Label changeAccountinfomrationLabelStartscreen;
 
-    private void switchMainContent(Parent parentToSwitchTo) {
-        JavaFxUtils.setAllAnchorPaneConstraints(parentToSwitchTo, 0);
-    }
-
     @FXML
     void handleAddDoctoralStudentButton(ActionEvent event) throws IOException{
         eventBus.post(new SwitchMainScreenEvent(DashboardController.MainScreen.DoctoralStudent));
@@ -100,6 +104,7 @@ public class StartscreenControlerApplication implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.bundle = resources;
         eventBus.register(this);
         try {
             String forname = EntityPool.getInstance().getLoggedInUser().getForename();
@@ -125,7 +130,37 @@ public class StartscreenControlerApplication implements Initializable {
         // post event for receiving data for alert list view
         eventBus.post(new RequestAlertedDoctoralStudentEvent());
 
+
+
+        facultyPieChart.setLabelsVisible(true);
+        facultyPieChart.setLegendSide(Side.RIGHT);
+        facultyPieChart.setLegendVisible(true);
+        facultyPieChart.setTitle(bundle.getString("ui.label.title_faculty_pie_chart"));
+        refreshPieChart();
     }
+
+    private void refreshPieChart() {
+        // fill pie chart data
+        Collection<PreviewDoctoralStudentDTO> previews = EntityPool.getInstance().getPreviewStudents();
+        Map<String, Integer> facultyRatio = new HashMap<>();
+        for (PreviewDoctoralStudentDTO preview : previews) {
+            FacultyDTO faculty = preview.getFaculty();
+            if (faculty != null) {
+                String name = faculty.getFacultyName();
+                if (facultyRatio.containsKey(name)) {
+                    facultyRatio.put(name, facultyRatio.get(name)+1);
+                } else {
+                    facultyRatio.put(name, 1);
+                }
+            }
+        }
+
+        facultyPieChart.getData().clear();
+        for (Map.Entry<String, Integer> e : facultyRatio.entrySet()) {
+            facultyPieChart.getData().add(new PieChart.Data(e.getKey(), e.getValue()));
+        }
+    }
+
     @Subscribe
     public void updateAlertListView(ShowAlertedDoctoralStudentsEvent event) {
         alertListView.getItems().clear();

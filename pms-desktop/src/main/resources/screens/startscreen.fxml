@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.geometry.*?>
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
-<ScrollPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.StartscreenControlerApplication">
+<ScrollPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.StartScreenController">
    <content>
-      <VBox maxHeight="980.0" maxWidth="1630.0" spacing="30.0" stylesheets="@../styles/style.css">
+      <VBox maxHeight="980.0" maxWidth="1630.0" spacing="40.0" stylesheets="@../styles/style.css">
          <children>
             <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                <children>
@@ -17,66 +17,76 @@
                         <Font name="System Bold" size="40.0" />
                      </font>
                      <VBox.margin>
-                        <Insets left="30.0" top="10.0" />
+                        <Insets />
                      </VBox.margin>
                   </Label>
                   <Label fx:id="DescriptionApplication" text="%ui.label.BeschreibungApllikation" wrapText="true">
                      <VBox.margin>
-                        <Insets left="30.0" right="30.0" top="30.0" />
+                        <Insets right="30.0" top="30.0" />
                      </VBox.margin>
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
                </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
             </VBox>
             <VBox maxWidth="1.7976931348623157E308" prefHeight="175.0">
                <children>
-                  <HBox spacing="10.0">
+                  <HBox spacing="30.0">
                      <children>
                         <VBox>
                            <children>
-                              <Label fx:id="headingTabelDescription" text="%ui.label.TabelleUeberschrift">
-                                 <font>
-                                    <Font name="System Bold" size="16.0" />
-                                 </font>
+                              <VBox>
+                                 <children>
+                                    <Label fx:id="headingTabelDescription" text="%ui.label.TabelleUeberschrift">
+                                       <font>
+                                          <Font name="System Bold" size="16.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets right="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label fx:id="DescriptionTable" text="%ui.label.Tabellebeschreibung" wrapText="true">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets right="10.0" top="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox minHeight="100.0" prefHeight="100.0">
+                                 <children>
+                                    <Label text="%ui.label.alert_notification_for_doctoral_students">
+                                       <font>
+                                          <Font name="System Bold" size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <ListView fx:id="alertListView" maxHeight="100.0">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </ListView>
+                                 </children>
                                  <VBox.margin>
-                                    <Insets left="20.0" right="10.0" />
+                                    <Insets top="10.0" />
                                  </VBox.margin>
-                              </Label>
-                              <Label fx:id="DescriptionTable" text="%ui.label.Tabellebeschreibung" wrapText="true">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets left="20.0" right="10.0" top="10.0" />
-                                 </VBox.margin>
-                              </Label>
+                              </VBox>
                            </children>
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
                         </VBox>
-                        <VBox minHeight="100.0" prefHeight="100.0" HBox.hgrow="ALWAYS">
+                        <Separator orientation="VERTICAL" prefHeight="200.0" />
+                        <VBox>
                            <children>
-                              <Label text="%ui.label.alert_notification_for_doctoral_students">
-                                 <font>
-                                    <Font name="System Bold" size="16.0" />
-                                 </font>
-                              </Label>
-                              <ListView fx:id="alertListView" maxHeight="100.0">
-                                 <VBox.margin>
-                                    <Insets right="10.0" />
-                                 </VBox.margin>
-                              </ListView>
+                              <PieChart fx:id="facultyPieChart" minHeight="300.0" />
                            </children>
-                           <HBox.margin>
-                              <Insets right="30.0" />
-                           </HBox.margin>
                         </VBox>
                      </children>
                      <VBox.margin>
-                        <Insets top="20.0" />
+                        <Insets />
                      </VBox.margin>
                   </HBox>
                </children>
@@ -219,6 +229,9 @@
                </VBox.margin>
             </VBox>
          </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
       </VBox>
    </content>
 </ScrollPane>
