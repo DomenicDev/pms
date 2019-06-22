@@ -7,6 +7,7 @@ import de.hfu.pms.model.User;
 import de.hfu.pms.model.UserRole;
 import de.hfu.pms.service.UserService;
 import de.hfu.pms.shared.dto.ChangeUserInformationDTO;
+import de.hfu.pms.shared.dto.UpdateUserDTO;
 import de.hfu.pms.shared.dto.UserDTO;
 import de.hfu.pms.shared.dto.UserInfoDTO;
 import org.modelmapper.ModelMapper;
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.LinkedList;
 import java.util.List;
 
 @RestController
@@ -45,13 +47,12 @@ public class UserController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDTO newUser(@RequestBody UserDTO userDTO) {
+    public UserInfoDTO newUser(@RequestBody UserDTO userDTO) {
         User user = convertToEntity(userDTO);
-        service.createUser(user);
-        return userDTO;
+        return convertToInfoDTO(service.createUser(user));
     }
 
-    @PostMapping("/delete/{username}")
+    @DeleteMapping("/delete/{username}")
     @ResponseStatus(HttpStatus.OK)
     public String deleteUser(@PathVariable String username) {
         service.deleteUser(username);
@@ -60,21 +61,21 @@ public class UserController {
 
     @PostMapping("/updatePassword/{username}")
     @ResponseStatus(HttpStatus.OK)
-    public UserDTO updatePassword(@PathVariable String username, @RequestBody String newPassword) {
-        return convertToDTO(service.updatePassword(username, newPassword));
+    public UserInfoDTO updatePassword(@PathVariable String username, @RequestBody String newPassword) {
+        return convertToInfoDTO(service.updatePassword(username, newPassword));
     }
 
     @PostMapping("/updateRole/{username}")
     @ResponseStatus(HttpStatus.OK)
-    public UserDTO updateUserRole(@PathVariable String username, @RequestBody UserRole newRole) {
+    public UserInfoDTO updateUserRole(@PathVariable String username, @RequestBody UserRole newRole) {
         User user = service.updateRole(username , newRole);
-        return convertToDTO(user);
+        return convertToInfoDTO(user);
     }
 
     @PostMapping("/updateEmail/{username}")
     @ResponseStatus(HttpStatus.OK)
-    public UserDTO updateUserEmail(@PathVariable String username, @RequestBody String email) {
-        return convertToDTO(service.updateEmail(username , email));
+    public UserInfoDTO updateUserEmail(@PathVariable String username, @RequestBody String email) {
+        return convertToInfoDTO(service.updateEmail(username , email));
     }
 
     @PatchMapping("/patch/{username}")
@@ -93,23 +94,23 @@ public class UserController {
 
     @PatchMapping("/update/{username}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<?> patchUser(@PathVariable String username, @RequestBody UserDTO userDTO){
-
-        String password = userDTO.getPassword();
+    public ResponseEntity<UserInfoDTO> patchUser(@PathVariable String username, @RequestBody UpdateUserDTO userDTO){
+        String forename = userDTO.getForename();
+        String surname = userDTO.getSurname();
         UserRole role = userRoleHelper(userDTO.getRole());
         String email = userDTO.getEmail();
 
-        if(password != null){
-            service.updatePassword(username,password);
-        }
-        if(role != null){
-            service.updateRole(username,role);
-        }
-        if(email != null){
-            service.updateEmail(username,email);
+        if (forename == null || surname == null || role == null || email == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
-        return ResponseEntity.ok("resource patched");
+        // update
+        service.updateInformation(username, forename, surname, email);
+        service.updateRole(username, role);
+
+        // return updated user as InfoDTO
+        User user = service.getUser(username);
+        return ResponseEntity.ok(convertToInfoDTO(user));
     }
 
     @GetMapping("/get/{username}")
@@ -120,8 +121,12 @@ public class UserController {
 
     @GetMapping("/getList")
     @ResponseStatus(HttpStatus.OK)
-    public List<User> getAllUsers() {
-        return service.getUserList();
+    public List<UserInfoDTO> getAllUsers() {
+        List<UserInfoDTO> infoUserList = new LinkedList<>();
+        for (User user : service.getUserList()) {
+            infoUserList.add(convertToInfoDTO(user));
+        }
+        return infoUserList;
     }
 
     private User convertToEntity(UserDTO userDTO) {

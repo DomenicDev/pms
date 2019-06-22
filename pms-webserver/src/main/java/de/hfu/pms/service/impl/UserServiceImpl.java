@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void createUser(User newUser) {
+    public User createUser(User newUser) {
         for (User user : userDao.findAll()) {
             if (user.getUsername().equals(newUser.getUsername())) {
                 throw new org.springframework.dao.DataIntegrityViolationException("User already exists!");
@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
         }
         String password = newUser.getPassword();
         newUser.setPassword(passwordEncoder.encode(password));
-        userDao.save(newUser);
+        return userDao.save(newUser);
     }
 
     @Override
@@ -41,6 +41,7 @@ public class UserServiceImpl implements UserService {
         for (User user : userDao.findAll()) {
             if (user.getUsername().equals(username)) {
                 userDao.delete(user);
+                return;
             }
         }
         throw new UserNotFoundException(username);

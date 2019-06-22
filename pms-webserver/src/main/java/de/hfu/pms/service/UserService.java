@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserService {
 
-    void createUser(User newUser);
+    User createUser(User newUser);
     void deleteUser(String username);
     User updatePassword(String username, String newPassword);
     User updateRole(String username, UserRole role);
