@@ -307,19 +307,15 @@ public class ApplicationServiceImpl implements ApplicationServices {
     }
 
     @Override
-    public UserDTO changePassword(UserDTO userDTO, String newPassword) throws BusinessException {
+    public UserInfoDTO changePassword(String username, String newPassword) throws BusinessException {
         try {
-            String json = newPassword;
-            String response = restClient.postJson(HOST_URL + USER_PREFIX + "updatePassword/" + userDTO.getUsername(), json);
-            UserDTO dto = mapper.readValue(response, UserDTO.class);
+            String response = restClient.postJson(HOST_URL + USER_PREFIX + "updatePassword/" + username, newPassword);
+            UserInfoDTO dto = mapper.readValue(response, UserInfoDTO.class);
             logger.log(Level.INFO, response);
             return dto;
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new BusinessException("could not change password...");
         }
-        throw new BusinessException("could not change password...");
     }
 
     public UserDTO changeUserEmail(UserDTO userDTO, String newEmail) throws BusinessException {
@@ -358,11 +354,11 @@ public class ApplicationServiceImpl implements ApplicationServices {
 
 
     @Override
-    public UserDTO addUser(UserDTO userDTO) throws BusinessException {
+    public UserInfoDTO addUser(UserDTO userDTO) throws BusinessException {
         try {
             String json = mapper.writeValueAsString(userDTO);
             String response = restClient.postJson(HOST_URL + USER_PREFIX + "create", json);
-            UserDTO dto = mapper.readValue(response, UserDTO.class);
+            UserInfoDTO dto = mapper.readValue(response, UserInfoDTO.class);
             logger.log(Level.INFO, "User created: " + dto);
             return dto;
         } catch (JsonProcessingException e) {
@@ -374,22 +370,31 @@ public class ApplicationServiceImpl implements ApplicationServices {
     }
 
     @Override
-    public void removeUser(String username) throws BusinessException {
+    public UserInfoDTO updateUser(UpdateUserDTO updateUserDTO) throws BusinessException {
         try {
-            String response = restClient.get(HOST_URL + USER_PREFIX + "delete/" + username);
-            logger.log(Level.INFO, response);
+            String response = restClient.patchJson(USER_SERVICES + "update/" + updateUserDTO.getUsername(), toJSON(updateUserDTO));
+            return toObject(response, UserInfoDTO.class);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new BusinessException("User could not be updated");
         }
-        throw new BusinessException("could nut remove User...");
     }
 
     @Override
-    public UserDTO changeUserPrivileges(String username, UserRole newUserRole) throws BusinessException {
+    public void deleteUser(String username) throws BusinessException {
+        try {
+            String response = restClient.delete(HOST_URL + USER_PREFIX + "delete/" + username);
+            logger.log(Level.INFO, response);
+        } catch (IOException e) {
+            throw new BusinessException("could not remove User...");
+        }
+    }
+
+    @Override
+    public UserInfoDTO changeUserPrivileges(String username, UserRole newUserRole) throws BusinessException {
         try {
             String response = restClient.postJson(HOST_URL + USER_PREFIX + "updateRole/" + username, mapper.writeValueAsString(newUserRole));
             logger.log(Level.INFO, response);
-            return mapper.readValue(response, UserDTO.class);
+            return mapper.readValue(response, UserInfoDTO.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -412,16 +417,15 @@ public class ApplicationServiceImpl implements ApplicationServices {
     }
 
     @Override
-    public UserDTO changeUserEmail(String username, String email) throws BusinessException {
+    public UserInfoDTO changeUserEmail(String username, String email) throws BusinessException {
         try {
             String response = restClient.postJson(HOST_URL + USER_PREFIX + "updateEmail/" + username, email);
-            UserDTO dto = mapper.readValue(response, UserDTO.class);
+            UserInfoDTO dto = mapper.readValue(response, UserInfoDTO.class);
             logger.log(Level.INFO, response);
             return dto;
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new BusinessException("could not change email...");
         }
-        throw new BusinessException("could not change email...");
     }
 
     @Override
@@ -436,10 +440,10 @@ public class ApplicationServiceImpl implements ApplicationServices {
     }
 
     @Override
-    public List<UserDTO> getAllUsers() {
+    public List<UserInfoDTO> getAllUsers() {
         try {
             String response = restClient.get(HOST_URL + USER_PREFIX + "getList");
-            return mapper.readValue(response, new TypeReference<List<UserDTO>>() {
+            return mapper.readValue(response, new TypeReference<List<UserInfoDTO>>() {
             });
         } catch (IOException e) {
             e.printStackTrace();

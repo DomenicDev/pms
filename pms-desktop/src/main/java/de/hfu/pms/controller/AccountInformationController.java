@@ -3,7 +3,7 @@ package de.hfu.pms.controller;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
-import de.hfu.pms.events.SuccessfullyChangedUserInformationEvent;
+import de.hfu.pms.events.SuccessfullyUpdatedUserEvent;
 import de.hfu.pms.exceptions.BusinessException;
 import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.UserInfoDTO;
@@ -71,7 +71,7 @@ public class AccountInformationController implements Initializable {
     }
 
     @Subscribe
-    public void handle(SuccessfullyChangedUserInformationEvent event) throws BusinessException {
+    public void handle(SuccessfullyUpdatedUserEvent event) throws BusinessException {
         UserInfoDTO infoDTO = event.getUserInfoDTO();
         String username = infoDTO.getUsername();
         if (username != null) {

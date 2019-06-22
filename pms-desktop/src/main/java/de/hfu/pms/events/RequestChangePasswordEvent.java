@@ -1,18 +1,17 @@
 package de.hfu.pms.events;
 
-import de.hfu.pms.shared.dto.UserDTO;
-
 public class RequestChangePasswordEvent {
-    private UserDTO userDTO;
+
+    private String username;
     private String newPassword;
 
-    public RequestChangePasswordEvent(UserDTO userDTO, String newPassword){
-        this.userDTO = userDTO;
+    public RequestChangePasswordEvent(String username, String newPassword){
+        this.username = username;
         this.newPassword = newPassword;
     }
 
-    public UserDTO getUser(){
-        return userDTO;
+    public String getUsername(){
+        return username;
     }
     public String getNewPassword(){
         return newPassword;

@@ -35,8 +35,9 @@ public interface ApplicationServices {
 
     /**
      * Login with the specified credentials.
+     *
      * @param username the username to login with
-     * @param pwHash the password to login with
+     * @param pwHash   the password to login with
      * @throws LoginFailedException if login authentication failed
      */
     void login(String username, String pwHash) throws LoginFailedException;
@@ -64,21 +65,30 @@ public interface ApplicationServices {
 
     void logout();
 
-    UserDTO changePassword(UserDTO userDTO, String newPassword) throws BusinessException;
+    UserInfoDTO changePassword(String username, String newPassword) throws BusinessException;
 
-    UserDTO addUser(UserDTO userDTO) throws BusinessException;
+    UserInfoDTO addUser(UserDTO userDTO) throws BusinessException;
 
-    void removeUser(String username) throws BusinessException;
+    /**
+     * Can only be used by admin
+     *
+     * @param updateUserDTO
+     * @return
+     * @throws BusinessException
+     */
+    UserInfoDTO updateUser(UpdateUserDTO updateUserDTO) throws BusinessException;
 
-    UserDTO changeUserPrivileges(String username, UserRole newUserRole) throws BusinessException;
+    void deleteUser(String username) throws BusinessException;
 
-    UserInfoDTO changeAccountInformation(String username, String forename, String surname, String email)throws BusinessException;
+    UserInfoDTO changeUserPrivileges(String username, UserRole newUserRole) throws BusinessException;
 
-    UserDTO changeUserEmail(String username, String email) throws BusinessException;
+    UserInfoDTO changeAccountInformation(String username, String forename, String surname, String email) throws BusinessException;
+
+    UserInfoDTO changeUserEmail(String username, String email) throws BusinessException;
 
     UserDTO getUser(String username) throws BusinessException;
 
-    List<UserDTO> getAllUsers();
+    List<UserInfoDTO> getAllUsers();
 
     DocumentDTO getDocument(DocumentInformationDTO documentInformation);
 

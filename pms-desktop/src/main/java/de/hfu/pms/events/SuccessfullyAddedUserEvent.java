@@ -1,16 +1,16 @@
 package de.hfu.pms.events;
 
-import de.hfu.pms.shared.dto.UserDTO;
+import de.hfu.pms.shared.dto.UserInfoDTO;
 
 public class SuccessfullyAddedUserEvent {
 
-    private final UserDTO userDTO;
+    private final UserInfoDTO userDTO;
 
-    public SuccessfullyAddedUserEvent(UserDTO userDTO) {
+    public SuccessfullyAddedUserEvent(UserInfoDTO userDTO) {
         this.userDTO = userDTO;
     }
 
-    public UserDTO getUser() {
+    public UserInfoDTO getUser() {
         return userDTO;
     }
 }

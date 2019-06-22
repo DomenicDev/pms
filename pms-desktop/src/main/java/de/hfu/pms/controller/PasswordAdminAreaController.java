@@ -3,7 +3,7 @@ package de.hfu.pms.controller;
 import com.google.common.eventbus.EventBus;
 import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.RequestChangePasswordEvent;
-import de.hfu.pms.shared.dto.UserDTO;
+import de.hfu.pms.shared.dto.UserInfoDTO;
 import de.hfu.pms.utils.FormValidator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,84 +17,51 @@ import java.util.ResourceBundle;
 
 public class PasswordAdminAreaController implements Initializable {
 
-        private EventBus eventBus = EventBusSystem.getEventBus();
+    private EventBus eventBus = EventBusSystem.getEventBus();
 
-        private UserDTO user;
-
-
-        @FXML
-        private Label lableUsername;
-
-        @FXML
-        private PasswordField PasswordFieldPassword;
-
-        @FXML
-        private PasswordField PasswordFieldRewrite;
-
-        @FXML
-        private Label labelAlert;
-
-        @FXML
-        void handleChangePasswordEvent(ActionEvent event) {
-                if(user == null){
-                        user =new UserDTO();}
-
-                boolean validationSuccessful = writeToUserDTO();
-
-                if (!validationSuccessful){
-                        return;
-                }else{
-                        eventBus.post(new RequestChangePasswordEvent(user,PasswordFieldPassword.getText()));
-                        ((Button)event.getSource()).getScene().getWindow().hide();
-
-                }
+    private UserInfoDTO user;
 
 
+    @FXML
+    private Label lableUsername;
 
-        }
-        public void edit(UserDTO user) {
-                this.user = user;
+    @FXML
+    private PasswordField passwordFieldPassword;
+    @FXML
+    private PasswordField passwordFieldRewrite;
 
-                //PasswordFieldPassword.setText(user.getPassword());
-                lableUsername.setText(user.getUsername());
+    @FXML
+    private Label labelAlert;
 
-        }
-
-
-
-        @FXML
-        void handleExitEvent(ActionEvent event) {
-                ((Button) event.getSource()).getScene().getWindow().hide();
-
-        }
-
-        private boolean writeToUserDTO() {
-
-                FormValidator userValidator = new FormValidator();
-
-                String password = PasswordFieldPassword.getText();
-
-                if (userValidator.textFieldNotEmpty((PasswordFieldPassword))) {
-                        user.getPassword();
-                }
-
-                if (!userValidator.passwordFieldsAreSimilar(PasswordFieldPassword,PasswordFieldRewrite)){
-                        labelAlert.setVisible(true);
-                }
-
-                if(userValidator.textFieldNotEmpty(PasswordFieldRewrite)){}
-
-                return userValidator.validationSuccessful();
-        }
-
-        public void initialize(URL location, ResourceBundle resources) {
-                eventBus.register(this);
-
-                labelAlert.setVisible(false);
-
-
-        }
-
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        eventBus.register(this);
+        labelAlert.setVisible(false);
     }
+
+    @FXML
+    void handleChangePasswordEvent(ActionEvent event) {
+        FormValidator userValidator = new FormValidator();
+        userValidator.textFieldNotEmpty(passwordFieldPassword);
+        userValidator.textFieldNotEmpty(passwordFieldRewrite);
+        userValidator.passwordFieldsAreSimilar(passwordFieldPassword, passwordFieldRewrite);
+
+        if (userValidator.validationSuccessful()) {
+            eventBus.post(new RequestChangePasswordEvent(user.getUsername(), passwordFieldPassword.getText()));
+            ((Button) event.getSource()).getScene().getWindow().hide();
+        }
+    }
+
+    public void edit(UserInfoDTO user) {
+        this.user = user;
+        lableUsername.setText(user.getUsername());
+    }
+
+    @FXML
+    void handleExitEvent(ActionEvent event) {
+        ((Button) event.getSource()).getScene().getWindow().hide();
+    }
+
+}
 
 

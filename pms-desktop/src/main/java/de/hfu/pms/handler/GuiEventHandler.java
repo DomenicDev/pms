@@ -173,7 +173,7 @@ public class GuiEventHandler {
     public void handleAddUserEvent(RequestAddUserEvent requestAddUserEvent){
         try {
             UserDTO userDTO = requestAddUserEvent.getUser();
-            UserDTO response = applicationServices.addUser(userDTO);
+            UserInfoDTO response = applicationServices.addUser(userDTO);
             eventBus.post(new SuccessfullyAddedUserEvent(response));
         }catch (BusinessException e){
             e.printStackTrace();
@@ -182,13 +182,33 @@ public class GuiEventHandler {
     }
 
     @Subscribe
+    public void handlePatch(RequestPatchUserEvent event) {
+        try {
+            UserInfoDTO updatedUser = applicationServices.updateUser(event.getUpdateUserDTO());
+            eventBus.post(new SuccessfullyUpdatedUserEvent(updatedUser));
+            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.INFO, bundle.getString("ui.alert.successfully_updated_user")));
+        } catch (BusinessException e) {
+            show(e);
+        }
+    }
+
+    @Subscribe
+    public void handleDeleteUser(RequestDeleteUserEvent event) {
+        try {
+            applicationServices.deleteUser(event.getUsername());
+            eventBus.post(new SuccessfullyDeletedUserEvent(event.getUsername()));
+        } catch (BusinessException e) {
+            show(e);
+        }
+    }
+
+    @Subscribe
     public void handlePasswordChange(RequestChangePasswordEvent requestChangePasswordEvent){
         try {
-            UserDTO userDTO = requestChangePasswordEvent.getUser();
+            String username = requestChangePasswordEvent.getUsername();
             String newPassword = requestChangePasswordEvent.getNewPassword();
-            UserDTO response = null;
-            response = applicationServices.changePassword(userDTO,newPassword);
-            eventBus.post(new SuccessfullyChangedPasswordEvent(response));
+            applicationServices.changePassword(username, newPassword);
+            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.INFO, bundle.getString("ui.alert.successfully_changed_password")));
         } catch (BusinessException e) {
             e.printStackTrace();
             eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.ERROR, "Konnte Passwort nicht ändern..."));
@@ -200,9 +220,10 @@ public class GuiEventHandler {
     public void handleRoleChange(RequestChangeUserRoleEvent requestChangeUserRoleEvent){
         try {
             UserDTO userDTO = requestChangeUserRoleEvent.getUser();
-            UserDTO response = null;
+            UserInfoDTO response = null;
             response = applicationServices.changeUserPrivileges(userDTO.getUsername(),userDTO.getRole());
-            eventBus.post(new SuccessfullyChangedUserRoleEvent(response));
+            //eventBus.post(new SuccessfullyChangedUserRoleEvent(response));
+            eventBus.post(new SuccessfullyUpdatedUserEvent(response));
         } catch (BusinessException e) {
             e.printStackTrace();
             eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.ERROR, "Konnte Rolle nicht ändern"));
@@ -214,8 +235,9 @@ public class GuiEventHandler {
         try {
             String username = requestChangeEmailEvent.getUsername();
             String newEmail = requestChangeEmailEvent.getNewEmail();
-            UserDTO response = applicationServices.changeUserEmail(username, newEmail);
-            eventBus.post(new SuccessfullyChangedEmailEvent(response));
+            UserInfoDTO response = applicationServices.changeUserEmail(username, newEmail);
+          //  eventBus.post(new SuccessfullyChangedEmailEvent(response));
+            eventBus.post(new SuccessfullyUpdatedUserEvent(response));
         } catch (BusinessException e){
             e.printStackTrace();
             eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.ERROR,"Konnte Email nicht ändern"));
@@ -229,7 +251,7 @@ public class GuiEventHandler {
         String newSurname = event.getSurname();
         String newEmail = event.getEmail();
         UserInfoDTO response = applicationServices.changeAccountInformation(username, newForename, newSurname, newEmail);
-        eventBus.post(new SuccessfullyChangedUserInformationEvent(response));
+        eventBus.post(new SuccessfullyUpdatedUserEvent(response));
     }
 
     @Subscribe

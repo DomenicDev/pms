@@ -4,7 +4,7 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.SuccessfullyAddedUniversityEvent;
-import de.hfu.pms.events.SuccessfullyChangedUserInformationEvent;
+import de.hfu.pms.events.SuccessfullyUpdatedUserEvent;
 import de.hfu.pms.exceptions.BusinessException;
 import de.hfu.pms.service.ApplicationServices;
 import de.hfu.pms.shared.dto.*;
@@ -23,7 +23,7 @@ public final class EntityPool {
     private Collection<UniversityDTO> universities = new HashSet<>();
     private Collection<FacultyDTO> faculties = new HashSet<>();
     private Collection<PreviewDoctoralStudentDTO> previewStudents = new HashSet<>();
-    private Collection<UserDTO> users = new HashSet<>();
+    private Collection<UserInfoDTO> users = new HashSet<>();
     private Collection<DoctoralStudentDTO> doctoralStudents = new HashSet<>();
     private ApplicationServices applicationServices;
 
@@ -60,7 +60,7 @@ public final class EntityPool {
         this.previewStudents.addAll(previews);
     }
 
-    public void initUsers(Collection<UserDTO> initUsers) {
+    public void initUsers(Collection<UserInfoDTO> initUsers) {
         if (initUsers == null) {
             return;
         }
@@ -105,7 +105,7 @@ public final class EntityPool {
         return previewStudents;
     }
 
-    public Collection<UserDTO> getUsers() {
+    public Collection<UserInfoDTO> getUsers() {
         return users;
     }
 
@@ -119,7 +119,7 @@ public final class EntityPool {
     }
 
     @Subscribe
-    public void handle(SuccessfullyChangedUserInformationEvent event) {
+    public void handle(SuccessfullyUpdatedUserEvent event) {
         if (loggedInUser == null) {
             return;
         }

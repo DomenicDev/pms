@@ -89,6 +89,7 @@ public class ChangeUserAdminArea  implements Initializable {
 
     @FXML
     void handleButtonChangePassword(ActionEvent event) {
+        /*
 
         try {
             ResourceBundle bundle = ResourceBundle.getBundle("lang/strings");
@@ -107,6 +108,8 @@ public class ChangeUserAdminArea  implements Initializable {
         } catch (Exception e) {
             logger.log(Level.ERROR, "Unable to load the Change Password - AdminArea Screen ");
         }
+
+         */
     }
 
 
