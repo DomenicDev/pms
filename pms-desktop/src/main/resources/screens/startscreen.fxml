@@ -81,7 +81,12 @@
                         <Separator orientation="VERTICAL" prefHeight="200.0" />
                         <VBox>
                            <children>
-                              <PieChart fx:id="facultyPieChart" minHeight="300.0" />
+                              <HBox>
+                                 <children>
+                                    <PieChart fx:id="facultyPieChart" minHeight="300.0" />
+                                    <Button mnemonicParsing="false" onAction="#handleOnActionRefreshButton" text="%ui.button.refresh" />
+                                 </children>
+                              </HBox>
                            </children>
                         </VBox>
                      </children>

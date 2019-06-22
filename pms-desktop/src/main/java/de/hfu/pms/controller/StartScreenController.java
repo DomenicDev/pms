@@ -139,6 +139,11 @@ public class StartScreenController implements Initializable {
         refreshPieChart();
     }
 
+    @FXML
+    public void handleOnActionRefreshButton() {
+        refreshPieChart();
+    }
+
     private void refreshPieChart() {
         // fill pie chart data
         Collection<PreviewDoctoralStudentDTO> previews = EntityPool.getInstance().getPreviewStudents();
