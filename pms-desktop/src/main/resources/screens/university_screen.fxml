@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<ScrollPane prefHeight="554.0" prefWidth="769.0" style="-fx-background-color: #FAFAFA;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.UniversityScreenController">
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<ScrollPane prefHeight="554.0" prefWidth="769.0" style="-fx-background-color: #FAFAFA;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.UniversityScreenController">
   <content>
     <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="701.0" prefWidth="798.0" stylesheets="@../styles/style.css">
       <children>
@@ -20,6 +27,14 @@
                 <TableColumn fx:id="TableColumnKuerzel" prefWidth="75.0" text="%ui.label.contraction" />
                 <TableColumn fx:id="TableColumnContacttoUniversity" prefWidth="75.0" text="%ui.label.university_contact" />
               </columns>
+                     <contextMenu>
+                        <ContextMenu>
+                          <items>
+                            <MenuItem mnemonicParsing="false" onAction="#handleChangeUniversityButton" text="Bearbeiten" />
+                            <MenuItem mnemonicParsing="false" onAction="#handleDeleteUniversityButton" text="Entfernen" />
+                          </items>
+                        </ContextMenu>
+                     </contextMenu>
             </TableView>
           </content>
         </ScrollPane>
