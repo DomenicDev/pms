@@ -13,7 +13,7 @@ public class CreateDoctoralStudentDTO {
     private EmploymentDTO employment;
     private SupportDTO support;
     private AlumniStateDTO alumniState;
-    private byte[] photo;
+    private PhotoDTO photo;
     private Collection<DocumentDTO> documents;
 
     public CreateDoctoralStudentDTO() {
@@ -69,11 +69,11 @@ public class CreateDoctoralStudentDTO {
         this.alumniState = alumniState;
     }
 
-    public byte[] getPhoto() {
+    public PhotoDTO getPhoto() {
         return photo;
     }
 
-    public void setPhoto(byte[] photo) {
+    public void setPhoto(PhotoDTO photo) {
         this.photo = photo;
     }
 

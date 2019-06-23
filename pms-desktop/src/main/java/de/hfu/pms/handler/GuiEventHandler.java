@@ -9,6 +9,7 @@ import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.service.ApplicationServices;
 import de.hfu.pms.shared.dto.*;
 import de.hfu.pms.utils.GuiLoader;
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -26,10 +27,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class GuiEventHandler {
 
@@ -44,6 +43,9 @@ public class GuiEventHandler {
     private HashMap<String, Node> scenes = new HashMap<>();
     private ResourceBundle bundle;
 
+    private boolean closed = false;
+    private Queue<Job> jobs = new ConcurrentLinkedDeque<>();
+
     public GuiEventHandler(Stage primaryStage, ApplicationServices applicationServices, EventBus eventBus) {
         this.primaryStage = primaryStage;
 
@@ -53,41 +55,83 @@ public class GuiEventHandler {
         this.bundle = GuiLoader.getResourceBundle();
 
         this.applicationServices = applicationServices;
+
+        /*
+        this.setName("[GuiEventHandler]-Thread");
+        this.start();
+
+         */
+    }
+
+    private interface Job {
+
+        void callback();
+
+    }
+
+    /*
+    @Override
+    public void run() {
+
+        while (!closed) {
+
+            if (!jobs.isEmpty()) {
+                Job job = jobs.poll();
+                job.callback();
+            }
+
+        }
+
+    }
+
+     */
+
+
+    private void addJob(Job job) {
+        this.jobs.add(job);
     }
 
     @Subscribe
     public void handleLoginEvent(LoginRequestEvent loginRequestEvent) {
-        // extract credentials from request
-        String username = loginRequestEvent.getUsername();
-        String password = loginRequestEvent.getPwHash();
 
-        try {
-            // try to login with specified username and password
-            applicationServices.login(username, password);
-
-            // login was successful, so we can close the login screen and open the dashboard
-            primaryStage.close();
-
-            // prepare entities
-            applicationServices.initEntityPool();
-            EntityPool.getInstance().setApplicationServices(applicationServices);
+            // extract credentials from request
+            String username = loginRequestEvent.getUsername();
+            String password = loginRequestEvent.getPwHash();
 
             try {
-                Stage newStage = new Stage(StageStyle.DECORATED);
-                Parent dashboard = GuiLoader.loadFXML("/screens/dashboard_final.fxml");
-                Scene scene = new Scene(dashboard);
-                scene.getStylesheets().add(getClass().getResource("/styles/style.css").toExternalForm());
-                newStage.setScene(scene);
-                newStage.setMaximized(true);
-                newStage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
+                // try to login with specified username and password
+                applicationServices.login(username, password);
+
+                // prepare entities
+                applicationServices.initEntityPool();
+                EntityPool.getInstance().setApplicationServices(applicationServices);
+
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        // login was successful, so we can close the login screen and open the dashboard
+                        primaryStage.close();
+                        try {
+                            Stage newStage = new Stage(StageStyle.DECORATED);
+                            Parent dashboard = GuiLoader.loadFXML("/screens/dashboard_final.fxml");
+                            Scene scene = new Scene(dashboard);
+                            scene.getStylesheets().add(getClass().getResource("/styles/style.css").toExternalForm());
+                            newStage.setScene(scene);
+                            newStage.setMaximized(true);
+                            newStage.show();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            } catch (LoginFailedException e) {
+                Platform.runLater(() -> {
+                    logger.log(Level.DEBUG, "Login failed..." + Thread.currentThread());
+                    eventBus.post(new LoginFailedEvent(bundle.getString("ui.login.login_failed")));
+                });
             }
 
-        } catch (LoginFailedException e) {
-            logger.log(Level.DEBUG, "Login failed...");
-            eventBus.post(new LoginFailedEvent(bundle.getString("ui.login.login_failed")));
-        }
+
     }
 
     @Subscribe

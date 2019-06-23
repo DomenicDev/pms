@@ -31,11 +31,10 @@ public class DoctoralStudent implements Serializable {
     @Embedded
     private AlumniState alumniState;
 
-    @Lob // large object
-    @Column(columnDefinition="BLOB")
-    private byte[] photo; // saved as blob
+    @Column
+    private Long photoId;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
     @JoinColumn(name = "fk_student")
     private Set<Document> documents;
 
@@ -135,12 +134,12 @@ public class DoctoralStudent implements Serializable {
         this.alumniState = alumniState;
     }
 
-    public void setPhoto(byte[] photo) {
-        this.photo = photo;
+    public Long getPhotoId() {
+        return photoId;
     }
 
-    public byte[] getPhoto() {
-        return photo;
+    public void setPhotoId(Long photoId) {
+        this.photoId = photoId;
     }
 
     public void setDocuments(Set<Document> documents) {

@@ -27,7 +27,7 @@ public class DoctoralStudentDTO {
     private AlumniStateDTO alumniState;
 
     // profile photo
-    private byte[] photo;
+    private PhotoDTO photo;
 
     // DOCUMENTS (META DATA ONLY)
     private Set<DocumentInformationDTO> documents;
@@ -103,11 +103,11 @@ public class DoctoralStudentDTO {
         this.alumniState = alumniState;
     }
 
-    public void setPhoto(byte[] photo) {
+    public void setPhoto(PhotoDTO photo) {
         this.photo = photo;
     }
 
-    public byte[] getPhoto() {
+    public PhotoDTO getPhoto() {
         return photo;
     }
 

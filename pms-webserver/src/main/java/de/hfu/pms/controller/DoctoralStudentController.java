@@ -4,6 +4,7 @@ import de.hfu.pms.exceptions.DoctoralStudentNotFoundException;
 import de.hfu.pms.model.*;
 import de.hfu.pms.service.DoctoralStudentService;
 import de.hfu.pms.service.DocumentService;
+import de.hfu.pms.service.PhotoService;
 import de.hfu.pms.shared.dto.*;
 import de.hfu.pms.shared.utils.Converter;
 import org.modelmapper.ModelMapper;
@@ -24,12 +25,14 @@ public class DoctoralStudentController {
     private final DocumentService documentService;
     private final DoctoralStudentService doctoralStudentService;
     private final ModelMapper modelMapper;
+    private final PhotoService photoService;
 
     @Autowired
-    public DoctoralStudentController(DoctoralStudentService doctoralStudentService, ModelMapper modelMapper, DocumentService documentService) {
+    public DoctoralStudentController(DoctoralStudentService doctoralStudentService, ModelMapper modelMapper, DocumentService documentService, PhotoService photoService) {
         this.doctoralStudentService = doctoralStudentService;
         this.modelMapper = modelMapper;
         this.documentService = documentService;
+        this.photoService = photoService;
     }
 
     @PostMapping(value= "/create")
@@ -37,6 +40,12 @@ public class DoctoralStudentController {
     public DoctoralStudentDTO createDoctoralStudent(@RequestBody CreateDoctoralStudentDTO doctoralStudentDTO) {
         DoctoralStudent student = convertToEntity(doctoralStudentDTO);
         DoctoralStudent studentCreated = doctoralStudentService.create(student);
+
+        // check if photo is set
+        PhotoDTO photoDTO = doctoralStudentDTO.getPhoto();
+        if (photoDTO != null) {
+            doctoralStudentService.updatePhoto(studentCreated.getId(), photoDTO.getFilename(), photoDTO.getPhoto());
+        }
         return convertToDTO(studentCreated);
     }
 
@@ -57,7 +66,7 @@ public class DoctoralStudentController {
         SupportDTO supportDTO = patchDTO.getPatchedSupport();
         AlumniStateDTO alumniStateDTO = patchDTO.getPatchedAlumniState();
         boolean photoChanged = patchDTO.isChangedPhoto();
-        byte[] photo = patchDTO.getPhoto();
+        PhotoDTO photo = patchDTO.getPhoto();
         Collection<DocumentDTO> documentsToAdd = patchDTO.getDocumentsToAdd();
         Collection<Long> documentsToRemove = patchDTO.getDocumentsToRemove();
 
@@ -89,9 +98,9 @@ public class DoctoralStudentController {
         }
         if (photoChanged) {
             if (photo != null) {
-                doctoralStudentService.updatePhoto(id, photo);
+                doctoralStudentService.updatePhoto(id, photo.getFilename(), photo.getPhoto());
             } else {
-                doctoralStudentService.updatePhoto(id, null);
+                doctoralStudentService.deletePhoto(id);
             }
         }
         if (documentsToAdd != null && !documentsToAdd.isEmpty()) {
@@ -125,7 +134,12 @@ public class DoctoralStudentController {
     @GetMapping("/get/{id}")
     public DoctoralStudentDTO getDoctoralStudent(@PathVariable Long id) {
         DoctoralStudent student = doctoralStudentService.findById(id);
-        return convertToDTO(student);
+        DoctoralStudentDTO dto = convertToDTO(student);
+        Long photoId = student.getPhotoId();
+        if (photoId != null) {
+            dto.setPhoto(convertToPhotoDTO(photoService.getPhotoById(photoId)));
+        }
+        return dto;
     }
 
     @GetMapping("get/exceeded")
@@ -228,6 +242,9 @@ public class DoctoralStudentController {
         return entity;
     }
 
+    private PhotoDTO convertToPhotoDTO(Photo photo) {
+        return modelMapper.map(photo, PhotoDTO.class);
+    }
 
     private DoctoralStudent convertToEntity(DoctoralStudentDTO doctoralStudentDTO) {
         DoctoralStudent doctoralStudent = modelMapper.map(doctoralStudentDTO, DoctoralStudent.class);
