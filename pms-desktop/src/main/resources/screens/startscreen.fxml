@@ -61,11 +61,19 @@
                               </VBox>
                               <VBox minHeight="100.0" prefHeight="100.0">
                                  <children>
-                                    <Label text="%ui.label.alert_notification_for_doctoral_students">
-                                       <font>
-                                          <Font name="System Bold" size="16.0" />
-                                       </font>
-                                    </Label>
+                                    <HBox spacing="15.0">
+                                       <children>
+                                          <Label text="%ui.label.alert_notification_for_doctoral_students">
+                                             <font>
+                                                <Font name="System Bold" size="16.0" />
+                                             </font>
+                                          </Label>
+                                          <Button mnemonicParsing="false" onAction="#handleOnActionRefreshAlertTableButton" text="%ui.button.refresh" />
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" />
+                                       </VBox.margin>
+                                    </HBox>
                                     <ListView fx:id="alertListView" maxHeight="100.0">
                                        <VBox.margin>
                                           <Insets />

@@ -105,6 +105,7 @@ public class StartScreenController implements Initializable {
         eventBus.register(this);
 
         refreshGreetingLabel();
+        refreshAlertTable();
 
         // create cell factory for alert list view to customize representation
         alertListView.setCellFactory((param -> new ListCell<>() {
@@ -119,10 +120,6 @@ public class StartScreenController implements Initializable {
                 setText(RepresentationWrapper.getPreviewRepresentation(item));
             }
         }));
-
-        // post event for receiving data for alert list view
-        eventBus.post(new RequestAlertedDoctoralStudentEvent());
-
 
 
         facultyPieChart.setLabelsVisible(true);
@@ -167,6 +164,15 @@ public class StartScreenController implements Initializable {
         for (Map.Entry<String, Integer> e : facultyRatio.entrySet()) {
             facultyPieChart.getData().add(new PieChart.Data(e.getKey(), e.getValue()));
         }
+    }
+
+    @FXML
+    public void handleOnActionRefreshAlertTableButton() {
+        refreshAlertTable();
+    }
+
+    private void refreshAlertTable() {
+        eventBus.post(new RequestAlertedDoctoralStudentEvent());
     }
 
     @Subscribe

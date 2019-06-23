@@ -138,7 +138,9 @@ public class DoctoralStudentController {
             TargetGraduation targetGraduation = student.getTargetGraduation();
             if (targetGraduation == null) continue;
 
-            // check if student has already finished its promotion
+            // check if the student has already finished the promotion and if so, skip that one
+            if (targetGraduation.getProcedureCompleted() != null) continue;
+
             // also make sure that student has neither canceled its promotion nor has been anonymized
             if (targetGraduation.getPromotionCanceled() || student.getAnonymized() || targetGraduation.getProcedureCompleted() != null) continue;
 
