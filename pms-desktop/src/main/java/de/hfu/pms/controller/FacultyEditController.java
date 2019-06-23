@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 
 public class FacultyEditController implements Initializable {
     private EventBus eventBus = EventBusSystem.getEventBus();
-    private static Logger logger = Logger.getLogger(EntityPool.class);
+    private static Logger logger = Logger.getLogger(FacultyEditController.class);
     private ResourceBundle bundle;
     private FacultyDTO faculty;
 

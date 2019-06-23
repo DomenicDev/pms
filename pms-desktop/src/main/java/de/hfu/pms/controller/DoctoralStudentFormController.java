@@ -1238,8 +1238,12 @@ public class DoctoralStudentFormController implements Initializable {
     }
 
     private void updateFacultyCombobox() {
+        WrappedEntity<FacultyDTO> facultyDTO = facultyHFUComboBox.getSelectionModel().getSelectedItem();
         facultyHFUComboBox.getItems().clear();
         facultyHFUComboBox.getItems().addAll(RepresentationWrapper.getWrappedFaculties(EntityPool.getInstance().getFaculties()));
+        if (facultyDTO != null) {
+            facultyHFUComboBox.getSelectionModel().select(facultyDTO);
+        }
     }
 
     @Subscribe

@@ -151,7 +151,7 @@ public class GuiEventHandler {
     public void handleAddFacultyEvent(RequestAddFacultyEvent requestSaveEvent){
         FacultyDTO facultyDTO = requestSaveEvent.getFaculty();
         FacultyDTO response = applicationServices.addFaculty(facultyDTO);
-        EntityPool.getInstance().addFaculty(facultyDTO);
+        EntityPool.getInstance().addFaculty(response);
         eventBus.post(new SuccessfullyAddedFacultyEvent(response));
     }
 

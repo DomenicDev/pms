@@ -54,7 +54,7 @@ public class DatabaseInit implements CommandLineRunner {
         // add a test faculty
         Faculty facultyHFU = new Faculty();
         facultyHFU.setFacultyName("Informatik");
-        facultyDao.save(facultyHFU);
+        facultyHFU = facultyDao.save(facultyHFU);
 
         // add simple doctoral student
         DoctoralStudent student = new DoctoralStudent();
