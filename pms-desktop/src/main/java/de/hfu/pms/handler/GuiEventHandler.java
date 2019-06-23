@@ -19,6 +19,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,6 +34,8 @@ import java.util.ResourceBundle;
 public class GuiEventHandler {
 
     private EventBus eventBus;
+
+    private Logger logger = Logger.getLogger(GuiEventHandler.class);
 
     private ApplicationServices applicationServices;
 
@@ -81,8 +85,8 @@ public class GuiEventHandler {
             }
 
         } catch (LoginFailedException e) {
-            // todo: show prompt which shows error message failed login
-            e.printStackTrace();
+            logger.log(Level.DEBUG, "Login failed...");
+            eventBus.post(new LoginFailedEvent(bundle.getString("ui.login.login_failed")));
         }
     }
 

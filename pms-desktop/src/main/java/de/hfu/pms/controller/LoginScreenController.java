@@ -1,16 +1,22 @@
 package de.hfu.pms.controller;
 
 import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
+import de.hfu.pms.events.LoginFailedEvent;
 import de.hfu.pms.events.LoginRequestEvent;
+import de.hfu.pms.utils.FormValidator;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-public class LoginScreenController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class LoginScreenController implements Initializable {
 
     private EventBus eventBus = EventBusSystem.getEventBus();
 
@@ -21,15 +27,12 @@ public class LoginScreenController {
     private PasswordField passwordField;
 
     @FXML
-    private Button loginButton;
+    private Label errorLabel;
 
-    @FXML
-    private Button exitButton;
-
-
-    @FXML
-    private void initialize() {
-
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        eventBus.register(this);
+        errorLabel.getStyleClass().add("error_text");
     }
 
     @FXML
@@ -38,19 +41,32 @@ public class LoginScreenController {
     }
 
     @FXML
-    public void handleLoginEvent(ActionEvent actionEvent) {
-        // extract credentials from text fields
+    public void handleLoginEvent() {
+        // check that both text fields are not empty
+        FormValidator validator = new FormValidator();
+        validator.textFieldNotEmpty(usernameTextField);
+        validator.textFieldNotEmpty(passwordField);
+
+        if (!validator.validationSuccessful()) {
+            return;
+        }
+
+        // extract login credentials
         String username = usernameTextField.getText();
         String password = passwordField.getText();
 
-        // check if there are any empty textfields
-        if (username == null || password == null) {
-            // todo: show prompt which tells the user to fill in all text fields
-            return;
-        }
+        // reset error label flag
+        errorLabel.setVisible(false);
 
         // notify about the login request
         eventBus.post(new LoginRequestEvent(username, password));
     }
+
+    @Subscribe
+    public void handle(LoginFailedEvent event) {
+        errorLabel.setText(event.getReason());
+        errorLabel.setVisible(true);
+    }
+
 
 }
