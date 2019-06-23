@@ -15,6 +15,8 @@ import de.hfu.pms.shared.enums.UserRole;
 import de.hfu.pms.shared.utils.Converter;
 import de.hfu.pms.utils.CollectionUtils;
 import de.hfu.pms.utils.GuiLoader;
+import de.hfu.pms.utils.RepresentationWrapper;
+import de.hfu.pms.utils.WrappedEntity;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -62,7 +64,7 @@ public class DoctoralStudentOverviewController implements Initializable {
     @FXML
     private TableColumn<PreviewDoctoralStudentDTO, String> searchResultPhoneNumberTableColumn;
     @FXML
-    private TableColumn<PreviewDoctoralStudentDTO, Gender> searchResultGenderTableColumn;
+    private TableColumn<PreviewDoctoralStudentDTO, String> searchResultGenderTableColumn;
 
     /* ************ */
     /* Check Boxes  */
@@ -266,7 +268,19 @@ public class DoctoralStudentOverviewController implements Initializable {
         searchResultFacultyTableColumn.setCellValueFactory(new PropertyValueFactory<>("faculty"));
         searchResultEmailTableColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
         searchResultPhoneNumberTableColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
-        searchResultGenderTableColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
+        searchResultGenderTableColumn.setCellValueFactory(param -> {
+            PreviewDoctoralStudentDTO preview = param.getValue();
+            if (preview != null) {
+                if (preview.getGender() != null) {
+                    WrappedEntity<Gender> gender = RepresentationWrapper.find(param.getValue().getGender(), RepresentationWrapper.getWrappedGenders());
+                    if (gender != null) {
+                        return new SimpleObjectProperty<>(gender.getRepresentation());
+                    }
+                }
+            }
+            return new SimpleObjectProperty<>("");
+        });
+
 
         searchResultTableView.setRowFactory(new Callback<>() {
             @Override
