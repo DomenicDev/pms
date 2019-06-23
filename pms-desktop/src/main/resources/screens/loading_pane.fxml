@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<VBox alignment="CENTER" prefHeight="250.0" prefWidth="400.0" spacing="20.0" style="-fx-background-color: darkgreen;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" text="%ui.label.please_wait" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font></Label>
+      <ProgressIndicator style="-fx-progress-color: white;" />
+   </children>
+   <effect>
+      <DropShadow blurType="ONE_PASS_BOX" height="47.69" radius="21.862499999999997" spread="0.1" width="41.76" />
+   </effect>
+</VBox>
