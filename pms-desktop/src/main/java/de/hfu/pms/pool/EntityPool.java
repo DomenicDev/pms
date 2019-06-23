@@ -117,7 +117,7 @@ public final class EntityPool {
     }
 
     public Collection<PreviewDoctoralStudentDTO> getPreviewStudents() {
-        return previewStudents;
+        return applicationServices.getPreviews();
     }
 
     public Collection<UserInfoDTO> getUsers() {
