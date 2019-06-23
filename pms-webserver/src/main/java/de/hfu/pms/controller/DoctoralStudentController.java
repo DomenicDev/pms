@@ -4,8 +4,8 @@ import de.hfu.pms.exceptions.DoctoralStudentNotFoundException;
 import de.hfu.pms.model.*;
 import de.hfu.pms.service.DoctoralStudentService;
 import de.hfu.pms.service.DocumentService;
+import de.hfu.pms.service.PhotoService;
 import de.hfu.pms.shared.dto.*;
-import de.hfu.pms.shared.utils.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,12 +24,14 @@ public class DoctoralStudentController {
     private final DocumentService documentService;
     private final DoctoralStudentService doctoralStudentService;
     private final ModelMapper modelMapper;
+    private final PhotoService photoService;
 
     @Autowired
-    public DoctoralStudentController(DoctoralStudentService doctoralStudentService, ModelMapper modelMapper, DocumentService documentService) {
+    public DoctoralStudentController(DoctoralStudentService doctoralStudentService, ModelMapper modelMapper, DocumentService documentService, PhotoService photoService) {
         this.doctoralStudentService = doctoralStudentService;
         this.modelMapper = modelMapper;
         this.documentService = documentService;
+        this.photoService = photoService;
     }
 
     @PostMapping(value= "/create")
@@ -37,6 +39,12 @@ public class DoctoralStudentController {
     public DoctoralStudentDTO createDoctoralStudent(@RequestBody CreateDoctoralStudentDTO doctoralStudentDTO) {
         DoctoralStudent student = convertToEntity(doctoralStudentDTO);
         DoctoralStudent studentCreated = doctoralStudentService.create(student);
+
+        // check if photo is set
+        PhotoDTO photoDTO = doctoralStudentDTO.getPhoto();
+        if (photoDTO != null) {
+            doctoralStudentService.updatePhoto(studentCreated.getId(), photoDTO.getFilename(), photoDTO.getPhoto());
+        }
         return convertToDTO(studentCreated);
     }
 
@@ -57,7 +65,7 @@ public class DoctoralStudentController {
         SupportDTO supportDTO = patchDTO.getPatchedSupport();
         AlumniStateDTO alumniStateDTO = patchDTO.getPatchedAlumniState();
         boolean photoChanged = patchDTO.isChangedPhoto();
-        byte[] photo = patchDTO.getPhoto();
+        PhotoDTO photo = patchDTO.getPhoto();
         Collection<DocumentDTO> documentsToAdd = patchDTO.getDocumentsToAdd();
         Collection<Long> documentsToRemove = patchDTO.getDocumentsToRemove();
 
@@ -89,9 +97,9 @@ public class DoctoralStudentController {
         }
         if (photoChanged) {
             if (photo != null) {
-                doctoralStudentService.updatePhoto(id, photo);
+                doctoralStudentService.updatePhoto(id, photo.getFilename(), photo.getPhoto());
             } else {
-                doctoralStudentService.updatePhoto(id, null);
+                doctoralStudentService.deletePhoto(id);
             }
         }
         if (documentsToAdd != null && !documentsToAdd.isEmpty()) {
@@ -118,14 +126,18 @@ public class DoctoralStudentController {
     @GetMapping("/preview/{id}")
     public PreviewDoctoralStudentDTO getPreview(@PathVariable Long id) {
         DoctoralStudent entity = doctoralStudentService.findById(id);
-        DoctoralStudentDTO dto = convertToDTO(entity);
-        return Converter.convert(dto);
+        return convertToPreview(entity);
     }
 
     @GetMapping("/get/{id}")
     public DoctoralStudentDTO getDoctoralStudent(@PathVariable Long id) {
         DoctoralStudent student = doctoralStudentService.findById(id);
-        return convertToDTO(student);
+        DoctoralStudentDTO dto = convertToDTO(student);
+        Long photoId = student.getPhotoId();
+        if (photoId != null) {
+            dto.setPhoto(convertToPhotoDTO(photoService.getPhotoById(photoId)));
+        }
+        return dto;
     }
 
     @GetMapping("get/exceeded")
@@ -206,11 +218,34 @@ public class DoctoralStudentController {
     private Collection<PreviewDoctoralStudentDTO> convertToPreview(Collection<DoctoralStudent> students) {
         Collection<PreviewDoctoralStudentDTO> previews = new HashSet<>();
         for (DoctoralStudent student : students) {
-            DoctoralStudentDTO dto = convertToDTO(student);
-            PreviewDoctoralStudentDTO preview = Converter.convert(dto);
-            previews.add(preview);
+            previews.add(convertToPreview(student));
         }
         return previews;
+    }
+
+    private PreviewDoctoralStudentDTO convertToPreview(DoctoralStudent doctoralStudent) {
+        PreviewDoctoralStudentDTO preview = new PreviewDoctoralStudentDTO();
+        preview.setId(doctoralStudent.getId());
+        preview.setForeName(doctoralStudent.getPersonalData().getForename());
+        preview.setName(doctoralStudent.getPersonalData().getLastName());
+        preview.setFaculty(modelMapper.map(doctoralStudent.getTargetGraduation().getFacultyHFU(), FacultyDTO.class));
+        preview.setEmail(doctoralStudent.getPersonalData().getEmail());
+        preview.setPhoneNumber(doctoralStudent.getPersonalData().getTelephone());
+        preview.setGender(doctoralStudent.getPersonalData().getGender());
+
+        // set boolean flags
+        TargetGraduation targetGraduationDTO = doctoralStudent.getTargetGraduation();
+        if (targetGraduationDTO != null) {
+            // membership
+            preview.setMemberHFUCollege(targetGraduationDTO.getMemberOfHFUKolleg());
+
+            // active
+            preview.setActive(targetGraduationDTO.getProcedureCompleted() == null);
+        }
+
+        preview.setAnonymized(doctoralStudent.getAnonymized());
+
+        return preview;
     }
 
     private DocumentDTO convertToDTO(Document document) {
@@ -228,6 +263,9 @@ public class DoctoralStudentController {
         return entity;
     }
 
+    private PhotoDTO convertToPhotoDTO(Photo photo) {
+        return modelMapper.map(photo, PhotoDTO.class);
+    }
 
     private DoctoralStudent convertToEntity(DoctoralStudentDTO doctoralStudentDTO) {
         DoctoralStudent doctoralStudent = modelMapper.map(doctoralStudentDTO, DoctoralStudent.class);

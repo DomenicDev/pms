@@ -9,6 +9,7 @@ import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.service.ApplicationServices;
 import de.hfu.pms.shared.dto.*;
 import de.hfu.pms.utils.GuiLoader;
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -26,12 +27,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
-public class GuiEventHandler {
+public class GuiEventHandler extends Thread {
 
     private EventBus eventBus;
 
@@ -44,7 +43,12 @@ public class GuiEventHandler {
     private HashMap<String, Node> scenes = new HashMap<>();
     private ResourceBundle bundle;
 
-    public GuiEventHandler(Stage primaryStage, ApplicationServices applicationServices, EventBus eventBus) {
+    private boolean closed = false;
+    private Queue<Job> jobs = new ConcurrentLinkedDeque<>();
+
+    private volatile Stage loadingWindow;
+
+    public GuiEventHandler(Stage primaryStage, ApplicationServices applicationServices, EventBus eventBus) throws IOException {
         this.primaryStage = primaryStage;
 
         this.eventBus = eventBus;
@@ -53,79 +57,112 @@ public class GuiEventHandler {
         this.bundle = GuiLoader.getResourceBundle();
 
         this.applicationServices = applicationServices;
+
+        this.setName("[GuiEventHandler]-Thread");
+        this.start();
+    }
+
+    private interface Job {
+
+        void callback();
+
+    }
+
+
+    @Override
+    public void run() {
+
+        while (!closed) {
+
+            if (!jobs.isEmpty()) {
+                Job job = jobs.poll();
+                job.callback();
+            }
+
+        }
+
+    }
+
+
+    private void addJob(Job job) {
+        this.jobs.add(job);
     }
 
     @Subscribe
     public void handleLoginEvent(LoginRequestEvent loginRequestEvent) {
+
         // extract credentials from request
         String username = loginRequestEvent.getUsername();
         String password = loginRequestEvent.getPwHash();
 
-        try {
-            // try to login with specified username and password
-            applicationServices.login(username, password);
+        addJob(() -> {
 
-            // login was successful, so we can close the login screen and open the dashboard
-            primaryStage.close();
-
-            // prepare entities
-            applicationServices.initEntityPool();
-            EntityPool.getInstance().setApplicationServices(applicationServices);
+            showLoadingScreen();
 
             try {
-                Stage newStage = new Stage(StageStyle.DECORATED);
-                Parent dashboard = GuiLoader.loadFXML("/screens/dashboard_final.fxml");
-                Scene scene = new Scene(dashboard);
-                scene.getStylesheets().add(getClass().getResource("/styles/style.css").toExternalForm());
-                newStage.setScene(scene);
-                newStage.setMaximized(true);
-                newStage.show();
-            } catch (IOException e) {
+                sleep(1000);
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            try {
+                // try to login with specified username and password
+                applicationServices.login(username, password);
 
-        } catch (LoginFailedException e) {
-            logger.log(Level.DEBUG, "Login failed...");
-            eventBus.post(new LoginFailedEvent(bundle.getString("ui.login.login_failed")));
-        }
+                // prepare entities
+                applicationServices.initEntityPool();
+                EntityPool.getInstance().setApplicationServices(applicationServices);
+
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        // login was successful, so we can close the login screen and open the dashboard
+                        primaryStage.close();
+                        try {
+                            Stage newStage = new Stage(StageStyle.DECORATED);
+                            Parent dashboard = GuiLoader.loadFXML("/screens/dashboard_final.fxml");
+                            Scene scene = new Scene(dashboard);
+                            scene.getStylesheets().add(getClass().getResource("/styles/style.css").toExternalForm());
+                            newStage.setScene(scene);
+                            newStage.setMaximized(true);
+                            newStage.show();
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            } catch (LoginFailedException e) {
+                Platform.runLater(() -> {
+                    logger.log(Level.DEBUG, "Login failed..." + Thread.currentThread());
+                    eventBus.post(new LoginFailedEvent(bundle.getString("ui.login.login_failed")));
+                });
+            }
+
+            closeLoadingScreen();
+        });
+
+
+
     }
 
     @Subscribe
     public void handleCreateDoctoralStudentEvent(RequestCreateDoctoralStudentEvent saveEvent) {
         CreateDoctoralStudentDTO doctoralStudent = saveEvent.getCreateDoctoralStudentDTO();
 
-        try {
-            DoctoralStudentDTO createdEntity = applicationServices.addDoctoralStudent(doctoralStudent);
-            eventBus.post(new SuccessfullyAddedDoctoralStudentEvent(createdEntity));
-        } catch (BusinessException e) {
-            e.printStackTrace();
-        }
-
-
-        /*
-        // we check if a new entity has been created or if an existing one has been edited
-        if (doctoralStudent.getId() == null) {
-            DoctoralStudentDTO createdStudent = applicationServices.addDoctoralStudent(doctoralStudent);
-            if (createdStudent != null) {
-                eventBus.post(new SuccessfullyAddedDoctoralStudentEvent(createdStudent));
-            }
-        } else {
-            // we are editing an already existing entity
+        addJob(() -> {
+            showLoadingScreen();
             try {
-                DoctoralStudentDTO updatedStudent = applicationServices.editDoctoralStudent(doctoralStudent);
-                // we inform about the successful update
-                eventBus.post(new SuccessfullyUpdatedDoctoralStudentEvent(updatedStudent));
+                DoctoralStudentDTO createdEntity = applicationServices.addDoctoralStudent(doctoralStudent);
+                eventBus.post(new SuccessfullyAddedDoctoralStudentEvent(createdEntity));
             } catch (BusinessException e) {
                 e.printStackTrace();
             }
-
-        }
-
-         */
+            closeLoadingScreen();
+        });
     }
 
     @Subscribe
-    public void handleAnonymizeDoctoralStudentEvent(RequestAnonymizeDoctoralStudentEvent requestAnonymizeDoctoralStudentEvent){
+    public void handleAnonymizeDoctoralStudentEvent(RequestAnonymizeDoctoralStudentEvent requestAnonymizeDoctoralStudentEvent) {
         try {
             AnonymizeResultDTO result = applicationServices.anonymize(requestAnonymizeDoctoralStudentEvent.getId());
             eventBus.post(new SuccessfullyDeletedDoctoralStudentEvent(result.getDeletedId()));
@@ -136,7 +173,7 @@ public class GuiEventHandler {
     }
 
     @Subscribe
-    public void handleAddUniversityEvent(RequestAddUniversityEvent requestSaveEvent){
+    public void handleAddUniversityEvent(RequestAddUniversityEvent requestSaveEvent) {
         UniversityDTO universityDTO = requestSaveEvent.getUniversity();
         UniversityDTO response = applicationServices.addUniversity(universityDTO);
         EntityPool.getInstance().addUniversity(response);
@@ -144,7 +181,7 @@ public class GuiEventHandler {
     }
 
     @Subscribe
-    public void handleUpdateUniversityEvent(RequestUpdateUniversityEvent requestUpdateUniversityEvent){
+    public void handleUpdateUniversityEvent(RequestUpdateUniversityEvent requestUpdateUniversityEvent) {
         UniversityDTO universityDTO = requestUpdateUniversityEvent.getUniversity();
         UniversityDTO response = applicationServices.updateUniversity(universityDTO.getId(), universityDTO);
         EntityPool.getInstance().updateUniversity(response);
@@ -154,7 +191,7 @@ public class GuiEventHandler {
     // todo: delete university
 
     @Subscribe
-    public void handleAddFacultyEvent(RequestAddFacultyEvent requestSaveEvent){
+    public void handleAddFacultyEvent(RequestAddFacultyEvent requestSaveEvent) {
         FacultyDTO facultyDTO = requestSaveEvent.getFaculty();
         FacultyDTO response = applicationServices.addFaculty(facultyDTO);
         EntityPool.getInstance().addFaculty(response);
@@ -162,28 +199,28 @@ public class GuiEventHandler {
     }
 
     @Subscribe
-    public void handleUpdateFacultyEvent(RequestUpdateFacultyEvent requestUpdateFacultyEvent){
+    public void handleUpdateFacultyEvent(RequestUpdateFacultyEvent requestUpdateFacultyEvent) {
         FacultyDTO facultyDTO = requestUpdateFacultyEvent.getFaculty();
         FacultyDTO response = applicationServices.updateFaculty(facultyDTO);
         eventBus.post(new SuccessfullyUpdatedFacultyEvent(response));
     }
 
     @Subscribe
-    public void handleDeleteFacultyEvent(RequestDeleteFacultyEvent requestDeleteEvent){
+    public void handleDeleteFacultyEvent(RequestDeleteFacultyEvent requestDeleteEvent) {
         FacultyDTO facultyDTO = requestDeleteEvent.getFaculty();
         FacultyDTO response = applicationServices.deleteFaculty(facultyDTO);
         eventBus.post(new SuccessfullyDeletedFacultyEvent(response));
     }
 
     @Subscribe
-    public void handleAddUserEvent(RequestAddUserEvent requestAddUserEvent){
+    public void handleAddUserEvent(RequestAddUserEvent requestAddUserEvent) {
         try {
             UserDTO userDTO = requestAddUserEvent.getUser();
             UserInfoDTO response = applicationServices.addUser(userDTO);
             eventBus.post(new SuccessfullyAddedUserEvent(response));
-        }catch (BusinessException e){
+        } catch (BusinessException e) {
             e.printStackTrace();
-            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.ERROR,"User konnte nicht hinzugefügt werden."));
+            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.ERROR, "User konnte nicht hinzugefügt werden."));
         }
     }
 
@@ -209,7 +246,7 @@ public class GuiEventHandler {
     }
 
     @Subscribe
-    public void handlePasswordChange(RequestChangePasswordEvent requestChangePasswordEvent){
+    public void handlePasswordChange(RequestChangePasswordEvent requestChangePasswordEvent) {
         try {
             String username = requestChangePasswordEvent.getUsername();
             String newPassword = requestChangePasswordEvent.getNewPassword();
@@ -218,16 +255,17 @@ public class GuiEventHandler {
         } catch (BusinessException e) {
             e.printStackTrace();
             eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.ERROR, "Konnte Passwort nicht ändern..."));
+            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.ERROR, "Konnte Passwort nicht ändern..."));
         }
 
     }
 
     @Subscribe
-    public void handleRoleChange(RequestChangeUserRoleEvent requestChangeUserRoleEvent){
+    public void handleRoleChange(RequestChangeUserRoleEvent requestChangeUserRoleEvent) {
         try {
             UserDTO userDTO = requestChangeUserRoleEvent.getUser();
             UserInfoDTO response = null;
-            response = applicationServices.changeUserPrivileges(userDTO.getUsername(),userDTO.getRole());
+            response = applicationServices.changeUserPrivileges(userDTO.getUsername(), userDTO.getRole());
             //eventBus.post(new SuccessfullyChangedUserRoleEvent(response));
             eventBus.post(new SuccessfullyUpdatedUserEvent(response));
         } catch (BusinessException e) {
@@ -242,11 +280,11 @@ public class GuiEventHandler {
             String username = requestChangeEmailEvent.getUsername();
             String newEmail = requestChangeEmailEvent.getNewEmail();
             UserInfoDTO response = applicationServices.changeUserEmail(username, newEmail);
-          //  eventBus.post(new SuccessfullyChangedEmailEvent(response));
+            //  eventBus.post(new SuccessfullyChangedEmailEvent(response));
             eventBus.post(new SuccessfullyUpdatedUserEvent(response));
-        } catch (BusinessException e){
+        } catch (BusinessException e) {
             e.printStackTrace();
-            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.ERROR,"Konnte Email nicht ändern"));
+            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.ERROR, "Konnte Email nicht ändern"));
         }
     }
 
@@ -263,31 +301,44 @@ public class GuiEventHandler {
     @Subscribe
     public void handleEvent(OnClickEditDoctoralStudentEvent event) {
         Long id = event.getId();
-        DoctoralStudentDTO doctoralStudentDTO = null;
-        try {
-            doctoralStudentDTO = applicationServices.getDoctoralStudent(id);
-        } catch (IOException e) {
-            // todo handle properly
-            e.printStackTrace();
-        }
 
-        // load and start doc student form mask and fill with data
-        eventBus.post(new ShowDoctoralStudentEvent(doctoralStudentDTO));
+        addJob(() -> {
+            showLoadingScreen();
+
+            try {
+                DoctoralStudentDTO doctoralStudentDTO = applicationServices.getDoctoralStudent(id);
+                Platform.runLater(() -> eventBus.post(new ShowDoctoralStudentEvent(doctoralStudentDTO)));
+            } catch (IOException e) {
+                show(new BusinessException(e.getLocalizedMessage()));
+            }
+
+            closeLoadingScreen();
+        });
+
     }
 
     @Subscribe
     public void handle(RequestPatchDoctoralStudentEvent event) {
-        try {
-            applicationServices.patchDoctoralStudent(event.getPatchDoctoralStudentDTO());
-            // successfully patched
-            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.INFO, bundle.getString("ui.alert.successfully_patched_entry")));
+        addJob(() -> {
+            showLoadingScreen();
+            try {
+                applicationServices.patchDoctoralStudent(event.getPatchDoctoralStudentDTO());
+                PreviewDoctoralStudentDTO preview = applicationServices.getPreview(event.getPatchDoctoralStudentDTO().getId());
 
-            PreviewDoctoralStudentDTO preview = applicationServices.getPreview(event.getPatchDoctoralStudentDTO().getId());
-            eventBus.post(new SuccessfullyUpdatedDoctoralStudentEvent(preview));
-            eventBus.post(new SuccessfullyUpdatedDoctoralStudentEvent(preview));
-        } catch (BusinessException e) {
-            e.printStackTrace();
-        }
+                // successfully patched
+                Platform.runLater(() -> {
+                    eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.INFO, bundle.getString("ui.alert.successfully_patched_entry")));
+                    eventBus.post(new SuccessfullyUpdatedDoctoralStudentEvent(preview));
+                });
+
+            } catch (BusinessException e) {
+                e.printStackTrace();
+            } finally {
+                closeLoadingScreen();
+            }
+
+        });
+
     }
 
     @Subscribe
@@ -355,10 +406,10 @@ public class GuiEventHandler {
     }
 
     @Subscribe
-    public void handleDocumentRequestEvent(RequestDocumentsEvent event){
+    public void handleDocumentRequestEvent(RequestDocumentsEvent event) {
         Collection<DocumentDTO> documents = new HashSet<>();
         Collection<DocumentInformationDTO> requestedDocuments = event.getDocuments();
-        for(DocumentInformationDTO doc : requestedDocuments){
+        for (DocumentInformationDTO doc : requestedDocuments) {
             // todo: show some kind of progress window
             documents.add(applicationServices.getDocument(doc));
         }
@@ -366,7 +417,7 @@ public class GuiEventHandler {
         // select file storage location
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Ablageort");
-        File defaultDirectory = new File(System.getProperty("user.home")+"/Downloads/");
+        File defaultDirectory = new File(System.getProperty("user.home") + "/Downloads/");
         directoryChooser.setInitialDirectory(defaultDirectory);
         File selectedDirectory = directoryChooser.showDialog(null);
 
@@ -375,13 +426,13 @@ public class GuiEventHandler {
             return;
         }
         try {
-            for(DocumentDTO doc : documents){
+            for (DocumentDTO doc : documents) {
                 // rename file according to the Windows naming convention if a file with the same name already exists
                 String ext = FilenameUtils.getExtension(doc.getFilename());
                 String fileNameWithoutExt = FilenameUtils.removeExtension(doc.getFilename());
                 File document = new File(selectedDirectory + "/" + fileNameWithoutExt + "." + ext);
                 int i = 2;
-                while(document.exists()){
+                while (document.exists()) {
                     document = new File(selectedDirectory + "/" + fileNameWithoutExt + "(" + i++ + ")." + ext);
                 }
 
@@ -394,12 +445,36 @@ public class GuiEventHandler {
             // show success notification
             eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.INFO, bundle.getString("ui.alert.successfully_saved_documents")));
 
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private void show(BusinessException exception) {
         eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.ERROR, exception.getLocalizedMessage()));
+    }
+
+    private void showLoadingScreen() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("create");
+                try {
+                   loadingWindow = GuiLoader.createLoadingScreen();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void closeLoadingScreen() {
+        if (loadingWindow != null) {
+            Platform.runLater(() -> {
+                System.out.println("close");
+                loadingWindow.close();
+                });
+        }
     }
 }

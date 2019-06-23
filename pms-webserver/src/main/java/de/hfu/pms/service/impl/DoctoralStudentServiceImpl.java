@@ -1,6 +1,7 @@
 package de.hfu.pms.service.impl;
 
 import de.hfu.pms.dao.DoctoralStudentDao;
+import de.hfu.pms.dao.PhotoDao;
 import de.hfu.pms.exceptions.AlreadyAnonymizedException;
 import de.hfu.pms.exceptions.DoctoralStudentNotFoundException;
 import de.hfu.pms.model.*;
@@ -19,11 +20,13 @@ public class DoctoralStudentServiceImpl implements DoctoralStudentService {
 
     private final DoctoralStudentDao doctoralStudentDao;
     private final DocumentService documentService;
+    private final PhotoDao photoDao;
 
     @Autowired
-    public DoctoralStudentServiceImpl(DoctoralStudentDao doctoralStudentDao, DocumentService documentService) {
+    public DoctoralStudentServiceImpl(DoctoralStudentDao doctoralStudentDao, DocumentService documentService, PhotoDao photoDao) {
         this.doctoralStudentDao = doctoralStudentDao;
         this.documentService = documentService;
+        this.photoDao = photoDao;
     }
 
     @Override
@@ -38,10 +41,32 @@ public class DoctoralStudentServiceImpl implements DoctoralStudentService {
         return doctoralStudentDao.save(doctoralStudent);
     }
 
+
     @Override
-    public DoctoralStudent updatePhoto(Long id, byte[] data) {
+    public DoctoralStudent deletePhoto(Long id) {
         DoctoralStudent entity = findById(id);
-        entity.setPhoto(data);
+        Long photoId = entity.getPhotoId();
+        if (photoId != null) {
+            photoDao.deleteById(photoId);
+        }
+        entity.setPhotoId(null);
+        return doctoralStudentDao.save(entity);
+    }
+
+    @Override
+    public DoctoralStudent updatePhoto(Long id, String filename, byte[] data) {
+        DoctoralStudent entity = findById(id);
+        Long photoId = entity.getPhotoId();
+        Photo photo;
+        if (photoId == null) {
+            photo = new Photo();
+        } else {
+            photo = photoDao.findById(photoId).orElseThrow();
+        }
+        photo.setFilename(filename);
+        photo.setPhoto(data);
+        photo = photoDao.save(photo);
+        entity.setPhotoId(photo.getId());
         return doctoralStudentDao.save(entity);
     }
 
@@ -89,7 +114,7 @@ public class DoctoralStudentServiceImpl implements DoctoralStudentService {
 
     @Override
     public DoctoralStudent findById(Long id) {
-       return doctoralStudentDao.findById(id).orElseThrow(() -> new DoctoralStudentNotFoundException(id));
+        return doctoralStudentDao.findById(id).orElseThrow(() -> new DoctoralStudentNotFoundException(id));
     }
 
     @Override
@@ -119,18 +144,24 @@ public class DoctoralStudentServiceImpl implements DoctoralStudentService {
         PersonalData personalData = doctoralStudent.getPersonalData();
         if (personalData.getForename() != null && personalData.getForename().matches(searchText)) return true;
         if (personalData.getLastName() != null && personalData.getLastName().matches(searchText)) return true;
-        if (personalData.getFormerLastName() != null && personalData.getFormerLastName().matches(searchText)) return true;
+        if (personalData.getFormerLastName() != null && personalData.getFormerLastName().matches(searchText))
+            return true;
         if (personalData.getTitle() != null && personalData.getTitle().matches(searchText)) return true;
-        if (personalData.getDateOfBirth() != null && personalData.getDateOfBirth().toString().matches(searchText)) return true;
-        if (personalData.getFamilyStatus() != null && personalData.getFamilyStatus().toString().matches(searchText)) return true;
+        if (personalData.getDateOfBirth() != null && personalData.getDateOfBirth().toString().matches(searchText))
+            return true;
+        if (personalData.getFamilyStatus() != null && personalData.getFamilyStatus().toString().matches(searchText))
+            return true;
         if (personalData.getEmail() != null && personalData.getEmail().matches(searchText)) return true;
         if (personalData.getTelephone() != null && personalData.getTelephone().matches(searchText)) return true;
 
         QualifiedGraduation qualifiedGraduation = doctoralStudent.getQualifiedGraduation();
         if (qualifiedGraduation.getGrade() != null && qualifiedGraduation.getGrade().matches(searchText)) return true;
-        if (qualifiedGraduation.getSubjectArea() != null && qualifiedGraduation.getSubjectArea().matches(searchText)) return true;
-        if (qualifiedGraduation.getGraduation() != null && qualifiedGraduation.getGraduation().name().matches(searchText)) return true;
-        if (qualifiedGraduation.getGradedUniversity() != null && qualifiedGraduation.getGradedUniversity().getName().matches(searchText)) return true;
+        if (qualifiedGraduation.getSubjectArea() != null && qualifiedGraduation.getSubjectArea().matches(searchText))
+            return true;
+        if (qualifiedGraduation.getGraduation() != null && qualifiedGraduation.getGraduation().name().matches(searchText))
+            return true;
+        if (qualifiedGraduation.getGradedUniversity() != null && qualifiedGraduation.getGradedUniversity().getName().matches(searchText))
+            return true;
 
         Address address = doctoralStudent.getPersonalData().getAddress();
         if (address.getStreet() != null && address.getStreet().matches(searchText)) return true;
@@ -140,11 +171,16 @@ public class DoctoralStudentServiceImpl implements DoctoralStudentService {
 
         TargetGraduation promotion = doctoralStudent.getTargetGraduation();
         if (promotion.getTargetDegree() != null && promotion.getTargetDegree().matches(searchText)) return true;
-        if (promotion.getNameOfDissertation() != null && promotion.getNameOfDissertation().matches(searchText)) return true;
-        if (promotion.getInternalSupervisor() != null && promotion.getInternalSupervisor().matches(searchText)) return true;
-        if (promotion.getFacultyHFU() != null && promotion.getFacultyHFU().getFacultyName().matches(searchText)) return true;
-        if (promotion.getExternalSupervisor() != null && promotion.getExternalSupervisor().matches(searchText)) return true;
-        if (promotion.getExternalUniversity() != null && promotion.getExternalUniversity().getName().matches(searchText)) return true;
+        if (promotion.getNameOfDissertation() != null && promotion.getNameOfDissertation().matches(searchText))
+            return true;
+        if (promotion.getInternalSupervisor() != null && promotion.getInternalSupervisor().matches(searchText))
+            return true;
+        if (promotion.getFacultyHFU() != null && promotion.getFacultyHFU().getFacultyName().matches(searchText))
+            return true;
+        if (promotion.getExternalSupervisor() != null && promotion.getExternalSupervisor().matches(searchText))
+            return true;
+        if (promotion.getExternalUniversity() != null && promotion.getExternalUniversity().getName().matches(searchText))
+            return true;
         if (promotion.getExternalFaculty() != null && promotion.getExternalFaculty().matches(searchText)) return true;
         if (promotion.getRating() != null && promotion.getRating().name().matches(searchText)) return true;
 
@@ -166,63 +202,65 @@ public class DoctoralStudentServiceImpl implements DoctoralStudentService {
     @Override
     public DoctoralStudent anonymize(Long id) {
         DoctoralStudent doctoralStudent = doctoralStudentDao.findById(id).orElseThrow(() -> new DoctoralStudentNotFoundException(id));
-        if(!doctoralStudent.getAnonymized()) {
+        if (!doctoralStudent.getAnonymized()) {
             DoctoralStudent anonymizedDoctoralStudent = new DoctoralStudent();
             anonymizedDoctoralStudent.setAnonymized(true);
 
 
-        //Get all subtables
-        PersonalData personalData = doctoralStudent.getPersonalData();
-        QualifiedGraduation qualifiedGraduation = doctoralStudent.getQualifiedGraduation();
-        TargetGraduation targetGraduation = doctoralStudent.getTargetGraduation();
-        Employment employment = doctoralStudent.getEmployment();
-        Support support = doctoralStudent.getSupport();
-        AlumniState alumniState = doctoralStudent.getAlumniState();
+            //Get all subtables
+            PersonalData personalData = doctoralStudent.getPersonalData();
+            QualifiedGraduation qualifiedGraduation = doctoralStudent.getQualifiedGraduation();
+            TargetGraduation targetGraduation = doctoralStudent.getTargetGraduation();
+            Employment employment = doctoralStudent.getEmployment();
+            Support support = doctoralStudent.getSupport();
+            AlumniState alumniState = doctoralStudent.getAlumniState();
 
-        //Delete PersonalData
-        PersonalData anonymizedPersonalData = new PersonalData();
-        anonymizedPersonalData.setGender(personalData.getGender());
-        LocalDate dateOfBirth = personalData.getDateOfBirth();
+            //Delete PersonalData
+            PersonalData anonymizedPersonalData = new PersonalData();
+            anonymizedPersonalData.setGender(personalData.getGender());
+            LocalDate dateOfBirth = personalData.getDateOfBirth();
 
-        //fill in asterix
-        String fillCharacter = "*";
-        anonymizedPersonalData.setLastName(fillCharacter);
-        anonymizedPersonalData.setForename(fillCharacter);
-        anonymizedPersonalData.setEmail(fillCharacter);
-        anonymizedPersonalData.setTelephone(fillCharacter);
-        anonymizedPersonalData.setDateOfBirth(LocalDate.of(dateOfBirth.getYear(),1,1));
+            //fill in asterix
+            String fillCharacter = "*";
+            anonymizedPersonalData.setLastName(fillCharacter);
+            anonymizedPersonalData.setForename(fillCharacter);
+            anonymizedPersonalData.setEmail(fillCharacter);
+            anonymizedPersonalData.setTelephone(fillCharacter);
+            anonymizedPersonalData.setDateOfBirth(LocalDate.of(dateOfBirth.getYear(), 1, 1));
 
-        anonymizedDoctoralStudent.setPersonalData(anonymizedPersonalData);
+            anonymizedDoctoralStudent.setPersonalData(anonymizedPersonalData);
 
-        //QualifiedGraduation
-        anonymizedDoctoralStudent.setQualifiedGraduation(qualifiedGraduation);
+            //QualifiedGraduation
+            anonymizedDoctoralStudent.setQualifiedGraduation(qualifiedGraduation);
 
-        //Delete name of Dissertation
-        targetGraduation.setNameOfDissertation(null);
-        anonymizedDoctoralStudent.setTargetGraduation(targetGraduation);
+            //Delete name of Dissertation
+            targetGraduation.setNameOfDissertation(null);
+            anonymizedDoctoralStudent.setTargetGraduation(targetGraduation);
 
-        //delete employment
-        anonymizedDoctoralStudent.setEmployment(null);
+            //delete employment
+            anonymizedDoctoralStudent.setEmployment(null);
 
-        //delete awards
-        support.setAwards(null);
-        anonymizedDoctoralStudent.setSupport(support);
+            //delete awards
+            support.setAwards(null);
+            anonymizedDoctoralStudent.setSupport(support);
 
-        //modify AllumniState
-        alumniState.setAgreementNews(false);
-        alumniState.setAgreementEvaluation(false);
-        anonymizedDoctoralStudent.setAlumniState(alumniState);
+            //modify AllumniState
+            alumniState.setAgreementNews(false);
+            alumniState.setAgreementEvaluation(false);
+            anonymizedDoctoralStudent.setAlumniState(alumniState);
 
-        //delete Photo
-        doctoralStudent.setPhoto(null);
+            //delete Photo
+            if (doctoralStudent.getPhotoId() != null) {
+                photoDao.deleteById(doctoralStudent.getId());
+            }
+            doctoralStudent.setPhotoId(null);
 
-        //delete all Documents
-        documentService.deleteAll(id);
+            //delete all Documents
+            documentService.deleteAll(id);
 
-        doctoralStudentDao.deleteById(id);
-        return doctoralStudentDao.save(anonymizedDoctoralStudent);
-        }
-        else throw new AlreadyAnonymizedException(id);
+            doctoralStudentDao.deleteById(id);
+            return doctoralStudentDao.save(anonymizedDoctoralStudent);
+        } else throw new AlreadyAnonymizedException(id);
     }
 
     @Override

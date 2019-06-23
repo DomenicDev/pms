@@ -33,7 +33,7 @@ public class PatchDoctoralStudentDTO {
     private boolean changedPhoto;
 
     // profile photo
-    private byte[] photo;
+    private PhotoDTO photo;
 
     // documents
     private Collection<DocumentDTO> documentsToAdd;
@@ -117,11 +117,11 @@ public class PatchDoctoralStudentDTO {
         this.patchedAlumniState = patchedAlumniState;
     }
 
-    public byte[] getPhoto() {
+    public PhotoDTO getPhoto() {
         return photo;
     }
 
-    public void setPhoto(byte[] photo) {
+    public void setPhoto(PhotoDTO photo) {
         this.photo = photo;
     }
 

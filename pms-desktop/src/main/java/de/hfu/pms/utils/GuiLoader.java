@@ -8,6 +8,7 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.ResourceBundle;
@@ -31,6 +32,7 @@ public class GuiLoader {
     public static final String ACCOUNT_INFORMATION = "/screens/account_infoscreen.fxml";
     public static final String EDIT_ACCOUNT_INFORMATION = "/screens/change_accountinformation_screen.fxml";
     public static final String USER_FORM_MASK_ADMIN_AREA = "/screens/AddUserAdminArea.fxml";
+    public static final String LOADING_SCREEN = "/screens/loading_pane.fxml";
 
     static {
         // load resource bundle file
@@ -119,6 +121,19 @@ public class GuiLoader {
         stage.show();
         return stage;
     }
+
+    public static Stage createLoadingScreen() throws IOException {
+        Parent parent = GuiLoader.loadFXML(LOADING_SCREEN);
+        Scene scene = new Scene(parent);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setMinWidth(200);
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+        return stage;
+    }
+
 
     /**
      * Creates and shows an alert dialog with a yes-button, a no-button, and a cancel button.

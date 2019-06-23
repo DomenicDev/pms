@@ -413,10 +413,10 @@ public class DoctoralStudentFormController implements Initializable {
         emailTextField.setText(personalData.getEmail());
 
         // photo
-        byte[] photoData = doctoralStudent.getPhoto();
+        PhotoDTO photoData = doctoralStudent.getPhoto();
         if (photoData != null) {
             try {
-                BufferedImage bufferedImage = ImageUtils.getImage(photoData);
+                BufferedImage bufferedImage = ImageUtils.getImage(photoData.getPhoto());
                 Image image = SwingFXUtils.toFXImage(bufferedImage, null);
                 photoImageView.setImage(image);
             } catch (IOException e) {
@@ -991,7 +991,7 @@ public class DoctoralStudentFormController implements Initializable {
                 byte[] imageBytes;
                 BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
                 imageBytes = ImageUtils.getImageData(bufferedImage);
-                doctoralStudent.setPhoto(imageBytes);
+                doctoralStudent.setPhoto(new PhotoDTO("personal_image", imageBytes));
             } catch (IOException e) {
                 e.printStackTrace();
             }
