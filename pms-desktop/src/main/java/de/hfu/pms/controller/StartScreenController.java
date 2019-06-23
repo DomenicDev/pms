@@ -105,22 +105,26 @@ public class StartScreenController implements Initializable {
         eventBus.register(this);
 
         refreshGreetingLabel();
-        refreshAlertTable();
+
 
         // create cell factory for alert list view to customize representation
+
+
         alertListView.setCellFactory((param -> new ListCell<>() {
 
             @Override
             protected void updateItem(PreviewDoctoralStudentDTO item, boolean empty) {
                 super.updateItem(item, empty);
-                if (item == null) {
-                    return;
+                if (empty || item == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    setText(RepresentationWrapper.getPreviewRepresentation(item));
                 }
-
-                setText(RepresentationWrapper.getPreviewRepresentation(item));
             }
         }));
 
+        refreshAlertTable();
 
         facultyPieChart.setLabelsVisible(true);
         facultyPieChart.setLegendSide(Side.RIGHT);
@@ -179,6 +183,7 @@ public class StartScreenController implements Initializable {
     public void updateAlertListView(ShowAlertedDoctoralStudentsEvent event) {
         alertListView.getItems().clear();
         alertListView.getItems().addAll(event.getAlertedStudents());
+        alertListView.refresh();
     }
 
     @Subscribe

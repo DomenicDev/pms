@@ -4,8 +4,6 @@ import de.hfu.pms.shared.dto.DoctoralStudentDTO;
 import de.hfu.pms.shared.dto.PreviewDoctoralStudentDTO;
 import de.hfu.pms.shared.dto.TargetGraduationDTO;
 
-import java.time.LocalDate;
-
 public class Converter {
 
     public static PreviewDoctoralStudentDTO convert(DoctoralStudentDTO doctoralStudent) {
@@ -25,16 +23,7 @@ public class Converter {
             preview.setMemberHFUCollege(targetGraduationDTO.isMemberOfHFUKolleg());
 
             // active
-            if (targetGraduationDTO.getPrognosticatedPromotionDate() != null) {
-                if (!doctoralStudent.isAnonymized()
-                        && !targetGraduationDTO.isPromotionCanceled()
-                        && LocalDate.now().isBefore(targetGraduationDTO.getPrognosticatedPromotionDate())) {
-                    preview.setActive(true);
-                }
-            } else {
-                preview.setActive(false);
-            }
-
+            preview.setActive(targetGraduationDTO.getProcedureCompleted() == null);
         }
 
         preview.setAnonymized(doctoralStudent.isAnonymized());
