@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.layout.Region;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -148,6 +149,8 @@ public class GuiLoader {
     public static void showYesNoCancelAlert(Alert.AlertType alertType, String title, String content, ButtonServiceRoutine onYes, ButtonServiceRoutine onNo, ButtonServiceRoutine onCancel) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
+        alert.getDialogPane().setMinWidth(Region.USE_PREF_SIZE);
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         alert.setContentText(content);
         ButtonType okButton = new ButtonType(bundle.getString("ui.label.yes"), ButtonBar.ButtonData.YES);
         ButtonType noButton = new ButtonType(bundle.getString("ui.label.no"), ButtonBar.ButtonData.NO);
@@ -196,6 +199,8 @@ public class GuiLoader {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
         alert.setContentText(content);
+        alert.getDialogPane().setMinWidth(Region.USE_PREF_SIZE);
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         ButtonType okButton = new ButtonType(yesLabel, ButtonBar.ButtonData.YES);
         ButtonType noButton = new ButtonType(noLabel, ButtonBar.ButtonData.NO);
         alert.getButtonTypes().setAll(okButton, noButton);
