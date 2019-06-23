@@ -12,18 +12,19 @@
          <children>
             <TextField fx:id="usernameTextField" layoutX="37.0" layoutY="93.0" prefHeight="25.0" prefWidth="277.0" promptText="%ui.label.username" style="-fx-text-inner-color: #000000; -fx-prompt-text-fill: #008351;" styleClass="background-white" AnchorPane.bottomAnchor="281.85714285714283" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="93.0" />
             <PasswordField fx:id="passwordField" layoutX="37.0" layoutY="148.0" prefHeight="25.0" prefWidth="277.0" promptText="%ui.label.password" style="-fx-text-inner-color: #000000; -fx-prompt-text-fill: #008351;" styleClass="background-white" AnchorPane.bottomAnchor="226.85714285714286" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="148.0" />
-            <Button fx:id="loginButton" defaultButton="true" layoutX="84.0" layoutY="241.0" mnemonicParsing="false" onAction="#handleLoginEvent" prefHeight="25.0" prefWidth="183.0" styleClass="button-login" text="%ui.button.login" textFill="#008351" AnchorPane.bottomAnchor="133.8571428571429" AnchorPane.leftAnchor="84.0" AnchorPane.rightAnchor="84.0" AnchorPane.topAnchor="241.0" />
+            <Button fx:id="loginButton" defaultButton="true" layoutX="84.0" layoutY="256.0" mnemonicParsing="false" onAction="#handleLoginEvent" prefHeight="25.0" prefWidth="183.0" styleClass="button-login" text="%ui.button.login" textFill="#008351" AnchorPane.bottomAnchor="118.85714285714289" AnchorPane.leftAnchor="84.0" AnchorPane.rightAnchor="84.0" AnchorPane.topAnchor="256.0" />
             <Text fill="WHITE" layoutX="40.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="color-white" text="%ui.label.login_title" AnchorPane.bottomAnchor="350.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="30.0">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Text>
-            <Button fx:id="exitButton" layoutX="84.0" layoutY="292.0" mnemonicParsing="false" onAction="#handleExitEvent" prefHeight="25.0" prefWidth="183.0" styleClass="button-login" text="%ui.button.exit" textFill="#008351" AnchorPane.bottomAnchor="82.85714285714289" AnchorPane.leftAnchor="84.0" AnchorPane.rightAnchor="84.0" AnchorPane.topAnchor="292.0" />
+            <Button fx:id="exitButton" layoutX="84.0" layoutY="307.0" mnemonicParsing="false" onAction="#handleExitEvent" prefHeight="25.0" prefWidth="183.0" styleClass="button-login" text="%ui.button.exit" textFill="#008351" AnchorPane.bottomAnchor="67.85714285714289" AnchorPane.leftAnchor="84.0" AnchorPane.rightAnchor="84.0" AnchorPane.topAnchor="307.0" />
             <Label fx:id="errorLabel" layoutX="40.0" layoutY="192.0">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
+            <ProgressBar fx:id="loginProgressBar" layoutX="76.0" layoutY="218.0" opacity="0.71" prefWidth="200.0" />
          </children>
       </AnchorPane>
       <ImageView fitHeight="135.0" fitWidth="286.0" layoutX="33.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="164.3182830810547" AnchorPane.leftAnchor="33.0" AnchorPane.rightAnchor="381.0" AnchorPane.topAnchor="134.0">

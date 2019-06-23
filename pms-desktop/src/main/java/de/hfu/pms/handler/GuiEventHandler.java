@@ -102,8 +102,6 @@ public class GuiEventHandler extends Thread {
 
         addJob(() -> {
 
-            showLoadingScreen();
-
             try {
                 sleep(1000);
             } catch (InterruptedException e) {
@@ -143,7 +141,6 @@ public class GuiEventHandler extends Thread {
                 });
             }
 
-            closeLoadingScreen();
         });
 
 

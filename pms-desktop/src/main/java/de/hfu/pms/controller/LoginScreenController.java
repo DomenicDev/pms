@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
@@ -29,10 +30,15 @@ public class LoginScreenController implements Initializable {
     @FXML
     private Label errorLabel;
 
+    @FXML
+    private ProgressBar loginProgressBar;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         eventBus.register(this);
         errorLabel.getStyleClass().add("error_text");
+
+        loginProgressBar.setVisible(false);
     }
 
     @FXML
@@ -58,14 +64,24 @@ public class LoginScreenController implements Initializable {
         // reset error label flag
         errorLabel.setVisible(false);
 
+        // make login progress bar visible
+        setProgressBarVisible(true);
+
         // notify about the login request
         eventBus.post(new LoginRequestEvent(username, password));
+    }
+
+    private void setProgressBarVisible(boolean visible) {
+        this.loginProgressBar.setVisible(visible);
     }
 
     @Subscribe
     public void handle(LoginFailedEvent event) {
         errorLabel.setText(event.getReason());
         errorLabel.setVisible(true);
+
+        // reset progress bar
+        setProgressBarVisible(false);
     }
 
 
