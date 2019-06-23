@@ -1,38 +1,29 @@
-.button-sidebar
-{
-    -fx-background-color:  #0000/*#92C8FF*/;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+.button-sidebar {
+    -fx-background-color: #0000 /*#92C8FF*/;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 10, 0, 0, 0);
     -fx-background-radius: 0em;
     -fx-text-fill: white;
 }
-.button-sidebar:hover
-{
+
+.button-sidebar:hover {
     -fx-background-color: rgba(132, 182, 45, 150);
 
 }
-.button-sidebar:pressed
-{
-    -fx-background-color: #92C8FF;
 
-}
-.button-sidebar:focused
-{
-    -fx-background-color: #008D58;
-    -fx-border-color: #92C8FF;
-    -fx-border-width: 0px 0px 0px 0px;
-    -fx-text-fill: white;
-}
-.vbox-sidebar{
+
+.vbox-sidebar {
     -fx-background-color: linear-gradient(to bottom left, rgb(132, 182, 45), rgb(107, 150, 36));
 }
-.hbox-top{
+
+.hbox-top {
     -fx-background-color: linear-gradient(to left bottom, rgb(107, 150, 36), rgb(132, 182, 45));
 }
 
-.separator-sidebar{
+.separator-sidebar {
     -fx-background-color: #C5E2FF;
 }
-.label-top{
+
+.label-top {
     -fx-text-fill: #FAFAFA;
 }
 
@@ -59,51 +50,54 @@
 }
 
 
-
-
-
-.button-NOT-sidebar:hover{
+.button-NOT-sidebar:hover {
     -fx-background-color: #BFBFBF;
     /*box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);*/
 }
-.button-NOT-sidebar:focused{
+
+.button-NOT-sidebar:focused {
     -fx-background-color: #92C8FF;
 
 }
+
 .button-NOT-sidebar:pressed {
     -fx-background-color: #008D58;
 }
-.tool-bar-Doctoral-students{
+
+.tool-bar-Doctoral-students {
     -fx-background-color: #FAFAFA;
     -fx-border-color: #92C8FF;
     -fx-border-width: 0px 0px 5px 0px;
 }
 
-.tab-pane{
+.tab-pane {
 
-    -fx-background-color:#FAFAFA;
+    -fx-background-color: #FAFAFA;
 }
 
-.tab{
+.tab {
 
     -fx-background-color: #F0F0F0;
 
 }
 
-.tab:hover{
+.tab:hover {
     -fx-background-color: #BFBFBF;
 }
-.tab:pressed{
+
+.tab:pressed {
 
     -fx-background-color: #008D58;
 
 }
-.tab:selected
-{
+
+.tab:selected {
     -fx-background-color: #92C8FF;
     -fx-border-color: #92C8FF;
     -fx-border-width: 0px 0px 0px 0px;
-}/*
+}
+
+/*
 .tab-pane *.tab-header-background
 {
     -fx-background-color: #FFFFFF;
@@ -113,6 +107,9 @@
 
 .selected {
     -fx-background-color: #008D58 !important;
+    -fx-border-color: #92C8FF;
+    -fx-border-width: 0px 0px 0px 0px;
+    -fx-text-fill: white;
 }
 
 .background-green {
@@ -132,8 +129,7 @@
     -fx-text-fill: white;
 }
 
-.button-login:pressed
-{
+.button-login:pressed {
     -fx-background-color: #92C8FF;
 
 }

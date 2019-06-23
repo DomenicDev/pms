@@ -201,7 +201,7 @@ public class DashboardController implements Initializable {
         // to make sure to switch to the specific content screen.
         // This is important if the call of this event comes
         // from another screen than this one
-        switchMainContent(doctoralStudentsParent);
+        show(MainScreen.DoctoralStudent);
     }
 
     @Subscribe
