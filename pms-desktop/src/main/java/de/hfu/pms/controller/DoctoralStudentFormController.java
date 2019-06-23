@@ -700,6 +700,8 @@ public class DoctoralStudentFormController implements Initializable {
             }
 
             postExitScreenEvent();
+        } else {
+            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.WARNING, bundle.getString("ui.alert.validation_not_successful")));
         }
 
     }
