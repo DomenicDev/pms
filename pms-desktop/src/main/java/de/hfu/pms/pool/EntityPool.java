@@ -1,9 +1,7 @@
 package de.hfu.pms.pool;
 
 import com.google.common.eventbus.EventBus;
-import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
-import de.hfu.pms.events.SuccessfullyUpdatedUserEvent;
 import de.hfu.pms.exceptions.BusinessException;
 import de.hfu.pms.service.ApplicationServices;
 import de.hfu.pms.shared.dto.*;
@@ -129,21 +127,7 @@ public final class EntityPool {
     public Collection<DoctoralStudentDTO> getDoctoralStudents() {return doctoralStudents;}
 
     public UserInfoDTO getLoggedInUser() throws BusinessException {
-        if (loggedInUser == null) {
-            this.loggedInUser = applicationServices.getCurrentUser();
-        }
-        return loggedInUser;
-    }
-
-    @Subscribe
-    public void handle(SuccessfullyUpdatedUserEvent event) {
-        if (loggedInUser == null) {
-            return;
-        }
-        String usernameLoggedInUser = loggedInUser.getUsername();
-        if (usernameLoggedInUser.equals(event.getUserInfoDTO().getUsername())) {
-            this.loggedInUser = event.getUserInfoDTO();
-        }
+        return applicationServices.getCurrentUser();
     }
 
 }

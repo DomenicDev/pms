@@ -3,10 +3,7 @@ package de.hfu.pms.controller;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
-import de.hfu.pms.events.RequestAlertedDoctoralStudentEvent;
-import de.hfu.pms.events.ShowAlertedDoctoralStudentsEvent;
-import de.hfu.pms.events.SwitchDoctoralStudentScreenEvent;
-import de.hfu.pms.events.SwitchMainScreenEvent;
+import de.hfu.pms.events.*;
 import de.hfu.pms.exceptions.BusinessException;
 import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.FacultyDTO;
@@ -106,13 +103,9 @@ public class StartScreenController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         this.bundle = resources;
         eventBus.register(this);
-        try {
-            String forname = EntityPool.getInstance().getLoggedInUser().getForename();
-            String lastname = EntityPool.getInstance().getLoggedInUser().getLastname();
-            welcomeLabel.setText(welcomeLabel.getText() + " " + forname + " " + lastname);
-        } catch (BusinessException e) {
-            e.printStackTrace();
-        }
+
+        refreshGreetingLabel();
+
         // create cell factory for alert list view to customize representation
         alertListView.setCellFactory((param -> new ListCell<>() {
 
@@ -137,6 +130,16 @@ public class StartScreenController implements Initializable {
         facultyPieChart.setLegendVisible(true);
         facultyPieChart.setTitle(bundle.getString("ui.label.title_faculty_pie_chart"));
         refreshPieChart();
+    }
+
+    private void refreshGreetingLabel() {
+        try {
+            String forename = EntityPool.getInstance().getLoggedInUser().getForename();
+            String surname = EntityPool.getInstance().getLoggedInUser().getLastname();
+            welcomeLabel.setText(bundle.getString("ui.label.welcome") + ", " + forename + " " + surname);
+        } catch (BusinessException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -172,6 +175,10 @@ public class StartScreenController implements Initializable {
         alertListView.getItems().addAll(event.getAlertedStudents());
     }
 
+    @Subscribe
+    public void handle(SuccessfullyUpdatedUserEvent event) {
+        refreshGreetingLabel();
+    }
 
     @FXML
     public void handleHomepage() {
