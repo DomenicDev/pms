@@ -517,6 +517,9 @@ public class DoctoralStudentFormController implements Initializable {
         // will enable/disable children based on their value
         refreshCheckBoxes();
 
+        // reset flags since they could be modified while adding values
+        resetChangeControlFlags();
+
     }
 
     @FXML
