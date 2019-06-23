@@ -58,6 +58,7 @@ public class GuiEventHandler extends Thread {
 
         this.applicationServices = applicationServices;
 
+        this.setDaemon(true);
         this.setName("[GuiEventHandler]-Thread");
         this.start();
     }
@@ -81,6 +82,10 @@ public class GuiEventHandler extends Thread {
 
         }
 
+    }
+
+    public void close() {
+        this.closed = true;
     }
 
 
