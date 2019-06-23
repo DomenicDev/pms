@@ -3,7 +3,6 @@ package de.hfu.pms.pool;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
-import de.hfu.pms.events.SuccessfullyAddedUniversityEvent;
 import de.hfu.pms.events.SuccessfullyUpdatedUserEvent;
 import de.hfu.pms.exceptions.BusinessException;
 import de.hfu.pms.service.ApplicationServices;
@@ -12,7 +11,9 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 public final class EntityPool {
 
@@ -20,7 +21,7 @@ public final class EntityPool {
 
     private EventBus eventBus = EventBusSystem.getEventBus();
     private static Logger logger = Logger.getLogger(EntityPool.class);
-    private Collection<UniversityDTO> universities = new HashSet<>();
+    private Map<Long, UniversityDTO> universities = new HashMap<>();
     private Collection<FacultyDTO> faculties = new HashSet<>();
     private Collection<PreviewDoctoralStudentDTO> previewStudents = new HashSet<>();
     private Collection<UserInfoDTO> users = new HashSet<>();
@@ -50,7 +51,9 @@ public final class EntityPool {
             return;
         }
         logger.log(Level.DEBUG, "Adding " + data.size() + " items to university pool.");
-        universities.addAll(data);
+        for (UniversityDTO uni : data) {
+            universities.put(uni.getId(), uni);
+        }
     }
 
     public void initPreviews(Collection<PreviewDoctoralStudentDTO> previews) {
@@ -93,8 +96,22 @@ public final class EntityPool {
         faculties.remove(faculty);
     }
 
+    public void addUniversity(UniversityDTO universityDTO) {
+        if (universityDTO == null) {
+            return;
+        }
+        universities.put(universityDTO.getId(), universityDTO);
+    }
+
+    public void updateUniversity(UniversityDTO universityDTO) {
+        if (universityDTO == null) {
+            return;
+        }
+        universities.put(universityDTO.getId(), universityDTO);
+    }
+
     public Collection<UniversityDTO> getUniversities() {
-        return universities;
+        return universities.values();
     }
 
     public Collection<FacultyDTO> getFaculties() {
@@ -129,8 +146,4 @@ public final class EntityPool {
         }
     }
 
-    @Subscribe
-    public void handleCreateUniversityEvent(SuccessfullyAddedUniversityEvent event) {
-        universities.add(event.getUniversity());
-    }
 }

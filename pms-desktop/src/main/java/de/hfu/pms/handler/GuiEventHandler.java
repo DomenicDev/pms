@@ -135,6 +135,7 @@ public class GuiEventHandler {
     public void handleAddUniversityEvent(RequestAddUniversityEvent requestSaveEvent){
         UniversityDTO universityDTO = requestSaveEvent.getUniversity();
         UniversityDTO response = applicationServices.addUniversity(universityDTO);
+        EntityPool.getInstance().addUniversity(response);
         eventBus.post(new SuccessfullyAddedUniversityEvent(response));
     }
 
@@ -142,6 +143,7 @@ public class GuiEventHandler {
     public void handleUpdateUniversityEvent(RequestUpdateUniversityEvent requestUpdateUniversityEvent){
         UniversityDTO universityDTO = requestUpdateUniversityEvent.getUniversity();
         UniversityDTO response = applicationServices.updateUniversity(universityDTO.getId(), universityDTO);
+        EntityPool.getInstance().updateUniversity(response);
         eventBus.post(new SuccessfullyUpdatedUniversityEvent(response));
     }
 
