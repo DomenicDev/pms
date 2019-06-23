@@ -18,6 +18,7 @@ import de.hfu.pms.utils.GuiLoader;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -44,7 +45,8 @@ public class DoctoralStudentOverviewController implements Initializable {
     private ObjectProperty<TableRow<PreviewDoctoralStudentDTO>> selectedTableRow = new SimpleObjectProperty<>();
 
     private ResourceBundle bundle;
-
+    @FXML
+    private Label labelDoctoralInList;
     @FXML
     private TextField searchTextField;
     @FXML
@@ -117,6 +119,8 @@ public class DoctoralStudentOverviewController implements Initializable {
             }
         });
 
+        searchResultTableView.getItems().addListener((ListChangeListener<PreviewDoctoralStudentDTO>) c -> labelDoctoralInList.setText(bundle.getString("ui.label.content.doctoral_in_list") + " " + searchResultTableView.getItems().size()));
+
         initCheckBoxes();
 
         setDeleteButtonsDisabledForNonAdmins();
@@ -143,37 +147,7 @@ public class DoctoralStudentOverviewController implements Initializable {
 
     @FXML
     private void onCheckBoxSelectionChanged() {
-
-        Collection<PreviewDoctoralStudentDTO> filteredPreviews = new HashSet<>();
-        if (activeCheckBox.isSelected()) {
-            filteredPreviews.addAll(getForActivity(true));
-        }
-        if (inactiveCheckBox.isSelected()) {
-            filteredPreviews.addAll(getForActivity(false));
-        }
-        if (memberCheckBox.isSelected()) {
-            if (activeCheckBox.isSelected() || inactiveCheckBox.isSelected()) {
-                Collection<PreviewDoctoralStudentDTO> newFiltered = getMembers(filteredPreviews);
-                filteredPreviews.clear();
-                filteredPreviews.addAll(newFiltered);
-            } else {
-                Collection<PreviewDoctoralStudentDTO> newFiltered = getMembers(masterData);
-                filteredPreviews.clear();
-                filteredPreviews.addAll(newFiltered);
-            }
-        }
-        if (anonymizedCheckBox.isSelected()) {
-            filteredPreviews.addAll(getAnonymizedPreviews());
-        }
-        searchResultTableView.getItems().clear();
-        searchResultTableView.getItems().addAll(filteredPreviews);
-
-        this.filteredMasterData.clear();
-        this.filteredMasterData = filteredPreviews;
-
-        if (!searchTextField.getText().trim().isEmpty()) {
-            filterForSearchResult();
-        }
+        refreshTable();
     }
 
     private Collection<PreviewDoctoralStudentDTO> getForActivity(boolean active) {
@@ -313,9 +287,39 @@ public class DoctoralStudentOverviewController implements Initializable {
         });
     }
 
-   private void refreshTable() {
-        onCheckBoxSelectionChanged();
-   }
+    private void refreshTable() {
+        Collection<PreviewDoctoralStudentDTO> filteredPreviews = new HashSet<>();
+        if (activeCheckBox.isSelected()) {
+            filteredPreviews.addAll(getForActivity(true));
+        }
+        if (inactiveCheckBox.isSelected()) {
+            filteredPreviews.addAll(getForActivity(false));
+        }
+        if (memberCheckBox.isSelected()) {
+            if (activeCheckBox.isSelected() || inactiveCheckBox.isSelected()) {
+                Collection<PreviewDoctoralStudentDTO> newFiltered = getMembers(filteredPreviews);
+                filteredPreviews.clear();
+                filteredPreviews.addAll(newFiltered);
+            } else {
+                Collection<PreviewDoctoralStudentDTO> newFiltered = getMembers(masterData);
+                filteredPreviews.clear();
+                filteredPreviews.addAll(newFiltered);
+            }
+        }
+        if (anonymizedCheckBox.isSelected()) {
+            filteredPreviews.addAll(getAnonymizedPreviews());
+        }
+        searchResultTableView.getItems().clear();
+        searchResultTableView.getItems().addAll(filteredPreviews);
+
+        this.filteredMasterData.clear();
+        this.filteredMasterData = filteredPreviews;
+
+        if (!searchTextField.getText().trim().isEmpty()) {
+            filterForSearchResult();
+        }
+
+    }
 
     private void addToTable(DoctoralStudentDTO doctoralStudentDTO) {
         if (doctoralStudentDTO == null) {
@@ -376,5 +380,6 @@ public class DoctoralStudentOverviewController implements Initializable {
 
         searchResultTableView.getItems().clear();
         searchResultTableView.getItems().addAll(newFilter);
+
     }
 }

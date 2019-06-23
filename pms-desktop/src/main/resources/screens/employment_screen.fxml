@@ -32,9 +32,9 @@
                         <Label text="%ui.table_column.employment.location" />
                         <Label text="%ui.table_column.employment.kind_of_employment" GridPane.rowIndex="1" />
                         <Label text="%ui.table_column.employment.employment_campus" GridPane.rowIndex="2" />
+                  <TextField fx:id="employmentLocationTextField" GridPane.columnIndex="1" />
                         <TextField fx:id="kindOfEmploymentTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <ComboBox fx:id="employmentCampusComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <TextField fx:id="employmentLocationTextField" GridPane.columnIndex="1" />
                   <DatePicker fx:id="employmentBeginDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <DatePicker fx:id="employmentEndDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <Label text="%ui.table_column.employment.begin" GridPane.rowIndex="3" />
