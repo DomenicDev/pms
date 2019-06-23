@@ -6,7 +6,6 @@ import de.hfu.pms.service.DoctoralStudentService;
 import de.hfu.pms.service.DocumentService;
 import de.hfu.pms.service.PhotoService;
 import de.hfu.pms.shared.dto.*;
-import de.hfu.pms.shared.utils.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -127,8 +126,7 @@ public class DoctoralStudentController {
     @GetMapping("/preview/{id}")
     public PreviewDoctoralStudentDTO getPreview(@PathVariable Long id) {
         DoctoralStudent entity = doctoralStudentService.findById(id);
-        DoctoralStudentDTO dto = convertToDTO(entity);
-        return Converter.convert(dto);
+        return convertToPreview(entity);
     }
 
     @GetMapping("/get/{id}")
@@ -220,11 +218,34 @@ public class DoctoralStudentController {
     private Collection<PreviewDoctoralStudentDTO> convertToPreview(Collection<DoctoralStudent> students) {
         Collection<PreviewDoctoralStudentDTO> previews = new HashSet<>();
         for (DoctoralStudent student : students) {
-            DoctoralStudentDTO dto = convertToDTO(student);
-            PreviewDoctoralStudentDTO preview = Converter.convert(dto);
-            previews.add(preview);
+            previews.add(convertToPreview(student));
         }
         return previews;
+    }
+
+    private PreviewDoctoralStudentDTO convertToPreview(DoctoralStudent doctoralStudent) {
+        PreviewDoctoralStudentDTO preview = new PreviewDoctoralStudentDTO();
+        preview.setId(doctoralStudent.getId());
+        preview.setForeName(doctoralStudent.getPersonalData().getForename());
+        preview.setName(doctoralStudent.getPersonalData().getLastName());
+        preview.setFaculty(modelMapper.map(doctoralStudent.getTargetGraduation().getFacultyHFU(), FacultyDTO.class));
+        preview.setEmail(doctoralStudent.getPersonalData().getEmail());
+        preview.setPhoneNumber(doctoralStudent.getPersonalData().getTelephone());
+        preview.setGender(doctoralStudent.getPersonalData().getGender());
+
+        // set boolean flags
+        TargetGraduation targetGraduationDTO = doctoralStudent.getTargetGraduation();
+        if (targetGraduationDTO != null) {
+            // membership
+            preview.setMemberHFUCollege(targetGraduationDTO.getMemberOfHFUKolleg());
+
+            // active
+            preview.setActive(targetGraduationDTO.getProcedureCompleted() == null);
+        }
+
+        preview.setAnonymized(doctoralStudent.getAnonymized());
+
+        return preview;
     }
 
     private DocumentDTO convertToDTO(Document document) {
