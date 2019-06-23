@@ -138,9 +138,7 @@ public class UniversityScreenController implements Initializable {
     public void handleUpdateEvent(SuccessfullyUpdatedUniversityEvent event) {
         UniversityDTO newUniversity = event.getUniversity();
         CollectionUtils.removeFromList(newUniversity, tableViewUniversity.getItems(), (original, collectionItem) -> original.getId().equals(collectionItem.getId()));
-
         tableViewUniversity.getItems().add(newUniversity);
-        tableViewUniversity.refresh();
     }
 
 
