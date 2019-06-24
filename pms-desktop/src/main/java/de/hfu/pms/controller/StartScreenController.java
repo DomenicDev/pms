@@ -154,6 +154,7 @@ public class StartScreenController implements Initializable {
         Map<String, Integer> facultyRatio = new HashMap<>();
         for (PreviewDoctoralStudentDTO preview : previews) {
             FacultyDTO faculty = preview.getFaculty();
+            if (!preview.isActive() || preview.isAnonymized()) continue;
             if (faculty != null) {
                 String name = faculty.getFacultyName();
                 if (facultyRatio.containsKey(name)) {

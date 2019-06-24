@@ -241,6 +241,9 @@ public class DoctoralStudentController {
 
             // active
             preview.setActive(targetGraduationDTO.getProcedureCompleted() == null);
+            if (targetGraduationDTO.getPromotionCanceled() || doctoralStudent.getAnonymized()) {
+                preview.setActive(false);
+            }
         }
 
         preview.setAnonymized(doctoralStudent.getAnonymized());
