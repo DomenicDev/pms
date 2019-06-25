@@ -53,8 +53,10 @@ public class UserUnitTest {
 
     @Test
     public void checkDeleteUser(){
+        String username = "bob";
+
         User user = new User();
-        user.setUsername("bob");
+        user.setUsername(username);
         user.setForename("Bob");
         user.setLastname("Baumeiser");
         user.setEmail("bob@example.com");
@@ -62,9 +64,9 @@ public class UserUnitTest {
         user.setRole(UserRole.ADMIN);
 
         userService.createUser(user);
-        assertEquals(userService.getUser("bob").getUsername(),"bob");
-        userService.deleteUser("bob");
-        assertThatThrownBy(() -> userService.getUser("bob")).isInstanceOf(UserNotFoundException.class);
+        assertEquals(userService.getUser(username).getUsername(),username);
+        userService.deleteUser(username);
+        assertThatThrownBy(() -> userService.getUser(username)).isInstanceOf(UserNotFoundException.class);
 
     }
 
