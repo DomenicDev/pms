@@ -1,6 +1,7 @@
 package de.hfu.pms.service.impl;
 
 import de.hfu.pms.dao.FacultyDao;
+import de.hfu.pms.exceptions.FacultyNotFoundException;
 import de.hfu.pms.model.Faculty;
 import de.hfu.pms.service.FacultyService;
 import org.springframework.stereotype.Service;
@@ -22,8 +23,10 @@ public class FacultyServiceImpl implements FacultyService {
     }
 
     @Override
-    public Faculty editFaculty(Long id, Faculty faculty) {
-        return facultyDao.save(faculty);
+    public Faculty editFaculty(Long id, Faculty newFaculty) {
+        Faculty oldFaculty = facultyDao.findById(id).orElseThrow(() -> new FacultyNotFoundException(id));
+        newFaculty.setId(oldFaculty.getId());
+        return facultyDao.save(newFaculty);
     }
 
     @Override

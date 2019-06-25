@@ -2,7 +2,6 @@ package de.hfu.pms;
 
 import de.hfu.pms.dao.UserDao;
 import de.hfu.pms.exceptions.UniversityNotFoundException;
-import de.hfu.pms.exceptions.UserNotFoundException;
 import de.hfu.pms.model.University;
 import de.hfu.pms.service.UniversityService;
 import org.junit.Test;
@@ -51,6 +50,8 @@ public class UniversityUnitTest {
         assertEquals(saved.getCountry(),"Deutschland");
         assertEquals(saved.getAbbreviation(),"HFU");
         assertEquals(saved.getContact(),"Herr Fitzon");
+
+        universityService.deleteUniversity(university.getId());
 
     }
     @Test
@@ -103,7 +104,7 @@ public class UniversityUnitTest {
         assertEquals(savedUniversity.getAbbreviation(),updatedUniversity.getAbbreviation());
         assertEquals(savedUniversity.getContact(),updatedUniversity.getContact());
 
-
+        universityService.deleteUniversity(id);
 
     }
 
@@ -139,6 +140,10 @@ public class UniversityUnitTest {
         //3 + 1 für die vor generierte HFU
         //TODO: Discuss this test
         assertEquals(4,list.size());
+
+        universityService.deleteUniversity(university1.getId());
+        universityService.deleteUniversity(university2.getId());
+        universityService.deleteUniversity(university3.getId());
 
 
     }
