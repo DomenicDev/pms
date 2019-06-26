@@ -18,7 +18,6 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-@ActiveProfiles("test")
 public class UniversityUnitTest {
 
 
