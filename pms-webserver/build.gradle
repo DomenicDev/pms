@@ -3,11 +3,24 @@ plugins {
     id 'java'
 }
 
+task runWithTestData(type: JavaExec) {
+    group = 'hfu'
+
+    classpath sourceSets.main.runtimeClasspath // <-- Don't change this
+    main = "de.hfu.pms.MainApplication"
+    args "-test"
+}
+
+task run(type: JavaExec) {
+    group = 'hfu'
+
+    classpath sourceSets.main.runtimeClasspath // <-- Don't change this
+    main = "de.hfu.pms.MainApplication"
+}
 
 apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'io.spring.dependency-management'
-
 
 sourceCompatibility = 11
 
