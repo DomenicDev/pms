@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Collection;
@@ -16,6 +17,7 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
+@ActiveProfiles("test")
 public class FacultyUnitTest {
 
 
@@ -105,9 +107,7 @@ public class FacultyUnitTest {
         facultyService.addFaculty(faculty3);
 
         Collection<Faculty> list = facultyService.getAll();
-        //3 + 2 für die vor generierte Facultaeten?
-        //TODO: Discuss this test
-        assertEquals(4,list.size());
+        assertEquals(3,list.size());
 
 
     }

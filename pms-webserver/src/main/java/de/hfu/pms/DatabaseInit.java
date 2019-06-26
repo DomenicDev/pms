@@ -9,6 +9,7 @@ import de.hfu.pms.model.*;
 import de.hfu.pms.shared.enums.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ import java.time.LocalDate;
  * This service adds some test (sample) entities to the database.
  */
 @Service
+@Profile("!test")
 public class DatabaseInit implements CommandLineRunner {
 
     private UserDao userDao;

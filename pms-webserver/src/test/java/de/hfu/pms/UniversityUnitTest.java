@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
+@ActiveProfiles("test")
 public class UniversityUnitTest {
 
 
@@ -137,9 +139,8 @@ public class UniversityUnitTest {
         universityService.createUniversity(university3);
 
         List<University> list = universityService.getUniversityList();
-        //3 + 1 für die vor generierte HFU
-        //TODO: Discuss this test
-        assertEquals(4,list.size());
+
+        assertEquals(3,list.size());
 
         universityService.deleteUniversity(university1.getId());
         universityService.deleteUniversity(university2.getId());
