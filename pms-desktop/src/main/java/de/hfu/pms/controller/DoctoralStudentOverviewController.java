@@ -6,13 +6,11 @@ import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.*;
 import de.hfu.pms.exceptions.BusinessException;
 import de.hfu.pms.pool.EntityPool;
-import de.hfu.pms.shared.dto.DoctoralStudentDTO;
 import de.hfu.pms.shared.dto.FacultyDTO;
 import de.hfu.pms.shared.dto.PreviewDoctoralStudentDTO;
 import de.hfu.pms.shared.dto.UserInfoDTO;
 import de.hfu.pms.shared.enums.Gender;
 import de.hfu.pms.shared.enums.UserRole;
-import de.hfu.pms.shared.utils.Converter;
 import de.hfu.pms.utils.CollectionUtils;
 import de.hfu.pms.utils.GuiLoader;
 import de.hfu.pms.utils.RepresentationWrapper;
@@ -305,13 +303,12 @@ public class DoctoralStudentOverviewController implements Initializable {
         }
     }
 
-    private void addToTable(DoctoralStudentDTO doctoralStudentDTO) {
-        if (doctoralStudentDTO == null) {
+    private void addToTable(PreviewDoctoralStudentDTO preview) {
+        if (preview == null) {
             logger.log(Level.DEBUG, "null values cannot be added to the preview table");
             return;
         }
 
-        PreviewDoctoralStudentDTO preview = Converter.convert(doctoralStudentDTO);
         this.masterData.add(preview);
         refreshTable();
     }
@@ -329,7 +326,7 @@ public class DoctoralStudentOverviewController implements Initializable {
 
     @Subscribe
     public void handle(SuccessfullyAddedDoctoralStudentEvent event) {
-        DoctoralStudentDTO doctoralStudentDTO = event.getDoctoralStudentDTO();
+        PreviewDoctoralStudentDTO doctoralStudentDTO = event.getDoctoralStudentDTO();
         addToTable(doctoralStudentDTO);
     }
 

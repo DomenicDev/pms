@@ -4,12 +4,9 @@ public class AnonymizeResultDTO {
 
     private Long deletedId;
 
-    private DoctoralStudentDTO newDoctoralStudent;
+    private PreviewDoctoralStudentDTO newDoctoralStudent;
 
-    public AnonymizeResultDTO() {
-    }
-
-    public AnonymizeResultDTO(Long deletedId, DoctoralStudentDTO newDoctoralStudent) {
+    public AnonymizeResultDTO(Long deletedId, PreviewDoctoralStudentDTO newDoctoralStudent) {
         this.deletedId = deletedId;
         this.newDoctoralStudent = newDoctoralStudent;
     }
@@ -18,15 +15,9 @@ public class AnonymizeResultDTO {
         return deletedId;
     }
 
-    public void setDeletedId(Long deletedId) {
-        this.deletedId = deletedId;
-    }
 
-    public DoctoralStudentDTO getNewDoctoralStudent() {
+    public PreviewDoctoralStudentDTO getNewDoctoralStudent() {
         return newDoctoralStudent;
     }
 
-    public void setNewDoctoralStudent(DoctoralStudentDTO newDoctoralStudent) {
-        this.newDoctoralStudent = newDoctoralStudent;
-    }
 }

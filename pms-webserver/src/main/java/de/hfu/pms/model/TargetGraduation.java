@@ -260,7 +260,7 @@ public class TargetGraduation {
         this.membershipExtended = membershipExtended;
     }
 
-    public Boolean getPromotionCanceled() {
+    public boolean getPromotionCanceled() {
         return promotionCanceled;
     }
 

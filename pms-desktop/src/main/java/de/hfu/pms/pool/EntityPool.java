@@ -1,7 +1,5 @@
 package de.hfu.pms.pool;
 
-import com.google.common.eventbus.EventBus;
-import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.exceptions.BusinessException;
 import de.hfu.pms.service.ApplicationServices;
 import de.hfu.pms.shared.dto.*;
@@ -17,7 +15,6 @@ public final class EntityPool {
 
     private static EntityPool entityPool = new EntityPool();
 
-    private EventBus eventBus = EventBusSystem.getEventBus();
     private static Logger logger = Logger.getLogger(EntityPool.class);
     private Map<Long, UniversityDTO> universities = new HashMap<>();
     private Collection<FacultyDTO> faculties = new HashSet<>();
@@ -25,8 +22,6 @@ public final class EntityPool {
     private Collection<UserInfoDTO> users = new HashSet<>();
     private Collection<DoctoralStudentDTO> doctoralStudents = new HashSet<>();
     private ApplicationServices applicationServices;
-
-    private UserInfoDTO loggedInUser = null;
 
     private EntityPool() {
         // private constructor

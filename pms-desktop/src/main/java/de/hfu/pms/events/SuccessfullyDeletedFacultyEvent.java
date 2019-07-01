@@ -1,16 +1,14 @@
 package de.hfu.pms.events;
 
-import de.hfu.pms.shared.dto.FacultyDTO;
-
 public class SuccessfullyDeletedFacultyEvent {
 
-    private FacultyDTO facultyDTO;
+    private Long facultyId;
 
-    public SuccessfullyDeletedFacultyEvent(FacultyDTO facultyDTODTO) {
-        this.facultyDTO = facultyDTO;
+    public SuccessfullyDeletedFacultyEvent(Long facultyId) {
+        this.facultyId = facultyId;
     }
 
-    public FacultyDTO getFaculty() {
-        return facultyDTO;
+    public Long getFaculty() {
+        return facultyId;
     }
 }

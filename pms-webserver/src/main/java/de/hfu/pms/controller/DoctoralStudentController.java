@@ -36,7 +36,7 @@ public class DoctoralStudentController {
 
     @PostMapping(value= "/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public DoctoralStudentDTO createDoctoralStudent(@RequestBody CreateDoctoralStudentDTO doctoralStudentDTO) {
+    public PreviewDoctoralStudentDTO createDoctoralStudent(@RequestBody CreateDoctoralStudentDTO doctoralStudentDTO) {
         DoctoralStudent student = convertToEntity(doctoralStudentDTO);
         DoctoralStudent studentCreated = doctoralStudentService.create(student);
 
@@ -45,7 +45,7 @@ public class DoctoralStudentController {
         if (photoDTO != null) {
             doctoralStudentService.updatePhoto(studentCreated.getId(), photoDTO.getFilename(), photoDTO.getPhoto());
         }
-        return convertToDTO(studentCreated);
+        return convertToPreview(studentCreated);
     }
 
     @PostMapping("/update/{id}")
@@ -194,8 +194,7 @@ public class DoctoralStudentController {
     @ResponseStatus(HttpStatus.OK)
     public AnonymizeResultDTO anonymize(@PathVariable Long id){
         DoctoralStudent anonymizedStudent = doctoralStudentService.anonymize(id);
-        DoctoralStudentDTO dto = convertToDTO(anonymizedStudent);
-        return new AnonymizeResultDTO(id, dto);
+        return new AnonymizeResultDTO(id, convertToPreview(anonymizedStudent));
     }
 
     // ------------------ //

@@ -1,16 +1,16 @@
 package de.hfu.pms.events;
 
-import de.hfu.pms.shared.dto.DoctoralStudentDTO;
+import de.hfu.pms.shared.dto.PreviewDoctoralStudentDTO;
 
 public class SuccessfullyAddedDoctoralStudentEvent {
 
-    private DoctoralStudentDTO doctoralStudentDTO;
+    private PreviewDoctoralStudentDTO doctoralStudentDTO;
 
-    public SuccessfullyAddedDoctoralStudentEvent(DoctoralStudentDTO doctoralStudentDTO) {
+    public SuccessfullyAddedDoctoralStudentEvent(PreviewDoctoralStudentDTO doctoralStudentDTO) {
         this.doctoralStudentDTO = doctoralStudentDTO;
     }
 
-    public DoctoralStudentDTO getDoctoralStudentDTO() {
+    public PreviewDoctoralStudentDTO getDoctoralStudentDTO() {
         return doctoralStudentDTO;
     }
 }

@@ -115,8 +115,8 @@ public class UserController {
 
     @GetMapping("/get/{username}")
     @ResponseStatus(HttpStatus.OK)
-    public UserDTO getUser(@PathVariable String username) {
-        return convertToDTO(service.getUser(username));
+    public UserInfoDTO getUser(@PathVariable String username) {
+        return convertToInfoDTO(service.getUser(username));
     }
 
     @GetMapping("/getList")
