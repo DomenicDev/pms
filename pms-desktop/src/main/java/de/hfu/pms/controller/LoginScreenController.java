@@ -17,6 +17,9 @@ import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Screen Controller for the login screen.
+ */
 public class LoginScreenController implements Initializable {
 
     private EventBus eventBus = EventBusSystem.getEventBus();
@@ -83,6 +86,5 @@ public class LoginScreenController implements Initializable {
         // reset progress bar
         setProgressBarVisible(false);
     }
-
 
 }

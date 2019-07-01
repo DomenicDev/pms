@@ -8,12 +8,8 @@ import de.hfu.pms.exceptions.BusinessException;
 import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.FacultyDTO;
 import de.hfu.pms.shared.dto.PreviewDoctoralStudentDTO;
-import de.hfu.pms.shared.dto.UserInfoDTO;
 import de.hfu.pms.utils.GuiLoader;
 import de.hfu.pms.utils.RepresentationWrapper;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Side;
@@ -21,83 +17,29 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import org.apache.log4j.Logger;
 
-import java.awt.*;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URL;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-
+/**
+ * This controller handles the start screen and its features
+ * such as the pie chart (statistic) and the alert list.
+ */
 public class StartScreenController implements Initializable {
 
     private EventBus eventBus = EventBusSystem.getEventBus();
-    private Logger logger = Logger.getLogger(UniversityScreenController.class);
     private ResourceBundle bundle;
-    private UserInfoDTO user;
 
     @FXML
     private Label welcomeLabel;
-
     @FXML
     private PieChart facultyPieChart;
-
-    @FXML
-    public void handleFelixHFUEvent() {
-
-        try {
-            Desktop.getDesktop().browse(new URI("https://felix.hs-furtwangen.de/dmz/"));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    @FXML
-    public void handleHFUWebmailEvent() {
-        try {
-            Desktop.getDesktop().browse(new URI("https://webmail.hs-furtwangen.de/SOGo/"));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    @FXML
-    private Label DescriptionApplication;
-    @FXML
-    private Label headingTabelDescription;
-    @FXML
-    private Label DescriptionTable;
     @FXML
     private ListView<PreviewDoctoralStudentDTO> alertListView;
-    @FXML
-    private Label sddDoctoralStudentLabelStartscreen;
-
-    @FXML
-    private Label addUniversityLabelStartscreen;
-
-    @FXML
-    private Label changeAccountinfomrationLabelStartscreen;
-
-    @FXML
-    void handleAddDoctoralStudentButton(ActionEvent event) throws IOException{
-        eventBus.post(new SwitchMainScreenEvent(DashboardController.MainScreen.DoctoralStudent));
-        eventBus.post(new SwitchDoctoralStudentScreenEvent(DoctoralStudentMainContentController.DoctoralStudentScreen.FORM_MASK));
-    }
-    @FXML
-    void handleAddUniversityButton()throws  IOException {
-        GuiLoader.createModalWindow(GuiLoader.UNIVERSITY_FORM_SCREEN, 250, 300, false);
-
-    }
-    @FXML
-    void handleChangeAccoutinformationButton(ActionEvent event)throws IOException {
-        eventBus.post(new SwitchMainScreenEvent(DashboardController.MainScreen.AccountInformation));
-    }
-
-    ObservableList<PreviewDoctoralStudentDTO> masterData = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -106,10 +48,7 @@ public class StartScreenController implements Initializable {
 
         refreshGreetingLabel();
 
-
         // create cell factory for alert list view to customize representation
-
-
         alertListView.setCellFactory((param -> new ListCell<>() {
 
             @Override
@@ -133,6 +72,32 @@ public class StartScreenController implements Initializable {
         refreshPieChart();
     }
 
+    @FXML
+    public void handleAddDoctoralStudentButton() {
+        eventBus.post(new SwitchMainScreenEvent(DashboardController.MainScreen.DoctoralStudent));
+        eventBus.post(new SwitchDoctoralStudentScreenEvent(DoctoralStudentMainContentController.DoctoralStudentScreen.FORM_MASK));
+    }
+
+    @FXML
+    public void handleAddUniversityButton()throws  IOException {
+        GuiLoader.createModalWindow(GuiLoader.UNIVERSITY_FORM_SCREEN, 250, 300, false);
+    }
+
+    @FXML
+    public void handleChangeAccountInformationButton() {
+        eventBus.post(new SwitchMainScreenEvent(DashboardController.MainScreen.AccountInformation));
+    }
+
+    @FXML
+    public void handleOnActionRefreshAlertTableButton() {
+        refreshAlertTable();
+    }
+
+    @FXML
+    public void handleOnActionRefreshButton() {
+        refreshPieChart();
+    }
+
     private void refreshGreetingLabel() {
         try {
             String forename = EntityPool.getInstance().getLoggedInUser().getForename();
@@ -141,11 +106,6 @@ public class StartScreenController implements Initializable {
         } catch (BusinessException e) {
             e.printStackTrace();
         }
-    }
-
-    @FXML
-    public void handleOnActionRefreshButton() {
-        refreshPieChart();
     }
 
     private void refreshPieChart() {
@@ -171,11 +131,6 @@ public class StartScreenController implements Initializable {
         }
     }
 
-    @FXML
-    public void handleOnActionRefreshAlertTableButton() {
-        refreshAlertTable();
-    }
-
     private void refreshAlertTable() {
         eventBus.post(new RequestAlertedDoctoralStudentEvent());
     }
@@ -192,14 +147,4 @@ public class StartScreenController implements Initializable {
         refreshGreetingLabel();
     }
 
-    @FXML
-    public void handleHomepage() {
-        try {
-            Desktop.getDesktop().browse(new URI("https://www.hs-furtwangen.de"));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
 }
-
-

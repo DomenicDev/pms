@@ -12,7 +12,6 @@ import de.hfu.pms.shared.dto.UniversityDTO;
 import de.hfu.pms.shared.dto.UserInfoDTO;
 import de.hfu.pms.utils.CollectionUtils;
 import de.hfu.pms.utils.GuiLoader;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -54,16 +53,13 @@ public class UniversityScreenController implements Initializable {
     @FXML
     private Button universityDeleteButton;
 
-    @FXML
-    private Button universityAddButton;
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.bundle = resources;
         this.eventBus.register(this);
 
-        initUniversityTable(resources);
+        initUniversityTable();
         tableViewUniversity.getItems().addAll(EntityPool.getInstance().getUniversities());
         tableViewUniversity.setEditable(true);
 
@@ -74,12 +70,10 @@ public class UniversityScreenController implements Initializable {
         } catch (BusinessException e) {
             e.printStackTrace();
         }
-
-
     }
 
     @FXML
-    public void handleUniversityAddButton(ActionEvent event) {
+    public void handleUniversityAddButton() {
         try {
             GuiLoader.createModalWindow(GuiLoader.UNIVERSITY_FORM_SCREEN, 250, 300, false);
         } catch (IOException e) {
@@ -88,7 +82,7 @@ public class UniversityScreenController implements Initializable {
     }
 
     @FXML
-    public void handleChangeUniversityButton(ActionEvent event) {
+    public void handleChangeUniversityButton() {
         try {
 
             UniversityDTO university = tableViewUniversity.getSelectionModel().getSelectedItem();
@@ -106,7 +100,7 @@ public class UniversityScreenController implements Initializable {
     }
 
     @FXML
-    public void handleDeleteUniversityButton(ActionEvent event) {
+    public void handleDeleteUniversityButton() {
         UniversityDTO university = tableViewUniversity.getSelectionModel().getSelectedItem();
         if (university == null) {
             showAlertSelectFirst();
@@ -120,7 +114,7 @@ public class UniversityScreenController implements Initializable {
         eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.INFO, bundle.getString("ui.alert.select_university")));
     }
 
-    private void initUniversityTable(ResourceBundle resources) {
+    private void initUniversityTable() {
         TableColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         TableColumnOrt.setCellValueFactory(new PropertyValueFactory<>("location"));
         TableColumnLand.setCellValueFactory(new PropertyValueFactory<>("country"));

@@ -17,6 +17,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -98,10 +99,9 @@ public class DashboardController implements Initializable {
             accountInformationController.showUser(EntityPool.getInstance().getLoggedInUser());
 
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (BusinessException e) {
-            e.printStackTrace();
+            logger.log(Level.DEBUG, "Finished initializing screens...");
+        } catch (IOException | BusinessException e) {
+            logger.log(Level.DEBUG, "Error while initializing: " + e);
         }
 
         // set home to be showed at first

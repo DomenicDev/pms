@@ -15,6 +15,9 @@ import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * The controller for the account information screen.
+ */
 public class ChangeAccountInformationController implements Initializable {
 
     private EventBus eventBus = EventBusSystem.getEventBus();
@@ -34,7 +37,6 @@ public class ChangeAccountInformationController implements Initializable {
     @FXML
     private TextField surnameTextField;
 
-
     private UserInfoDTO user;
 
     @Override
@@ -43,7 +45,7 @@ public class ChangeAccountInformationController implements Initializable {
     }
 
     @FXML
-    void handleOnActionSaveButton(ActionEvent event) {
+    public void handleOnActionSaveButton(ActionEvent event) {
         if (user == null) {
             return;
         }
@@ -59,12 +61,15 @@ public class ChangeAccountInformationController implements Initializable {
             return;
         }
 
+        // validation successful, so extract fields
         String forename = textfieldForename.getText();
         String surname = surnameTextField.getText();
         String email = textfieldChangeEmail.getText();
 
+        // send request
         eventBus.post(new RequestChangeUserInformationEvent(user.getUsername(), forename, surname, email));
 
+        // close screen
         ((Button) event.getSource()).getScene().getWindow().hide();
     }
 

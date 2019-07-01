@@ -219,7 +219,7 @@
                               </VBox>
                               <VBox prefHeight="200.0" prefWidth="100.0">
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#handleChangeAccoutinformationButton" prefHeight="100.0" prefWidth="300.0" styleClass="button-sidebar" text="Accounteinstellungen Bearbeiten">
+                                    <Button mnemonicParsing="false" onAction="#handleChangeAccountInformationButton" prefHeight="100.0" prefWidth="300.0" styleClass="button-sidebar" text="Accounteinstellungen Bearbeiten">
                                        <font>
                                           <Font size="14.0" />
                                        </font>

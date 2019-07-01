@@ -16,120 +16,117 @@ import javafx.scene.control.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for adding a new user.
+ */
 public class AddUserAdminAreaController implements Initializable {
 
-        private EventBus eventBus = EventBusSystem.getEventBus();
+    private EventBus eventBus = EventBusSystem.getEventBus();
 
-        @FXML
-        private TextField TextfieldUsername;
+    @FXML
+    private TextField TextfieldUsername;
 
-        @FXML
-        private PasswordField passwordfielPassword;
+    @FXML
+    private PasswordField passwordfielPassword;
 
-        @FXML
-        private PasswordField TextfieldPasswordRewrite;
+    @FXML
+    private PasswordField TextfieldPasswordRewrite;
 
-        @FXML
-        private Label LabelAreBothPasswortsSimilar;
+    @FXML
+    private Label LabelAreBothPasswortsSimilar;
 
-        @FXML
-        private Button ButtonAdd;
+    @FXML
+    private ComboBox<WrappedEntity<UserRole>> comboboxRole;
 
-        @FXML
-        private Button ButtonExitScene;
+    @FXML
+    private TextField TextFieldEmail;
 
-        @FXML
-        private ComboBox<WrappedEntity<UserRole>> comboboxRole;
+    @FXML
+    private TextField TextfieldLastname;
 
-        @FXML
-        private TextField TextFieldEmail;
+    @FXML
+    private TextField TextfieldForname;
 
-        @FXML
-        private TextField TextfieldLastname;
+    private UserDTO user;
 
-        @FXML
-        private TextField TextfieldForname;
+    private void initComboBox() {
+        // personal role combo boxes
+        comboboxRole.getItems().addAll(RepresentationWrapper.getWrappedRole());
+    }
 
-        private UserDTO user;
-        private void initComboBox() {
-                // personal role combo boxes
-                comboboxRole.getItems().addAll(RepresentationWrapper.getWrappedRole());
-        }
+    public void edit(UserDTO user) {
+        this.user = user;
 
-        public void edit(UserDTO user) {
-                this.user = user;
+        // fill text fields with admin area attributes
+        TextfieldUsername.setText(user.getUsername());
+        TextfieldForname.setText(user.getForename());
+        TextfieldLastname.setText(user.getLastname());
+        passwordfielPassword.setText(user.getPassword());
+        TextFieldEmail.setText(user.getEmail());
+        comboboxRole.getSelectionModel().select(RepresentationWrapper.find(user.getRole(), comboboxRole.getItems()));
+    }
 
-                // fill text fields with admin area attributes
-                TextfieldUsername.setText(user.getUsername());
-                TextfieldForname.setText(user.getForename());
-                TextfieldLastname.setText(user.getLastname());
-                passwordfielPassword.setText(user.getPassword());
-                TextFieldEmail.setText(user.getEmail());
-                comboboxRole.getSelectionModel().select(RepresentationWrapper.find(user.getRole(), comboboxRole.getItems()));
-
-        }
-
-        @FXML
-        void handleActionEventAddUserInformation(ActionEvent event) {
-                if(user == null){
-                        user =new UserDTO();
-
-                }
-                boolean validationSuccessful = writeToUserDTO();
-
-                if (!validationSuccessful){
-                        return;
-                }else{
-                        eventBus.post(new RequestAddUserEvent(user));
-                        ((Button)event.getSource()).getScene().getWindow().hide();
-                }
+    @FXML
+    public void handleActionEventAddUserInformation(ActionEvent event) {
+        if (user == null) {
+            user = new UserDTO();
 
         }
-        private boolean writeToUserDTO() {
+        boolean validationSuccessful = writeToUserDTO();
 
-                FormValidator userValidator = new FormValidator();
-
-                String forename = TextfieldForname.getText();
-                String lastname = TextfieldLastname.getText();
-                String password = passwordfielPassword.getText();
-                String email = TextFieldEmail.getText();
-                String username = TextfieldUsername.getText();
-
-                if (userValidator.comboBoxHasSelectedItem(comboboxRole)) {
-                user.setRole(comboboxRole.getValue().getEntity());
-                }
-
-                if (userValidator.textFieldNotEmpty(TextfieldForname)) {
-                        user.setForename(forename);
-                }
-                if (userValidator.textFieldNotEmpty(TextfieldLastname)) {
-                        user.setLastname(lastname);
-                }
-                if (userValidator.textFieldNotEmpty((passwordfielPassword))) {
-                        user.setPassword(password);
-                }
-                if (userValidator.textFieldNotEmpty(TextfieldUsername)) {
-                        user.setUsername(username);
-                }
-                if (userValidator.textFieldNotEmpty((TextFieldEmail))) {
-                        user.setEmail(email);
-                }
-                if (!userValidator.passwordFieldsAreSimilar(passwordfielPassword,TextfieldPasswordRewrite))
-                        LabelAreBothPasswortsSimilar.setVisible(true);
-
-                if (userValidator.textFieldNotEmpty(TextfieldPasswordRewrite)){}
-                return userValidator.validationSuccessful();
+        if (validationSuccessful) {
+            eventBus.post(new RequestAddUserEvent(user));
+            ((Button) event.getSource()).getScene().getWindow().hide();
         }
-        @FXML
-        void handleActionEventCloseScene(ActionEvent event) {
-                ((Button) event.getSource()).getScene().getWindow().hide();
+    }
 
+    private boolean writeToUserDTO() {
+
+        FormValidator userValidator = new FormValidator();
+
+        String forename = TextfieldForname.getText();
+        String lastname = TextfieldLastname.getText();
+        String password = passwordfielPassword.getText();
+        String email = TextFieldEmail.getText();
+        String username = TextfieldUsername.getText();
+
+        if (userValidator.comboBoxHasSelectedItem(comboboxRole)) {
+            user.setRole(comboboxRole.getValue().getEntity());
         }
 
-        @Override
-        public void initialize(URL location, ResourceBundle resources) {
-                eventBus.register(this);
-                initComboBox();
-                LabelAreBothPasswortsSimilar.setVisible(false);
+        if (userValidator.textFieldNotEmpty(TextfieldForname)) {
+            user.setForename(forename);
         }
+        if (userValidator.textFieldNotEmpty(TextfieldLastname)) {
+            user.setLastname(lastname);
+        }
+        if (userValidator.textFieldNotEmpty((passwordfielPassword))) {
+            user.setPassword(password);
+        }
+        if (userValidator.textFieldNotEmpty(TextfieldUsername)) {
+            user.setUsername(username);
+        }
+        if (userValidator.textFieldNotEmpty((TextFieldEmail))) {
+            user.setEmail(email);
+        }
+        if (!userValidator.passwordFieldsAreSimilar(passwordfielPassword, TextfieldPasswordRewrite))
+            LabelAreBothPasswortsSimilar.setVisible(true);
+
+        if (userValidator.textFieldNotEmpty(TextfieldPasswordRewrite)) {
+        }
+        return userValidator.validationSuccessful();
+    }
+
+    @FXML
+    void handleActionEventCloseScene(ActionEvent event) {
+        ((Button) event.getSource()).getScene().getWindow().hide();
+
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        eventBus.register(this);
+        initComboBox();
+        LabelAreBothPasswortsSimilar.setVisible(false);
+    }
 }

@@ -17,19 +17,14 @@ import de.hfu.pms.utils.CollectionUtils;
 import de.hfu.pms.utils.GuiLoader;
 import de.hfu.pms.utils.RepresentationWrapper;
 import de.hfu.pms.utils.WrappedEntity;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
-import javafx.util.Callback;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -42,11 +37,9 @@ import java.util.ResourceBundle;
 public class DoctoralStudentOverviewController implements Initializable {
 
     private Logger logger = Logger.getLogger(DoctoralStudentOverviewController.class.getName());
-
     private EventBus eventBus = EventBusSystem.getEventBus();
-    private ObjectProperty<TableRow<PreviewDoctoralStudentDTO>> selectedTableRow = new SimpleObjectProperty<>();
-
     private ResourceBundle bundle;
+
     @FXML
     private Label labelDoctoralInList;
     @FXML
@@ -78,13 +71,9 @@ public class DoctoralStudentOverviewController implements Initializable {
     @FXML
     private CheckBox memberCheckBox;
 
-    /* ************ */
-    /* Buttons      */
-    /* ************ */
-    @FXML
-    private Button addButton;
-    @FXML
-    private Button editButton;
+    /* ******* */
+    /* Buttons */
+    /* ******* */
     @FXML
     private Button anonymizeButton;
     @FXML
@@ -109,14 +98,11 @@ public class DoctoralStudentOverviewController implements Initializable {
         searchResultTableView.getItems().addAll(masterData);
 
         // open edit window on double mouse click
-        searchResultTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (event.getClickCount() == 2) {
-                    PreviewDoctoralStudentDTO preview = searchResultTableView.getSelectionModel().getSelectedItem();
-                    if (preview != null) {
-                        eventBus.post(new OnClickEditDoctoralStudentEvent(preview.getId()));
-                    }
+        searchResultTableView.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                PreviewDoctoralStudentDTO preview = searchResultTableView.getSelectionModel().getSelectedItem();
+                if (preview != null) {
+                    eventBus.post(new OnClickEditDoctoralStudentEvent(preview.getId()));
                 }
             }
         });
@@ -214,7 +200,7 @@ public class DoctoralStudentOverviewController implements Initializable {
     }
 
     @FXML
-    public void handleOnActionEditButton(ActionEvent event) {
+    public void handleOnActionEditButton() {
         int selectedCount = searchResultTableView.getSelectionModel().getSelectedItems().size();
         if (selectedCount == 1) {
             PreviewDoctoralStudentDTO selectedItem = searchResultTableView.getSelectionModel().getSelectedItem();
@@ -255,19 +241,19 @@ public class DoctoralStudentOverviewController implements Initializable {
         String searchText = searchTextField.getText();
         if (searchText != null && !searchText.trim().isEmpty()) {
             eventBus.post(new RequestSearchDoctoralStudentEvent(searchText));
-        } else {
-            // empty search box... so load all previews
-
         }
     }
 
     private void initPreviewTables() {
-        searchResultTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        // define property representation
+        searchResultTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         searchResultNameTableColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         searchResultForeNameTableColumn.setCellValueFactory(new PropertyValueFactory<>("foreName"));
         searchResultFacultyTableColumn.setCellValueFactory(new PropertyValueFactory<>("faculty"));
         searchResultEmailTableColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
         searchResultPhoneNumberTableColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+
+        // for the gender we want to show the definition in the appropriate language
         searchResultGenderTableColumn.setCellValueFactory(param -> {
             PreviewDoctoralStudentDTO preview = param.getValue();
             if (preview != null) {
@@ -281,27 +267,10 @@ public class DoctoralStudentOverviewController implements Initializable {
             return new SimpleObjectProperty<>("");
         });
 
-
-        searchResultTableView.setRowFactory(new Callback<>() {
-            @Override
-            public TableRow<PreviewDoctoralStudentDTO> call(TableView<PreviewDoctoralStudentDTO> tableView2) {
-                final TableRow<PreviewDoctoralStudentDTO> row = new TableRow<>();
-                row.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        final int index = row.getIndex();
-                        if (index >= 0 && index < searchResultTableView.getItems().size() && searchResultTableView.getSelectionModel().isSelected(index)) {
-                            searchResultTableView.getSelectionModel().clearSelection();
-                            event.consume();
-                        }
-                    }
-                });
-                return row;
-            }
-        });
     }
 
     private void refreshTable() {
+        // first we want to check which filter check boxes has been checked
         Collection<PreviewDoctoralStudentDTO> filteredPreviews = new HashSet<>();
         if (activeCheckBox.isSelected()) {
             filteredPreviews.addAll(getForActivity(true));
@@ -323,16 +292,17 @@ public class DoctoralStudentOverviewController implements Initializable {
         if (anonymizedCheckBox.isSelected()) {
             filteredPreviews.addAll(getAnonymizedPreviews());
         }
+        // reset the whole table
         searchResultTableView.getItems().clear();
         searchResultTableView.getItems().addAll(filteredPreviews);
 
         this.filteredMasterData.clear();
         this.filteredMasterData = filteredPreviews;
 
+        // if exists, filter the already filtered entities for the specified search text
         if (!searchTextField.getText().trim().isEmpty()) {
             filterForSearchResult();
         }
-
     }
 
     private void addToTable(DoctoralStudentDTO doctoralStudentDTO) {

@@ -12,7 +12,9 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-
+/**
+ * Controller for creating a new employment entry.
+ */
 public class EmploymentController extends AbstractPropertyFormController<EmploymentEntryDTO> {
 
     @FXML

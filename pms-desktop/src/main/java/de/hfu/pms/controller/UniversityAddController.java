@@ -35,10 +35,7 @@ public class UniversityAddController implements Initializable {
     private TextField textFieldShortForm;
 
     @FXML
-    private Button ButtonUniversityAdd;
-
-    @FXML
-    private TextField textFieldContacttoUniversity;
+    private TextField textFieldContactToUniversity;
 
     @FXML
     private Label title;
@@ -61,7 +58,7 @@ public class UniversityAddController implements Initializable {
         textFieldCountry.setText(university.getCountry());
         textFieldLocation.setText(university.getLocation());
         textFieldShortForm.setText(university.getAbbreviation());
-        textFieldContacttoUniversity.setText(university.getContact());
+        textFieldContactToUniversity.setText(university.getContact());
         setEditMode(true);
     }
 
@@ -79,7 +76,7 @@ public class UniversityAddController implements Initializable {
     }
 
     @FXML
-    void handleAddButton(ActionEvent event) {
+    public void handleAddButton(ActionEvent event) {
 
         if (university == null) {
             university = new UniversityDTO();
@@ -101,14 +98,14 @@ public class UniversityAddController implements Initializable {
 
     }
     private boolean writeToUniversityDTO(){
-
+        // validate input fields
         FormValidator universityValidator = new FormValidator();
 
         String name = textFieldNameOfUniverity.getText();
         String location =textFieldLocation.getText();
         String country = textFieldCountry.getText();
         String shortForm =textFieldShortForm.getText();
-        String contact =textFieldContacttoUniversity.getText();
+        String contact = textFieldContactToUniversity.getText();
 
         if(universityValidator.textFieldNotEmpty(textFieldNameOfUniverity)){
             university.setName(name);
@@ -125,14 +122,11 @@ public class UniversityAddController implements Initializable {
         university.setContact(contact);
 
         return universityValidator.validationSuccessful();
-
-
     }
 
     @FXML
-    void handleCancelButton(ActionEvent event) {
+    public void handleCancelButton(ActionEvent event) {
         ((Button) event.getSource()).getScene().getWindow().hide();
-
     }
 
 }

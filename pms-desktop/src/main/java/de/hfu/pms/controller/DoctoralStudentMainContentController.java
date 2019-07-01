@@ -10,7 +10,6 @@ import de.hfu.pms.events.SwitchDoctoralStudentScreenEvent;
 import de.hfu.pms.shared.dto.DoctoralStudentDTO;
 import de.hfu.pms.utils.GuiLoader;
 import de.hfu.pms.utils.JavaFxUtils;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -23,6 +22,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * This controller can dynamically switch between the overview screen
+ * and the form mask.
+ */
 public class DoctoralStudentMainContentController implements Initializable {
 
     private Logger logger = Logger.getLogger(DoctoralStudentMainContentController.class);
@@ -92,21 +95,6 @@ public class DoctoralStudentMainContentController implements Initializable {
         // get controller
         DoctoralStudentFormController formController = loader.getController();
         formController.fillFormMask(doctoralStudentDTO);
-    }
-
-    @FXML
-    public void handleOnActionOverviewButton(ActionEvent event) {
-        switchMainContent(overview);
-    }
-
-    @FXML
-    public void handleOnActionAddButton(ActionEvent event) throws IOException {
-        switchMainContent(GuiLoader.loadFXML(GuiLoader.DOCTORAL_STUDENT_FORM_MASK));
-    }
-
-    @FXML
-    public void handleOnActionEditButton(ActionEvent event) {
-
     }
 
     @Subscribe

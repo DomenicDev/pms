@@ -36,6 +36,17 @@ import java.nio.file.Files;
 import java.time.LocalDate;
 import java.util.*;
 
+/**
+ * The DoctoralStudentFormController ist the biggest screen controller
+ * of this application. Its task is to show a doctoral student with all
+ * its attributes and assignments. It can also be used to create a complete
+ * new one.<br/>
+ *
+ * Use the <code>fillFormMask()</code> method to show a specified student
+ * in the screen. When the save button is clicked and there was no student
+ * being set before, a new one is going to be created.
+ *
+ */
 public class DoctoralStudentFormController implements Initializable {
 
     private Logger logger = Logger.getLogger(DoctoralStudentFormController.class);
@@ -270,8 +281,8 @@ public class DoctoralStudentFormController implements Initializable {
         this.bundle = resources;
 
         // setup table columns
-        initEmploymentTable(resources);
-        initSupportTables(resources);
+        initEmploymentTable();
+        initSupportTables();
 
         initDocumentsListView();
         initComboBoxes();
@@ -315,7 +326,7 @@ public class DoctoralStudentFormController implements Initializable {
         parent.getChildren().add(0, n);
     }
 
-    private void initEmploymentTable(ResourceBundle resources) {
+    private void initEmploymentTable() {
         employmentLocationTableColumn.setCellValueFactory(new PropertyValueFactory<>("employmentLocation"));
         kindOfEmploymentTableColumn.setCellValueFactory(new PropertyValueFactory<>("kindOfEmployment"));
         employmentCampusTableColumn.setCellValueFactory(new PropertyValueFactory<>("campusOfDeployment"));
@@ -326,7 +337,7 @@ public class DoctoralStudentFormController implements Initializable {
         employmentTableView.getItems().addListener((ListChangeListener<EmploymentEntryDTO>) c -> onEmploymentChanged());
     }
 
-    private void initSupportTables(ResourceBundle resources) {
+    private void initSupportTables() {
         // Travel Cost University
         travelCostUniversityDateTableColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         travelCostUniversitySupportTableColumn.setCellValueFactory(new PropertyValueFactory<>("sum"));
@@ -367,9 +378,6 @@ public class DoctoralStudentFormController implements Initializable {
 
         // add some common target degrees to show for auto completion
         TextFields.bindAutoCompletion(targetGraduationDegreeTextField, RepresentationWrapper.getTargetDegreeSuggestions());
-
-        // faculty
-        Collection<FacultyDTO> faculties = EntityPool.getInstance().getFaculties();
 
         // init combo boxes with wrapped entities of the specific type
         updateFacultyCombobox();
@@ -773,12 +781,12 @@ public class DoctoralStudentFormController implements Initializable {
     }
 
     @FXML
-    public void handleOnActionAddConsultingButton(ActionEvent actionEvent) throws IOException {
+    public void handleOnActionAddConsultingButton() throws IOException {
         GuiLoader.createModalWindow(GuiLoader.CONSULTING_SUPPORT, 450, 250, false);
     }
 
     @FXML
-    public void handleOnActionAddQualificationButton(ActionEvent actionEvent) throws IOException {
+    public void handleOnActionAddQualificationButton() throws IOException {
         GuiLoader.createModalWindow(GuiLoader.QUALIFICATION, 450, 200, false);
     }
 
@@ -1177,11 +1185,11 @@ public class DoctoralStudentFormController implements Initializable {
         alert.setTitle(bundle.getString("ui.alert.title.deleteDocuments"));
         alert.setHeaderText(bundle.getString("ui.alert.header.deleteDocuments"));
 
-        String documentNames = "";
+        StringBuilder documentNames = new StringBuilder();
         for (DocumentInformationDTO file : documentsListView.getSelectionModel().getSelectedItems()) {
-            documentNames += file.getFilename() + "\n";
+            documentNames.append(file.getFilename()).append("\n");
         }
-        alert.setContentText(documentNames);
+        alert.setContentText(documentNames.toString());
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
@@ -1226,11 +1234,11 @@ public class DoctoralStudentFormController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle(bundle.getString("ui.alert.documents_not_associated"));
             alert.setHeaderText(bundle.getString("ui.alert.documents_download_selection"));
-            String documentNames = "";
+            StringBuilder documentNames = new StringBuilder();
             for (DocumentInformationDTO file : notDownloadable) {
-                documentNames += file.getFilename() + "\n";
+                documentNames.append(file.getFilename()).append("\n");
             }
-            alert.setContentText(documentNames);
+            alert.setContentText(documentNames.toString());
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() != ButtonType.OK) {

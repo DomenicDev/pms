@@ -15,15 +15,18 @@ import javafx.scene.control.PasswordField;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Screen used for creating a new password for user.
+ * The user has to enter the new password twice.
+ * Only if the passwords match, the new password is accepted.
+ */
 public class PasswordAdminAreaController implements Initializable {
 
     private EventBus eventBus = EventBusSystem.getEventBus();
-
     private UserInfoDTO user;
 
-
     @FXML
-    private Label lableUsername;
+    private Label labelUsername;
 
     @FXML
     private PasswordField passwordFieldPassword;
@@ -54,7 +57,7 @@ public class PasswordAdminAreaController implements Initializable {
 
     public void edit(UserInfoDTO user) {
         this.user = user;
-        lableUsername.setText(user.getUsername());
+        labelUsername.setText(user.getUsername());
     }
 
     @FXML

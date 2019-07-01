@@ -32,7 +32,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-
+/**
+ * The controller for the admin area screen.
+ */
 public class AdminAreaController implements Initializable {
 
     private EventBus eventBus = EventBusSystem.getEventBus();
@@ -40,19 +42,14 @@ public class AdminAreaController implements Initializable {
     private Logger logger = Logger.getLogger(AdminAreaController.class);
     private ResourceBundle bundle;
 
-
     @FXML
     private TableView<UserInfoDTO> tableAdminArea;
     @FXML
     private TableColumn<UserInfoDTO, String> TableColumnForname;
     @FXML
     private TableColumn<UserInfoDTO, String> TableColumnLastname;
-
-    @FXML
-    private Button ButtonAddUserAdmin;
     @FXML
     private Button deleteButton;
-
     @FXML
     private Pane infoBox;
     @FXML
@@ -125,7 +122,6 @@ public class AdminAreaController implements Initializable {
             emailTextField.setText(user.getEmail());
             infoBox.setDisable(false);
         }
-
     }
 
     private void initAdminTable(ResourceBundle resources) {
@@ -134,7 +130,7 @@ public class AdminAreaController implements Initializable {
     }
 
     @FXML
-    void handleAddUserAdminEvent(ActionEvent event) {
+    public void handleAddUserAdminEvent(ActionEvent event) {
         try {
             GuiLoader.createAndShow(GuiLoader.USER_FORM_MASK_ADMIN_AREA, bundle.getString("ui.label.create_new_user"), true);
         } catch (Exception e) {

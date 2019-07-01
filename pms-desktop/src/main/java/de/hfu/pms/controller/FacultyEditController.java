@@ -17,14 +17,14 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for adding, editing, and deleting faculties.
+ */
 public class FacultyEditController implements Initializable {
+
     private EventBus eventBus = EventBusSystem.getEventBus();
     private static Logger logger = Logger.getLogger(FacultyEditController.class);
     private ResourceBundle bundle;
-    private FacultyDTO faculty;
-
-    @FXML
-    private Label title;
 
     @FXML
     private ListView<FacultyDTO> facultiesListView;
@@ -32,22 +32,22 @@ public class FacultyEditController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         eventBus.register(this);
-        this.bundle =resources;
+        this.bundle = resources;
 
         // init list view with available faculties
         updateListView();
     }
 
     @FXML
-    void handleAddButton(ActionEvent event) {
+    public void handleAddButton() {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle(bundle.getString("ui.label.header.addFaculty"));
         dialog.setHeaderText(bundle.getString("ui.label.content.addFaculty"));
         dialog.setContentText(bundle.getString("ui.label.name.addFaculty"));
         Optional<String> result = dialog.showAndWait();
 
-        if (result.isPresent()){
-            if(!(result.get().isBlank() || result.get().isEmpty())){
+        if (result.isPresent()) {
+            if (!(result.get().isBlank() || result.get().isEmpty())) {
                 // add the new faculty
                 FacultyDTO newFaculty = new FacultyDTO(result.get());
                 EventBusSystem.getEventBus().post(new RequestAddFacultyEvent(newFaculty));
@@ -58,8 +58,8 @@ public class FacultyEditController implements Initializable {
     }
 
     @FXML
-    void handleEditButton(ActionEvent event){
-        if(facultiesListView.getSelectionModel().getSelectedItem() == null){
+    public void handleEditButton() {
+        if (facultiesListView.getSelectionModel().getSelectedItem() == null) {
             eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.INFO, bundle.getString("ui.alert.editFaculty")));
             return;
         }
@@ -70,8 +70,8 @@ public class FacultyEditController implements Initializable {
         dialog.setContentText(bundle.getString("ui.label.name.editFaculty"));
         Optional<String> result = dialog.showAndWait();
 
-        if (result.isPresent()){
-            if(!(result.get().isBlank() || result.get().isEmpty())){
+        if (result.isPresent()) {
+            if (!(result.get().isBlank() || result.get().isEmpty())) {
                 // rename
                 FacultyDTO faculty = facultiesListView.getSelectionModel().getSelectedItem();
                 faculty.setFacultyName(result.get());
@@ -79,17 +79,17 @@ public class FacultyEditController implements Initializable {
                 EventBusSystem.getEventBus().post(new RequestUpdateFacultyEvent(faculty));
                 return;
             }
-            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.INFO,bundle.getString("ui.alert.addFaculty")));
+            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.INFO, bundle.getString("ui.alert.addFaculty")));
         }
         //updateListView();
     }
 
     @FXML
-    void handleDeleteButton(ActionEvent event) {
+    public void handleDeleteButton() {
         FacultyDTO toBeDeleted = facultiesListView.getSelectionModel().getSelectedItem();
 
-        if(facultiesListView.getSelectionModel().getSelectedItem() == null){
-            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.INFO,bundle.getString("ui.alert.deleteFaculty_selected")));
+        if (facultiesListView.getSelectionModel().getSelectedItem() == null) {
+            eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.INFO, bundle.getString("ui.alert.deleteFaculty_selected")));
             return;
         }
 
@@ -99,7 +99,7 @@ public class FacultyEditController implements Initializable {
         alert.setHeaderText(bundle.getString("ui.alert.delete_finally_faculty"));
         alert.setContentText(toBeDeleted.getFacultyName());
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK){
+        if (result.get() == ButtonType.OK) {
             // todo: delete selected Entry
             //EventBusSystem.getEventBus().post(new RequestDeleteFacultyEvent(toBeDeleted));
         }
@@ -107,7 +107,7 @@ public class FacultyEditController implements Initializable {
     }
 
     @FXML
-    void handleCancelButton(ActionEvent event) {
+    public void handleCancelButton(ActionEvent event) {
         ((Button) event.getSource()).getScene().getWindow().hide();
     }
 
@@ -115,25 +115,25 @@ public class FacultyEditController implements Initializable {
         facultiesListView.getItems().clear();
         facultiesListView.getItems().addAll(EntityPool.getInstance().getFaculties());
 
-        String logMessage = "Currently known faculties: ";
-        for(FacultyDTO faculty : EntityPool.getInstance().getFaculties()){
-            logMessage += "[" + faculty.getId() + ":" + faculty.getFacultyName() + "]";
+        StringBuilder logMessage = new StringBuilder("Currently known faculties: ");
+        for (FacultyDTO faculty : EntityPool.getInstance().getFaculties()) {
+            logMessage.append("[").append(faculty.getId()).append(":").append(faculty.getFacultyName()).append("]");
         }
-        logger.log(Level.DEBUG, logMessage);
+        logger.log(Level.DEBUG, logMessage.toString());
     }
 
     @Subscribe
-    public void handleAddedFacultyEvent(SuccessfullyAddedFacultyEvent event){
+    public void handleAddedFacultyEvent(SuccessfullyAddedFacultyEvent event) {
         updateListView();
     }
 
     @Subscribe
-    public void handleDeletedFacultyEvent(SuccessfullyDeletedFacultyEvent event){
+    public void handleDeletedFacultyEvent(SuccessfullyDeletedFacultyEvent event) {
         updateListView();
     }
 
     @Subscribe
-    public void handleDeletedFacultyEvent(SuccessfullyUpdatedFacultyEvent event){
+    public void handleDeletedFacultyEvent(SuccessfullyUpdatedFacultyEvent event) {
         updateListView();
     }
 }
