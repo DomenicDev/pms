@@ -55,7 +55,6 @@ public class GuiEventHandler extends Thread {
 
         this.setDaemon(true);
         this.setName("[GuiEventHandler]-Thread");
-        this.start();
     }
 
     private interface Job {

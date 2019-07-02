@@ -14,7 +14,7 @@ javafx {
 // this vm argument is important to make the "controlsfx" dependency work 
 applicationDefaultJvmArgs = ["--add-exports=javafx.base/com.sun.javafx.event=ALL-UNNAMED"]
 
-mainClassName = 'de.hfu.pms.NewGuiTest'
+mainClassName = 'de.hfu.pms.MainDesktopApplication'
 
 dependencies {
     compile project(':pms-core')

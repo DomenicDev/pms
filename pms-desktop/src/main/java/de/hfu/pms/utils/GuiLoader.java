@@ -34,6 +34,7 @@ public class GuiLoader {
     public static final String EDIT_ACCOUNT_INFORMATION = "/screens/change_accountinformation_screen.fxml";
     public static final String USER_FORM_MASK_ADMIN_AREA = "/screens/AddUserAdminArea.fxml";
     public static final String LOADING_SCREEN = "/screens/loading_pane.fxml";
+    public static final String ABOUT_SCREEN = "/screens/about_screen.fxml";
 
     static {
         // load resource bundle file
@@ -61,6 +62,16 @@ public class GuiLoader {
         return loader.load();
     }
 
+    public static void showLoginScreen(Stage stage) throws IOException {
+        Parent login = GuiLoader.loadFXML("/screens/login.fxml");
+        Scene loginScene = new Scene(login);
+        loginScene.getStylesheets().add(GuiLoader.class.getResource("/styles/style.css").toExternalForm());
+        stage.setScene(loginScene);
+        stage.setResizable(false);
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.show();
+    }
+
     /**
      * This helper method creates and displays the specified fxml in a separate window.
      * The method will return the defined controller of the file
@@ -72,12 +83,13 @@ public class GuiLoader {
      * @return the controller defined for this screen
      * @throws IOException if screen could not be loaded
      */
-    public static <T> T createAndShow(String url, String title, boolean modal) throws IOException {
+    public static <T> T createAndShow(String url, String title, boolean modal, boolean resizable) throws IOException {
         FXMLLoader loader = new FXMLLoader(GuiLoader.class.getResource(url));
         loader.setResources(bundle);
         Parent parent = loader.load();
         Scene scene = new Scene(parent);
         Stage stage = new Stage();
+        stage.setResizable(resizable);
         stage.setScene(scene);
         stage.setTitle(title);
 

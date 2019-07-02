@@ -132,7 +132,7 @@ public class AdminAreaController implements Initializable {
     @FXML
     public void handleAddUserAdminEvent(ActionEvent event) {
         try {
-            GuiLoader.createAndShow(GuiLoader.USER_FORM_MASK_ADMIN_AREA, bundle.getString("ui.label.create_new_user"), true);
+            GuiLoader.createAndShow(GuiLoader.USER_FORM_MASK_ADMIN_AREA, bundle.getString("ui.label.create_new_user"), true, false);
         } catch (Exception e) {
             logger.log(Level.ERROR, "Unable to load the Add User - AdminArea Screen " + e);
         }

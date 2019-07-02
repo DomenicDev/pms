@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
@@ -10,45 +11,16 @@
 <?import org.kordamp.ikonli.javafx.*?>
 <VBox prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.DashboardController">
   <children>
-    <MenuBar VBox.vgrow="NEVER">
-      <menus>
-        <Menu mnemonicParsing="false" text="File">
-          <items>
-            <MenuItem mnemonicParsing="false" text="New" />
-            <MenuItem mnemonicParsing="false" text="Open…" />
-            <Menu mnemonicParsing="false" text="Open Recent" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Close" />
-            <MenuItem mnemonicParsing="false" text="Save" />
-            <MenuItem mnemonicParsing="false" text="Save As…" />
-            <MenuItem mnemonicParsing="false" text="Revert" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Preferences…" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Quit" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Undo" />
-            <MenuItem mnemonicParsing="false" text="Redo" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Cut" />
-            <MenuItem mnemonicParsing="false" text="Copy" />
-            <MenuItem mnemonicParsing="false" text="Paste" />
-            <MenuItem mnemonicParsing="false" text="Delete" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Select All" />
-            <MenuItem mnemonicParsing="false" text="Unselect All" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Help">
-          <items>
-            <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
-          </items>
-        </Menu>
-      </menus>
-    </MenuBar>
+      <MenuBar VBox.vgrow="NEVER">
+          <Menu mnemonicParsing="false" text="%ui.menu.file">
+              <MenuItem mnemonicParsing="false" onAction="#handleOnActionCloseMenuItem" text="%ui.menu.close" />
+          </Menu>
+          <Menu mnemonicParsing="false" text="%ui.menu.help">
+              <items>
+                  <MenuItem mnemonicParsing="false" onAction="#handleOnActionAboutMenuItem" text="%ui.menu.about" />
+              </items>
+          </Menu>
+      </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" stylesheets="@../styles/style.css" VBox.vgrow="ALWAYS">
          <children>
             <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -61,8 +33,11 @@
                                  <children>
                                     <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="97.0" prefWidth="282.0" text="PhDMS HFU" textFill="WHITE">
                                        <font>
-                                          <Font name="Rockwell Bold" size="36.0" />
+                                          <Font name="Rockwell Bold" size="42.0" />
                                        </font>
+                                       <effect>
+                                          <DropShadow />
+                                       </effect>
                                     </Label>
                                     <Separator prefHeight="0.0" prefWidth="219.0" styleClass="separator-sidebar" />
                                  </children>
@@ -105,11 +80,17 @@
                                  <graphic>
                                     <FontIcon iconLiteral="fa-gear" />
                                  </graphic>
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
                               </Button>
                               <Button fx:id="adminAreaButton" mnemonicParsing="false" onAction="#handleAdminArea" styleClass="button-sidebar" text="%ui.button.admin_area" VBox.vgrow="ALWAYS">
                                  <graphic>
                                     <FontIcon iconLiteral="fa-lock" />
                                  </graphic>
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
                               </Button>
                            </children>
                         </VBox>
@@ -117,11 +98,24 @@
                            <children>
                               <ImageView fitHeight="100.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../images/Logo_HFU_A6_RGB.jpg" />
+                                    <Image url="@../images/hfu_logo.png" />
                                  </image>
                                  <viewport>
                                     <Rectangle2D />
                                  </viewport>
+                                 <effect>
+                                    <Lighting>
+                                       <bumpInput>
+                                          <Shadow />
+                                       </bumpInput>
+                                       <light>
+                                          <Light.Distant />
+                                       </light>
+                                    </Lighting>
+                                 </effect>
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin>
                               </ImageView>
                            </children>
                         </VBox>
@@ -135,13 +129,19 @@
                            <children>
                               <Label fx:id="mainContentTitle" styleClass="label-top" text="Title">
                                  <font>
-                                    <Font name="System Bold" size="65.0" />
+                                    <Font name="System Bold" size="58.0" />
                                  </font>
                                  <padding>
                                     <Insets left="20.0" />
                                  </padding>
+                                 <effect>
+                                    <DropShadow />
+                                 </effect>
                               </Label>
                            </children>
+                           <effect>
+                              <DropShadow offsetY="2.0" radius="4.75" width="0.0" />
+                           </effect>
                         </HBox>
                         <AnchorPane fx:id="mainContentPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
                      </children>

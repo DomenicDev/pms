@@ -91,7 +91,7 @@ public class UniversityScreenController implements Initializable {
                 return;
             }
 
-            UniversityAddController controller = GuiLoader.createAndShow(GuiLoader.UNIVERSITY_FORM_SCREEN, bundle.getString("ui.label.change_university"), true);
+            UniversityAddController controller = GuiLoader.createAndShow(GuiLoader.UNIVERSITY_FORM_SCREEN, bundle.getString("ui.label.change_university"), true, false);
             controller.edit(university);
 
         } catch (Exception e) {

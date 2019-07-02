@@ -10,6 +10,7 @@ import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.UserInfoDTO;
 import de.hfu.pms.utils.GuiLoader;
 import de.hfu.pms.utils.JavaFxUtils;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -179,6 +180,16 @@ public class DashboardController implements Initializable {
     @FXML
     public void handleAdminArea() {
         show(MainScreen.AdminArea);
+    }
+
+    @FXML
+    public void handleOnActionCloseMenuItem() {
+        Platform.exit();
+    }
+
+    @FXML
+    public void handleOnActionAboutMenuItem() throws IOException {
+        GuiLoader.createAndShow(GuiLoader.ABOUT_SCREEN, bundle.getString("ui.label.about_title"), true, false);
     }
 
     private void show(MainScreen screen) {

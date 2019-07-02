@@ -51,7 +51,7 @@ public class AccountInformationController implements Initializable {
             ChangeAccountInformationController controller = GuiLoader.createAndShow(
                     GuiLoader.EDIT_ACCOUNT_INFORMATION,
                     bundle.getString("ui.label.change_user_information"),
-                    true);
+                    true, false );
             controller.edit(user);
         } catch (Exception e) {
             logger.log(Level.ERROR, "Unable to load the Change account Infomrationscreen ");
