@@ -19,7 +19,7 @@
                         </Label>
                         <HBox alignment="CENTER" spacing="20.0">
                            <children>
-                              <Button fx:id="ButtonAddUserAdmin" mnemonicParsing="false" onAction="#handleAddUserAdminEvent" styleClass="button-NOT-sidebar" text="%ui.label.add_new_user" />
+                              <Button mnemonicParsing="false" onAction="#handleAddUserAdminEvent" styleClass="button-NOT-sidebar" text="%ui.label.add_new_user" />
                               <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#handleOnActionDeleteButton" text="Benutzer löschen" />
                            </children>
                         </HBox>
@@ -30,8 +30,8 @@
                   </HBox>
                   <TableView fx:id="tableAdminArea" prefHeight="589.0" prefWidth="589.0">
                     <columns>
-                      <TableColumn fx:id="TableColumnForname" prefWidth="75.0" text="Vorname " />
-                      <TableColumn fx:id="TableColumnLastname" prefWidth="75.0" text="Nachname" />
+                      <TableColumn fx:id="TableColumnForname" prefWidth="75.0" text="%ui.label.forename" />
+                      <TableColumn fx:id="TableColumnLastname" prefWidth="75.0" text="ui.label.surname" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -43,7 +43,7 @@
                <children>
                   <VBox fx:id="infoBox" spacing="20.0">
                      <children>
-                        <Label text="Benutzerinformationen">
+                        <Label text="%ui.label.user_information">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -61,11 +61,11 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label text="Vorname" GridPane.rowIndex="1" />
-                              <Label text="Benutzername" />
-                              <Label text="Rolle" GridPane.rowIndex="3" />
-                              <Label text="Email" GridPane.rowIndex="4" />
-                              <Label text="Nachname" GridPane.rowIndex="2" />
+                              <Label text="%ui.label.forename" GridPane.rowIndex="1" />
+                              <Label text="%ui.label.username" />
+                              <Label text="%ui.label.user_role" GridPane.rowIndex="3" />
+                              <Label text="%ui.label.email" GridPane.rowIndex="4" />
+                              <Label text="%ui.label.surname" GridPane.rowIndex="2" />
                               <TextField fx:id="forenameTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <TextField fx:id="surnameTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <ComboBox fx:id="roleComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
@@ -75,14 +75,14 @@
                         </GridPane>
                         <HBox spacing="150.0">
                            <children>
-                              <Button fx:id="saveButton" mnemonicParsing="false" onAction="#handleOnActionSaveButton" text="Speichern">
+                              <Button mnemonicParsing="false" onAction="#handleOnActionSaveButton" text="%ui.button.save">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Button>
                               <VBox spacing="20.0">
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#handleOnActionChangePasswordButton" text="Passwort ändern" />
+                                    <Button mnemonicParsing="false" onAction="#handleOnActionChangePasswordButton" text="%ui.button.change_password" />
                                  </children>
                               </VBox>
                            </children>

@@ -36,7 +36,7 @@
                   <HBox spacing="15.0">
                      <children>
                         <FontIcon iconLiteral="fa-search" iconSize="20" />
-                        <TextField fx:id="searchTextField" onKeyTyped="#handleOnActionSearch" prefHeight="25.0" prefWidth="176.0" promptText="Search for Doctoral Students" />
+                        <TextField fx:id="searchTextField" onKeyTyped="#handleOnActionSearch" prefHeight="25.0" prefWidth="176.0" promptText="%ui.text_field_prompt.search_doctoral_students" />
                      </children>
                   </HBox>
                   <Label fx:id="labelDoctoralInList" text="Label">

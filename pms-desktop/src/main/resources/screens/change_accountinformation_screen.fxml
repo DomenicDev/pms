@@ -13,8 +13,8 @@
       <TextField fx:id="textfieldForename" layoutX="200.0" layoutY="116.0" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="116.0" />
       <TextField fx:id="surnameTextField" layoutX="202.0" layoutY="137.0" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="156.0" />
       <TextField fx:id="textfieldChangeEmail" layoutX="200.0" layoutY="196.0" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="236.0" />
-      <Button fx:id="saveChangesButton" layoutX="50.0" layoutY="272.0" mnemonicParsing="false" onAction="#handleOnActionSaveButton" styleClass="button-NOT-sidebar" text="%ui.button.save_changes" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="275.0" />
-      <Button fx:id="ButtonExitScreen" layoutX="250.0" layoutY="275.0" mnemonicParsing="false" onAction="#handleExitButton" styleClass="button-NOT-sidebar" text="%ui.button.cancel" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="275.0" />
+      <Button layoutX="50.0" layoutY="272.0" mnemonicParsing="false" onAction="#handleOnActionSaveButton" styleClass="button-NOT-sidebar" text="%ui.button.save_changes" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="275.0" />
+      <Button layoutX="250.0" layoutY="275.0" mnemonicParsing="false" onAction="#handleExitButton" styleClass="button-NOT-sidebar" text="%ui.button.cancel" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="275.0" />
       <Label fx:id="userRoleLabel" layoutX="200.0" layoutY="160.0" text="/Rolle" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="200.0" />
       <Label layoutX="363.0" layoutY="160.0" text="%ui.label.admin_only" AnchorPane.leftAnchor="360.0" AnchorPane.topAnchor="200.0" />
       <Label layoutX="51.0" layoutY="35.0" text="%ui.button.change_user_information">
