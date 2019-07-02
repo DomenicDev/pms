@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -62,6 +63,12 @@ public class DashboardController implements Initializable {
     private Parent adminArea;
     private Logger logger = Logger.getLogger(DashboardController.class);
 
+    // current screen
+    private MainScreen currentShownScreen = null;
+
+    // controller
+    private DoctoralStudentMainContentController doctoralStudentMainContentController;
+
     // we store a reference to the last focused button of the dashboard
     private Button lastFocusedButton;
 
@@ -86,7 +93,14 @@ public class DashboardController implements Initializable {
         // to later dynamically switch between them
         try {
             homeParent = GuiLoader.loadFXML("/screens/startscreen.fxml");
-            doctoralStudentsParent = GuiLoader.loadFXML("/screens/doctoral_students_content.fxml");
+
+            // prepare doctoral student controller
+            FXMLLoader docLoader = new FXMLLoader(getClass().getResource("/screens/doctoral_students_content.fxml"));
+            docLoader.setResources(GuiLoader.getResourceBundle());
+            this.doctoralStudentsParent = docLoader.load();
+            this.doctoralStudentMainContentController = docLoader.getController();
+
+            //doctoralStudentsParent = GuiLoader.loadFXML("/screens/doctoral_students_content.fxml");
             universitiesParent = GuiLoader.loadFXML("/screens/university_screen.fxml");
             adminArea = GuiLoader.loadFXML("/screens/admin_Area.fxml");
 
@@ -106,7 +120,7 @@ public class DashboardController implements Initializable {
         }
 
         // set home to be showed at first
-        switchScreen(startButton, bundle.getString("ui.section.home"), homeParent);
+        show(MainScreen.Home);
 
         try {
             UserInfoDTO user = EntityPool.getInstance().getLoggedInUser();
@@ -193,10 +207,41 @@ public class DashboardController implements Initializable {
     }
 
     private void show(MainScreen screen) {
+        if (screen == null) {
+            return;
+        }
+
+        // this is a hard coded check, if the doctoral student form mask
+        // is currently opened. If so, we want to the user to ask if the screen
+        // shall really be left with the hint that unsaved changes are not submitted.
+        // This could be in a much cleaner way, e.g. by using a interface for common
+        // methods which is implemented in the single controllers, so the controller
+        // itself could be asked if a switch is okay... but time ran away ;-)
+        if (this.currentShownScreen == MainScreen.DoctoralStudent) {
+            if (doctoralStudentMainContentController.isInFormMask()) {
+                GuiLoader.showYesAndNoAlert(Alert.AlertType.WARNING,
+                        bundle.getString("ui.alert.title.switch_screen_hint"),
+                        bundle.getString("ui.alert.content.switch_screen_hint"),
+                        bundle.getString("ui.alert.button.yes_exit"),
+                        bundle.getString("ui.alert.button.no_stay"),
+                        () -> showReally(screen),
+                        null);
+            } else {
+                showReally(screen);
+            }
+        } else {
+            showReally(screen);
+        }
+
+    }
+
+    private void showReally(MainScreen screen) {
+        this.currentShownScreen = screen;
         if (screen == MainScreen.Home) {
             switchScreen(startButton, bundle.getString("ui.section.home"), homeParent);
         } else if (screen == MainScreen.DoctoralStudent) {
             switchScreen(doctoralStudentsButton, bundle.getString("ui.section.doctoral_students"), doctoralStudentsParent);
+            doctoralStudentMainContentController.switchScreen(DoctoralStudentMainContentController.DoctoralStudentScreen.OVERVIEW);
         } else if (screen == MainScreen.University) {
             switchScreen(universityButton, bundle.getString("ui.section.universities"), universitiesParent);
         } else if (screen == MainScreen.AccountInformation) {

@@ -44,6 +44,8 @@ public class DoctoralStudentMainContentController implements Initializable {
 
     private ResourceBundle resourceBundle;
 
+    private DoctoralStudentScreen currentScreen;
+
     public enum DoctoralStudentScreen {
 
         OVERVIEW,
@@ -75,8 +77,12 @@ public class DoctoralStudentMainContentController implements Initializable {
 
         JavaFxUtils.setAllAnchorPaneConstraints(overview, 0);
 
-        doctoralStudentContentPane.getChildren().add(overview);
+        switchScreen(DoctoralStudentScreen.OVERVIEW);
 
+    }
+
+    public boolean isInFormMask() {
+        return currentScreen == DoctoralStudentScreen.FORM_MASK;
     }
 
     private void switchMainContent(Parent parentToSwitchTo) {
@@ -95,6 +101,8 @@ public class DoctoralStudentMainContentController implements Initializable {
         // get controller
         DoctoralStudentFormController formController = loader.getController();
         formController.fillFormMask(doctoralStudentDTO);
+
+        this.currentScreen = DoctoralStudentScreen.FORM_MASK;
     }
 
     @Subscribe
@@ -106,6 +114,7 @@ public class DoctoralStudentMainContentController implements Initializable {
     @Subscribe
     public void handle(OnClickAddNewDoctoralStudentEvent event) {
         try {
+            this.currentScreen = DoctoralStudentScreen.FORM_MASK;
             switchMainContent(GuiLoader.loadFXML(GuiLoader.DOCTORAL_STUDENT_FORM_MASK));
         } catch (IOException e) {
             eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.ERROR, resourceBundle.getString("ui.alert.screen_could_not_be_opened")));
@@ -115,6 +124,11 @@ public class DoctoralStudentMainContentController implements Initializable {
     @Subscribe
     public void handle(SwitchDoctoralStudentScreenEvent event) {
         DoctoralStudentScreen screen = event.getScreen();
+        switchScreen(screen);
+    }
+
+    public void switchScreen(DoctoralStudentScreen screen) {
+        this.currentScreen = screen;
         if (screen == DoctoralStudentScreen.OVERVIEW) {
             switchMainContent(overview);
         } else if (screen == DoctoralStudentScreen.FORM_MASK) {
@@ -122,4 +136,7 @@ public class DoctoralStudentMainContentController implements Initializable {
         }
     }
 
+    public DoctoralStudentScreen getCurrentScreen() {
+        return currentScreen;
+    }
 }
