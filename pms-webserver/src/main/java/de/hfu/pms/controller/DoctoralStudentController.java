@@ -270,13 +270,11 @@ public class DoctoralStudentController {
     }
 
     private DoctoralStudent convertToEntity(DoctoralStudentDTO doctoralStudentDTO) {
-        DoctoralStudent doctoralStudent = modelMapper.map(doctoralStudentDTO, DoctoralStudent.class);
-        return doctoralStudent;
+        return modelMapper.map(doctoralStudentDTO, DoctoralStudent.class);
     }
 
     private DoctoralStudent convertToEntity(CreateDoctoralStudentDTO doctoralStudentDTO) {
-        DoctoralStudent doctoralStudent = modelMapper.map(doctoralStudentDTO, DoctoralStudent.class);
-        return doctoralStudent;
+        return modelMapper.map(doctoralStudentDTO, DoctoralStudent.class);
     }
 
     private DoctoralStudentDTO convertToDTO(DoctoralStudent doctoralStudent) {

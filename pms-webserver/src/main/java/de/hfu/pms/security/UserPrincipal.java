@@ -10,6 +10,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * This class wraps our user object to a UserDetails object
+ * for later accessing principals.
+ */
 public class UserPrincipal implements UserDetails {
 
     private User user;
@@ -30,7 +34,6 @@ public class UserPrincipal implements UserDetails {
         authorities.add(authority);
 
         // ... we might want to add more permissions here in future
-
 
         return authorities;
     }
