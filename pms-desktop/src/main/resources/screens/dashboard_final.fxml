@@ -31,18 +31,16 @@
                            <children>
                               <VBox>
                                  <children>
-                                    <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="97.0" prefWidth="282.0" text="PhDMS HFU" textFill="WHITE">
+                                    <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="97.0" prefWidth="282.0" style="-fx-background-color: green;" text="PhDMS HFU" textFill="WHITE">
                                        <font>
-                                          <Font name="Rockwell Bold" size="42.0" />
+                                          <Font name="Consolas Bold" size="46.0" />
                                        </font>
                                        <effect>
                                           <DropShadow />
                                        </effect>
                                     </Label>
-                                    <Separator prefHeight="0.0" prefWidth="219.0" styleClass="separator-sidebar" />
                                  </children>
                               </VBox>
-                              <Separator halignment="RIGHT" orientation="VERTICAL" prefHeight="100.0" prefWidth="0.0" />
                            </children>
                         </HBox>
                         <VBox prefHeight="203.0" prefWidth="219.0" spacing="20.0" styleClass="vbox-sidebar">
