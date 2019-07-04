@@ -112,6 +112,7 @@ public class GuiEventHandler extends Thread {
                         primaryStage.close();
                         try {
                             Stage newStage = new Stage(StageStyle.DECORATED);
+                            newStage.setTitle(bundle.getString("app.name"));
                             Parent dashboard = GuiLoader.loadFXML("/screens/dashboard_final.fxml");
                             Scene scene = new Scene(dashboard);
                             scene.getStylesheets().add(getClass().getResource("/styles/style.css").toExternalForm());
