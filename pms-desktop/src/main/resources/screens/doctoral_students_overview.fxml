@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import org.kordamp.ikonli.javafx.*?>
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" spacing="20.0" style="-fx-background-color: #FAFAFA;" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.DoctoralStudentOverviewController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="800.0" spacing="20.0" style="-fx-background-color: #FAFAFA;" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hfu.pms.controller.DoctoralStudentOverviewController">
    <children>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
          <items>
@@ -60,7 +60,7 @@
             <Insets left="10.0" top="20.0" />
          </padding>
       </HBox>
-      <TableView fx:id="searchResultTableView" prefHeight="200.0" prefWidth="200.0">
+      <TableView fx:id="searchResultTableView" minHeight="-Infinity" prefWidth="200.0">
         <columns>
           <TableColumn fx:id="searchResultNameTableColumn" prefWidth="75.0" text="%ui.label.surname" />
           <TableColumn fx:id="searchResultForeNameTableColumn" prefWidth="75.0" text="%ui.label.forename" />
