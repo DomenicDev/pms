@@ -141,12 +141,15 @@ public class GuiEventHandler extends Thread {
 
         addJob(() -> {
             showLoadingScreen();
-            try {
-                PreviewDoctoralStudentDTO createdEntity = applicationServices.addDoctoralStudent(doctoralStudent);
-                eventBus.post(new SuccessfullyAddedDoctoralStudentEvent(createdEntity));
-            } catch (BusinessException e) {
-                e.printStackTrace();
-            }
+            Platform.runLater(() -> {
+                try {
+                    PreviewDoctoralStudentDTO createdEntity = applicationServices.addDoctoralStudent(doctoralStudent);
+                    eventBus.post(new SuccessfullyAddedDoctoralStudentEvent(createdEntity));
+                } catch (BusinessException e) {
+                    e.printStackTrace();
+                }
+            });
+
             closeLoadingScreen();
         });
     }
@@ -285,12 +288,15 @@ public class GuiEventHandler extends Thread {
         addJob(() -> {
             showLoadingScreen();
 
-            try {
-                DoctoralStudentDTO doctoralStudentDTO = applicationServices.getDoctoralStudent(id);
-                Platform.runLater(() -> eventBus.post(new ShowDoctoralStudentEvent(doctoralStudentDTO)));
-            } catch (IOException e) {
-                show(new BusinessException(e.getLocalizedMessage()));
-            }
+            Platform.runLater(() -> {
+                try {
+                    DoctoralStudentDTO doctoralStudentDTO = applicationServices.getDoctoralStudent(id);
+                    Platform.runLater(() -> eventBus.post(new ShowDoctoralStudentEvent(doctoralStudentDTO)));
+                } catch (IOException e) {
+                    show(new BusinessException(e.getLocalizedMessage()));
+                }
+            });
+
 
             closeLoadingScreen();
         });
