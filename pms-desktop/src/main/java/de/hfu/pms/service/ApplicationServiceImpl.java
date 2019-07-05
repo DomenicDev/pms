@@ -77,7 +77,7 @@ public class ApplicationServiceImpl implements ApplicationServices {
             String response = restClient.get(HOST_URL + STUDENT_PREFIX + "anonymize/" + studentID);
             return toObject(response, AnonymizeResultDTO.class);
         } catch (IOException e) {
-            throw new BusinessException("could not anonymize");
+            throw new BusinessException("could not anonymize"+e);
         }
     }
 

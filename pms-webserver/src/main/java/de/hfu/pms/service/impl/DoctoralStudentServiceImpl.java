@@ -133,7 +133,7 @@ public class DoctoralStudentServiceImpl implements DoctoralStudentService {
         // search each student and add matching entities to the return list
         Collection<DoctoralStudent> all = doctoralStudentDao.findAll();
         for (DoctoralStudent student : all) {
-            if (fullTextSearch(student, searchText)) {
+            if (!student.getAnonymized() && fullTextSearch(student, searchText)) {
                 searchResult.add(student);
             }
         }

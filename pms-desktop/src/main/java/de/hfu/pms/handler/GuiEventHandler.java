@@ -140,7 +140,7 @@ public class GuiEventHandler extends Thread {
         CreateDoctoralStudentDTO doctoralStudent = saveEvent.getCreateDoctoralStudentDTO();
 
         addJob(() -> {
-            showLoadingScreen();
+      //      showLoadingScreen();
             Platform.runLater(() -> {
                 try {
                     PreviewDoctoralStudentDTO createdEntity = applicationServices.addDoctoralStudent(doctoralStudent);
@@ -150,7 +150,7 @@ public class GuiEventHandler extends Thread {
                 }
             });
 
-            closeLoadingScreen();
+        //    closeLoadingScreen();
         });
     }
 
@@ -158,8 +158,14 @@ public class GuiEventHandler extends Thread {
     public void handleAnonymizeDoctoralStudentEvent(RequestAnonymizeDoctoralStudentEvent requestAnonymizeDoctoralStudentEvent) {
         try {
             AnonymizeResultDTO result = applicationServices.anonymize(requestAnonymizeDoctoralStudentEvent.getId());
-            eventBus.post(new SuccessfullyDeletedDoctoralStudentEvent(result.getDeletedId()));
-            eventBus.post(new SuccessfullyAddedDoctoralStudentEvent(result.getNewDoctoralStudent()));
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    eventBus.post(new SuccessfullyDeletedDoctoralStudentEvent(result.getDeletedId()));
+                    eventBus.post(new SuccessfullyAddedDoctoralStudentEvent(result.getNewDoctoralStudent()));
+                }
+            });
+
         } catch (BusinessException e) {
             e.printStackTrace();
         }
@@ -286,19 +292,19 @@ public class GuiEventHandler extends Thread {
         Long id = event.getId();
 
         addJob(() -> {
-            showLoadingScreen();
+       //     showLoadingScreen();
 
-            Platform.runLater(() -> {
-                try {
-                    DoctoralStudentDTO doctoralStudentDTO = applicationServices.getDoctoralStudent(id);
+            try {
+                DoctoralStudentDTO doctoralStudentDTO = applicationServices.getDoctoralStudent(id);
+                Platform.runLater(() -> {
                     Platform.runLater(() -> eventBus.post(new ShowDoctoralStudentEvent(doctoralStudentDTO)));
-                } catch (IOException e) {
-                    show(new BusinessException(e.getLocalizedMessage()));
-                }
-            });
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
 
-            closeLoadingScreen();
+         //   closeLoadingScreen();
         });
 
     }

@@ -6,6 +6,10 @@ public class AnonymizeResultDTO {
 
     private PreviewDoctoralStudentDTO newDoctoralStudent;
 
+    public AnonymizeResultDTO() {
+
+    }
+
     public AnonymizeResultDTO(Long deletedId, PreviewDoctoralStudentDTO newDoctoralStudent) {
         this.deletedId = deletedId;
         this.newDoctoralStudent = newDoctoralStudent;
