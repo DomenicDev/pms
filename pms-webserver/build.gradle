@@ -5,16 +5,14 @@ plugins {
 
 task runWithTestData(type: JavaExec) {
     group = 'hfu'
-
-    classpath sourceSets.main.runtimeClasspath // <-- Don't change this
+    classpath sourceSets.main.runtimeClasspath
     main = "de.hfu.pms.MainApplication"
     args "-test"
 }
 
 task run(type: JavaExec) {
     group = 'hfu'
-
-    classpath sourceSets.main.runtimeClasspath // <-- Don't change this
+    classpath sourceSets.main.runtimeClasspath
     main = "de.hfu.pms.MainApplication"
 }
 
