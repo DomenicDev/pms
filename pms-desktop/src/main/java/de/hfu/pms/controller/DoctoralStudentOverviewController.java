@@ -239,6 +239,10 @@ public class DoctoralStudentOverviewController implements Initializable {
         String searchText = searchTextField.getText();
         if (searchText != null && !searchText.trim().isEmpty()) {
             eventBus.post(new RequestSearchDoctoralStudentEvent(searchText));
+        } else {
+            // search text removed, so we do a simple refresh
+            // to show all entities again
+            refreshTable();
         }
     }
 
