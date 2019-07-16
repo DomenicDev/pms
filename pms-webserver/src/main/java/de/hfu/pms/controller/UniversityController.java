@@ -31,9 +31,9 @@ public class UniversityController {
         return convertToDTO(university);
     }
 
-    @GetMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public String deleteUser (@PathVariable Long id){
+    public String deleteUniversity (@PathVariable Long id){
         universityService.deleteUniversity(id);
         return "Die Universität wurde erfolgreich gelöscht.";
     }

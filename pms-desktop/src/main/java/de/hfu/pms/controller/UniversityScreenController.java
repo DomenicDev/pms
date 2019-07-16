@@ -4,9 +4,11 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.hfu.pms.eventbus.EventBusSystem;
 import de.hfu.pms.events.AlertNotificationEvent;
+import de.hfu.pms.events.RequestDeleteUniversityEvent;
 import de.hfu.pms.events.SuccessfullyAddedUniversityEvent;
 import de.hfu.pms.events.SuccessfullyUpdatedUniversityEvent;
 import de.hfu.pms.exceptions.BusinessException;
+import de.hfu.pms.handler.SuccessfullyDeletedUniversityEvent;
 import de.hfu.pms.pool.EntityPool;
 import de.hfu.pms.shared.dto.UniversityDTO;
 import de.hfu.pms.shared.dto.UserInfoDTO;
@@ -106,8 +108,7 @@ public class UniversityScreenController implements Initializable {
             showAlertSelectFirst();
             return;
         }
-        // todo: confirm dialog + check for dependencies & delete if there are none
-        // ...
+        eventBus.post(new RequestDeleteUniversityEvent(university.getId()));
     }
 
     private void showAlertSelectFirst() {
@@ -133,6 +134,11 @@ public class UniversityScreenController implements Initializable {
         UniversityDTO newUniversity = event.getUniversity();
         CollectionUtils.removeFromList(newUniversity, tableViewUniversity.getItems(), (original, collectionItem) -> original.getId().equals(collectionItem.getId()));
         tableViewUniversity.getItems().add(newUniversity);
+    }
+
+    @Subscribe
+    public void handleDeleteEvent(SuccessfullyDeletedUniversityEvent event) {
+        CollectionUtils.removeFromList(tableViewUniversity.getItems(), collectionItem -> collectionItem.getId().equals(event.getId()));
     }
 
 

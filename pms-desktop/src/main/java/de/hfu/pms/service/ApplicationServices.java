@@ -131,6 +131,14 @@ public interface ApplicationServices {
     UniversityDTO updateUniversity(Long id, UniversityDTO universityDTO) throws BusinessException;
 
     /**
+     * Deletes the specified University by its id.
+     *
+     * @param id the id of the university
+     * @throws BusinessException if there are dependencies (e.g. with doctoral students)
+     */
+    void deleteUniversity(Long id) throws BusinessException;
+
+    /**
      * @return a collection containing all faculties.
      */
     Collection<FacultyDTO> getAllFaculties();

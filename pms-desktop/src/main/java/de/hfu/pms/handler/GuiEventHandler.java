@@ -41,7 +41,6 @@ public class GuiEventHandler extends Thread {
     private ResourceBundle bundle;
     private boolean closed = false;
     private Queue<Job> jobs = new ConcurrentLinkedDeque<>();
-    private volatile Stage loadingWindow;
 
     public GuiEventHandler(Stage primaryStage, ApplicationServices applicationServices, EventBus eventBus) {
         this.primaryStage = primaryStage;
@@ -79,7 +78,7 @@ public class GuiEventHandler extends Thread {
     }
 
 
-    private void addJob(Job job) {
+    private synchronized void addJob(Job job) {
         this.jobs.add(job);
     }
 
@@ -140,7 +139,6 @@ public class GuiEventHandler extends Thread {
         CreateDoctoralStudentDTO doctoralStudent = saveEvent.getCreateDoctoralStudentDTO();
 
         addJob(() -> {
-      //      showLoadingScreen();
             Platform.runLater(() -> {
                 try {
                     PreviewDoctoralStudentDTO createdEntity = applicationServices.addDoctoralStudent(doctoralStudent);
@@ -149,26 +147,23 @@ public class GuiEventHandler extends Thread {
                     e.printStackTrace();
                 }
             });
-
-        //    closeLoadingScreen();
         });
     }
 
     @Subscribe
     public void handleAnonymizeDoctoralStudentEvent(RequestAnonymizeDoctoralStudentEvent requestAnonymizeDoctoralStudentEvent) {
-        try {
-            AnonymizeResultDTO result = applicationServices.anonymize(requestAnonymizeDoctoralStudentEvent.getId());
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
+        addJob(() -> {
+            try {
+                AnonymizeResultDTO result = applicationServices.anonymize(requestAnonymizeDoctoralStudentEvent.getId());
+                Platform.runLater(() -> {
                     eventBus.post(new SuccessfullyDeletedDoctoralStudentEvent(result.getDeletedId()));
                     eventBus.post(new SuccessfullyAddedDoctoralStudentEvent(result.getNewDoctoralStudent()));
-                }
-            });
+                });
 
-        } catch (BusinessException e) {
-            e.printStackTrace();
-        }
+            } catch (BusinessException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @Subscribe
@@ -192,6 +187,16 @@ public class GuiEventHandler extends Thread {
             eventBus.post(new SuccessfullyUpdatedUniversityEvent(response));
         } catch (BusinessException e) {
             show(e);
+        }
+    }
+
+    @Subscribe
+    public void handleDeleteUniversityEvent(RequestDeleteUniversityEvent event) {
+        try {
+            applicationServices.deleteUniversity(event.getId());
+            eventBus.post(new SuccessfullyDeletedUniversityEvent(event.getId()));
+        } catch (BusinessException e) {
+            show(new BusinessException(bundle.getString("ui.alert.delete_failed_university")));
         }
     }
 
@@ -292,8 +297,6 @@ public class GuiEventHandler extends Thread {
         Long id = event.getId();
 
         addJob(() -> {
-       //     showLoadingScreen();
-
             try {
                 DoctoralStudentDTO doctoralStudentDTO = applicationServices.getDoctoralStudent(id);
                 Platform.runLater(() -> {
@@ -302,9 +305,6 @@ public class GuiEventHandler extends Thread {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-
-         //   closeLoadingScreen();
         });
 
     }
@@ -312,7 +312,6 @@ public class GuiEventHandler extends Thread {
     @Subscribe
     public void handle(RequestPatchDoctoralStudentEvent event) {
         addJob(() -> {
-            showLoadingScreen();
             try {
                 applicationServices.patchDoctoralStudent(event.getPatchDoctoralStudentDTO());
                 PreviewDoctoralStudentDTO preview = applicationServices.getPreview(event.getPatchDoctoralStudentDTO().getId());
@@ -325,10 +324,7 @@ public class GuiEventHandler extends Thread {
 
             } catch (BusinessException e) {
                 e.printStackTrace();
-            } finally {
-                closeLoadingScreen();
             }
-
         });
 
     }
@@ -448,22 +444,5 @@ public class GuiEventHandler extends Thread {
 
     private void show(BusinessException exception) {
         eventBus.post(new AlertNotificationEvent(AlertNotificationEvent.ERROR, exception.getLocalizedMessage()));
-    }
-
-    private void showLoadingScreen() {
-        Platform.runLater(() -> {
-            try {
-                loadingWindow = GuiLoader.createLoadingScreen();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
-    private void closeLoadingScreen() {
-        if (loadingWindow != null) {
-            Platform.runLater(() -> loadingWindow.close());
-        }
     }
 }

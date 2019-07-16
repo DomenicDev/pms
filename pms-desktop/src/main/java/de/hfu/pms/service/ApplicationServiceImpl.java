@@ -31,6 +31,7 @@ public class ApplicationServiceImpl implements ApplicationServices {
 
     private final String STUDENT_SERVICES = HOST_URL + STUDENT_PREFIX;
     private final String USER_SERVICES = HOST_URL + USER_PREFIX;
+    private final String UNIVERSITY_SERVICES = HOST_URL + UNIVERSITY_PREFIX;
 
     public ApplicationServiceImpl() {
         this.restClient = new RestClient();
@@ -201,6 +202,15 @@ public class ApplicationServiceImpl implements ApplicationServices {
             return dto;
         } catch (IOException e) {
             throw new BusinessException("University could not be updated" + e);
+        }
+    }
+
+    @Override
+    public void deleteUniversity(Long id) throws BusinessException {
+        try {
+            restClient.delete(UNIVERSITY_SERVICES + "delete/" + id);
+        } catch (IOException e) {
+            throw new BusinessException(e.getMessage());
         }
     }
 
