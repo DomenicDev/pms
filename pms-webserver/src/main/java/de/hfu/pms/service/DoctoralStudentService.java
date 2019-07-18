@@ -12,6 +12,7 @@ public interface DoctoralStudentService {
     DoctoralStudent update(Long id, DoctoralStudent doctoralStudent);
 
     DoctoralStudent updatePhoto(Long id, String filename, byte[] data);
+    byte[] getPhotoData(Long id);
     DoctoralStudent deletePhoto(Long id);
 
     DoctoralStudent update(Long id, PersonalData personalData);

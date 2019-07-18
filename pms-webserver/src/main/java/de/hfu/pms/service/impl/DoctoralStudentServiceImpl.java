@@ -10,6 +10,11 @@ import de.hfu.pms.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -27,6 +32,9 @@ public class DoctoralStudentServiceImpl implements DoctoralStudentService {
         this.doctoralStudentDao = doctoralStudentDao;
         this.documentService = documentService;
         this.photoDao = photoDao;
+
+        File photoDir = new File("photos/");
+        photoDir.mkdir();
     }
 
     @Override
@@ -50,6 +58,12 @@ public class DoctoralStudentServiceImpl implements DoctoralStudentService {
             photoDao.deleteById(photoId);
         }
         entity.setPhotoId(null);
+
+        File photoFile = Paths.get("photos/"+id).toFile();
+        if (photoFile.exists()) {
+            photoFile.delete();
+        }
+
         return doctoralStudentDao.save(entity);
     }
 
@@ -64,10 +78,29 @@ public class DoctoralStudentServiceImpl implements DoctoralStudentService {
             photo = photoDao.findById(photoId).orElseThrow();
         }
         photo.setFilename(filename);
-        photo.setPhoto(data);
         photo = photoDao.save(photo);
         entity.setPhotoId(photo.getId());
+
+        // save photo to local disk
+        Path path = Paths.get("photos/" + id);
+        try {
+            Files.write(path, data);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return doctoralStudentDao.save(entity);
+    }
+
+    @Override
+    public byte[] getPhotoData(Long id) {
+        Path path = Paths.get("photos/" + id);
+        try {
+            return Files.readAllBytes(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override

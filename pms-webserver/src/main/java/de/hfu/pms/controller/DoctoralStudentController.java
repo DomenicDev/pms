@@ -4,7 +4,6 @@ import de.hfu.pms.exceptions.DoctoralStudentNotFoundException;
 import de.hfu.pms.model.*;
 import de.hfu.pms.service.DoctoralStudentService;
 import de.hfu.pms.service.DocumentService;
-import de.hfu.pms.service.PhotoService;
 import de.hfu.pms.shared.dto.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +24,12 @@ public class DoctoralStudentController {
     private final DocumentService documentService;
     private final DoctoralStudentService doctoralStudentService;
     private final ModelMapper modelMapper;
-    private final PhotoService photoService;
 
     @Autowired
-    public DoctoralStudentController(DoctoralStudentService doctoralStudentService, ModelMapper modelMapper, DocumentService documentService, PhotoService photoService) {
+    public DoctoralStudentController(DoctoralStudentService doctoralStudentService, ModelMapper modelMapper, DocumentService documentService) {
         this.doctoralStudentService = doctoralStudentService;
         this.modelMapper = modelMapper;
         this.documentService = documentService;
-        this.photoService = photoService;
     }
 
     @PostMapping(value= "/create")
@@ -136,7 +133,9 @@ public class DoctoralStudentController {
         DoctoralStudentDTO dto = convertToDTO(student);
         Long photoId = student.getPhotoId();
         if (photoId != null) {
-            dto.setPhoto(convertToPhotoDTO(photoService.getPhotoById(photoId)));
+            byte[] photoData = doctoralStudentService.getPhotoData(id);
+            PhotoDTO photoDTO = new PhotoDTO("photo", photoData);
+            dto.setPhoto(photoDTO);
         }
         return dto;
     }

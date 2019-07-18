@@ -13,9 +13,6 @@ public class Photo {
     @Column
     private String filename;
 
-    @Lob // large object
-    @Column(columnDefinition="BLOB")
-    private byte[] photo; // saved as blob
 
     public Long getId() {
         return id;
@@ -33,11 +30,4 @@ public class Photo {
         this.filename = filename;
     }
 
-    public byte[] getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(byte[] photo) {
-        this.photo = photo;
-    }
 }
