@@ -421,6 +421,7 @@ public class DoctoralStudentFormController implements Initializable {
         emailTextField.setText(personalData.getEmail());
 
         // photo
+
         PhotoDTO photoData = doctoralStudent.getPhoto();
         if (photoData != null) {
             try {
@@ -431,6 +432,8 @@ public class DoctoralStudentFormController implements Initializable {
                 e.printStackTrace();
             }
         }
+
+
 
         // personal data combo boxes
         salutationComboBox.getSelectionModel().select(RepresentationWrapper.find(personalData.getSalutation(), salutationComboBox.getItems()));
@@ -922,12 +925,7 @@ public class DoctoralStudentFormController implements Initializable {
         }
     }
 
-    @Subscribe
-    public void handleAddUniversityEvent(SuccessfullyAddedUniversityEvent event) {
-        UniversityDTO university = event.getUniversity();
-        this.externalUniversityComboBox.getItems().add(RepresentationWrapper.getWrappedUniversity(university));
-        this.qualifiedGraduationUniversityComboBox.getItems().add(RepresentationWrapper.getWrappedUniversity(university));
-    }
+
 
     private boolean writeToDoctoralStudentDTO() {
         PersonalDataDTO personalData = doctoralStudent.getPersonalData();
@@ -1272,5 +1270,31 @@ public class DoctoralStudentFormController implements Initializable {
     @Subscribe
     public void handleDeletedFacultyEvent(SuccessfullyUpdatedFacultyEvent event) {
         updateFacultyCombobox();
+    }
+
+
+    @Subscribe
+    public void handleAddUniversityEvent(SuccessfullyAddedUniversityEvent event) {
+        UniversityDTO university = event.getUniversity();
+        this.externalUniversityComboBox.getItems().add(RepresentationWrapper.getWrappedUniversity(university));
+        this.qualifiedGraduationUniversityComboBox.getItems().add(RepresentationWrapper.getWrappedUniversity(university));
+    }
+
+    @Subscribe
+    public void handleUpdateUniversityEvent(SuccessfullyUpdatedUniversityEvent event) {
+        UniversityDTO updatedUniversity = event.getUniversity();
+        updateUniversityList(externalUniversityComboBox.getItems(), updatedUniversity);
+        updateUniversityList(qualifiedGraduationUniversityComboBox.getItems(), updatedUniversity);
+    }
+
+    private void updateUniversityList(Collection<WrappedEntity<UniversityDTO>> collection, UniversityDTO universityDTO) {
+        CollectionUtils.removeFromList(externalUniversityComboBox.getItems(), collectionItem -> universityDTO.getId().equals(collectionItem.getEntity().getId()));
+        collection.add(RepresentationWrapper.getWrappedUniversity(universityDTO));
+    }
+
+    @Subscribe
+    public void handleDeleteUniversityEvent(SuccessfullyDeletedUniversityEvent event) {
+        CollectionUtils.removeFromList(externalUniversityComboBox.getItems(), collectionItem -> collectionItem.getEntity().getId().equals(event.getId()));
+        CollectionUtils.removeFromList(qualifiedGraduationUniversityComboBox.getItems(), collectionItem -> collectionItem.getEntity().getId().equals(event.getId()));
     }
 }
