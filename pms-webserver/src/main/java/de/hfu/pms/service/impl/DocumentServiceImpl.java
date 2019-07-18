@@ -7,6 +7,7 @@ import de.hfu.pms.model.Document;
 import de.hfu.pms.service.DocumentService;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,6 +20,8 @@ public class DocumentServiceImpl implements DocumentService {
 
     private final DocumentDao documentDao;
     private final DoctoralStudentDao doctoralStudentDao;
+
+    private static final String UPLOAD_DIR = "uploads/";
 
     public DocumentServiceImpl(DocumentDao documentDao, DoctoralStudentDao doctoralStudentDao) {
         this.documentDao = documentDao;
@@ -42,12 +45,12 @@ public class DocumentServiceImpl implements DocumentService {
         // now we want to save the file on the disk (local storage)
 
         // look up root upload folder
-        Path path = Paths.get("/uploads/");
+        Path path = Paths.get(UPLOAD_DIR);
         if ( ! path.toFile().exists() ) {
             path.toFile().mkdir();
         }
 
-        Path filePath = Paths.get("/uploads/" + savedDocument.getId());
+        Path filePath = Paths.get(UPLOAD_DIR + savedDocument.getId());
         Files.write(filePath, data);
     }
 
@@ -58,14 +61,17 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public byte[] getDocumentData(Long id) throws IOException {
-        Path filePath = Paths.get("/uploads/" + id);
+        Path filePath = Paths.get(UPLOAD_DIR + id);
         return Files.readAllBytes(filePath);
     }
 
     @Override
     public void deleteDocument(Long documentId) {
         documentDao.deleteById(documentId);
-        // todo remove on disk as well
+        File file = Paths.get(UPLOAD_DIR + documentId).toFile();
+        if (file.exists()) {
+            file.delete();
+        }
 
     }
 
