@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashSet;
@@ -203,15 +204,19 @@ public class DoctoralStudentController {
 
     @PostMapping("/docs/{studentId}")
     public ResponseEntity<?> uploadDocument(@RequestBody DocumentDTO document, @PathVariable Long studentId) {
-        Document entity = convertToEntity(document);
-        documentService.assignDocument(studentId, entity);
+        try {
+            documentService.assignDocument(studentId, document.getFilename(), document.getData());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return ResponseEntity.ok("document uploaded");
     }
 
     @GetMapping("/docs/{id}")
-    public DocumentDTO getDocumentById(@PathVariable Long id) {
+    public DocumentDTO getDocumentById(@PathVariable Long id) throws IOException {
         Document document = documentService.getDocumentById(id);
-        return convertToDTO(document);
+        byte[] data = documentService.getDocumentData(id);
+        return new DocumentDTO(document.getId(), document.getFilename(), data);
     }
 
     private Collection<PreviewDoctoralStudentDTO> convertToPreview(Collection<DoctoralStudent> students) {
@@ -248,21 +253,6 @@ public class DoctoralStudentController {
         preview.setAnonymized(doctoralStudent.getAnonymized());
 
         return preview;
-    }
-
-    private DocumentDTO convertToDTO(Document document) {
-        DocumentDTO documentDTO = new DocumentDTO();
-        documentDTO.setId(document.getId());
-        documentDTO.setFilename(document.getFilename());
-        documentDTO.setData(document.getData());
-        return documentDTO;
-    }
-
-    private Document convertToEntity(DocumentDTO documentDTO) {
-        Document entity = new Document();
-        entity.setFilename(documentDTO.getFilename());
-        entity.setData(documentDTO.getData());
-        return entity;
     }
 
     private PhotoDTO convertToPhotoDTO(Photo photo) {

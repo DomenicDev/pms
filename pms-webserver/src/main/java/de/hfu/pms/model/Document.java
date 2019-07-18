@@ -13,10 +13,6 @@ public class Document {
     @Column(nullable = false)
     private String filename;
 
-    @Lob
-    @Column(nullable = false, columnDefinition="BLOB")
-    private byte[] data;
-
     public Document() {
     }
 
@@ -36,11 +32,4 @@ public class Document {
         this.filename = filename;
     }
 
-    public byte[] getData() {
-        return data;
-    }
-
-    public void setData(byte[] data) {
-        this.data = data;
-    }
 }
