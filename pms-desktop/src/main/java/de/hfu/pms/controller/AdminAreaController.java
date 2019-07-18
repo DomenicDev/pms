@@ -171,7 +171,7 @@ public class AdminAreaController implements Initializable {
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle(bundle.getString("ui.label.password_from") + user.getUsername() + " " + bundle.getString("ui.label.change"));
+            stage.setTitle(bundle.getString("ui.label.password_from") + " " + user.getUsername() + " " + bundle.getString("ui.label.change"));
             stage.setScene(new Scene(root));
             stage.show();
 

@@ -52,6 +52,8 @@ public class PasswordAdminAreaController implements Initializable {
         if (userValidator.validationSuccessful()) {
             eventBus.post(new RequestChangePasswordEvent(user.getUsername(), passwordFieldPassword.getText()));
             ((Button) event.getSource()).getScene().getWindow().hide();
+        } else {
+            labelAlert.setVisible(true);
         }
     }
 

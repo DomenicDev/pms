@@ -31,7 +31,7 @@
                   <TableView fx:id="tableAdminArea" prefHeight="589.0" prefWidth="589.0">
                     <columns>
                       <TableColumn fx:id="TableColumnForname" prefWidth="75.0" text="%ui.label.forename" />
-                      <TableColumn fx:id="TableColumnLastname" prefWidth="75.0" text="ui.label.surname" />
+                      <TableColumn fx:id="TableColumnLastname" prefWidth="75.0" text="%ui.label.surname" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
