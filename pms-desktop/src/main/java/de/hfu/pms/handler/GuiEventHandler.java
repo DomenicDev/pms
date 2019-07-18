@@ -347,14 +347,19 @@ public class GuiEventHandler extends Thread {
     public void handle(RequestSearchDoctoralStudentEvent event) {
         String searchText = event.getSearchText();
         if (searchText != null) {
-            try {
-                Collection<PreviewDoctoralStudentDTO> previews = applicationServices.searchDoctoralStudents(searchText);
-                if (previews != null) {
-                    eventBus.post(new ResponseSearchRequestEvent(previews));
+            addJob(() -> {
+                try {
+                    Collection<PreviewDoctoralStudentDTO> previews = applicationServices.searchDoctoralStudents(searchText);
+                    if (previews != null) {
+                        Platform.runLater(() -> {
+                            eventBus.post(new ResponseSearchRequestEvent(previews));
+                        });
+                    }
+                } catch (BusinessException e) {
+                    e.printStackTrace();
                 }
-            } catch (BusinessException e) {
-                e.printStackTrace();
-            }
+            });
+
         }
     }
 

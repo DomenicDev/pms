@@ -116,6 +116,7 @@ public class ApplicationServiceImpl implements ApplicationServices {
 
     @Override
     public Collection<PreviewDoctoralStudentDTO> searchDoctoralStudents(String keyword) throws BusinessException {
+        keyword = keyword.replaceAll("\\s", ".");
         try {
             String response = restClient.get(STUDENT_SERVICES + "search/" + keyword);
             return mapper.readValue(response, new TypeReference<List<PreviewDoctoralStudentDTO>>() {});
