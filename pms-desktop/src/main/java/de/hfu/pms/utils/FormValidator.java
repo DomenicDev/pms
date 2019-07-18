@@ -103,6 +103,18 @@ public class FormValidator {
         return false;
     }
 
+    public boolean validateUsername(TextField textField) {
+        String input = textField.getText();
+        removeClass(textField, ERROR_BORDER);
+        if (input.matches("^(\\w)+$")) {
+            return true;
+        } else {
+            addClass(textField, ERROR_BORDER);
+            failValidation();
+            return false;
+        }
+    }
+
     public boolean passwordFieldsAreSimilar(PasswordField passwordField, PasswordField passwordFieldRewrite) {
         if (passwordField.getText().equals(passwordFieldRewrite.getText())) {
             return true;

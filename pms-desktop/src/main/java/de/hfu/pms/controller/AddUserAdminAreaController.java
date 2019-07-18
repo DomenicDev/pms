@@ -114,6 +114,8 @@ public class AddUserAdminAreaController implements Initializable {
 
         if (userValidator.textFieldNotEmpty(TextfieldPasswordRewrite)) {
         }
+        if (userValidator.validateUsername(TextfieldUsername)){
+        }
         return userValidator.validationSuccessful();
     }
 
