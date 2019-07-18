@@ -123,6 +123,7 @@ public class UniversityScreenController implements Initializable {
     public void handleUniversityAddEvent(SuccessfullyAddedUniversityEvent event) {
         UniversityDTO university = event.getUniversity();
         tableViewUniversity.getItems().add(university);
+        tableViewUniversity.refresh();
     }
 
     @Subscribe
@@ -130,11 +131,13 @@ public class UniversityScreenController implements Initializable {
         UniversityDTO newUniversity = event.getUniversity();
         CollectionUtils.removeFromList(newUniversity, tableViewUniversity.getItems(), (original, collectionItem) -> original.getId().equals(collectionItem.getId()));
         tableViewUniversity.getItems().add(newUniversity);
+        tableViewUniversity.refresh();
     }
 
     @Subscribe
     public void handleDeleteEvent(SuccessfullyDeletedUniversityEvent event) {
         CollectionUtils.removeFromList(tableViewUniversity.getItems(), collectionItem -> collectionItem.getId().equals(event.getId()));
+        tableViewUniversity.refresh();
     }
 
 
