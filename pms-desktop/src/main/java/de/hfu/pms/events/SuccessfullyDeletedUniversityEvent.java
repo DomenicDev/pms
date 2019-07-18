@@ -1,4 +1,4 @@
-package de.hfu.pms.handler;
+package de.hfu.pms.events;
 
 public class SuccessfullyDeletedUniversityEvent {
 
