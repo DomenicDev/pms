@@ -2,19 +2,27 @@ plugins {
     id 'java'
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.7'
+    id 'java-library-distribution'
 }
 
 sourceCompatibility = 11
 
 javafx {
     // version = "11.0.2"
-    modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.graphics', 'javafx.swing' ]
+    modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.graphics', 'javafx.base', 'javafx.swing' ]
 }
 
 // this vm argument is important to make the "controlsfx" dependency work 
 applicationDefaultJvmArgs = ["--add-exports=javafx.base/com.sun.javafx.event=ALL-UNNAMED"]
 
-mainClassName = 'de.hfu.pms.MainDesktopApplication'
+mainClassName = 'de.hfu.pms.Main'
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'de.hfu.pms.Main'
+    }
+    from { (configurations.runtime).collect { it.isDirectory() ? it : zipTree(it) } }
+}
 
 dependencies {
     compile project(':pms-core')
@@ -34,3 +42,7 @@ dependencies {
     
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
+
+
+
+
