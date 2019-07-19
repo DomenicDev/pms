@@ -126,6 +126,7 @@ public class GuiEventHandler extends Thread {
                     }
                 });
             } catch (LoginFailedException e) {
+                e.printStackTrace();
                 Platform.runLater(() -> {
                     logger.log(Level.DEBUG, "Login failed..." + Thread.currentThread());
                     eventBus.post(new LoginFailedEvent(bundle.getString("ui.login.login_failed")));
