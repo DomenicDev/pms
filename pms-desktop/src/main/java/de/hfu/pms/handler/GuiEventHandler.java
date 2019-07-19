@@ -232,11 +232,11 @@ public class GuiEventHandler extends Thread {
     @Subscribe
     public void handleDeleteFacultyEvent(RequestDeleteFacultyEvent requestDeleteEvent) {
         try {
-            Long id = requestDeleteEvent.getFaculty().getId();
+            Long id = requestDeleteEvent.getFacultyId();
             applicationServices.deleteFaculty(id);
             eventBus.post(new SuccessfullyDeletedFacultyEvent(id));
         } catch (BusinessException e) {
-            e.printStackTrace();
+            show(new BusinessException(bundle.getString("ui.alert.delete_failed_faculty")));
         }
     }
 

@@ -108,7 +108,7 @@ public final class EntityPool {
     }
 
     public Collection<FacultyDTO> getFaculties() {
-        return faculties;
+        return applicationServices.getAllFaculties();
     }
 
     public Collection<PreviewDoctoralStudentDTO> getPreviewStudents() {

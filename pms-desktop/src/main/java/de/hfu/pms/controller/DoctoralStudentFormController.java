@@ -1259,17 +1259,18 @@ public class DoctoralStudentFormController implements Initializable {
 
     @Subscribe
     public void handleAddedFacultyEvent(SuccessfullyAddedFacultyEvent event) {
-        updateFacultyCombobox();
+        facultyHFUComboBox.getItems().add(RepresentationWrapper.getWrappedFaculty(event.getFaculty()));
     }
 
     @Subscribe
     public void handleDeletedFacultyEvent(SuccessfullyDeletedFacultyEvent event) {
-        updateFacultyCombobox();
+        CollectionUtils.removeFromList(facultyHFUComboBox.getItems(), collectionItem -> collectionItem.getEntity().getId().equals(event.getFaculty()));
     }
 
     @Subscribe
-    public void handleDeletedFacultyEvent(SuccessfullyUpdatedFacultyEvent event) {
-        updateFacultyCombobox();
+    public void handleUpdatedFacultyEvent(SuccessfullyUpdatedFacultyEvent event) {
+        CollectionUtils.removeFromList(facultyHFUComboBox.getItems(), collectionItem -> collectionItem.getEntity().getId().equals(event.getFaculty().getId()));
+        facultyHFUComboBox.getItems().add(RepresentationWrapper.getWrappedFaculty(event.getFaculty()));
     }
 
 

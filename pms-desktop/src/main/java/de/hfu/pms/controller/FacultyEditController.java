@@ -101,6 +101,7 @@ public class FacultyEditController implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
             // todo: delete selected Entry
+            eventBus.post(new RequestDeleteFacultyEvent(toBeDeleted.getId()));
             //EventBusSystem.getEventBus().post(new RequestDeleteFacultyEvent(toBeDeleted));
         }
         // else do nothing, closes automatically on cancel button;
