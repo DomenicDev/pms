@@ -1,10 +1,12 @@
 package de.hfu.pms.client;
 
+import de.hfu.pms.service.ApplicationServiceImpl;
 import org.apache.http.HttpStatus;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.methods.*;
 import org.apache.http.client.protocol.HttpClientContext;
@@ -21,6 +23,7 @@ import org.apache.http.impl.client.*;
 import org.apache.http.impl.conn.BasicHttpClientConnectionManager;
 import org.apache.http.ssl.SSLContexts;
 import org.apache.http.util.EntityUtils;
+import org.apache.log4j.Logger;
 
 import javax.net.ssl.SSLContext;
 import java.io.IOException;
@@ -32,6 +35,8 @@ import java.security.NoSuchAlgorithmException;
  * The RestClient provides basic methods for communication with REST Services.
  */
 public class RestClient {
+
+    private Logger logger = Logger.getLogger(ApplicationServiceImpl.class);
 
     private CloseableHttpClient client;
     private HttpClientContext context;
@@ -80,6 +85,17 @@ public class RestClient {
                 .setConnectionManager(connectionManager).build();
         // .... END OF CUSTOM SSL CONFIGURATION
 
+        HttpRequestRetryHandler retryHandler = (exception, executionCount, context) -> {
+            if (executionCount > 3) {
+                logger.warn("Maximum tries reached for client http pool ");
+                return false;
+            }
+            if (exception instanceof org.apache.http.NoHttpResponseException) {
+                logger.warn("No response from server on " + executionCount + " call");
+                return true;
+            }
+            return false;
+        };
 
         // create http client
         client = HttpClientBuilder.create()
@@ -88,7 +104,10 @@ public class RestClient {
                 .setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE)
                 .setSSLSocketFactory(sslsf)
                 .setConnectionManager(connectionManager)
+                .setRetryHandler(retryHandler)
                 .build();
+
+
     }
 
     /**

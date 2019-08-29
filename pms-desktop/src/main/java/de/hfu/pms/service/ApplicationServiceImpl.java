@@ -47,7 +47,7 @@ public class ApplicationServiceImpl implements ApplicationServices {
             logger.log(Level.INFO, "Doctoral Student created: " + dto);
             return dto;
         } catch (IOException e) {
-            throw new BusinessException("could not create student");
+            throw new BusinessException("could not create student " + e);
         }
     }
 
