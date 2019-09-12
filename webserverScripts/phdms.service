@@ -5,10 +5,9 @@ After=syslog.target network.target
 [Service]
 Type=simple
 WorkingDirectory=/etc/phdms.d
-ExecStart=/usr/bin/java -cp phdms.jar &
-ExecReload=/bin/kill -s HUP $MAINPID
-ExecStop=/bin/kill -s QUIT $MAINPID
+ExecStart=/usr/bin/java/bin/java -jar phdms-webserver.jar
 SuccessExitStatus=143
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
